@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace LapStopApi.Entities.Models
 {
-    public sealed class EmployeeStatus
+    public sealed class ProductStatus
     {
         public Guid Id { get; set; }
 
         public string Name { get; set; }
 
-        public bool IsActivate { get; set; }
+        public string Description { get; set; }
+
+        public bool IsRemoved { get; set; }
 
         public DateTime CreatedDate { get; set; }
 
@@ -20,7 +22,7 @@ namespace LapStopApi.Entities.Models
 
         #region NAVIGATION PROPERTIES
 
-        public ICollection<Employee>? Employees { get; set; }
+        public ICollection<Product>? Products { get; set; }
 
         #endregion
     }
