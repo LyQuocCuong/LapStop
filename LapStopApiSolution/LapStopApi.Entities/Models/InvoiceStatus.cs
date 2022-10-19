@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LapStopApi.Entities.Models
 {
-    public sealed class SalesOrderStatus
+    public sealed class InvoiceStatus
     {
         public Guid Id { get; set; }
 
@@ -24,7 +24,9 @@ namespace LapStopApi.Entities.Models
 
         #region NAVIGATION PROPERTIES
 
-        public ICollection<SalesOrder>? SalesOrders { get; set; }
+        public ICollection<ImportedInvoice>? ImportedInvoices { get; set; }
+
+        public ICollection<ExportedInvoice>? ExportedInvoices { get; set; }
 
         #endregion
     }

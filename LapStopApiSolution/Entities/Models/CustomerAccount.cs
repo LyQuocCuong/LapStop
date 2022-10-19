@@ -6,17 +6,15 @@ using System.Threading.Tasks;
 
 namespace LapStopApi.Entities.Models
 {
-    public sealed class Customer
+    public sealed class CustomerAccount
     {
-        public Guid Id { get; set; }
+        public Guid CustomerId { get; set; }
 
-        public string FirstName { get; set; }
+        public string Username { get; set; }
 
-        public string LastName { get; set; }
+        public string Password { get; set; }
 
-        public string Address { get; set; }
-
-        public string Phone { get; set; }
+        public bool IsActivate { get; set; }
 
         public bool IsRemoved { get; set; }
 

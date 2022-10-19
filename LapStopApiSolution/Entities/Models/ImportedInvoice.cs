@@ -6,15 +6,19 @@ using System.Threading.Tasks;
 
 namespace LapStopApi.Entities.Models
 {
-    public sealed class SalesOrderStatus
+    public sealed class ImportedInvoice
     {
         public Guid Id { get; set; }
 
-        public string Name { get; set; }
+        public Guid EmployeeId { get; set; }
 
-        public string Description { get; set; }
+        public Guid InvoiceStatusId { get; set; }
 
-        public bool IsEnable { get; set; }
+        public string InvoiceCode { get; set; }
+
+        public DateTime? InvoiceDate { get; set; }
+
+        public int Total { get; set; }
 
         public bool IsRemoved { get; set; }
 
@@ -24,7 +28,9 @@ namespace LapStopApi.Entities.Models
 
         #region NAVIGATION PROPERTIES
 
-        public ICollection<SalesOrder>? SalesOrders { get; set; }
+        public Employee Employee { get; set; }
+
+        public ICollection<ImportedInvoiceDetail> ImportedInvoiceDetails { get; set; }
 
         #endregion
     }
