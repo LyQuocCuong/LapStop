@@ -6,14 +6,26 @@ using System.Threading.Tasks;
 
 namespace LapStopApi.Entities.Models
 {
-    public class EmployeeAvatar
+    public sealed class ProductGallery
     {
-        public Guid EmployeeId { get; set; }
+        public Guid Id { get; set; }
+
+        public Guid ProductId { get; set; }
+
         public string Title { get; set; }
+
         public string Url { get; set; }
+
+        public bool IsRemoved { get; set; }
+
         public DateTime CreatedDate { get; set; }
+
         public DateTime UpdatedDate { get; set; }
 
-        public Employee Employee { get; set; }
+        #region NAVIGATION PROPERTIES
+
+        public Product Product { get; set; }
+
+        #endregion
     }
 }
