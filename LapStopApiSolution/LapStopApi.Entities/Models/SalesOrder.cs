@@ -16,9 +16,9 @@ namespace LapStopApi.Entities.Models
 
         public DateTime OrderDate { get; set; }
 
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
         public int Total { get; set; }
 
@@ -30,11 +30,11 @@ namespace LapStopApi.Entities.Models
 
         #region NAVIGATION PROPERTIES
 
-        public SalesOrderStatus SalesOrderStatus { get; set; }
+        public SalesOrderStatus? SalesOrderStatus { get; set; }
 
-        public ExportedInvoice ExportedInvoice { get; set; }
+        public ExportedInvoice? ExportedInvoice { get; set; }
 
-        public ICollection<SalesOrderDetail> SalesOrderDetails { get; set; }
+        public ICollection<SalesOrderDetail>? SalesOrderDetails { get; set; }
 
         #endregion
     }

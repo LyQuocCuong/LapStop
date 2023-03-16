@@ -12,9 +12,9 @@ namespace LapStopApi.Entities.Models
 
         public Guid ProductId { get; set; }
 
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
-        public string Url { get; set; }
+        public string? Url { get; set; }
 
         public bool IsRemoved { get; set; }
 
@@ -24,7 +24,7 @@ namespace LapStopApi.Entities.Models
 
         #region NAVIGATION PROPERTIES
 
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
 
         #endregion
     }

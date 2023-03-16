@@ -29,9 +29,9 @@ namespace LapStopApi.Entities.Models
 
         #region NAVIGATION PROPERTIES
 
-        public SalesOrder SalesOrder { get; set; }
+        public SalesOrder? SalesOrder { get; set; }
 
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
 
         #endregion
     }
