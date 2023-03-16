@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LapStopApi", "LapStopApi\La
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LapStopApi.Entities", "LapStopApi.Entities\LapStopApi.Entities.csproj", "{E2FB2C5D-75EA-47C9-9213-60E9ABF29191}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{CB73833C-0ED9-46E4-A660-B54B829C2A0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerService", "LoggerService\LoggerService.csproj", "{EBB9CCB2-9ECD-4F28-B532-91DA6EB3038D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{E2FB2C5D-75EA-47C9-9213-60E9ABF29191}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2FB2C5D-75EA-47C9-9213-60E9ABF29191}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2FB2C5D-75EA-47C9-9213-60E9ABF29191}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB73833C-0ED9-46E4-A660-B54B829C2A0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB73833C-0ED9-46E4-A660-B54B829C2A0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB73833C-0ED9-46E4-A660-B54B829C2A0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB73833C-0ED9-46E4-A660-B54B829C2A0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBB9CCB2-9ECD-4F28-B532-91DA6EB3038D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBB9CCB2-9ECD-4F28-B532-91DA6EB3038D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBB9CCB2-9ECD-4F28-B532-91DA6EB3038D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBB9CCB2-9ECD-4F28-B532-91DA6EB3038D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

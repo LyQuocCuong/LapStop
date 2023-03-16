@@ -1,4 +1,4 @@
-﻿using LapStopApi.Models;
+﻿using LapStopApi.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,23 +15,23 @@ namespace LapStopApi.Entities.Models
 
         public Guid EmployeeStatusId { get; set; }
 
-        public string EmployeeCode { get; set; }
+        public string? EmployeeCode { get; set; }
 
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
         public bool? IsMale { get; set; }
 
         public DateTime DOB { get; set; }
 
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
-        public string AvatarUrl { get; set; }
+        public string? AvatarUrl { get; set; }
 
         public bool IsRemoved { get; set; }
 
@@ -41,13 +41,13 @@ namespace LapStopApi.Entities.Models
 
         #region NAVIGATION PROPERTIES
 
-        public EmployeeRole EmployeeRole { get; set; }
+        public EmployeeRole? EmployeeRole { get; set; }
 
-        public EmployeeStatus EmployeeStatus { get; set; }
+        public EmployeeStatus? EmployeeStatus { get; set; }
 
-        public ICollection<EmployeeGallery> EmployeeGalleries { get; set; }
+        public ICollection<EmployeeGallery>? EmployeeGalleries { get; set; }
 
-        public ICollection<ImportedInvoice> ImportedInvoices { get; set; }
+        public ICollection<ImportedInvoice>? ImportedInvoices { get; set; }
 
         #endregion
     }

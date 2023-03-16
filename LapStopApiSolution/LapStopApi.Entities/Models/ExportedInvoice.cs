@@ -16,7 +16,7 @@ namespace LapStopApi.Entities.Models
 
         public Guid InvoiceStatusId { get; set; }
 
-        public string InvoiceCode { get; set; }
+        public string? InvoiceCode { get; set; }
 
         public DateTime InvoiceDate { get; set; }
 
@@ -30,11 +30,11 @@ namespace LapStopApi.Entities.Models
 
         #region NAVIGATION PROPERTIES
 
-        public Employee Employee { get; set; }
+        public Employee? Employee { get; set; }
 
-        public SalesOrder SalesOrder { get; set; }
+        public SalesOrder? SalesOrder { get; set; }
 
-        public ICollection<ExportedInvoiceDetail> ExportedInvoiceDetails { get; set; }
+        public ICollection<ExportedInvoiceDetail>? ExportedInvoiceDetails { get; set; }
 
         #endregion
     }

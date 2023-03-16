@@ -10,11 +10,11 @@ namespace LapStopApi.Entities.Models
     {
         public Guid Id { get; set; }
 
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
-        public string AvatarUrl { get; set; }
+        public string? AvatarUrl { get; set; }
 
         public bool IsRemoved { get; set; }
 
@@ -24,7 +24,7 @@ namespace LapStopApi.Entities.Models
 
         #region NAVIGATION PROPERTIES
 
-        public ICollection<Product_Brand>? product_Brands { get; set; }
+        public ICollection<ProductBrand>? product_Brands { get; set; }
 
         #endregion
     }

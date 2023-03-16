@@ -12,13 +12,13 @@ namespace LapStopApi.Entities.Models
 
         public Guid ProductStatusId { get; set; }
 
-        public string ProductCode { get; set; }
+        public string? ProductCode { get; set; }
 
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
-        public string AvatarUrl { get; set; }
+        public string? AvatarUrl { get; set; }
 
         public int OriginalPrice { get; set; }
 
@@ -36,9 +36,9 @@ namespace LapStopApi.Entities.Models
 
         #region NAVIGATION PROPERTIES
 
-        public ProductStatus ProductStatus { get; set; }
+        public ProductStatus? ProductStatus { get; set; }
 
-        public ICollection<Product_Brand> Product_Brands { get; set; }
+        public ICollection<ProductBrand>? Product_Brands { get; set; }
 
         public ICollection<ProductGallery>? ProductGalleries { get; set; }
 

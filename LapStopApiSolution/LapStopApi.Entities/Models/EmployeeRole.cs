@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LapStopApi.Models
+namespace LapStopApi.Entities.Models
 {
     public sealed class EmployeeRole
     {
         public Guid Id { get; set; }
 
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         public bool IsEnable { get; set; }
 

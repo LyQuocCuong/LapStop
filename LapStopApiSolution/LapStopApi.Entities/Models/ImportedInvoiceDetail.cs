@@ -14,7 +14,7 @@ namespace LapStopApi.Entities.Models
 
         public Guid ProductId { get; set; }
 
-        public string ProductBarcode { get; set; }
+        public string? ProductBarcode { get; set; }
 
         public int CostPrice { get; set; }
 
@@ -30,9 +30,9 @@ namespace LapStopApi.Entities.Models
 
         #region NAVIGATION PROPERTIES
 
-        public ImportedInvoice ImportedInvoice { get; set; }
+        public ImportedInvoice? ImportedInvoice { get; set; }
 
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
  
         #endregion
     }

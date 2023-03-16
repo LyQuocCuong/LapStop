@@ -12,9 +12,9 @@ namespace LapStopApi.Entities.Models
 
         public Guid EmployeeId { get; set; }
 
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
-        public string Url { get; set; }
+        public string? Url { get; set; }
 
         public bool IsRemoved { get; set; }
 
@@ -25,7 +25,7 @@ namespace LapStopApi.Entities.Models
 
         #region NAVIGATION PROPERTIES
 
-        public Employee Employee { get; set; }
+        public Employee? Employee { get; set; }
 
         #endregion
     }
