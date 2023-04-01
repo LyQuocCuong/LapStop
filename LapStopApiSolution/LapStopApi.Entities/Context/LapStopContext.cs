@@ -18,7 +18,9 @@ namespace LapStopApi.Entities.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ConfigModelRelationships();
+            modelBuilder.ConfigAttributeExt();
+            modelBuilder.ConfigRelationshipExt();
+
             base.OnModelCreating(modelBuilder);
         }
 
