@@ -34,6 +34,8 @@ namespace LapStopApi.Entities.Models
 
         public SalesOrder? SalesOrder { get; set; }
 
+        public InvoiceStatus? InvoiceStatus { get; set; }
+
         public ICollection<ExportedInvoiceDetail>? ExportedInvoiceDetails { get; set; }
 
         #endregion

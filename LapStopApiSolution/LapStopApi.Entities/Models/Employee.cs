@@ -41,6 +41,8 @@ namespace LapStopApi.Entities.Models
 
         #region NAVIGATION PROPERTIES
 
+        public EmployeeAccount? EmployeeAccount { get; set; }
+
         public EmployeeRole? EmployeeRole { get; set; }
 
         public EmployeeStatus? EmployeeStatus { get; set; }
@@ -48,6 +50,8 @@ namespace LapStopApi.Entities.Models
         public ICollection<EmployeeGallery>? EmployeeGalleries { get; set; }
 
         public ICollection<ImportedInvoice>? ImportedInvoices { get; set; }
+
+        public ICollection<ExportedInvoice>? ExportedInvoices { get; set; }
 
         #endregion
     }
