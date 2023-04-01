@@ -10,11 +10,57 @@ namespace LapStopApi.Entities.Extensions
 {
     public static class ModelBuilderExt
     {
+        public static void ConfigAttributeExt(this ModelBuilder modelBuilder)
+        {
+            #region CUSTOMER ACCOUNT
+
+            modelBuilder.Entity<CustomerAccount>().ToTable("CustomerAccount");
+            modelBuilder.Entity<CustomerAccount>()
+                .HasKey(ca => ca.CustomerId)
+                .HasName("CustomerId");
+            modelBuilder.Entity<CustomerAccount>()
+                .Property(ca => ca.Username)
+                .HasColumnName("Username")
+                .IsRequired(true); // NOT nullable
+
+            #endregion
+
+            #region EMPLOYEE ACCOUNT
+
+            modelBuilder.Entity<EmployeeAccount>().ToTable("EmployeeAccount");
+            modelBuilder.Entity<EmployeeAccount>()
+                .HasKey(ea => ea.EmployeeId)
+                .HasName("EmployeeId");
+            modelBuilder.Entity<EmployeeAccount>()
+                .Property(ea => ea.Username)
+                .HasColumnName("Username")
+                .IsRequired(true); // NOT nullable
+
+            #endregion
+
+            #region PRODUCT BRAND
+
+            modelBuilder.Entity<ProductBrand>().ToTable("ProductBrand");
+            modelBuilder.Entity<ProductBrand>()
+                .HasKey(pb => new { pb.ProductId, pb.BrandId });
+            modelBuilder.Entity<ProductBrand>()
+                .Property(pb => pb.ProductId)
+                .HasColumnName("ProductId")
+                .IsRequired(true); // NOT nullable
+            modelBuilder.Entity<ProductBrand>()
+                .Property(pb => pb.BrandId)
+                .HasColumnName("BrandId")
+                .IsRequired(true); // NOT nullable
+
+            #endregion
+
+        }
+
         /// <summary>
         /// One-To-Many: START from the class CONTAINING ICollection<>
         /// One-To-One: START from the class does NOT contain FK_ID
         /// </summary>
-        public static void ConfigModelRelationships(this ModelBuilder modelBuilder)
+        public static void ConfigRelationshipExt(this ModelBuilder modelBuilder)
         {
             #region BRAND
 
