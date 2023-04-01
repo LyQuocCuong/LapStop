@@ -24,5 +24,14 @@ namespace LapStopApi.Entities.Models
 
         public DateTime UpdatedDate { get; set; }
 
+        #region NAVIGATION PROPERTIES
+
+        public CustomerAccount? CustomerAccount { get; set; }
+
+        public Cart? Cart { get; set; }
+
+        public ICollection<SalesOrder>? SalesOrders { get; set; }
+
+        #endregion
     }
 }

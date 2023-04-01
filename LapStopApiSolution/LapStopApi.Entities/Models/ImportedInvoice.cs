@@ -30,6 +30,8 @@ namespace LapStopApi.Entities.Models
 
         public Employee? Employee { get; set; }
 
+        public InvoiceStatus? InvoiceStatus { get; set; }
+
         public ICollection<ImportedInvoiceDetail>? ImportedInvoiceDetails { get; set; }
 
         #endregion

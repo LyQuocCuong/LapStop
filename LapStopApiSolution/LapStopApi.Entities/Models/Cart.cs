@@ -22,6 +22,8 @@ namespace LapStopApi.Entities.Models
 
         #region NAVIGATION PROPERTIES
 
+        public Customer? Customer { get; set; }
+
         public ICollection<CartItem>? CartItems { get; set; }
 
         #endregion

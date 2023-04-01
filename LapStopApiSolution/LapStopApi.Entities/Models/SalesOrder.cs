@@ -30,6 +30,8 @@ namespace LapStopApi.Entities.Models
 
         #region NAVIGATION PROPERTIES
 
+        public Customer? Customer { get; set; }
+
         public SalesOrderStatus? SalesOrderStatus { get; set; }
 
         public ExportedInvoice? ExportedInvoice { get; set; }

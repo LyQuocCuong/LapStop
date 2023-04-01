@@ -38,7 +38,7 @@ namespace LapStopApi.Entities.Models
 
         public ProductStatus? ProductStatus { get; set; }
 
-        public ICollection<ProductBrand>? Product_Brands { get; set; }
+        public ICollection<ProductBrand>? BrandsOfAProduct { get; set; }
 
         public ICollection<ProductGallery>? ProductGalleries { get; set; }
 

@@ -24,7 +24,7 @@ namespace LapStopApi.Entities.Models
 
         #region NAVIGATION PROPERTIES
 
-        public ICollection<ProductBrand>? product_Brands { get; set; }
+        public ICollection<ProductBrand>? ProductsOfABrand { get; set; }
 
         #endregion
     }

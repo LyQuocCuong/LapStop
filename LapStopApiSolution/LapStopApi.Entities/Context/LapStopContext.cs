@@ -1,4 +1,5 @@
-﻿using LapStopApi.Entities.Models;
+﻿using LapStopApi.Entities.Extensions;
+using LapStopApi.Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,12 @@ namespace LapStopApi.Entities.Context
         public LapStopContext(DbContextOptions<LapStopContext> options) : base(options) 
         {
             
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ConfigModelRelationships();
+            base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Brand> Brands { get; set; }
