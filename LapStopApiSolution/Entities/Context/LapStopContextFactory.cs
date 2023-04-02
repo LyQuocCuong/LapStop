@@ -24,7 +24,7 @@ namespace Entities.Context
 
             var builder = new DbContextOptionsBuilder<LapStopContext>()
                             .UseSqlServer(config.GetConnectionString("LapStopConnection"),      // name of ConnectionString
-                                          m => m.MigrationsAssembly("LapStopApi.Entities"));    // where running Migration commands on 
+                                          m => m.MigrationsAssembly("Entities"));    // where running Migration commands on 
 
             return new LapStopContext(builder.Options);     // define LapStopContext Constructor receive this Object
         }
