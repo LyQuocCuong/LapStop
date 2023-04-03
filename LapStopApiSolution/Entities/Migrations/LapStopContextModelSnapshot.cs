@@ -668,9 +668,6 @@ namespace Entities.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsEnable")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
 
