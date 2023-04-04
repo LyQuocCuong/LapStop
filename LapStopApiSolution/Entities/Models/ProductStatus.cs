@@ -14,8 +14,6 @@ namespace Entities.Models
 
         public string? Description { get; set; }
 
-        public bool IsEnable { get; set; }
-
         public bool IsRemoved { get; set; }
 
         public DateTime CreatedDate { get; set; }
