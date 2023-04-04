@@ -1,4 +1,5 @@
-﻿using Entities.Extensions;
+﻿using Entities.Configurations;
+using Entities.Extensions;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,13 +14,16 @@ namespace Entities.Context
     {
         public LapStopContext(DbContextOptions<LapStopContext> options) : base(options) 
         {
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ConfigAttributeExt();
-            modelBuilder.ConfigRelationshipExt();
+            modelBuilder.ApplyAttributeConfigExt();
+
+            modelBuilder.ApplyRelationshipConfigExt();
+
+            modelBuilder.ApplySeedingDataExt(); ;
 
             base.OnModelCreating(modelBuilder);
         }
