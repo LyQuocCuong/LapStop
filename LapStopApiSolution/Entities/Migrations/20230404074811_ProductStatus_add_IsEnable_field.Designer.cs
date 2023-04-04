@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Entities.Migrations
 {
     [DbContext(typeof(LapStopContext))]
-    [Migration("20230403110644_ProductStatus_add_IsEnable_field")]
+    [Migration("20230404074811_ProductStatus_add_IsEnable_field")]
     partial class ProductStatus_add_IsEnable_field
     {
         /// <inheritdoc />
