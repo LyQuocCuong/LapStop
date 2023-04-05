@@ -1,4 +1,5 @@
-﻿using Entities.Models;
+﻿using Entities.Configurations;
+using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace Entities.Extensions
 {
     public static class ModelBuilderExt
     {
-        public static void ConfigAttributeExt(this ModelBuilder modelBuilder)
+        public static void ApplyAttributeConfigExt(this ModelBuilder modelBuilder)
         {
             #region CUSTOMER ACCOUNT
 
@@ -55,13 +56,14 @@ namespace Entities.Extensions
             #endregion
 
         }
-
-        /// <summary>
-        /// One-To-Many: START from the class CONTAINING ICollection<>
-        /// One-To-One: START from the class does NOT contain FK_ID
-        /// </summary>
-        public static void ConfigRelationshipExt(this ModelBuilder modelBuilder)
+                
+        public static void ApplyRelationshipConfigExt(this ModelBuilder modelBuilder)
         {
+            /// <summary>
+            /// One-To-Many: START from the class CONTAINING ICollection<>
+            /// One-To-One: START from the class does NOT contain FK_ID
+            /// </summary>
+
             #region BRAND
 
             // (1) Brand --> (N) ProductBrand
@@ -288,6 +290,19 @@ namespace Entities.Extensions
 
             #endregion
 
+        }
+
+        public static void ApplySeedingDataExt(this ModelBuilder modelBuilder)
+        {
+            /// BOTH Attribute and Relationship can be DEFINED in this [ENTITY]Config.cs
+            /// But I just want to use this class for Seeding Data
+            /// I used EXTENSION_METHOD to define Attribute and Relationship
+
+            modelBuilder.ApplyConfiguration<EmployeeRole>(new EmployeeRoleConfig());
+            modelBuilder.ApplyConfiguration<EmployeeStatus>(new EmployeeStatusConfig());
+            modelBuilder.ApplyConfiguration<InvoiceStatus>(new InvoiceStatusConfig());
+            modelBuilder.ApplyConfiguration<ProductStatus>(new ProductStatusConfig());
+            modelBuilder.ApplyConfiguration<SalesOrderStatus>(new SalesOrderStatusConfig());
         }
     }
 }
