@@ -1,4 +1,6 @@
 using Contracts.ILog;
+using Contracts.IServices;
+using DTO.Output;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LapStopApi.Controllers
@@ -13,23 +15,26 @@ namespace LapStopApi.Controllers
     };
 
         private readonly ILogService _logger;
+        private readonly IServiceManager _serviceManager;
 
-        public WeatherForecastController(ILogService logger)
+        public WeatherForecastController(ILogService logger, IServiceManager serviceManager)
         {
+            _serviceManager = serviceManager;
             _logger = logger;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        public List<EmployeeRoleDto> Get()
         {
             _logger.LogInfo("Hello");
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            //return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            //{
+            //    Date = DateTime.Now.AddDays(index),
+            //    TemperatureC = Random.Shared.Next(-20, 55),
+            //    Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+            //})
+            //.ToArray();
+            return _serviceManager.EmployeeRole.GetAll();
         }
     }
 }

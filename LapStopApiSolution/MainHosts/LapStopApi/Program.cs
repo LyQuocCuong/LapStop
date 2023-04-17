@@ -1,6 +1,10 @@
 using Contracts.ILog;
+using Contracts.IServices;
+using Entities.Context;
+using Microsoft.EntityFrameworkCore;
 using NLog;
 using NLogLib;
+using Services;
 
 LogManager.LoadConfiguration(
     Path.Combine(Directory.GetCurrentDirectory(), 
@@ -10,8 +14,12 @@ LogManager.LoadConfiguration(
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddSingleton<ILogService, NLogService>();
 builder.Services.AddControllers();
+builder.Services.AddDbContext<LapStopContext>(
+    options => options.UseSqlServer(builder.Configuration.GetConnectionString("LapStopConnection"))
+);
+builder.Services.AddSingleton<ILogService, NLogService>();
+builder.Services.AddScoped<IServiceManager, ServiceManager>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
