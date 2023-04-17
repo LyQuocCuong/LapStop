@@ -2,6 +2,7 @@
 using Contracts.IRepositories.Models;
 using Contracts.IServices;
 using Contracts.IServices.Models;
+using Entities.Context;
 using Repositories;
 using Services.Models;
 using System;
@@ -14,6 +15,8 @@ namespace Services
 {
     public sealed class ServiceManager : IServiceManager
     {
+        private readonly LapStopContext _context;
+
         private readonly Lazy<IBrandService> _brandService;
         private readonly Lazy<ICartService> _cartService;
         private readonly Lazy<ICartItemService> _cartItemService;
@@ -37,8 +40,10 @@ namespace Services
         private readonly Lazy<ISalesOrderDetailService> _salesOrderDetailService;
         private readonly Lazy<ISalesOrderStatusService> _salesOrderStatusService;
 
-        public ServiceManager(IRepositoryManager repositoryManager)
+        public ServiceManager(LapStopContext context)
         {
+            _context = context;
+
             _brandService = new Lazy<IBrandService>(() => new BrandService());
             _cartService = new Lazy<ICartService>(() => new CartService());
             _cartItemService = new Lazy<ICartItemService>(() => new CartItemService());
@@ -47,7 +52,7 @@ namespace Services
             _employeeAccountService = new Lazy<IEmployeeAccountService>(() => new EmployeeAccountService());
             _employeeGalleryService = new Lazy<IEmployeeGalleryService>(() => new EmployeeGalleryService());
             _employeeService = new Lazy<IEmployeeService>(() => new EmployeeService());
-            _employeeRoleService = new Lazy<IEmployeeRoleService>(() => new EmployeeRoleService());
+            _employeeRoleService = new Lazy<IEmployeeRoleService>(() => new EmployeeRoleService(_context));
             _employeeStatusService = new Lazy<IEmployeeStatusService>(() => new EmployeeStatusService());
             _exportedInvoiceService = new Lazy<IExportedInvoiceService>(() => new ExportedInvoiceService());
             _exportedInvoiceDetailService = new Lazy<IExportedInvoiceDetailService>(() => new ExportedInvoiceDetailService());
