@@ -15,8 +15,6 @@ namespace Services
 {
     public sealed class ServiceManager : IServiceManager
     {
-        private readonly LapStopContext _context;
-
         private readonly Lazy<IBrandService> _brandService;
         private readonly Lazy<ICartService> _cartService;
         private readonly Lazy<ICartItemService> _cartItemService;
@@ -42,8 +40,6 @@ namespace Services
 
         public ServiceManager(LapStopContext context)
         {
-            _context = context;
-
             _brandService = new Lazy<IBrandService>(() => new BrandService(context));
             _cartService = new Lazy<ICartService>(() => new CartService(context));
             _cartItemService = new Lazy<ICartItemService>(() => new CartItemService(context));
