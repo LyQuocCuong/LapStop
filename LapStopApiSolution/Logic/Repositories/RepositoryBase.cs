@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Repositories
 {
-    public abstract class RepositoryBase<TModel> : IRepositoryBase<TModel> where TModel : class
+    internal abstract class RepositoryBase<TModel> : IRepositoryBase<TModel> where TModel : class
     {
         protected LapStopContext _context;
         protected DbSet<TModel> _dbSet;

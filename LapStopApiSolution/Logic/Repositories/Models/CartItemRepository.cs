@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Repositories.Models
 {
-    public sealed class CartItemRepository : RepositoryBase<CartItem>, ICartItemRepository
+    internal sealed class CartItemRepository : RepositoryBase<CartItem>, ICartItemRepository
     {
         public CartItemRepository(LapStopContext context) : base(context)
         {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Repositories.Models
 {
-    public sealed class SalesOrderRepository : RepositoryBase<SalesOrder>, ISalesOrderRepository
+    internal sealed class SalesOrderRepository : RepositoryBase<SalesOrder>, ISalesOrderRepository
     {
         public SalesOrderRepository(LapStopContext context) : base(context)
         {
