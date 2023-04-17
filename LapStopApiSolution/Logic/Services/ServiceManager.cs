@@ -44,28 +44,28 @@ namespace Services
         {
             _context = context;
 
-            _brandService = new Lazy<IBrandService>(() => new BrandService());
-            _cartService = new Lazy<ICartService>(() => new CartService());
-            _cartItemService = new Lazy<ICartItemService>(() => new CartItemService());
-            _customerAccountService = new Lazy<ICustomerAccountService>(() => new CustomerAccountService());
-            _customerService = new Lazy<ICustomerService>(() => new CustomerService());
-            _employeeAccountService = new Lazy<IEmployeeAccountService>(() => new EmployeeAccountService());
-            _employeeGalleryService = new Lazy<IEmployeeGalleryService>(() => new EmployeeGalleryService());
-            _employeeService = new Lazy<IEmployeeService>(() => new EmployeeService());
-            _employeeRoleService = new Lazy<IEmployeeRoleService>(() => new EmployeeRoleService(_context));
-            _employeeStatusService = new Lazy<IEmployeeStatusService>(() => new EmployeeStatusService());
-            _exportedInvoiceService = new Lazy<IExportedInvoiceService>(() => new ExportedInvoiceService());
-            _exportedInvoiceDetailService = new Lazy<IExportedInvoiceDetailService>(() => new ExportedInvoiceDetailService());
-            _importedInvoiceService = new Lazy<IImportedInvoiceService>(() => new ImportedInvoiceService());
-            _importedInvoiceDetailService = new Lazy<IImportedInvoiceDetailService>(() => new ImportedInvoiceDetailService());
-            _invoiceStatusService = new Lazy<IInvoiceStatusService>(() => new InvoiceStatusService());
-            _productBrandService = new Lazy<IProductBrandService>(() => new ProductBrandService());
-            _productGalleryService = new Lazy<IProductGalleryService>(() => new ProductGalleryService());
-            _productService = new Lazy<IProductService>(() => new ProductService());
-            _productStatusService = new Lazy<IProductStatusService>(() => new ProductStatusService());
-            _salesOrderService = new Lazy<ISalesOrderService>(() => new SalesOrderService());
-            _salesOrderDetailService = new Lazy<ISalesOrderDetailService>(() => new SalesOrderDetailService());
-            _salesOrderStatusService = new Lazy<ISalesOrderStatusService>(() => new SalesOrderStatusService());
+            _brandService = new Lazy<IBrandService>(() => new BrandService(context));
+            _cartService = new Lazy<ICartService>(() => new CartService(context));
+            _cartItemService = new Lazy<ICartItemService>(() => new CartItemService(context));
+            _customerAccountService = new Lazy<ICustomerAccountService>(() => new CustomerAccountService(context));
+            _customerService = new Lazy<ICustomerService>(() => new CustomerService(context));
+            _employeeAccountService = new Lazy<IEmployeeAccountService>(() => new EmployeeAccountService(context));
+            _employeeGalleryService = new Lazy<IEmployeeGalleryService>(() => new EmployeeGalleryService(context));
+            _employeeService = new Lazy<IEmployeeService>(() => new EmployeeService(context));
+            _employeeRoleService = new Lazy<IEmployeeRoleService>(() => new EmployeeRoleService(context));
+            _employeeStatusService = new Lazy<IEmployeeStatusService>(() => new EmployeeStatusService(context));
+            _exportedInvoiceService = new Lazy<IExportedInvoiceService>(() => new ExportedInvoiceService(context));
+            _exportedInvoiceDetailService = new Lazy<IExportedInvoiceDetailService>(() => new ExportedInvoiceDetailService(context));
+            _importedInvoiceService = new Lazy<IImportedInvoiceService>(() => new ImportedInvoiceService(context));
+            _importedInvoiceDetailService = new Lazy<IImportedInvoiceDetailService>(() => new ImportedInvoiceDetailService(context));
+            _invoiceStatusService = new Lazy<IInvoiceStatusService>(() => new InvoiceStatusService(context));
+            _productBrandService = new Lazy<IProductBrandService>(() => new ProductBrandService(context));
+            _productGalleryService = new Lazy<IProductGalleryService>(() => new ProductGalleryService(context));
+            _productService = new Lazy<IProductService>(() => new ProductService(context));
+            _productStatusService = new Lazy<IProductStatusService>(() => new ProductStatusService(context));
+            _salesOrderService = new Lazy<ISalesOrderService>(() => new SalesOrderService(context));
+            _salesOrderDetailService = new Lazy<ISalesOrderDetailService>(() => new SalesOrderDetailService(context));
+            _salesOrderStatusService = new Lazy<ISalesOrderStatusService>(() => new SalesOrderStatusService(context));
         }
 
         public IBrandService Brand => _brandService.Value;

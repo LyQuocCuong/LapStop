@@ -1,4 +1,5 @@
 ﻿using Contracts.IServices.Models;
+using Entities.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,10 @@ using System.Threading.Tasks;
 
 namespace Services.Models
 {
-    public sealed class ProductStatusService : IProductStatusService
+    internal sealed class ProductStatusService : ServiceBase, IProductStatusService
     {
+        public ProductStatusService(LapStopContext context) : base(context)
+        {
+        }
     }
 }
