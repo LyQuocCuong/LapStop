@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Repositories.Models
 {
-    public sealed class EmployeeGalleryRepository : RepositoryBase<EmployeeGallery>, IEmployeeGalleryRepository
+    internal sealed class EmployeeGalleryRepository : RepositoryBase<EmployeeGallery>, IEmployeeGalleryRepository
     {
         public EmployeeGalleryRepository(LapStopContext context) : base(context)
         {

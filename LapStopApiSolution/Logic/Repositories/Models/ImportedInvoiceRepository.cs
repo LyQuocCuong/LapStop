@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Repositories.Models
 {
-    public sealed class ImportedInvoiceRepository : RepositoryBase<ImportedInvoice>, IImportedInvoiceRepository
+    internal sealed class ImportedInvoiceRepository : RepositoryBase<ImportedInvoice>, IImportedInvoiceRepository
     {
         public ImportedInvoiceRepository(LapStopContext context) : base(context)
         {
