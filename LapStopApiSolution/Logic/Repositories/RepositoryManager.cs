@@ -2,16 +2,10 @@
 using Contracts.IRepositories.Models;
 using Entities.Context;
 using Repositories.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repositories
 {
-    public sealed class RepositoryManager : IRepositoryManager, IDisposable
+    public sealed class RepositoryManager : IRepositoryManager
     {
         private readonly LapStopContext _context;
 
@@ -69,11 +63,6 @@ namespace Repositories
         public void Save()
         {
             _context.SaveChanges();
-        }
-
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
         }
 
         public IBrandRepository Brand => _brandRepository.Value;

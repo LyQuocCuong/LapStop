@@ -38,30 +38,30 @@ namespace Services
         private readonly Lazy<ISalesOrderDetailService> _salesOrderDetailService;
         private readonly Lazy<ISalesOrderStatusService> _salesOrderStatusService;
 
-        public ServiceManager(LapStopContext context)
+        public ServiceManager(IRepositoryManager repositoryManager)
         {
-            _brandService = new Lazy<IBrandService>(() => new BrandService(context));
-            _cartService = new Lazy<ICartService>(() => new CartService(context));
-            _cartItemService = new Lazy<ICartItemService>(() => new CartItemService(context));
-            _customerAccountService = new Lazy<ICustomerAccountService>(() => new CustomerAccountService(context));
-            _customerService = new Lazy<ICustomerService>(() => new CustomerService(context));
-            _employeeAccountService = new Lazy<IEmployeeAccountService>(() => new EmployeeAccountService(context));
-            _employeeGalleryService = new Lazy<IEmployeeGalleryService>(() => new EmployeeGalleryService(context));
-            _employeeService = new Lazy<IEmployeeService>(() => new EmployeeService(context));
-            _employeeRoleService = new Lazy<IEmployeeRoleService>(() => new EmployeeRoleService(context));
-            _employeeStatusService = new Lazy<IEmployeeStatusService>(() => new EmployeeStatusService(context));
-            _exportedInvoiceService = new Lazy<IExportedInvoiceService>(() => new ExportedInvoiceService(context));
-            _exportedInvoiceDetailService = new Lazy<IExportedInvoiceDetailService>(() => new ExportedInvoiceDetailService(context));
-            _importedInvoiceService = new Lazy<IImportedInvoiceService>(() => new ImportedInvoiceService(context));
-            _importedInvoiceDetailService = new Lazy<IImportedInvoiceDetailService>(() => new ImportedInvoiceDetailService(context));
-            _invoiceStatusService = new Lazy<IInvoiceStatusService>(() => new InvoiceStatusService(context));
-            _productBrandService = new Lazy<IProductBrandService>(() => new ProductBrandService(context));
-            _productGalleryService = new Lazy<IProductGalleryService>(() => new ProductGalleryService(context));
-            _productService = new Lazy<IProductService>(() => new ProductService(context));
-            _productStatusService = new Lazy<IProductStatusService>(() => new ProductStatusService(context));
-            _salesOrderService = new Lazy<ISalesOrderService>(() => new SalesOrderService(context));
-            _salesOrderDetailService = new Lazy<ISalesOrderDetailService>(() => new SalesOrderDetailService(context));
-            _salesOrderStatusService = new Lazy<ISalesOrderStatusService>(() => new SalesOrderStatusService(context));
+            _brandService = new Lazy<IBrandService>(() => new BrandService(repositoryManager));
+            _cartService = new Lazy<ICartService>(() => new CartService(repositoryManager));
+            _cartItemService = new Lazy<ICartItemService>(() => new CartItemService(repositoryManager));
+            _customerAccountService = new Lazy<ICustomerAccountService>(() => new CustomerAccountService(repositoryManager));
+            _customerService = new Lazy<ICustomerService>(() => new CustomerService(repositoryManager));
+            _employeeAccountService = new Lazy<IEmployeeAccountService>(() => new EmployeeAccountService(repositoryManager));
+            _employeeGalleryService = new Lazy<IEmployeeGalleryService>(() => new EmployeeGalleryService(repositoryManager));
+            _employeeService = new Lazy<IEmployeeService>(() => new EmployeeService(repositoryManager));
+            _employeeRoleService = new Lazy<IEmployeeRoleService>(() => new EmployeeRoleService(repositoryManager));
+            _employeeStatusService = new Lazy<IEmployeeStatusService>(() => new EmployeeStatusService(repositoryManager));
+            _exportedInvoiceService = new Lazy<IExportedInvoiceService>(() => new ExportedInvoiceService(repositoryManager));
+            _exportedInvoiceDetailService = new Lazy<IExportedInvoiceDetailService>(() => new ExportedInvoiceDetailService(repositoryManager));
+            _importedInvoiceService = new Lazy<IImportedInvoiceService>(() => new ImportedInvoiceService(repositoryManager));
+            _importedInvoiceDetailService = new Lazy<IImportedInvoiceDetailService>(() => new ImportedInvoiceDetailService(repositoryManager));
+            _invoiceStatusService = new Lazy<IInvoiceStatusService>(() => new InvoiceStatusService(repositoryManager));
+            _productBrandService = new Lazy<IProductBrandService>(() => new ProductBrandService(repositoryManager));
+            _productGalleryService = new Lazy<IProductGalleryService>(() => new ProductGalleryService(repositoryManager));
+            _productService = new Lazy<IProductService>(() => new ProductService(repositoryManager));
+            _productStatusService = new Lazy<IProductStatusService>(() => new ProductStatusService(repositoryManager));
+            _salesOrderService = new Lazy<ISalesOrderService>(() => new SalesOrderService(repositoryManager));
+            _salesOrderDetailService = new Lazy<ISalesOrderDetailService>(() => new SalesOrderDetailService(repositoryManager));
+            _salesOrderStatusService = new Lazy<ISalesOrderStatusService>(() => new SalesOrderStatusService(repositoryManager));
         }
 
         public IBrandService Brand => _brandService.Value;
