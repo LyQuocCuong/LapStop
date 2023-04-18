@@ -1,16 +1,11 @@
-﻿using Contracts.IServices.Models;
-using Entities.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Contracts.IRepositories;
+using Contracts.IServices.Models;
 
 namespace Services.Models
 {
     internal sealed class ExportedInvoiceService : ServiceBase, IExportedInvoiceService
     {
-        public ExportedInvoiceService(LapStopContext context) : base(context)
+        public ExportedInvoiceService(IRepositoryManager repositoryManager) : base(repositoryManager)
         {
         }
     }

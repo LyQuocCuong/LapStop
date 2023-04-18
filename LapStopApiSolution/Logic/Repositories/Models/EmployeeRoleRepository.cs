@@ -19,13 +19,13 @@ namespace Repositories.Models
 
         public List<EmployeeRoleDto> GetAll()
         {
-            EmployeeRole employeeRole = FindAll(false).FirstOrDefault();
+            //EmployeeRole employeeRole = FindAll(false).FirstOrDefault();
             List<EmployeeRoleDto> dto = new List<EmployeeRoleDto>()
             {
                 new EmployeeRoleDto()
                 {
-                    Id = employeeRole.Id,
-                    Name = employeeRole.Name
+                    Id = Guid.NewGuid(),
+                    Name = "abc"
                 }
             };
             return dto;

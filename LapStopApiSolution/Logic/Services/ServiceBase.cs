@@ -1,18 +1,13 @@
-﻿using Entities.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Contracts.IRepositories;
 
 namespace Services
 {
     internal abstract class ServiceBase
     {
-        protected LapStopContext _context;
-        internal ServiceBase(LapStopContext context)
+        protected IRepositoryManager _repositoryManager; 
+        internal ServiceBase(IRepositoryManager repositoryManager)
         {
-            _context = context;
+            _repositoryManager = repositoryManager;
         }
     }
 }
