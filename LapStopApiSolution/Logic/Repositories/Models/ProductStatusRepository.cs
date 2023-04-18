@@ -1,11 +1,6 @@
 ﻿using Contracts.IRepositories.Models;
 using Domains.Models;
 using Entities.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repositories.Models
 {
@@ -13,6 +8,21 @@ namespace Repositories.Models
     {
         public ProductStatusRepository(LapStopContext context) : base(context)
         {
+        }
+
+        public IEnumerable<ProductStatus> GetAll()
+        {
+            return new List<ProductStatus>()
+            {
+                new ProductStatus()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "ABC",
+                    Description = "Description",
+                    IsEnable = true,
+                    IsRemoved = true,
+                }
+            };
         }
     }
 }

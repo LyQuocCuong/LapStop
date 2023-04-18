@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Domains.Models;
+using DTO.Output;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +10,6 @@ namespace Contracts.IRepositories.Models
 {
     public interface IProductStatusRepository
     {
+        IEnumerable<ProductStatus> GetAll();
     }
 }

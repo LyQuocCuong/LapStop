@@ -7,11 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Cores\Contracts\Contracts.csproj" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Cores\Domains\Domains.csproj" />
     <ProjectReference Include="..\..\DTO\DTO.csproj" />
-    <ProjectReference Include="..\..\Infrastructures\AutoMapperLib\AutoMapperLib.csproj" />
-    <ProjectReference Include="..\Repositories\Repositories.csproj" />
   </ItemGroup>
 
 </Project>
