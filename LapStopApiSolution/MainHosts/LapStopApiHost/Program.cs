@@ -16,6 +16,7 @@ LogManager.LoadConfiguration(
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllers()
     .AddApplicationPart(typeof(LapStopRestApi.AssemblyReference).Assembly);
 builder.Services.AddDbContext<LapStopContext>(
@@ -24,6 +25,7 @@ builder.Services.AddDbContext<LapStopContext>(
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 builder.Services.AddScoped<IServiceManager, ServiceManager>();
 builder.Services.AddSingleton<ILogService, NLogService>();
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

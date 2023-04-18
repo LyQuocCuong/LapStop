@@ -1,11 +1,12 @@
-﻿using Contracts.IRepositories;
+﻿using AutoMapper;
+using Contracts.IRepositories;
 using Contracts.IServices.Models;
 
 namespace Services.Models
 {
     internal sealed class SalesOrderStatusService : ServiceBase, ISalesOrderStatusService
     {
-        public SalesOrderStatusService(IRepositoryManager repositoryManager) : base(repositoryManager)
+        public SalesOrderStatusService(IRepositoryManager repositoryManager, IMapper mapper) : base(repositoryManager, mapper)
         {
         }
     }

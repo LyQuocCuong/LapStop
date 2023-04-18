@@ -1,4 +1,5 @@
-﻿using Contracts.IRepositories;
+﻿using AutoMapper;
+using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using DTO.Output;
 
@@ -6,7 +7,7 @@ namespace Services.Models
 {
     internal sealed class EmployeeRoleService : ServiceBase, IEmployeeRoleService
     {
-        public EmployeeRoleService(IRepositoryManager repositoryManager) : base(repositoryManager)
+        public EmployeeRoleService(IRepositoryManager repositoryManager, IMapper mapper) : base(repositoryManager, mapper)
         {
         }
 
