@@ -3,7 +3,7 @@ using Contracts.IServices;
 using DTO.Output;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LapStopApiHost.Controllers
+namespace LapStopRestApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
