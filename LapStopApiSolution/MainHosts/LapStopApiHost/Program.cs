@@ -16,7 +16,8 @@ LogManager.LoadConfiguration(
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddApplicationPart(typeof(LapStopRestApi.AssemblyReference).Assembly);
 builder.Services.AddDbContext<LapStopContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("LapStopConnection"))
 );
