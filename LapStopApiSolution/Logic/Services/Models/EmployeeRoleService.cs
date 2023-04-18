@@ -13,7 +13,8 @@ namespace Services.Models
 
         public List<EmployeeRoleDto> GetAll()
         {
-            return _repositoryManager.EmployeeRole.GetAll();
+            var x = _repositoryManager.EmployeeRole.GetAll();
+            return new List<EmployeeRoleDto>();
         }
     }
 }
