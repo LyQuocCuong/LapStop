@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Cores\Contracts.IServices\Contracts.IServices.csproj" />
     <ProjectReference Include="..\..\Cores\Contracts\Contracts.csproj" />
     <ProjectReference Include="..\..\DTO\DTO.csproj" />
     <ProjectReference Include="..\..\Logic\Services\Services.csproj" />

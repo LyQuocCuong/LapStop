@@ -1,13 +1,6 @@
 ﻿using Contracts.IRepositories.Models;
 using Domains.Models;
-using DTO.Output;
 using Entities.Context;
-using Microsoft.Identity.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repositories.Models
 {
@@ -17,12 +10,12 @@ namespace Repositories.Models
         {
         }
 
-        public List<EmployeeRoleDto> GetAll()
+        public List<EmployeeRole> GetAll()
         {
             //EmployeeRole employeeRole = FindAll(false).FirstOrDefault();
-            List<EmployeeRoleDto> dto = new List<EmployeeRoleDto>()
+            List<EmployeeRole> dto = new List<EmployeeRole>()
             {
-                new EmployeeRoleDto()
+                new EmployeeRole()
                 {
                     Id = Guid.NewGuid(),
                     Name = "abc"
