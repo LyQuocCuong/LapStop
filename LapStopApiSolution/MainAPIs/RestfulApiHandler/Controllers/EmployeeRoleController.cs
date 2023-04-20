@@ -1,13 +1,49 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Contracts.ILog;
+using Contracts.IServices;
+using DTO.Output;
+using Microsoft.AspNetCore.Mvc;
 
 namespace RestfulApiHandler.Controllers
 {
+    [ApiController]
+    [Route("api/employeeroles")]
     public class EmployeeRoleController : ControllerBase
     {
+        private readonly ILogService _logService;
+        private readonly IServiceManager _serviceManager;
+
+        public EmployeeRoleController(ILogService logService, IServiceManager serviceManager)
+        {
+            _logService = logService;
+            _serviceManager = serviceManager;
+        }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<EmployeeRoleDto> employeeRoleDtos = _serviceManager.EmployeeRole.GetAll(isTrackChanges: false);
+            return Ok(employeeRoleDtos);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult GetById(Guid id)
+        {
+            try
+            {
+                EmployeeRoleDto? employeeRoleDto = _serviceManager.EmployeeRole.GetById(isTrackChanges: false, id);
+                if (employeeRoleDto == null)
+                {
+                    return NotFound();
+                }
+                return Ok(employeeRoleDto);
+            }
+            catch (Exception ex)
+            {
+                _logService.LogError($"Something wrong: {ex}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
     }
 }

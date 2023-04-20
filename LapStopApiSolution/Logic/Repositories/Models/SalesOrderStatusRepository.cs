@@ -9,5 +9,15 @@ namespace Repositories.Models
         public SalesOrderStatusRepository(LapStopContext context) : base(context)
         {
         }
+
+        public List<SalesOrderStatus> GetAll(bool isTrackChanges)
+        {
+            return FindAll(isTrackChanges).ToList();
+        }
+
+        public SalesOrderStatus? GetById(bool isTrackChanges, Guid id)
+        {
+            return FindByCondition(isTrackChanges, s => s.Id == id).FirstOrDefault();
+        }
     }
 }

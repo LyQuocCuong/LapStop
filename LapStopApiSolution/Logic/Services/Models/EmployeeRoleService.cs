@@ -17,5 +17,11 @@ namespace Services.Models
             List<EmployeeRole> employeeRoles = _repositoryManager.EmployeeRole.GetAll(isTrackChanges);
             return _mapper.Map<List<EmployeeRoleDto>>(employeeRoles);
         }
+
+        public EmployeeRoleDto? GetById(bool isTrackChanges, Guid id)
+        {
+            EmployeeRole? employeeRole = _repositoryManager.EmployeeRole.GetById(isTrackChanges, id);
+            return _mapper?.Map<EmployeeRoleDto>(employeeRole);
+        }
     }
 }
