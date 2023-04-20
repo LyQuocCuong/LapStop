@@ -34,20 +34,12 @@ namespace RestfulApiHandler.Controllers
         [Route("{id}")]
         public IActionResult GetById(Guid id)
         {
-            try
+            EmployeeStatusDto? employeeStatusDto = _serviceManager.EmployeeStatus.GetById(isTrackChanges: false, id);
+            if (employeeStatusDto == null)
             {
-                EmployeeStatusDto? employeeStatusDto = _serviceManager.EmployeeStatus.GetById(isTrackChanges: false, id);
-                if (employeeStatusDto == null)
-                {
-                    return NotFound();
-                }
-                return Ok(employeeStatusDto);
+                return NotFound();
             }
-            catch (Exception ex)
-            {
-                _logService.LogError($"Something wrong: {ex}");
-                return StatusCode(500, "Internal Server Error");
-            }
+            return Ok(employeeStatusDto);
         }
 
     }
