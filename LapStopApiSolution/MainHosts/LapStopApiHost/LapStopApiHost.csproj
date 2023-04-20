@@ -24,6 +24,7 @@
     <ProjectReference Include="..\..\Infrastructures\NLogLib\NLogLib.csproj" />
     <ProjectReference Include="..\..\Logic\Services\Services.csproj" />
     <ProjectReference Include="..\..\MainAPIs\RestfulApiHandler\RestfulApiHandler.csproj" />
+    <ProjectReference Include="..\..\Shared\Shared.csproj" />
   </ItemGroup>
 
 </Project>

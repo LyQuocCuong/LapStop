@@ -29,7 +29,8 @@ namespace RestfulApiHandler.Controllers
         [Route("{id:guid}")]
         public IActionResult GetById(Guid id)
         {
-            //Using example: throw new Exception("Hello Ex");
+            //Using example:
+            //throw new Exception("Hello Ex");
             EmployeeRoleDto? employeeRoleDto = _serviceManager.EmployeeRole.GetById(isTrackChanges: false, id);
             if (employeeRoleDto == null)
             {
