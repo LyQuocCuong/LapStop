@@ -10,18 +10,10 @@ namespace Repositories.Models
         {
         }
 
-        public List<EmployeeRole> GetAll()
+        public List<EmployeeRole> GetAll(bool isTrackChanges)
         {
-            //EmployeeRole employeeRole = FindAll(false).FirstOrDefault();
-            List<EmployeeRole> dto = new List<EmployeeRole>()
-            {
-                new EmployeeRole()
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "abc"
-                }
-            };
-            return dto;
+            List<EmployeeRole> employeeRoles = FindAll(isTrackChanges).ToList();
+            return employeeRoles;
         }
     }
 }

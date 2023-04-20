@@ -4,6 +4,6 @@ namespace Contracts.IServices.Models
 {
     public interface IEmployeeRoleService
     {
-        List<EmployeeRoleDto> GetAll();
+        List<EmployeeRoleDto> GetAll(bool isTrackChanges);
     }
 }
