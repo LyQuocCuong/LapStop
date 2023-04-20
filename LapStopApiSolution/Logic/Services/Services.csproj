@@ -11,6 +11,7 @@
     <ProjectReference Include="..\..\Cores\Domains\Domains.csproj" />
     <ProjectReference Include="..\..\DTO\DTO.csproj" />
     <ProjectReference Include="..\..\Infrastructures\AutoMapperLib\AutoMapperLib.csproj" />
+    <ProjectReference Include="..\..\Shared\Shared.csproj" />
     <ProjectReference Include="..\Repositories\Repositories.csproj" />
   </ItemGroup>
 

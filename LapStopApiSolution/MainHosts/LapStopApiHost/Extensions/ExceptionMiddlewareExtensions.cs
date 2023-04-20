@@ -1,6 +1,7 @@
 ﻿using Contracts.ILog;
 using Microsoft.AspNetCore.Diagnostics;
 using Shared.ErrorModels;
+using Shared.Exceptions;
 using System.Net;
 
 namespace LapStopApiHost.Extensions
@@ -13,16 +14,27 @@ namespace LapStopApiHost.Extensions
             {
                 appError.Run(async context =>
                 {
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     context.Response.ContentType = "application/json";
                     var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+
+                    //Original Code: Always return 500 error -> NOT USE contextFeature
+                    //context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                                        
                     if (contextFeature != null)
                     {
+                        //Custom Code:
+                        context.Response.StatusCode = contextFeature.Error switch
+                        {
+                            NotFoundException => StatusCodes.Status404NotFound,
+                            _ => StatusCodes.Status500InternalServerError
+                        };
+
                         logger.LogError($"Something went wrong: {contextFeature.Error}");
                         await context.Response.WriteAsync(new ErrorDetails()
                         {
                             StatusCode = context.Response.StatusCode,
-                            Message = "Internal Server Error.",
+                            //Original Code: Message = "Internal Server Error.",
+                            Message = contextFeature.Error.Message
                         }.ToString());
                     }
                 });
