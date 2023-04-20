@@ -31,7 +31,7 @@ namespace RestfulApiHandler.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("{id:guid}")]
         public IActionResult GetById(Guid id)
         {
             InvoiceStatusDto? invoiceStatusDto = _serviceManager.InvoiceStatus.GetById(isTrackChanges: false, id);
