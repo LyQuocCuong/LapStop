@@ -1,6 +1,6 @@
 ﻿using Contracts.ILog;
-using DTO.ErrorModels;
 using Microsoft.AspNetCore.Diagnostics;
+using Shared.ErrorModels;
 using System.Net;
 
 namespace LapStopApiHost.Extensions
