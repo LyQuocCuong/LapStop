@@ -26,7 +26,7 @@ namespace RestfulApiHandler.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("{id:guid}")]
         public IActionResult GetById(Guid id)
         {
             //Using example: throw new Exception("Hello Ex");

@@ -31,7 +31,7 @@ namespace RestfulApiHandler.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("{id:guid}")]
         public IActionResult GetById(Guid id)
         {
             EmployeeStatusDto? employeeStatusDto = _serviceManager.EmployeeStatus.GetById(isTrackChanges: false, id);
