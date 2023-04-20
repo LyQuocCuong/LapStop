@@ -2,6 +2,7 @@ using Contracts.ILog;
 using Contracts.IRepositories;
 using Contracts.IServices;
 using Entities.Context;
+using LapStopApiHost.Extensions;
 using Microsoft.EntityFrameworkCore;
 using NLog;
 using NLogLib;
@@ -32,6 +33,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+// It is important to know that we have to extract the ILogService
+// AFTER the var app = builder.Build() code line,
+// because the Build method builds the WebApplication and REGISTER ALL the services added with IOC.
+var logger = app.Services.GetRequiredService<ILogService>();
+app.ConfigureExceptionHandler(logger);
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
