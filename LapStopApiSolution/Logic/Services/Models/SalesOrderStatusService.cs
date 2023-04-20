@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
+using Domains.Models;
+using DTO.Output;
 
 namespace Services.Models
 {
@@ -8,6 +10,18 @@ namespace Services.Models
     {
         public SalesOrderStatusService(IRepositoryManager repositoryManager, IMapper mapper) : base(repositoryManager, mapper)
         {
+        }
+
+        public List<SalesOrderStatusDto> GetAll(bool isTrackChanges)
+        {
+            List<SalesOrderStatus> salesOrderStatuses = _repositoryManager.SalesOrderStatus.GetAll(isTrackChanges);
+            return _mapper.Map<List<SalesOrderStatusDto>>(salesOrderStatuses);
+        }
+
+        public SalesOrderStatusDto? GetById(bool isTrackChanges, Guid id)
+        {
+            SalesOrderStatus? salesOrderStatus = _repositoryManager.SalesOrderStatus.GetById(isTrackChanges, id);
+            return _mapper.Map<SalesOrderStatusDto>(salesOrderStatus);
         }
     }
 }

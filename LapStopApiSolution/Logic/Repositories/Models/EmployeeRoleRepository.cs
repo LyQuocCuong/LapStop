@@ -15,5 +15,10 @@ namespace Repositories.Models
             List<EmployeeRole> employeeRoles = FindAll(isTrackChanges).ToList();
             return employeeRoles;
         }
+
+        public EmployeeRole? GetById(bool isTrackChanges, Guid id)
+        {
+            return FindByCondition(isTrackChanges, e => e.Id == id).FirstOrDefault();
+        }
     }
 }

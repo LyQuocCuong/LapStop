@@ -10,19 +10,14 @@ namespace Repositories.Models
         {
         }
 
-        public IEnumerable<ProductStatus> GetAll()
+        public List<ProductStatus> GetAll(bool isTrackChanges)
         {
-            return new List<ProductStatus>()
-            {
-                new ProductStatus()
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "ABC",
-                    Description = "Description",
-                    IsEnable = true,
-                    IsRemoved = true,
-                }
-            };
+            return FindAll(isTrackChanges).ToList();
+        }
+
+        public ProductStatus? GetById(bool isTrackChanges, Guid id)
+        {
+            return FindByCondition(isTrackChanges, p =>  p.Id == id).FirstOrDefault();
         }
     }
 }

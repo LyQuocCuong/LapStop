@@ -12,10 +12,16 @@ namespace Services.Models
         {
         }
 
-        public IEnumerable<ProductStatusDto> GetAll()
+        public List<ProductStatusDto> GetAll(bool isTrackChanges)
         {
-            IEnumerable<ProductStatus> productStatuses = _repositoryManager.ProductStatus.GetAll();
-            return _mapper.Map<IEnumerable<ProductStatusDto>>(productStatuses);
+            List<ProductStatus> productStatuses = _repositoryManager.ProductStatus.GetAll(isTrackChanges);
+            return _mapper.Map<List<ProductStatusDto>>(productStatuses);
+        }
+
+        public ProductStatusDto? GetById(bool isTrackChanges, Guid id)
+        {
+            ProductStatus? productStatus = _repositoryManager.ProductStatus.GetById(isTrackChanges, id);
+            return _mapper.Map<ProductStatusDto>(productStatus);
         }
     }
 }
