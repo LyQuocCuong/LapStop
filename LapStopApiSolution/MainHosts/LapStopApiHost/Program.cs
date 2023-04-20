@@ -18,7 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddAutoMapper(typeof(AutoMapperLib.MappingProfile));
 builder.Services.AddControllers()
-    .AddApplicationPart(typeof(LapStopRestApi.AssemblyReference).Assembly);
+    .AddApplicationPart(typeof(RestfulApiHandler.AssemblyReference).Assembly);
 builder.Services.AddDbContext<LapStopContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("LapStopConnection"))
 );
