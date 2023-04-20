@@ -24,7 +24,7 @@ namespace LapStopRestApi.Controllers
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<EmployeeRoleDto> Get()
+        public IActionResult Get()
         {
             _logger.LogInfo("Hello");
             //return Enumerable.Range(1, 5).Select(index => new WeatherForecast
@@ -34,7 +34,7 @@ namespace LapStopRestApi.Controllers
             //    Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             //})
             //.ToArray();
-            return _serviceManager.EmployeeRole.GetAll();
+            return Ok(_serviceManager.EmployeeRole.GetAll(isTrackChanges: false));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
+using Domains.Models;
 using DTO.Output;
 
 namespace Services.Models
@@ -11,10 +12,10 @@ namespace Services.Models
         {
         }
 
-        public List<EmployeeRoleDto> GetAll()
+        public List<EmployeeRoleDto> GetAll(bool isTrackChanges)
         {
-            var x = _repositoryManager.EmployeeRole.GetAll();
-            return new List<EmployeeRoleDto>();
+            List<EmployeeRole> employeeRoles = _repositoryManager.EmployeeRole.GetAll(isTrackChanges);
+            return _mapper.Map<List<EmployeeRoleDto>>(employeeRoles);
         }
     }
 }

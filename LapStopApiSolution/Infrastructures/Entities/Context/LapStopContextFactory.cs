@@ -18,7 +18,7 @@ namespace Entities.Context
         public LapStopContext CreateDbContext(string[] args)
         {
             IConfigurationRoot config = new ConfigurationBuilder()
-                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../../MainHosts/LapStopApi"))    // Combine Path
+                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../../MainHosts/LapStopApiHost"))    // Combine Path
                 .AddJsonFile("appsettings.Development.json")                                    // fileName contains ConnectionString
                 .Build();
 
