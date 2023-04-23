@@ -1,8 +1,7 @@
 ﻿using Contracts.ILog;
 using Microsoft.AspNetCore.Diagnostics;
+using Shared.CustomedExceptions;
 using Shared.ErrorModels;
-using Shared.Exceptions;
-using System.Net;
 
 namespace LapStopApiHost.Extensions
 {
@@ -25,7 +24,7 @@ namespace LapStopApiHost.Extensions
                         //Custom Code:
                         context.Response.StatusCode = contextFeature.Error switch
                         {
-                            NotFoundException => StatusCodes.Status404NotFound,
+                            NotFoundException404 => StatusCodes.Status404NotFound,
                             _ => StatusCodes.Status500InternalServerError
                         };
 
