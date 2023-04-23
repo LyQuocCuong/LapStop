@@ -10,7 +10,7 @@ namespace Repositories.Models
         {
         }
 
-        public List<CartItem> GetAll(bool isTrackChanges, Guid cartId)
+        public List<CartItem> GetByCartId(bool isTrackChanges, Guid cartId)
         {
             return FindByCondition(isTrackChanges, cartItem => cartItem.CartId == cartId).ToList();
         }

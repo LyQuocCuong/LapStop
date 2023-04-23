@@ -2,16 +2,11 @@
 using Contracts.IServices;
 using DTO.Output;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RestfulApiHandler.Controllers
 {
     [ApiController]
-    [Route("api/customers")]
+    [Route("api")]
     public class CustomerController : ControllerBase
     {
         private readonly ILogService _logService;
@@ -24,13 +19,14 @@ namespace RestfulApiHandler.Controllers
         }
 
         [HttpGet]
+        [Route("customers")]
         public IActionResult GetAll()
         {
             List<CustomerDto> customerDtos = _serviceManager.Customer.GetAll(isTrackChanges: false);
             return Ok(customerDtos);
         }
 
-        [HttpGet("{id : guid}")]
+        [HttpGet("customers/{id : guid}")]
         public IActionResult GetById(Guid id)
         {
             CustomerDto? customerDto = _serviceManager.Customer.GetById(isTrackChanges: false, id);

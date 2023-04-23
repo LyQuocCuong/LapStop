@@ -2,11 +2,6 @@
 using Contracts.IServices;
 using DTO.Output;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RestfulApiHandler.Controllers
 {
@@ -26,8 +21,6 @@ namespace RestfulApiHandler.Controllers
         [Route("customers/{customerId: guid}/cart")]
         public IActionResult GetByCustomerId(Guid customerId)
         {
-            if ()
-
             CartDto? cartDto = _serviceManager.Cart.GetByCustomerId(isTrackChanges: false, customerId);
             if (cartDto == null)
             {
@@ -36,8 +29,8 @@ namespace RestfulApiHandler.Controllers
             return Ok(cartDto);
         }
 
-        [HttpGet("customers")]
-        public IActionResult GetAll(Guid id)
+        [HttpGet("carts")]
+        public IActionResult GetAll()
         {
             List<CartDto> cartDtos = _serviceManager.Cart.GetAll(isTrackChanges: false);
             return Ok(cartDtos);

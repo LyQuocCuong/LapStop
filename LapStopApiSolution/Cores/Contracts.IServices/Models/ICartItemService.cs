@@ -4,6 +4,6 @@ namespace Contracts.IServices.Models
 {
     public interface ICartItemService
     {
-        List<CartItemDto> GetAll(bool isTrackChanges, Guid cartId);
+        List<CartItemDto> GetByCartId(bool isTrackChanges, Guid cartId);
     }
 }

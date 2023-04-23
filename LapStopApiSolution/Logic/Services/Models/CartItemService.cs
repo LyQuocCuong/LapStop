@@ -13,12 +13,14 @@ namespace Services.Models
         {
         }
 
-        public List<CartItemDto> GetAll(bool isTrackChanges, Guid cartId)
+        public List<CartItemDto> GetByCartId(bool isTrackChanges, Guid cartId)
         {
             if (_repositoryManager.Cart.IsValidCartId(cartId) == false)
             {
-                throw new NotFoundException404(typeof(Cart), nameof(GetAll), cartId);
+                throw new NotFoundException404(typeof(Cart), nameof(GetByCartId), cartId);
             }
+            List<CartItem> cartItems = _repositoryManager.CartItem.GetByCartId(isTrackChanges: false, cartId);
+            return _mapper.Map<List<CartItemDto>>(cartItems);
         }
     }
 }
