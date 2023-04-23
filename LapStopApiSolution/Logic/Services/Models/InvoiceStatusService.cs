@@ -3,6 +3,7 @@ using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
 using DTO.Output;
+using Shared.CustomedExceptions;
 
 namespace Services.Models
 {
@@ -21,6 +22,10 @@ namespace Services.Models
         public InvoiceStatusDto? GetById(bool isTrackChanges, Guid id)
         {
             InvoiceStatus? invoiceStatus = _repositoryManager.InvoiceStatus.GetById(isTrackChanges, id);
+            if (invoiceStatus == null)
+            {
+                throw new NotFoundException404(typeof(InvoiceStatus), nameof(GetById), id);
+            }
             return _mapper.Map<InvoiceStatusDto>(invoiceStatus);
         }
     }

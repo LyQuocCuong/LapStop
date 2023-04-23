@@ -3,6 +3,7 @@ using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
 using DTO.Output;
+using Shared.CustomedExceptions;
 
 namespace Services.Models
 {
@@ -21,6 +22,10 @@ namespace Services.Models
         public SalesOrderStatusDto? GetById(bool isTrackChanges, Guid id)
         {
             SalesOrderStatus? salesOrderStatus = _repositoryManager.SalesOrderStatus.GetById(isTrackChanges, id);
+            if (salesOrderStatus == null)
+            {
+                throw new NotFoundException404(typeof(SalesOrderStatus), nameof(GetById), id);
+            }
             return _mapper.Map<SalesOrderStatusDto>(salesOrderStatus);
         }
     }
