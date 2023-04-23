@@ -8,9 +8,9 @@ namespace Contracts.IRepositories
 
         IBrandRepository Brand { get; }
         
-        ICartRepository Card { get; }
+        ICartRepository Cart { get; }
         
-        ICartItemRepository CardItem { get; }
+        ICartItemRepository CartItem { get; }
         
         ICustomerAccountRepository CustomerAccount { get; }
         

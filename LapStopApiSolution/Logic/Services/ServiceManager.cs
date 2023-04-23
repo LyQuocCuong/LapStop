@@ -67,9 +67,9 @@ namespace Services
 
         public IBrandService Brand => _brandService.Value;
 
-        public ICartService Card => _cartService.Value;
+        public ICartService Cart => _cartService.Value;
 
-        public ICartItemService CardItem => _cartItemService.Value;
+        public ICartItemService CartItem => _cartItemService.Value;
 
         public ICustomerAccountService CustomerAccount => _customerAccountService.Value;
 

@@ -6,9 +6,9 @@ namespace Contracts.IServices
     {
         IBrandService Brand { get; }
 
-        ICartService Card { get; }
+        ICartService Cart { get; }
 
-        ICartItemService CardItem { get; }
+        ICartItemService CartItem { get; }
 
         ICustomerAccountService CustomerAccount { get; }
 

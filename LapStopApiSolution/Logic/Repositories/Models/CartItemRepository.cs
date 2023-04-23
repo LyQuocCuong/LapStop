@@ -9,5 +9,10 @@ namespace Repositories.Models
         public CartItemRepository(LapStopContext context) : base(context)
         {
         }
+
+        public List<CartItem> GetAll(bool isTrackChanges, Guid cartId)
+        {
+            return FindByCondition(isTrackChanges, cartItem => cartItem.CartId == cartId).ToList();
+        }
     }
 }
