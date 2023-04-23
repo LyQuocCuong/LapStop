@@ -67,9 +67,9 @@ namespace Repositories
 
         public IBrandRepository Brand => _brandRepository.Value;
 
-        public ICartRepository Card => _cartRepository.Value;
+        public ICartRepository Cart => _cartRepository.Value;
 
-        public ICartItemRepository CardItem => _cartItemRepository.Value;
+        public ICartItemRepository CartItem => _cartItemRepository.Value;
 
         public ICustomerAccountRepository CustomerAccount => _customerAccountRepository.Value;
 
