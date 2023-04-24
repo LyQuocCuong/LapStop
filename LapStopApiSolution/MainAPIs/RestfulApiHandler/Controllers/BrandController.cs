@@ -26,7 +26,7 @@ namespace RestfulApiHandler.Controllers
             return Ok(brandDtos);
         }
 
-        [HttpGet("brands/{id: guid}")]
+        [HttpGet("brands/{id:guid}")]
         public IActionResult GetById(Guid id)
         {
             BrandDto? brandDto = _serviceManager.Brand.GetById(isTrackChanges: false, id);

@@ -18,7 +18,7 @@ namespace RestfulApiHandler.Controllers
             _serviceManager = serviceManager;
         }
 
-        [Route("customers/{customerId: guid}/cart")]
+        [Route("customers/{customerId:guid}/cart")]
         public IActionResult GetByCustomerId(Guid customerId)
         {
             CartDto? cartDto = _serviceManager.Cart.GetByCustomerId(isTrackChanges: false, customerId);
