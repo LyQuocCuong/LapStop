@@ -9,5 +9,10 @@ namespace Repositories.Models
         public ProductGalleryRepository(LapStopContext context) : base(context)
         {
         }
+
+        public List<ProductGallery> GetByProductId(bool isTrackChanges, Guid id)
+        {
+            return FindByCondition(isTrackChanges, e => e.ProductId == id).ToList();
+        }
     }
 }

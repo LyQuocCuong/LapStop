@@ -9,5 +9,20 @@ namespace Repositories.Models
         public ProductRepository(LapStopContext context) : base(context)
         {
         }
+
+        public List<Product> GetAll(bool isTrackChanges)
+        {
+            return FindAll(isTrackChanges).ToList();
+        }
+
+        public Product? GetById(bool isTrackChanges, Guid id)
+        {
+            return FindByCondition(isTrackChanges, e => e.Id == id).FirstOrDefault();
+        }
+
+        public bool IsValidProductId(Guid id)
+        {
+            return FindByCondition(isTrackChanges: false, e => e.Id == id).Any();
+        }
     }
 }
