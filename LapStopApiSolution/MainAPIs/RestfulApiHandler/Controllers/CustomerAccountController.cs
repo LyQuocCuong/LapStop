@@ -27,7 +27,7 @@ namespace RestfulApiHandler.Controllers
         }
 
         [HttpGet]
-        [Route("customers/{customerId}/account")]
+        [Route("customers/{customerId:guid}/account")]
         public IActionResult GetByCustomerId(bool isTrackChanges, Guid customerId)
         {
             CustomerAccountDto? customerAccountDto = _serviceManager.CustomerAccount.GetByCustomerId(isTrackChanges, customerId);
