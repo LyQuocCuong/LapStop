@@ -2,7 +2,7 @@
 
 namespace DTO.Output
 {
-    public sealed class CustomerDto : OutputBaseDto
+    public sealed class CustomerDto : BaseOutputDto
     {
         public Guid Id { get; set; }
 

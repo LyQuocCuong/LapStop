@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DTO.Base;
 
 namespace DTO.Output
 {
-    public class EmployeeRoleDto
+    public sealed class EmployeeRoleDto : BaseOutputDto
     {
         public Guid Id { get; set; }
 
         public string? Name { get; set; }
 
         public bool IsEnable { get; set; }
-
-        public bool IsRemoved { get; set; }
     }
 }
