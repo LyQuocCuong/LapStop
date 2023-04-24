@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DTO.Base;
 
 namespace DTO.Output
 {
-    public class SalesOrderStatusDto
+    public sealed class SalesOrderStatusDto : BaseOutputDto
     {
         public Guid Id { get; set; }
 
@@ -15,7 +11,5 @@ namespace DTO.Output
         public string? Description { get; set; }
 
         public bool IsEnable { get; set; }
-
-        public bool IsRemoved { get; set; }
     }
 }

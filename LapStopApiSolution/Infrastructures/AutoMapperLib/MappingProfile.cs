@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using Domains.Models;
 using DTO.Output;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoMapperLib
 {
@@ -14,14 +9,28 @@ namespace AutoMapperLib
         public MappingProfile()
         {
             MappingBrand();
+
             MappingCart();
             MappingCartItem();
+
             MappingCustomerAccount();
             MappingCustomer();
+
+            MappingEmployeeAccount();
+            MappingEmployee();
+            MappingEmployeeGallery();
             MappingEmployeeRole();
             MappingEmployeeStatus();
+
             MappingInvoiceStatus();
+
+            MappingProduct();
+            MappingProductBrand();
+            MappingProductGallery();
             MappingProductStatus();
+
+            MappingSalesOrder();
+            MappingSalesOrderDetail();
             MappingSalesOrderStatus();
         }
 
@@ -109,6 +118,65 @@ namespace AutoMapperLib
 
         }
 
+        private void MappingEmployeeAccount()
+        {
+            CreateMap<EmployeeAccount, EmployeeAccountDto>()
+                .ForMember(dto => dto.EmployeeId,
+                           dto_Id => dto_Id.MapFrom(e => e.EmployeeId))
+                .ForMember(dto => dto.Username,
+                           dto_Username => dto_Username.MapFrom(e => e.Username))
+                .ForMember(dto => dto.Password,
+                           dto_Password => dto_Password.MapFrom(e => e.Password))
+                .ForMember(dto => dto.IsActivate,
+                           dto_IsActivate => dto_IsActivate.MapFrom(e => e.IsActivate));                      
+        }
+
+        private void MappingEmployee()
+        {
+            CreateMap<Employee, EmployeeDto>()
+                .ForMember(dto => dto.Id,
+                           dto_field => dto_field.MapFrom(e => e.Id))
+                .ForMember(dto => dto.EmployeeRoleId,
+                           dto_field => dto_field.MapFrom(e => e.EmployeeStatusId))
+                .ForMember(dto => dto.EmployeeRoleName,
+                           dto_field => dto_field.MapFrom(e => e.EmployeeRole != null ? e.EmployeeRole.Name : ""))
+                .ForMember(dto => dto.EmployeeStatusId,
+                           dto_field => dto_field.MapFrom(e => e.EmployeeStatusId))
+                .ForMember(dto => dto.EmployeeStatusName,
+                           dto_field => dto_field.MapFrom(e => e.EmployeeStatus != null ? e.EmployeeStatus.Name : ""))
+                .ForMember(dto => dto.EmployeeCode,
+                           dto_field => dto_field.MapFrom(e => e.EmployeeCode))
+                .ForMember(dto => dto.FirstName,
+                           dto_field => dto_field.MapFrom(e => e.FirstName))
+                .ForMember(dto => dto.LastName,
+                           dto_field => dto_field.MapFrom(e => e.LastName))
+                .ForMember(dto => dto.FullName,
+                           dto_field => dto_field.MapFrom(e => String.Concat(e.FirstName, " ", e.LastName)))
+                .ForMember(dto => dto.Email,
+                           dto_field => dto_field.MapFrom(e => e.Email))
+                .ForMember(dto => dto.DOB,
+                           dto_field => dto_field.MapFrom(e => e.DOB))
+                .ForMember(dto => dto.Email,
+                           dto_field => dto_field.MapFrom(e => e.Email))
+                .ForMember(dto => dto.Phone,
+                           dto_field => dto_field.MapFrom(e => e.Phone))
+                .ForMember(dto => dto.AvatarUrl,
+                           dto_field => dto_field.MapFrom(e => e.AvatarUrl));
+        }
+
+        private void MappingEmployeeGallery()
+        {
+            CreateMap<EmployeeGallery, EmployeeGalleryDto>()
+                .ForMember(dto => dto.Id,
+                           dto_Id => dto_Id.MapFrom(e => e.Id))
+                .ForMember(dto => dto.EmployeeId,
+                           dto_EmployeeId => dto_EmployeeId.MapFrom(e => e.EmployeeId))
+                .ForMember(dto => dto.Title,
+                           dto_Title => dto_Title.MapFrom(e => e.Title))
+                .ForMember(dto => dto.Url,
+                           dto_Url => dto_Url.MapFrom(e => e.Url));
+        }
+
         private void MappingEmployeeRole()
         {
             CreateMap<EmployeeRole, EmployeeRoleDto>()
@@ -153,6 +221,55 @@ namespace AutoMapperLib
 
         }
 
+        private void MappingProductBrand()
+        {
+            CreateMap<ProductBrand, ProductBrandDto>()
+                .ForMember(dto => dto.ProductId,
+                           dto_ProductId => dto_ProductId.MapFrom(e => e.ProductId))
+                .ForMember(dto => dto.BrandId,
+                           dto_BrandId => dto_BrandId.MapFrom(e => e.BrandId));
+        }
+
+        private void MappingProduct()
+        {
+            CreateMap<Product, ProductDto>()
+                .ForMember(dto => dto.Id,
+                           dto_Id => dto_Id.MapFrom(e => e.Id))
+                .ForMember(dto => dto.ProductStatusId,
+                           dto_ProductStatusId => dto_ProductStatusId.MapFrom(e => e.ProductStatusId))
+                .ForMember(dto => dto.ProductStatusName,
+                           dto_ProductStatusName => dto_ProductStatusName.MapFrom(e => e.ProductStatus != null ? e.ProductStatus.Name : ""))
+                .ForMember(dto => dto.ProductCode,
+                           dto_ProductCode => dto_ProductCode.MapFrom(e => e.ProductCode))
+                .ForMember(dto => dto.Name,
+                           dto_Name => dto_Name.MapFrom(e => e.Name))
+                .ForMember(dto => dto.Description,
+                           dto_Description => dto_Description.MapFrom(e => e.Description))
+                .ForMember(dto => dto.AvatarUrl,
+                           dto_AvatarUrl => dto_AvatarUrl.MapFrom(e => e.AvatarUrl))
+                .ForMember(dto => dto.OriginalPrice,
+                           dto_OriginalPrice => dto_OriginalPrice.MapFrom(e => e.OriginalPrice))
+                .ForMember(dto => dto.CurrentPrice,
+                           dto_CurrentPrice => dto_CurrentPrice.MapFrom(e => e.CurrentPrice))
+                .ForMember(dto => dto.SellingPrice,
+                           dto_SellingPrice => dto_SellingPrice.MapFrom(e => e.SellingPrice))
+                .ForMember(dto => dto.IsHiddenInStore,
+                           dto_IsHiddenInStore => dto_IsHiddenInStore.MapFrom(e => e.IsHiddenInStore));
+        }
+
+        private void MappingProductGallery()
+        {
+            CreateMap<ProductGallery, ProductGalleryDto>()
+                .ForMember(dto => dto.Id,
+                           dto_Id => dto_Id.MapFrom(e => e.Id))
+                .ForMember(dto => dto.ProductId,
+                           dto_ProductId => dto_ProductId.MapFrom(e => e.ProductId))
+                .ForMember(dto => dto.Title,
+                           dto_Title => dto_Title.MapFrom(e => e.Title))
+                .ForMember(dto => dto.Url,
+                           dto_Url => dto_Url.MapFrom(e => e.Url));
+        }
+
         private void MappingProductStatus()
         {
             CreateMap<ProductStatus, ProductStatusDto>()
@@ -166,6 +283,42 @@ namespace AutoMapperLib
                            dto_IsEnable => dto_IsEnable.MapFrom(e => e.IsEnable))
                 .ForMember(dto => dto.IsRemoved,
                            dto_IsRemoved => dto_IsRemoved.MapFrom(e => e.IsRemoved));
+        }
+
+        private void MappingSalesOrder()
+        {
+            CreateMap<SalesOrder, SalesOrderDto>()
+                .ForMember(dto => dto.Id,
+                           dto_field => dto_field.MapFrom(e => e.Id))
+                .ForMember(dto => dto.CustomerId,
+                           dto_field => dto_field.MapFrom(e => e.CustomerId))
+                .ForMember(dto => dto.SalesOrderStatusId,
+                           dto_field => dto_field.MapFrom(e => e.SalesOrderStatusId))
+                .ForMember(dto => dto.OrderDate,
+                           dto_field => dto_field.MapFrom(e => e.OrderDate))
+                .ForMember(dto => dto.Address,
+                           dto_field => dto_field.MapFrom(e => e.Address))
+                .ForMember(dto => dto.Phone,
+                           dto_field => dto_field.MapFrom(e => e.Phone))
+                .ForMember(dto => dto.Total,
+                           dto_field => dto_field.MapFrom(e => e.Total));
+        }
+
+        private void MappingSalesOrderDetail()
+        {
+            CreateMap<SalesOrderDetail, SalesOrderDetailDto>()
+                .ForMember(dto => dto.Id,
+                           dto_field => dto_field.MapFrom(e => e.Id))
+                .ForMember(dto => dto.SalesOrderId,
+                           dto_field => dto_field.MapFrom(e => e.SalesOrderId))
+                .ForMember(dto => dto.ProductId,
+                           dto_field => dto_field.MapFrom(e => e.ProductId))
+                .ForMember(dto => dto.Quantity,
+                           dto_field => dto_field.MapFrom(e => e.Quantity))
+                .ForMember(dto => dto.SellingPrice,
+                           dto_field => dto_field.MapFrom(e => e.SellingPrice))
+                .ForMember(dto => dto.SubTotal,
+                           dto_field => dto_field.MapFrom(e => e.SubTotal));
         }
 
         private void MappingSalesOrderStatus()

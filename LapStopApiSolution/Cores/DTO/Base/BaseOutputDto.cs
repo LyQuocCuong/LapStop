@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DTO.Base
 {
-    public abstract class OutputBaseDto
+    public abstract class BaseOutputDto
     {
         public bool IsRemoved { get; set; }
 

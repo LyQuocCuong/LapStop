@@ -2,9 +2,9 @@
 
 namespace DTO.Output
 {
-    public sealed class CustomerAccountDto : BaseOutputDto
+    public sealed class EmployeeAccountDto : BaseOutputDto
     {
-        public Guid CustomerId { get; set; }
+        public Guid EmployeeId { get; set; }
 
         public string? Username { get; set; }
 

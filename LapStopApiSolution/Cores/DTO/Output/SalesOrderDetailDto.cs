@@ -2,11 +2,11 @@
 
 namespace DTO.Output
 {
-    public sealed class CartItemDto : BaseOutputDto
+    public sealed class SalesOrderDetailDto : BaseOutputDto
     {
         public Guid Id { get; set; }
 
-        public Guid CartId { get; set; }
+        public Guid SalesOrderId { get; set; }
 
         public Guid ProductId { get; set; }
 
