@@ -16,7 +16,7 @@ namespace Services.Models
         public List<CustomerDto> GetAll(bool isTrackChanges)
         {
             List<Customer> customers = _repositoryManager.Customer.GetAll(isTrackChanges);
-            return _mapper.Map<List<CustomerDto>>(customers);
+            return MappingTo<List<CustomerDto>>(customers);
         }
 
         public CustomerDto? GetById(bool isTrackChanges, Guid id)
@@ -26,7 +26,7 @@ namespace Services.Models
             {
                 throw new NotFoundException404(typeof(Customer), nameof(GetById), id);
             }
-            return _mapper.Map<CustomerDto>(customer);
+            return MappingTo<CustomerDto>(customer);
         }
 
         public bool IsValidCustomerId(Guid customerId)

@@ -16,7 +16,7 @@ namespace Services.Models
         public List<CartDto> GetAll(bool isTrackChanges)
         {
             List<Cart> carts = _repositoryManager.Cart.GetAll(isTrackChanges);
-            return _mapper.Map<List<CartDto>>(carts);
+            return MappingTo<List<CartDto>>(carts);
         }
 
         public CartDto? GetByCustomerId(bool isTrackChanges, Guid customerId)
@@ -30,7 +30,7 @@ namespace Services.Models
             {
                 throw new NotFoundException404(typeof(Cart), nameof(GetByCustomerId), customerId);
             }
-            return _mapper.Map<CartDto>(cart);
+            return MappingTo<CartDto>(cart);
         }
 
         public bool IsValidCartId(Guid cartId)

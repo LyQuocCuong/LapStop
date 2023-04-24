@@ -20,7 +20,7 @@ namespace Services.Models
                 throw new NotFoundException404(typeof(Cart), nameof(GetByCartId), cartId);
             }
             List<CartItem> cartItems = _repositoryManager.CartItem.GetByCartId(isTrackChanges: false, cartId);
-            return _mapper.Map<List<CartItemDto>>(cartItems);
+            return MappingTo<List<CartItemDto>>(cartItems);
         }
     }
 }
