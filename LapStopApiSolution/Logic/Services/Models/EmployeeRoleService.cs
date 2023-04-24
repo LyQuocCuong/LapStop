@@ -24,7 +24,7 @@ namespace Services.Models
             EmployeeRole? employeeRole = _repositoryManager.EmployeeRole.GetById(isTrackChanges, id);
             if (employeeRole == null)
             {
-                throw new NotFoundException404(typeof(EmployeeRole), nameof(GetById), id);
+                throw new NotFoundException404(nameof(EmployeeRoleService), nameof(GetById), typeof(EmployeeRole), id);
             }
             return MappingTo<EmployeeRoleDto>(employeeRole);
         }

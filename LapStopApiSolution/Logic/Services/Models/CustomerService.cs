@@ -24,7 +24,7 @@ namespace Services.Models
             Customer? customer = _repositoryManager.Customer.GetById(isTrackChanges, id);
             if (customer == null)
             {
-                throw new NotFoundException404(typeof(Customer), nameof(GetById), id);
+                throw new NotFoundException404(nameof(CustomerService), nameof(GetById), typeof(Customer), id);
             }
             return MappingTo<CustomerDto>(customer);
         }

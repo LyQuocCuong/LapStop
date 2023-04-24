@@ -17,7 +17,7 @@ namespace Services.Models
         {
             if (_repositoryManager.Cart.IsValidCartId(cartId) == false)
             {
-                throw new NotFoundException404(typeof(Cart), nameof(GetByCartId), cartId);
+                throw new NotFoundException404(nameof(CartItemService), nameof(GetByCartId), typeof(Cart), cartId);
             }
             List<CartItem> cartItems = _repositoryManager.CartItem.GetByCartId(isTrackChanges: false, cartId);
             return MappingTo<List<CartItemDto>>(cartItems);

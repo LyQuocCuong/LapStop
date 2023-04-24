@@ -23,12 +23,12 @@ namespace Services.Models
         {
             if (_repositoryManager.Customer.IsValidCustomerId(customerId) == false)
             {
-                throw new NotFoundException404(typeof(Customer), nameof(GetByCustomerId), customerId);
+                throw new NotFoundException404(nameof(CartService), nameof(GetByCustomerId), typeof(Customer), customerId);
             }
             Cart? cart = _repositoryManager.Cart.GetByCustomerId(isTrackChanges, customerId);
             if (cart == null)
             {
-                throw new NotFoundException404(typeof(Cart), nameof(GetByCustomerId), customerId);
+                throw new NotFoundException404(nameof(CartService), nameof(GetByCustomerId), typeof(Cart), customerId);
             }
             return MappingTo<CartDto>(cart);
         }

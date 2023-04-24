@@ -24,7 +24,7 @@ namespace Services.Models
             InvoiceStatus? invoiceStatus = _repositoryManager.InvoiceStatus.GetById(isTrackChanges, id);
             if (invoiceStatus == null)
             {
-                throw new NotFoundException404(typeof(InvoiceStatus), nameof(GetById), id);
+                throw new NotFoundException404(nameof(InvoiceStatusService), nameof(GetById), typeof(InvoiceStatus), id);
             }
             return MappingTo<InvoiceStatusDto>(invoiceStatus);
         }
