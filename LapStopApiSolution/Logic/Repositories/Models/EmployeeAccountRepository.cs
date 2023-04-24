@@ -9,5 +9,15 @@ namespace Repositories.Models
         public EmployeeAccountRepository(LapStopContext context) : base(context)
         {
         }
+
+        public List<EmployeeAccount> GetAll(bool isTrackChanges)
+        {
+            return FindAll(isTrackChanges).ToList();
+        }
+
+        public EmployeeAccount? GetByEmployeeId(bool isTrackChanges, Guid employeeId)
+        {
+            return FindByCondition(isTrackChanges, e => e.EmployeeId == employeeId).FirstOrDefault();
+        }
     }
 }

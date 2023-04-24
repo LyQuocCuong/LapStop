@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
+using Domains.Models;
+using DTO.Output;
+using Shared.CustomedExceptions;
 
 namespace Services.Models
 {
@@ -8,6 +11,16 @@ namespace Services.Models
     {
         public ProductGalleryService(IRepositoryManager repositoryManager, IMapper mapper) : base(repositoryManager, mapper)
         {
+        }
+
+        public List<ProductGalleryDto> GetByProductId(bool isTrackChanges, Guid id)
+        {
+            if (_repositoryManager.Product.IsValidProductId(id) == false) 
+            { 
+                throw new NotFoundException404(nameof(ProductGalleryService), nameof(GetByProductId), typeof(Product), id);
+            }
+            List<ProductGallery> productGalleries = _repositoryManager.ProductGallery.GetByProductId(isTrackChanges, id);
+            return MappingTo<List<ProductGalleryDto>>(productGalleries);
         }
     }
 }
