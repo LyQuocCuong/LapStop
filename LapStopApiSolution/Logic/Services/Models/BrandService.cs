@@ -16,7 +16,7 @@ namespace Services.Models
         public List<BrandDto> GetAll(bool isTrackChanges)
         {
             List<Brand> brands = _repositoryManager.Brand.GetAll(isTrackChanges);
-            return _mapper.Map<List<BrandDto>>(brands);
+            return MappingTo<List<BrandDto>>(brands);
         }
 
         public BrandDto? GetById(bool isTrackChanges, Guid id)
@@ -26,7 +26,7 @@ namespace Services.Models
             {
                 throw new NotFoundException404(typeof(Brand), nameof(GetById), id);
             }
-            return _mapper.Map<BrandDto>(brand);
+            return MappingTo<BrandDto>(brand);
         }
     }
 }

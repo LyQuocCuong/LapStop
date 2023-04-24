@@ -16,7 +16,7 @@ namespace Services.Models
         public List<ProductStatusDto> GetAll(bool isTrackChanges)
         {
             List<ProductStatus> productStatuses = _repositoryManager.ProductStatus.GetAll(isTrackChanges);
-            return _mapper.Map<List<ProductStatusDto>>(productStatuses);
+            return MappingTo<List<ProductStatusDto>>(productStatuses);
         }
 
         public ProductStatusDto? GetById(bool isTrackChanges, Guid id)
@@ -26,7 +26,7 @@ namespace Services.Models
             {
                 throw new NotFoundException404(typeof(ProductStatus), nameof(GetById), id);
             }
-            return _mapper.Map<ProductStatusDto>(productStatus);
+            return MappingTo<ProductStatusDto>(productStatus);
         }
     }
 }
