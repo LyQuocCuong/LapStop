@@ -24,7 +24,7 @@ namespace Services.Models
             SalesOrderStatus? salesOrderStatus = _repositoryManager.SalesOrderStatus.GetById(isTrackChanges, id);
             if (salesOrderStatus == null)
             {
-                throw new NotFoundException404(typeof(SalesOrderStatus), nameof(GetById), id);
+                throw new NotFoundException404(nameof(SalesOrderStatusService), nameof(GetById), typeof(SalesOrderStatus), id);
             }
             return MappingTo<SalesOrderStatusDto>(salesOrderStatus);
         }

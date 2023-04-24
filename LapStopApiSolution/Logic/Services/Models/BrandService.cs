@@ -24,7 +24,7 @@ namespace Services.Models
             Brand? brand = _repositoryManager.Brand.GetById(isTrackChanges, id);
             if (brand == null)
             {
-                throw new NotFoundException404(typeof(Brand), nameof(GetById), id);
+                throw new NotFoundException404(nameof(BrandService), nameof(GetById),typeof(Brand), id);
             }
             return MappingTo<BrandDto>(brand);
         }

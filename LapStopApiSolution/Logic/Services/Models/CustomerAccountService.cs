@@ -23,12 +23,12 @@ namespace Services.Models
         {
             if (_repositoryManager.Customer.IsValidCustomerId(customerId) == false)
             {
-                throw new NotFoundException404(typeof(Customer), nameof(GetByCustomerId), customerId);
+                throw new NotFoundException404(nameof(CustomerAccountService), nameof(GetByCustomerId), typeof(Customer), customerId);
             }
             CustomerAccount? customerAccount = _repositoryManager.CustomerAccount.GetByCustomerId(isTrackChanges, customerId);
             if (customerAccount == null)
             {
-                throw new NotFoundException404(typeof(CustomerAccount), nameof(GetByCustomerId), customerId);
+                throw new NotFoundException404(nameof(CustomerAccountService), nameof(GetByCustomerId), typeof(CustomerAccount), customerId);
             }
             return MappingTo<CustomerAccountDto>(customerAccount);
         }

@@ -24,7 +24,7 @@ namespace Services.Models
             ProductStatus? productStatus = _repositoryManager.ProductStatus.GetById(isTrackChanges, id);
             if (productStatus == null)
             {
-                throw new NotFoundException404(typeof(ProductStatus), nameof(GetById), id);
+                throw new NotFoundException404(nameof(ProductStatusService), nameof(GetById), typeof(ProductStatus), id);
             }
             return MappingTo<ProductStatusDto>(productStatus);
         }
