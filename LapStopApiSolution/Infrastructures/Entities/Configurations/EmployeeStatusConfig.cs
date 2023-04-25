@@ -1,11 +1,7 @@
-﻿using Domains.Models;
+﻿using Contracts.Constants;
+using Domains.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entities.Configurations
 {
@@ -17,8 +13,8 @@ namespace Entities.Configurations
             builder.HasData(
                 new EmployeeStatus()
                 {
-                    Id = new Guid("b3d637e0-d20a-11ed-92cb-1903471dbe5a"),
-                    Name = "On",
+                    Id = ConstSeedingData.EMPLOYEE_STATUS.On.Id,
+                    Name = ConstSeedingData.EMPLOYEE_STATUS.On.Name,
                     IsEnable = true,
                     IsRemoved = false,
                     CreatedDate = DateTime.Now,
@@ -26,8 +22,8 @@ namespace Entities.Configurations
                 },
                 new EmployeeStatus()
                 {
-                    Id = new Guid("b3d637e1-d20a-11ed-92cb-1903471dbe5a"),
-                    Name = "Off",
+                    Id = ConstSeedingData.EMPLOYEE_STATUS.Off.Id,
+                    Name = ConstSeedingData.EMPLOYEE_STATUS.Off.Name,
                     IsEnable = true,
                     IsRemoved = false,
                     CreatedDate = DateTime.Now,
@@ -35,8 +31,8 @@ namespace Entities.Configurations
                 },
                 new EmployeeStatus()
                 {
-                    Id = new Guid("b3d637e2-d20a-11ed-92cb-1903471dbe5a"),
-                    Name = "Leaving",
+                    Id = ConstSeedingData.EMPLOYEE_STATUS.Leaving.Id,
+                    Name = ConstSeedingData.EMPLOYEE_STATUS.Leaving.Name,
                     IsEnable = true,
                     IsRemoved = false,
                     CreatedDate = DateTime.Now,

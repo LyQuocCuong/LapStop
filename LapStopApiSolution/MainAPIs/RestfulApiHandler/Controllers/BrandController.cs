@@ -1,4 +1,5 @@
-﻿using Contracts.ILog;
+﻿using Contracts.Constants;
+using Contracts.ILog;
 using Contracts.IServices;
 using DTO.Creation;
 using DTO.Output;
@@ -45,7 +46,7 @@ namespace RestfulApiHandler.Controllers
         {
             if (creationDto == null)
             {
-                return BadRequest($"{nameof(BrandForCreationDto)} is NULL");
+                return BadRequest(ConstMessages.OBJECT_IS_NULL(nameof(BrandForCreationDto)));
             }
             BrandDto newBrandDto = _serviceManager.Brand.CreateBrand(creationDto);
             return CreatedAtRoute("GetBrandById", new { id = newBrandDto.Id }, newBrandDto);
