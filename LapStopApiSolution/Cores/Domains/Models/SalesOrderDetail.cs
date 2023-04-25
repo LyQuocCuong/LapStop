@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Domains.Base;
 
 namespace Domains.Models
 {
-    public sealed class SalesOrderDetail
+    public sealed class SalesOrderDetail : BaseModel
     {
         public Guid Id { get; set; }
 
@@ -19,12 +15,6 @@ namespace Domains.Models
         public int SellingPrice { get; set; }
 
         public int SubTotal { get; set; }
-
-        public bool IsRemoved { get; set; }
-
-        public DateTime CreatedDate { get; set; }
-
-        public DateTime UpdatedDate { get; set; }
 
 
         #region NAVIGATION PROPERTIES

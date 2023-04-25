@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Domains.Base;
 
 namespace Domains.Models
 {
-    public sealed class EmployeeAccount
+    public sealed class EmployeeAccount : BaseModel
     {
         public Guid EmployeeId { get; set; }
 
@@ -15,12 +11,6 @@ namespace Domains.Models
         public string? Password { get; set; }
 
         public bool IsActivate { get; set; }
-
-        public bool IsRemoved { get; set; }
-
-        public DateTime CreatedDate { get; set; }
-
-        public DateTime UpdatedDate { get; set; }
 
         #region NAVIGATION PROPERTIES
 

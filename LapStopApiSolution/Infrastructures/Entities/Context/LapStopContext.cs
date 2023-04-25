@@ -1,4 +1,5 @@
-﻿using Domains.Models;
+﻿using Domains.Base;
+using Domains.Models;
 using Entities.Configurations;
 using Entities.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,8 @@ namespace Entities.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyOrderConfigExt();
+
             modelBuilder.ApplyAttributeConfigExt();
 
             modelBuilder.ApplyRelationshipConfigExt();
