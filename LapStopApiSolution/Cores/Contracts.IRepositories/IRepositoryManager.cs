@@ -4,7 +4,7 @@ namespace Contracts.IRepositories
 {
     public interface IRepositoryManager
     {
-        void Save();
+        void SaveChanges();
 
         IBrandRepository Brand { get; }
         

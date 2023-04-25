@@ -1,5 +1,6 @@
 ﻿using Contracts.ILog;
 using Contracts.IServices;
+using DTO.Creation;
 using DTO.Output;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,7 +28,7 @@ namespace RestfulApiHandler.Controllers
         }
 
         [HttpGet]
-        [Route("customers/{customerId:guid}/account")]
+        [Route("customers/{customerId:guid}/account", Name = "GetAccountByCustomerId")]
         public IActionResult GetByCustomerId(bool isTrackChanges, Guid customerId)
         {
             CustomerAccountDto? customerAccountDto = _serviceManager.CustomerAccount.GetByCustomerId(isTrackChanges, customerId);
@@ -38,6 +39,17 @@ namespace RestfulApiHandler.Controllers
             return Ok(customerAccountDto);
         }
 
+        [HttpPost]
+        [Route("customers/{customerId:guid}/account")]
+        public IActionResult CreateCustomerAccount(Guid customerId, [FromBody] CustomerAccountForCreationDto creationDto)
+        {
+            if (creationDto == null)
+            {
+                return BadRequest("");
+            }
+            CustomerAccountDto newCustomerAccountDto = _serviceManager.CustomerAccount.CreateCustomerAccount(customerId, creationDto);
+            return CreatedAtRoute("GetAccountByCustomerId", new { customerId = newCustomerAccountDto.CustomerId }, newCustomerAccountDto);
+        }
 
     }
 }

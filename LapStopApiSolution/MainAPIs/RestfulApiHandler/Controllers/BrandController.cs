@@ -1,5 +1,6 @@
 ﻿using Contracts.ILog;
 using Contracts.IServices;
+using DTO.Creation;
 using DTO.Output;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +27,8 @@ namespace RestfulApiHandler.Controllers
             return Ok(brandDtos);
         }
 
-        [HttpGet("brands/{id:guid}")]
+        [HttpGet]
+        [Route("brands/{id:guid}", Name = "GetBrandById")]
         public IActionResult GetById(Guid id)
         {
             BrandDto? brandDto = _serviceManager.Brand.GetById(isTrackChanges: false, id);
@@ -35,6 +37,18 @@ namespace RestfulApiHandler.Controllers
                 return NotFound();
             }
             return Ok(brandDto);
+        }
+
+        [HttpPost]
+        [Route("brands")]
+        public IActionResult CreateBrand([FromBody] BrandForCreationDto creationDto)
+        {
+            if (creationDto == null)
+            {
+                return BadRequest($"{nameof(BrandForCreationDto)} is NULL");
+            }
+            BrandDto newBrandDto = _serviceManager.Brand.CreateBrand(creationDto);
+            return CreatedAtRoute("GetBrandById", new { id = newBrandDto.Id }, newBrandDto);
         }
 
     }

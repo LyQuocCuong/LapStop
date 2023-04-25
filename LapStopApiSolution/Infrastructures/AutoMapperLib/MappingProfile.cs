@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Domains.Models;
+using DTO.Creation;
 using DTO.Output;
 
 namespace AutoMapperLib
@@ -36,6 +37,7 @@ namespace AutoMapperLib
 
         private void MappingBrand()
         {
+            #region Brand --> BrandDto
             CreateMap<Brand, BrandDto>()
                 .ForMember(dto => dto.Id,
                            dto_Id => dto_Id.MapFrom(e => e.Id))
@@ -47,7 +49,17 @@ namespace AutoMapperLib
                            dto_AvatarUrl => dto_AvatarUrl.MapFrom(e => e.AvatarUrl))
                 .ForMember(dto => dto.IsRemoved,
                            dto_IsRemoved => dto_IsRemoved.MapFrom(e => e.IsRemoved));
+            #endregion
 
+            #region BrandCreationDto --> Brand
+            CreateMap<BrandForCreationDto, Brand>()
+                .ForMember(model => model.Name,
+                           model_field => model_field.MapFrom(e => e.Name))
+                .ForMember(model => model.Description,
+                           model_field => model_field.MapFrom(e => e.Description))
+                .ForMember(model => model.AvatarUrl,
+                           model_field => model_field.MapFrom(e => e.AvatarUrl));
+            #endregion
         }
 
         private void MappingCart()
@@ -86,6 +98,7 @@ namespace AutoMapperLib
 
         private void MappingCustomerAccount()
         {
+            #region  CustomerAccount --> CustomerAccountDto
             CreateMap<CustomerAccount, CustomerAccountDto>()
                 .ForMember(dto => dto.CustomerId,
                            dto_CustomerId => dto_CustomerId.MapFrom(e => e.CustomerId))
@@ -97,11 +110,20 @@ namespace AutoMapperLib
                            dto_IsActivate => dto_IsActivate.MapFrom(e => e.IsActivate))
                 .ForMember(dto => dto.IsRemoved,
                            dto_IsRemoved => dto_IsRemoved.MapFrom(e => e.IsRemoved));
+            #endregion
 
+            #region CustomerAccountForCreationDto --> CustomerAccount
+            CreateMap<CustomerAccountForCreationDto, CustomerAccount>()
+                .ForMember(model => model.Username,
+                           model_field => model_field.MapFrom(e => e.Username))
+                .ForMember(model => model.Password,
+                           model_field => model_field.MapFrom(e => e.Password));
+            #endregion
         }
 
         private void MappingCustomer()
         {
+            #region Customer --> CustomerDto
             CreateMap<Customer, CustomerDto>()
                 .ForMember(dto => dto.Id,
                            dto_Id => dto_Id.MapFrom(e => e.Id))
@@ -115,7 +137,19 @@ namespace AutoMapperLib
                            dto_Phone => dto_Phone.MapFrom(e => e.Phone))
                 .ForMember(dto => dto.IsRemoved,
                            dto_IsRemoved => dto_IsRemoved.MapFrom(e => e.IsRemoved));
+            #endregion
 
+            #region CustomerForCreationDto --> Customer
+            CreateMap<CustomerForCreationDto, Customer>()
+                .ForMember(model => model.FirstName,
+                           model_field => model_field.MapFrom(e => e.FirstName))
+                .ForMember(model => model.LastName,
+                           model_field => model_field.MapFrom(e => e.LastName))
+                .ForMember(model => model.Address,
+                           model_field => model_field.MapFrom(e => e.Address))
+                .ForMember(model => model.Phone,
+                           model_field => model_field.MapFrom(e => e.Phone));
+            #endregion
         }
 
         private void MappingEmployeeAccount()
@@ -133,6 +167,7 @@ namespace AutoMapperLib
 
         private void MappingEmployee()
         {
+            #region Employee --> EmployeeDto
             CreateMap<Employee, EmployeeDto>()
                 .ForMember(dto => dto.Id,
                            dto_field => dto_field.MapFrom(e => e.Id))
@@ -162,6 +197,8 @@ namespace AutoMapperLib
                            dto_field => dto_field.MapFrom(e => e.Phone))
                 .ForMember(dto => dto.AvatarUrl,
                            dto_field => dto_field.MapFrom(e => e.AvatarUrl));
+            #endregion
+
         }
 
         private void MappingEmployeeGallery()

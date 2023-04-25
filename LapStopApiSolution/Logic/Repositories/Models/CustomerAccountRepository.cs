@@ -10,6 +10,11 @@ namespace Repositories.Models
         {
         }
 
+        public void CreateCustomerAccount(CustomerAccount newCustomerAccount)
+        {
+            Create(newCustomerAccount);
+        }
+
         public List<CustomerAccount> GetAll(bool isTrackChanges)
         {
             return FindAll(isTrackChanges).ToList();

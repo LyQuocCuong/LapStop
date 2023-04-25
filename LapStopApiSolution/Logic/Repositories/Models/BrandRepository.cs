@@ -10,6 +10,11 @@ namespace Repositories.Models
         {
         }
 
+        public void CreateBrand(Brand brand)
+        {
+            Create(brand);
+        }
+
         public List<Brand> GetAll(bool isTrackChanges)
         {
             return FindAll(isTrackChanges).ToList();
