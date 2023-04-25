@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Domains.Base;
 
 namespace Domains.Models
 {
-    public sealed class Brand
+    public sealed class Brand : BaseModel
     {
         public Guid Id { get; set; }
 
@@ -15,12 +11,6 @@ namespace Domains.Models
         public string? Description { get; set; }
 
         public string? AvatarUrl { get; set; }
-
-        public bool IsRemoved { get; set; }
-
-        public DateTime CreatedDate { get; set; }
-
-        public DateTime UpdatedDate { get; set; }
 
         #region NAVIGATION PROPERTIES
 
