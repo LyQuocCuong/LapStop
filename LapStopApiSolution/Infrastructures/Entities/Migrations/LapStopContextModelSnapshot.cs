@@ -325,35 +325,6 @@ namespace Entities.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("EmployeeRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("e6d15a40-d1e1-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6435),
-                            IsEnable = true,
-                            IsRemoved = false,
-                            Name = "Admin",
-                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6442)
-                        },
-                        new
-                        {
-                            Id = new Guid("e6d15a41-d1e1-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6444),
-                            IsEnable = true,
-                            IsRemoved = false,
-                            Name = "Manager",
-                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6444)
-                        },
-                        new
-                        {
-                            Id = new Guid("e6d15a42-d1e1-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6445),
-                            IsEnable = true,
-                            IsRemoved = false,
-                            Name = "Staff",
-                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6446)
-                        });
                 });
 
             modelBuilder.Entity("Domains.Models.EmployeeStatus", b =>
@@ -380,35 +351,6 @@ namespace Entities.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("EmployeeStatuses");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("b3d637e0-d20a-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6565),
-                            IsEnable = true,
-                            IsRemoved = false,
-                            Name = "On",
-                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6566)
-                        },
-                        new
-                        {
-                            Id = new Guid("b3d637e1-d20a-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6568),
-                            IsEnable = true,
-                            IsRemoved = false,
-                            Name = "Off",
-                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6568)
-                        },
-                        new
-                        {
-                            Id = new Guid("b3d637e2-d20a-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6570),
-                            IsEnable = true,
-                            IsRemoved = false,
-                            Name = "Leaving",
-                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6570)
-                        });
                 });
 
             modelBuilder.Entity("Domains.Models.ExportedInvoice", b =>
@@ -606,35 +548,6 @@ namespace Entities.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("InvoiceStatus");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("7187a500-d213-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6624),
-                            IsEnable = true,
-                            IsRemoved = false,
-                            Name = "Processing",
-                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6624)
-                        },
-                        new
-                        {
-                            Id = new Guid("7187a501-d213-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6625),
-                            IsEnable = true,
-                            IsRemoved = false,
-                            Name = "Completed",
-                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6626)
-                        },
-                        new
-                        {
-                            Id = new Guid("7187a502-d213-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6627),
-                            IsEnable = true,
-                            IsRemoved = false,
-                            Name = "Blocked",
-                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6628)
-                        });
                 });
 
             modelBuilder.Entity("Domains.Models.Product", b =>
@@ -770,35 +683,6 @@ namespace Entities.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductStatus");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("b7ee5e90-d212-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6682),
-                            IsEnable = true,
-                            IsRemoved = false,
-                            Name = "In Stock",
-                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6683)
-                        },
-                        new
-                        {
-                            Id = new Guid("b7ee5e91-d212-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6684),
-                            IsEnable = true,
-                            IsRemoved = false,
-                            Name = "Out Of Stock",
-                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6684)
-                        },
-                        new
-                        {
-                            Id = new Guid("b7ee5e92-d212-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6686),
-                            IsEnable = true,
-                            IsRemoved = false,
-                            Name = "Sold Out",
-                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6686)
-                        });
                 });
 
             modelBuilder.Entity("Domains.Models.SalesOrder", b =>
@@ -909,44 +793,6 @@ namespace Entities.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SalesOrderStatus");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("feb2d310-d212-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6733),
-                            IsEnable = true,
-                            IsRemoved = false,
-                            Name = "Waiting",
-                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6734)
-                        },
-                        new
-                        {
-                            Id = new Guid("feb2d311-d212-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6736),
-                            IsEnable = true,
-                            IsRemoved = false,
-                            Name = "Processing",
-                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6736)
-                        },
-                        new
-                        {
-                            Id = new Guid("feb2d312-d212-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6740),
-                            IsEnable = true,
-                            IsRemoved = false,
-                            Name = "Completed",
-                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6741)
-                        },
-                        new
-                        {
-                            Id = new Guid("feb2d313-d212-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6742),
-                            IsEnable = true,
-                            IsRemoved = false,
-                            Name = "Blocked",
-                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6742)
-                        });
                 });
 
             modelBuilder.Entity("Domains.Models.Cart", b =>
