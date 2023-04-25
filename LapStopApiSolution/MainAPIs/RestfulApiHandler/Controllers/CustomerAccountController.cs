@@ -1,4 +1,5 @@
-﻿using Contracts.ILog;
+﻿using Contracts.Constants;
+using Contracts.ILog;
 using Contracts.IServices;
 using DTO.Creation;
 using DTO.Output;
@@ -45,7 +46,7 @@ namespace RestfulApiHandler.Controllers
         {
             if (creationDto == null)
             {
-                return BadRequest("");
+                return BadRequest(ConstMessages.OBJECT_IS_NULL(nameof(CustomerAccountForCreationDto)));
             }
             CustomerAccountDto newCustomerAccountDto = _serviceManager.CustomerAccount.CreateCustomerAccount(customerId, creationDto);
             return CreatedAtRoute("GetAccountByCustomerId", new { customerId = newCustomerAccountDto.CustomerId }, newCustomerAccountDto);

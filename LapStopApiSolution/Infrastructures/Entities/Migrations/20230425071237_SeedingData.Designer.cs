@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Entities.Migrations
 {
     [DbContext(typeof(LapStopContext))]
-    [Migration("20230416052545_SeedingData")]
+    [Migration("20230425071237_SeedingData")]
     partial class SeedingData
     {
         /// <inheritdoc />
@@ -333,29 +333,29 @@ namespace Entities.Migrations
                         new
                         {
                             Id = new Guid("e6d15a40-d1e1-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(5938),
+                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6435),
                             IsEnable = true,
                             IsRemoved = false,
                             Name = "Admin",
-                            UpdatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(5948)
+                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6442)
                         },
                         new
                         {
                             Id = new Guid("e6d15a41-d1e1-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(5951),
+                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6444),
                             IsEnable = true,
                             IsRemoved = false,
                             Name = "Manager",
-                            UpdatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(5952)
+                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6444)
                         },
                         new
                         {
                             Id = new Guid("e6d15a42-d1e1-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(5955),
+                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6445),
                             IsEnable = true,
                             IsRemoved = false,
                             Name = "Staff",
-                            UpdatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(5955)
+                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6446)
                         });
                 });
 
@@ -388,29 +388,29 @@ namespace Entities.Migrations
                         new
                         {
                             Id = new Guid("b3d637e0-d20a-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6158),
+                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6565),
                             IsEnable = true,
                             IsRemoved = false,
                             Name = "On",
-                            UpdatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6159)
+                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6566)
                         },
                         new
                         {
                             Id = new Guid("b3d637e1-d20a-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6161),
+                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6568),
                             IsEnable = true,
                             IsRemoved = false,
                             Name = "Off",
-                            UpdatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6162)
+                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6568)
                         },
                         new
                         {
                             Id = new Guid("b3d637e2-d20a-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6164),
+                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6570),
                             IsEnable = true,
                             IsRemoved = false,
                             Name = "Leaving",
-                            UpdatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6165)
+                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6570)
                         });
                 });
 
@@ -614,29 +614,29 @@ namespace Entities.Migrations
                         new
                         {
                             Id = new Guid("7187a500-d213-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6244),
+                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6624),
                             IsEnable = true,
                             IsRemoved = false,
-                            Name = "Admin",
-                            UpdatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6245)
+                            Name = "Processing",
+                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6624)
                         },
                         new
                         {
                             Id = new Guid("7187a501-d213-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6248),
+                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6625),
                             IsEnable = true,
                             IsRemoved = false,
-                            Name = "Manager",
-                            UpdatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6248)
+                            Name = "Completed",
+                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6626)
                         },
                         new
                         {
                             Id = new Guid("7187a502-d213-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6250),
+                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6627),
                             IsEnable = true,
                             IsRemoved = false,
-                            Name = "Manager",
-                            UpdatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6251)
+                            Name = "Blocked",
+                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6628)
                         });
                 });
 
@@ -778,29 +778,29 @@ namespace Entities.Migrations
                         new
                         {
                             Id = new Guid("b7ee5e90-d212-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6329),
+                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6682),
                             IsEnable = true,
                             IsRemoved = false,
                             Name = "In Stock",
-                            UpdatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6329)
+                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6683)
                         },
                         new
                         {
                             Id = new Guid("b7ee5e91-d212-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6334),
+                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6684),
                             IsEnable = true,
                             IsRemoved = false,
                             Name = "Out Of Stock",
-                            UpdatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6334)
+                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6684)
                         },
                         new
                         {
                             Id = new Guid("b7ee5e92-d212-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6336),
+                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6686),
                             IsEnable = true,
                             IsRemoved = false,
                             Name = "Sold Out",
-                            UpdatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6337)
+                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6686)
                         });
                 });
 
@@ -917,38 +917,38 @@ namespace Entities.Migrations
                         new
                         {
                             Id = new Guid("feb2d310-d212-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6478),
+                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6733),
                             IsEnable = true,
                             IsRemoved = false,
                             Name = "Waiting",
-                            UpdatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6480)
+                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6734)
                         },
                         new
                         {
                             Id = new Guid("feb2d311-d212-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6483),
+                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6736),
                             IsEnable = true,
                             IsRemoved = false,
                             Name = "Processing",
-                            UpdatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6483)
+                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6736)
                         },
                         new
                         {
                             Id = new Guid("feb2d312-d212-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6486),
+                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6740),
                             IsEnable = true,
                             IsRemoved = false,
                             Name = "Completed",
-                            UpdatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6486)
+                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6741)
                         },
                         new
                         {
                             Id = new Guid("feb2d313-d212-11ed-92cb-1903471dbe5a"),
-                            CreatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6489),
+                            CreatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6742),
                             IsEnable = true,
                             IsRemoved = false,
                             Name = "Blocked",
-                            UpdatedDate = new DateTime(2023, 4, 16, 12, 25, 44, 823, DateTimeKind.Local).AddTicks(6489)
+                            UpdatedDate = new DateTime(2023, 4, 25, 14, 12, 37, 726, DateTimeKind.Local).AddTicks(6742)
                         });
                 });
 

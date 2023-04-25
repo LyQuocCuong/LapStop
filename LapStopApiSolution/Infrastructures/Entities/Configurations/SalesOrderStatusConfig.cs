@@ -1,11 +1,7 @@
-﻿using Domains.Models;
+﻿using Contracts.Constants;
+using Domains.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entities.Configurations
 {
@@ -17,8 +13,8 @@ namespace Entities.Configurations
             builder.HasData(
                 new SalesOrderStatus()
                 {
-                    Id = new Guid("feb2d310-d212-11ed-92cb-1903471dbe5a"),
-                    Name = "Waiting",
+                    Id = ConstSeedingData.SALES_ORDER_STATUS.Waiting.Id,
+                    Name = ConstSeedingData.SALES_ORDER_STATUS.Waiting.Name,
                     IsEnable = true,
                     IsRemoved = false,
                     CreatedDate = DateTime.Now,
@@ -26,8 +22,8 @@ namespace Entities.Configurations
                 },
                 new SalesOrderStatus()
                 {
-                    Id = new Guid("feb2d311-d212-11ed-92cb-1903471dbe5a"),
-                    Name = "Processing",
+                    Id = ConstSeedingData.SALES_ORDER_STATUS.Processing.Id,
+                    Name = ConstSeedingData.SALES_ORDER_STATUS.Processing.Name,
                     IsEnable = true,
                     IsRemoved = false,
                     CreatedDate = DateTime.Now,
@@ -35,8 +31,8 @@ namespace Entities.Configurations
                 },
                 new SalesOrderStatus()
                 {
-                    Id = new Guid("feb2d312-d212-11ed-92cb-1903471dbe5a"),
-                    Name = "Completed",
+                    Id = ConstSeedingData.SALES_ORDER_STATUS.Completed.Id,
+                    Name = ConstSeedingData.SALES_ORDER_STATUS.Completed.Name,
                     IsEnable = true,
                     IsRemoved = false,
                     CreatedDate = DateTime.Now,
@@ -44,8 +40,8 @@ namespace Entities.Configurations
                 },
                 new SalesOrderStatus()
                 {
-                    Id = new Guid("feb2d313-d212-11ed-92cb-1903471dbe5a"),
-                    Name = "Blocked",
+                    Id = ConstSeedingData.SALES_ORDER_STATUS.Blocked.Id,
+                    Name = ConstSeedingData.SALES_ORDER_STATUS.Blocked.Name,
                     IsEnable = true,
                     IsRemoved = false,
                     CreatedDate = DateTime.Now,

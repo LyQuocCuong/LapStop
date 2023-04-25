@@ -1,11 +1,7 @@
-﻿using Domains.Models;
+﻿using Contracts.Constants;
+using Domains.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entities.Configurations
 {
@@ -17,8 +13,8 @@ namespace Entities.Configurations
             builder.HasData(
                 new InvoiceStatus()
                 {
-                    Id = new Guid("7187a500-d213-11ed-92cb-1903471dbe5a"),
-                    Name = "Admin",
+                    Id = ConstSeedingData.INVOICE_STATUS.Processing.Id,
+                    Name = ConstSeedingData.INVOICE_STATUS.Processing.Name,
                     IsEnable = true,
                     IsRemoved = false,
                     CreatedDate = DateTime.Now,
@@ -26,8 +22,8 @@ namespace Entities.Configurations
                 },
                 new InvoiceStatus()
                 {
-                    Id = new Guid("7187a501-d213-11ed-92cb-1903471dbe5a"),
-                    Name = "Manager",
+                    Id = ConstSeedingData.INVOICE_STATUS.Completed.Id,
+                    Name = ConstSeedingData.INVOICE_STATUS.Completed.Name,
                     IsEnable = true,
                     IsRemoved = false,
                     CreatedDate = DateTime.Now,
@@ -35,8 +31,8 @@ namespace Entities.Configurations
                 },
                 new InvoiceStatus()
                 {
-                    Id = new Guid("7187a502-d213-11ed-92cb-1903471dbe5a"),
-                    Name = "Manager",
+                    Id = ConstSeedingData.INVOICE_STATUS.Blocked.Id,
+                    Name = ConstSeedingData.INVOICE_STATUS.Blocked.Name,
                     IsEnable = true,
                     IsRemoved = false,
                     CreatedDate = DateTime.Now,

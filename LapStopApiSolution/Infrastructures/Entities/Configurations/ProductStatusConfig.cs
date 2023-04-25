@@ -1,11 +1,7 @@
-﻿using Domains.Models;
+﻿using Contracts.Constants;
+using Domains.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entities.Configurations
 {
@@ -17,8 +13,8 @@ namespace Entities.Configurations
             builder.HasData(
                 new ProductStatus()
                 {
-                    Id = new Guid("b7ee5e90-d212-11ed-92cb-1903471dbe5a"),
-                    Name = "In Stock",
+                    Id = ConstSeedingData.PRODUCT_STATUS.InStock.Id,
+                    Name = ConstSeedingData.PRODUCT_STATUS.InStock.Name,
                     IsEnable = true,
                     IsRemoved = false,
                     CreatedDate = DateTime.Now,
@@ -26,8 +22,8 @@ namespace Entities.Configurations
                 },
                 new ProductStatus()
                 {
-                    Id = new Guid("b7ee5e91-d212-11ed-92cb-1903471dbe5a"),
-                    Name = "Out Of Stock",
+                    Id = ConstSeedingData.PRODUCT_STATUS.OutOfStock.Id,
+                    Name = ConstSeedingData.PRODUCT_STATUS.OutOfStock.Name,
                     IsEnable = true,
                     IsRemoved = false,
                     CreatedDate = DateTime.Now,
@@ -35,8 +31,8 @@ namespace Entities.Configurations
                 },
                 new ProductStatus()
                 {
-                    Id = new Guid("b7ee5e92-d212-11ed-92cb-1903471dbe5a"),
-                    Name = "Sold Out",
+                    Id = ConstSeedingData.PRODUCT_STATUS.SoldOut.Id,
+                    Name = ConstSeedingData.PRODUCT_STATUS.SoldOut.Name,
                     IsEnable = true,
                     IsRemoved = false,
                     CreatedDate = DateTime.Now,
