@@ -2,6 +2,7 @@
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
+using DTO.Creation;
 using DTO.Output;
 using Shared.CustomedExceptions;
 
@@ -11,6 +12,15 @@ namespace Services.Models
     {
         public CustomerService(IRepositoryManager repositoryManager, IMapper mapper) : base(repositoryManager, mapper)
         {
+        }
+
+        public CustomerDto CreateCustomer(CustomerForCreationDto creationDto)
+        {
+            Customer newCustomer = MappingTo<Customer>(creationDto);
+            _repositoryManager.Customer.CreateCustomer(newCustomer);
+            _repositoryManager.SaveChanges();
+
+            return MappingTo<CustomerDto>(newCustomer);
         }
 
         public List<CustomerDto> GetAll(bool isTrackChanges)

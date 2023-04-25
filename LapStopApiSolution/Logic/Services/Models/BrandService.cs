@@ -2,6 +2,7 @@
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
+using DTO.Creation;
 using DTO.Output;
 using Shared.CustomedExceptions;
 
@@ -11,6 +12,15 @@ namespace Services.Models
     {
         public BrandService(IRepositoryManager repositoryManager, IMapper mapper) : base(repositoryManager, mapper)
         {
+        }
+
+        public BrandDto CreateBrand(BrandForCreationDto creationDto)
+        {
+            Brand newBrand = MappingTo<Brand>(creationDto);
+            _repositoryManager.Brand.CreateBrand(newBrand);
+            _repositoryManager.SaveChanges();
+
+            return MappingTo<BrandDto>(newBrand);
         }
 
         public List<BrandDto> GetAll(bool isTrackChanges)
