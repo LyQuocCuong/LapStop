@@ -1,8 +1,10 @@
+using Azure;
 using Contracts.ILog;
 using Contracts.IRepositories;
 using Contracts.IServices;
 using Entities.Context;
 using LapStopApiHost.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NLog;
 using NLogLib;
@@ -15,6 +17,13 @@ LogManager.LoadConfiguration(
 );
 
 var builder = WebApplication.CreateBuilder(args);
+
+// right ABOVE the AddControllers() method
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;  // disable 400 – Bad Request responses.
+});
+
 
 // Add services to the container.
 builder.Services.AddAutoMapper(typeof(AutoMapperLib.MappingProfile));
