@@ -17,8 +17,8 @@ namespace Entities.Configurations
                     Name = ConstSeedingData.PRODUCT_STATUS.InStock.Name,
                     IsEnable = true,
                     IsRemoved = false,
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
+                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
                 },
                 new ProductStatus()
                 {
@@ -26,8 +26,8 @@ namespace Entities.Configurations
                     Name = ConstSeedingData.PRODUCT_STATUS.OutOfStock.Name,
                     IsEnable = true,
                     IsRemoved = false,
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
+                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
                 },
                 new ProductStatus()
                 {
@@ -35,8 +35,8 @@ namespace Entities.Configurations
                     Name = ConstSeedingData.PRODUCT_STATUS.SoldOut.Name,
                     IsEnable = true,
                     IsRemoved = false,
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
+                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
                 }
             );
         }

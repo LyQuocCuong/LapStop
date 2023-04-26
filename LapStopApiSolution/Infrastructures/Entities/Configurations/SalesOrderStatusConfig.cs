@@ -17,8 +17,8 @@ namespace Entities.Configurations
                     Name = ConstSeedingData.SALES_ORDER_STATUS.Waiting.Name,
                     IsEnable = true,
                     IsRemoved = false,
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
+                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
                 },
                 new SalesOrderStatus()
                 {
@@ -26,8 +26,8 @@ namespace Entities.Configurations
                     Name = ConstSeedingData.SALES_ORDER_STATUS.Processing.Name,
                     IsEnable = true,
                     IsRemoved = false,
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
+                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
                 },
                 new SalesOrderStatus()
                 {
@@ -35,8 +35,8 @@ namespace Entities.Configurations
                     Name = ConstSeedingData.SALES_ORDER_STATUS.Completed.Name,
                     IsEnable = true,
                     IsRemoved = false,
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
+                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
                 },
                 new SalesOrderStatus()
                 {
@@ -44,8 +44,8 @@ namespace Entities.Configurations
                     Name = ConstSeedingData.SALES_ORDER_STATUS.Blocked.Name,
                     IsEnable = true,
                     IsRemoved = false,
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
+                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
                 }
             );
         }
