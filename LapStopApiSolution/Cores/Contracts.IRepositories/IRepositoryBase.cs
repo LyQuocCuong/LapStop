@@ -13,5 +13,7 @@ namespace Contracts.IRepositories
         void Update(TModel obj);
         
         void Delete(TModel obj);
+
+        void DeletePermanently(TModel obj);
     }
 }

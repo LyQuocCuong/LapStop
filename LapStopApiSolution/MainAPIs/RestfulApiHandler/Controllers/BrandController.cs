@@ -52,5 +52,13 @@ namespace RestfulApiHandler.Controllers
             return CreatedAtRoute("GetBrandById", new { id = newBrandDto.Id }, newBrandDto);
         }
 
+        [HttpDelete]
+        [Route("brands/{id:guid}")]
+        public IActionResult DeleteBrand(Guid id)
+        {
+            _serviceManager.Brand.DeleteBrand(id);
+            return NoContent();
+        }
+
     }
 }
