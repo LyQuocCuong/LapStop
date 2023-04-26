@@ -3,6 +3,7 @@ using Contracts.ILog;
 using Contracts.IServices;
 using DTO.Creation;
 using DTO.Output;
+using DTO.Update;
 using Microsoft.AspNetCore.Mvc;
 
 namespace RestfulApiHandler.Controllers
@@ -28,18 +29,6 @@ namespace RestfulApiHandler.Controllers
             return Ok(brandDtos);
         }
 
-        [HttpGet]
-        [Route("brands/{id:guid}", Name = "GetBrandById")]
-        public IActionResult GetById(Guid id)
-        {
-            BrandDto? brandDto = _serviceManager.Brand.GetById(isTrackChanges: false, id);
-            if (brandDto == null)
-            {
-                return NotFound();
-            }
-            return Ok(brandDto);
-        }
-
         [HttpPost]
         [Route("brands")]
         public IActionResult CreateBrand([FromBody] BrandForCreationDto creationDto)
@@ -52,11 +41,31 @@ namespace RestfulApiHandler.Controllers
             return CreatedAtRoute("GetBrandById", new { id = newBrandDto.Id }, newBrandDto);
         }
 
+        [HttpGet]
+        [Route("brands/{id:guid}", Name = "GetBrandById")]
+        public IActionResult GetById(Guid id)
+        {
+            BrandDto? brandDto = _serviceManager.Brand.GetById(isTrackChanges: false, id);
+            if (brandDto == null)
+            {
+                return NotFound();
+            }
+            return Ok(brandDto);
+        }
+
         [HttpDelete]
         [Route("brands/{id:guid}")]
         public IActionResult DeleteBrand(Guid id)
         {
             _serviceManager.Brand.DeleteBrand(id);
+            return NoContent();
+        }
+
+        [HttpPut]
+        [Route("brands/{id:guid}")]
+        public IActionResult UpdateBrand(Guid id, [FromBody] BrandForUpdateDto updateDto)
+        {
+            _serviceManager.Brand.UpdateBrand(id, updateDto);
             return NoContent();
         }
 

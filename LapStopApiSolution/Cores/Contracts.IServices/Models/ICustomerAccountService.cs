@@ -1,5 +1,6 @@
 ﻿using DTO.Creation;
 using DTO.Output;
+using DTO.Update;
 
 namespace Contracts.IServices.Models
 {
@@ -10,5 +11,7 @@ namespace Contracts.IServices.Models
         CustomerAccountDto? GetByCustomerId(bool isTrackChanges, Guid customerId);
 
         CustomerAccountDto CreateCustomerAccount(Guid customerId, CustomerAccountForCreationDto creationDto);
+
+        void UpdateCustomerAccount(Guid customerId, CustomerAccountForUpdateDto updateDto);
     }
 }

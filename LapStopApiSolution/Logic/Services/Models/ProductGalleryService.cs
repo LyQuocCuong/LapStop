@@ -20,7 +20,7 @@ namespace Services.Models
                 throw new NotFoundException404(nameof(ProductGalleryService), nameof(GetByProductId), typeof(Product), id);
             }
             List<ProductGallery> productGalleries = _repositoryManager.ProductGallery.GetByProductId(isTrackChanges, id);
-            return MappingTo<List<ProductGalleryDto>>(productGalleries);
+            return MappingToNewObj<List<ProductGalleryDto>>(productGalleries);
         }
     }
 }

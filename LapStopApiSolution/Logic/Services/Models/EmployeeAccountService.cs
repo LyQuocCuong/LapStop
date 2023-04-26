@@ -16,7 +16,7 @@ namespace Services.Models
         public List<EmployeeAccountDto> GetAll(bool isTrackChanges)
         {
             List<EmployeeAccount> employeeAccounts = _repositoryManager.EmployeeAccount.GetAll(isTrackChanges);
-            return MappingTo<List<EmployeeAccountDto>>(employeeAccounts);
+            return MappingToNewObj<List<EmployeeAccountDto>>(employeeAccounts);
         }
 
         public EmployeeAccountDto? GetByEmployeeId(bool isTrackChanges, Guid employeeId)
@@ -30,7 +30,7 @@ namespace Services.Models
             {
                 throw new NotFoundException404(nameof(EmployeeAccountService), nameof(GetByEmployeeId), typeof(EmployeeAccount), employeeId);
             }
-            return MappingTo<EmployeeAccountDto>(employeeAccount);
+            return MappingToNewObj<EmployeeAccountDto>(employeeAccount);
         }
     }
 }

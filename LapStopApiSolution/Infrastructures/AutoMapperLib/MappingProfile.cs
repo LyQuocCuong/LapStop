@@ -2,6 +2,7 @@
 using Domains.Models;
 using DTO.Creation;
 using DTO.Output;
+using DTO.Update;
 
 namespace AutoMapperLib
 {
@@ -53,6 +54,16 @@ namespace AutoMapperLib
 
             #region BrandCreationDto --> Brand
             CreateMap<BrandForCreationDto, Brand>()
+                .ForMember(model => model.Name,
+                           model_field => model_field.MapFrom(e => e.Name))
+                .ForMember(model => model.Description,
+                           model_field => model_field.MapFrom(e => e.Description))
+                .ForMember(model => model.AvatarUrl,
+                           model_field => model_field.MapFrom(e => e.AvatarUrl));
+            #endregion
+
+            #region BrandForUpdateDto --> Brand
+            CreateMap<BrandForUpdateDto, Brand>()
                 .ForMember(model => model.Name,
                            model_field => model_field.MapFrom(e => e.Name))
                 .ForMember(model => model.Description,
@@ -119,6 +130,13 @@ namespace AutoMapperLib
                 .ForMember(model => model.Password,
                            model_field => model_field.MapFrom(e => e.Password));
             #endregion
+
+            #region CustomerAccountForUpdateDto --> CustomerAccount
+            CreateMap<CustomerAccountForUpdateDto, CustomerAccount>()
+                .ForMember(model => model.Password,
+                           model_field => model_field.MapFrom(e => e.Password));
+            #endregion
+
         }
 
         private void MappingCustomer()
@@ -150,10 +168,23 @@ namespace AutoMapperLib
                 .ForMember(model => model.Phone,
                            model_field => model_field.MapFrom(e => e.Phone));
             #endregion
+
+            #region CustomerForUpdateDto --> Customer
+            CreateMap<CustomerForUpdateDto, Customer>()
+                .ForMember(model => model.FirstName,
+                           model_field => model_field.MapFrom(e => e.FirstName))
+                .ForMember(model => model.LastName,
+                           model_field => model_field.MapFrom(e => e.LastName))
+                .ForMember(model => model.Address,
+                           model_field => model_field.MapFrom(e => e.Address))
+                .ForMember(model => model.Phone,
+                           model_field => model_field.MapFrom(e => e.Phone));
+            #endregion
         }
 
         private void MappingEmployeeAccount()
         {
+            #region EmployeeAccount --> EmployeeAccountDto
             CreateMap<EmployeeAccount, EmployeeAccountDto>()
                 .ForMember(dto => dto.EmployeeId,
                            dto_Id => dto_Id.MapFrom(e => e.EmployeeId))
@@ -162,7 +193,8 @@ namespace AutoMapperLib
                 .ForMember(dto => dto.Password,
                            dto_Password => dto_Password.MapFrom(e => e.Password))
                 .ForMember(dto => dto.IsActivate,
-                           dto_IsActivate => dto_IsActivate.MapFrom(e => e.IsActivate));                      
+                           dto_IsActivate => dto_IsActivate.MapFrom(e => e.IsActivate));
+            #endregion
         }
 
         private void MappingEmployee()

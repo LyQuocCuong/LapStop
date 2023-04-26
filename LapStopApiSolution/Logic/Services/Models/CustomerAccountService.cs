@@ -4,6 +4,7 @@ using Contracts.IServices.Models;
 using Domains.Models;
 using DTO.Creation;
 using DTO.Output;
+using DTO.Update;
 using Shared.CustomedExceptions;
 
 namespace Services.Models
@@ -16,18 +17,29 @@ namespace Services.Models
 
         public CustomerAccountDto CreateCustomerAccount(Guid customerId, CustomerAccountForCreationDto creationDto)
         {
-            CustomerAccount newCustomerAccount = MappingTo<CustomerAccount> (creationDto);
+            CustomerAccount newCustomerAccount = MappingToNewObj<CustomerAccount> (creationDto);
             newCustomerAccount.CustomerId = customerId;
             _repositoryManager.CustomerAccount.CreateCustomerAccount(newCustomerAccount);
             _repositoryManager.SaveChanges();
 
-            return MappingTo<CustomerAccountDto>(newCustomerAccount);
+            return MappingToNewObj<CustomerAccountDto>(newCustomerAccount);
+        }
+
+        public void UpdateCustomerAccount(Guid customerId, CustomerAccountForUpdateDto updateDto)
+        {
+            CustomerAccount? customerAccount = _repositoryManager.CustomerAccount.GetByCustomerId(isTrackChanges: true, customerId);
+            if (customerAccount == null)
+            {
+                throw new NotFoundException404(nameof(CustomerAccountService), nameof(UpdateCustomerAccount), typeof(CustomerAccount), customerId);
+            }
+            MappingToExistingObj(updateDto, customerAccount);
+            _repositoryManager.SaveChanges();
         }
 
         public List<CustomerAccountDto> GetAll(bool isTrackChanges)
         {
             List<CustomerAccount> customerAccounts = _repositoryManager.CustomerAccount.GetAll(isTrackChanges);
-            return MappingTo<List<CustomerAccountDto>>(customerAccounts);
+            return MappingToNewObj<List<CustomerAccountDto>>(customerAccounts);
         }
 
         public CustomerAccountDto? GetByCustomerId(bool isTrackChanges, Guid customerId)
@@ -41,7 +53,8 @@ namespace Services.Models
             {
                 throw new NotFoundException404(nameof(CustomerAccountService), nameof(GetByCustomerId), typeof(CustomerAccount), customerId);
             }
-            return MappingTo<CustomerAccountDto>(customerAccount);
+            return MappingToNewObj<CustomerAccountDto>(customerAccount);
         }
+
     }
 }

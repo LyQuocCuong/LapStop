@@ -3,6 +3,7 @@ using Contracts.ILog;
 using Contracts.IServices;
 using DTO.Creation;
 using DTO.Output;
+using DTO.Update;
 using Microsoft.AspNetCore.Mvc;
 
 namespace RestfulApiHandler.Controllers
@@ -28,6 +29,18 @@ namespace RestfulApiHandler.Controllers
             return Ok(customerDtos);
         }
 
+        [HttpPost]
+        [Route("customers")]
+        public IActionResult CreateCustomer([FromBody] CustomerForCreationDto creationDto)
+        {
+            if (creationDto == null)
+            {
+                return BadRequest(ConstMessages.OBJECT_IS_NULL(nameof(CustomerForCreationDto)));
+            }
+            CustomerDto newCustomerDto = _serviceManager.Customer.CreateCustomer(creationDto);
+            return CreatedAtRoute("GetCustomerById", new { id = newCustomerDto.Id }, newCustomerDto);
+        }
+
         [HttpGet]
         [Route("customers/{id:guid}", Name = "GetCustomerById")]
         public IActionResult GetById(Guid id)
@@ -40,16 +53,12 @@ namespace RestfulApiHandler.Controllers
             return Ok(customerDto);
         }
 
-        [HttpPost]
-        [Route("customers")]
-        public IActionResult CreateCustomer([FromBody] CustomerForCreationDto creationDto)
+        [HttpPut]
+        [Route("customers/{id:guid}")]
+        public IActionResult UpdateCustomer(Guid id, [FromBody] CustomerForUpdateDto updateDto)
         {
-            if (creationDto == null)
-            {
-                return BadRequest(ConstMessages.OBJECT_IS_NULL(nameof(CustomerForCreationDto)));
-            }
-            CustomerDto newCustomerDto = _serviceManager.Customer.CreateCustomer(creationDto);
-            return CreatedAtRoute("GetCustomerById", new { id = newCustomerDto.Id }, newCustomerDto);
+            _serviceManager.Customer.UpdateCustomer(id, updateDto);
+            return NoContent();
         }
 
     }

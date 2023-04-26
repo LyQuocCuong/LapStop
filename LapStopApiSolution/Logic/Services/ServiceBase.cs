@@ -15,9 +15,17 @@ namespace Services
             _mapper = mapper;
         }
 
-        public TDestination MappingTo<TDestination>(object source)
+        // Execute a mapping from the source object to a NEW destination object.
+        // The source type is INFERRED from the source object.
+        public TDestination MappingToNewObj<TDestination>(object source)
         {
             return _mapper.Map<TDestination>(source);
+        }
+
+        //Execute a mapping from the source object to the EXISTING destination object.
+        public object MappingToExistingObj(object fromSource, object toExistingDestination)
+        {
+            return _mapper.Map(fromSource, toExistingDestination);
         }
 
     }

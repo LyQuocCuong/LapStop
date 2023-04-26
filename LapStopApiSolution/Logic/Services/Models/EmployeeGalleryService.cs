@@ -20,7 +20,7 @@ namespace Services.Models
                 throw new NotFoundException404(nameof(EmployeeAccountService), nameof(GetByEmployeeId), typeof(Employee), employeeId);
             }
             List<EmployeeGallery> employeeGalleries = _repositoryManager.EmployeeGallery.GetByEmployeeId(isTrackChanges, employeeId);
-            return MappingTo<List<EmployeeGalleryDto>>(employeeGalleries);
+            return MappingToNewObj<List<EmployeeGalleryDto>>(employeeGalleries);
         }
     }
 }
