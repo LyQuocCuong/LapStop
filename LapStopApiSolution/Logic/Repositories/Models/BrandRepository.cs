@@ -15,6 +15,11 @@ namespace Repositories.Models
             Create(brand);
         }
 
+        public void DeleteBrand(Brand brand)
+        {
+            Delete(brand);
+        }
+
         public List<Brand> GetAll(bool isTrackChanges)
         {
             return FindAll(isTrackChanges).ToList();

@@ -2,6 +2,7 @@
 using Entities.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Repositories
 {
@@ -46,7 +47,17 @@ namespace Repositories
 
         public void Delete(TModel obj)
         {
-            //_dbSet.Remove(obj);
+            Type model = typeof(TModel);
+            PropertyInfo? prop = model.GetProperty("IsRemoved");
+            if (prop != null && prop.PropertyType == typeof(bool))
+            {
+                prop.SetValue(obj, true);
+            }
+        }
+
+        public void DeletePermanently(TModel obj)
+        {
+            _dbSet.Remove(obj);
         }
     }
 }

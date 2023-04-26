@@ -23,6 +23,17 @@ namespace Services.Models
             return MappingTo<BrandDto>(newBrand);
         }
 
+        public void DeleteBrand(Guid id)
+        {
+            Brand? brand = _repositoryManager.Brand.GetById(isTrackChanges: true, id);
+            if (brand == null)
+            {
+                throw new NotFoundException404(nameof(BrandService), nameof(GetById), typeof(Brand), id);
+            }
+            _repositoryManager.Brand.DeleteBrand(brand);
+            _repositoryManager.SaveChanges();
+        }
+
         public List<BrandDto> GetAll(bool isTrackChanges)
         {
             List<Brand> brands = _repositoryManager.Brand.GetAll(isTrackChanges);
