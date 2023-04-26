@@ -17,8 +17,8 @@ namespace Entities.Configurations
                     Name = ConstSeedingData.INVOICE_STATUS.Processing.Name,
                     IsEnable = true,
                     IsRemoved = false,
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
+                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
                 },
                 new InvoiceStatus()
                 {
@@ -26,8 +26,8 @@ namespace Entities.Configurations
                     Name = ConstSeedingData.INVOICE_STATUS.Completed.Name,
                     IsEnable = true,
                     IsRemoved = false,
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
+                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
                 },
                 new InvoiceStatus()
                 {
@@ -35,8 +35,8 @@ namespace Entities.Configurations
                     Name = ConstSeedingData.INVOICE_STATUS.Blocked.Name,
                     IsEnable = true,
                     IsRemoved = false,
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
+                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
                 }
             );
         }

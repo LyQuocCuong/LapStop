@@ -17,8 +17,8 @@ namespace Entities.Configurations
                     Name = ConstSeedingData.EMPLOYEE_STATUS.On.Name,
                     IsEnable = true,
                     IsRemoved = false,
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
+                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
                 },
                 new EmployeeStatus()
                 {
@@ -26,8 +26,8 @@ namespace Entities.Configurations
                     Name = ConstSeedingData.EMPLOYEE_STATUS.Off.Name,
                     IsEnable = true,
                     IsRemoved = false,
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
+                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
                 },
                 new EmployeeStatus()
                 {
@@ -35,8 +35,8 @@ namespace Entities.Configurations
                     Name = ConstSeedingData.EMPLOYEE_STATUS.Leaving.Name,
                     IsEnable = true,
                     IsRemoved = false,
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
+                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
                 }
             );
         }

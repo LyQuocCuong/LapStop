@@ -26,7 +26,7 @@ namespace Entities.Context
 
             modelBuilder.ApplyRelationshipConfigExt();
 
-            //modelBuilder.ApplySeedingDataExt();
+            modelBuilder.ApplySeedingDataExt();
 
             base.OnModelCreating(modelBuilder);
         }
