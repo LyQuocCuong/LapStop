@@ -16,7 +16,7 @@ namespace Services.Models
         public List<SalesOrderStatusDto> GetAll(bool isTrackChanges)
         {
             List<SalesOrderStatus> salesOrderStatuses = _repositoryManager.SalesOrderStatus.GetAll(isTrackChanges);
-            return MappingTo<List<SalesOrderStatusDto>>(salesOrderStatuses);
+            return MappingToNewObj<List<SalesOrderStatusDto>>(salesOrderStatuses);
         }
 
         public SalesOrderStatusDto? GetById(bool isTrackChanges, Guid id)
@@ -26,7 +26,7 @@ namespace Services.Models
             {
                 throw new NotFoundException404(nameof(SalesOrderStatusService), nameof(GetById), typeof(SalesOrderStatus), id);
             }
-            return MappingTo<SalesOrderStatusDto>(salesOrderStatus);
+            return MappingToNewObj<SalesOrderStatusDto>(salesOrderStatus);
         }
     }
 }

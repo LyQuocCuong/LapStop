@@ -1,5 +1,6 @@
 ﻿using DTO.Creation;
 using DTO.Output;
+using DTO.Update;
 
 namespace Contracts.IServices.Models
 {
@@ -12,6 +13,8 @@ namespace Contracts.IServices.Models
         bool IsValidCustomerId(Guid customerId);
 
         CustomerDto CreateCustomer(CustomerForCreationDto creationDto);
+
+        void UpdateCustomer(Guid id, CustomerForUpdateDto updateDto);
 
     }
 }

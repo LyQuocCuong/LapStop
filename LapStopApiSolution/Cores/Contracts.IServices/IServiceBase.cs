@@ -8,6 +8,7 @@ namespace Contracts.IServices
 {
     public interface IServiceBase
     {
-        TDestination MappingTo<TDestination>(object source);
+        TDestination MappingToNewObj<TDestination>(object source);
+        object MappingToExistingObj(object fromSource, object toExistingDestination);
     }
 }

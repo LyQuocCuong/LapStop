@@ -1,6 +1,6 @@
-﻿namespace DTO.Creation
+﻿namespace DTO.Update
 {
-    public sealed class BrandForCreationDto
+    public sealed class BrandForUpdateDto
     {
         public string? Name { get; set; }
 

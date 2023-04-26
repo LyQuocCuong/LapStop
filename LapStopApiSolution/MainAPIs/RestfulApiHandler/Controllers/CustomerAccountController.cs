@@ -3,6 +3,7 @@ using Contracts.ILog;
 using Contracts.IServices;
 using DTO.Creation;
 using DTO.Output;
+using DTO.Update;
 using Microsoft.AspNetCore.Mvc;
 
 namespace RestfulApiHandler.Controllers
@@ -50,6 +51,14 @@ namespace RestfulApiHandler.Controllers
             }
             CustomerAccountDto newCustomerAccountDto = _serviceManager.CustomerAccount.CreateCustomerAccount(customerId, creationDto);
             return CreatedAtRoute("GetAccountByCustomerId", new { customerId = newCustomerAccountDto.CustomerId }, newCustomerAccountDto);
+        }
+
+        [HttpPut]
+        [Route("customers/{customerId:guid}/account")]
+        public IActionResult UpdateCustomerAccount(Guid customerId, [FromBody] CustomerAccountForUpdateDto updateDto)
+        {
+            _serviceManager.CustomerAccount.UpdateCustomerAccount(customerId, updateDto);
+            return NoContent();
         }
 
     }

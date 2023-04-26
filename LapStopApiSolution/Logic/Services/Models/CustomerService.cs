@@ -4,6 +4,7 @@ using Contracts.IServices.Models;
 using Domains.Models;
 using DTO.Creation;
 using DTO.Output;
+using DTO.Update;
 using Shared.CustomedExceptions;
 
 namespace Services.Models
@@ -16,17 +17,28 @@ namespace Services.Models
 
         public CustomerDto CreateCustomer(CustomerForCreationDto creationDto)
         {
-            Customer newCustomer = MappingTo<Customer>(creationDto);
+            Customer newCustomer = MappingToNewObj<Customer>(creationDto);
             _repositoryManager.Customer.CreateCustomer(newCustomer);
             _repositoryManager.SaveChanges();
 
-            return MappingTo<CustomerDto>(newCustomer);
+            return MappingToNewObj<CustomerDto>(newCustomer);
+        }
+
+        public void UpdateCustomer(Guid id, CustomerForUpdateDto updateDto)
+        {
+            Customer? customer = _repositoryManager.Customer.GetById(isTrackChanges: true, id);
+            if (customer == null)
+            {
+                throw new NotFoundException404(nameof(CustomerService), nameof(UpdateCustomer), typeof(Customer), id);
+            }
+            MappingToExistingObj(updateDto, customer);
+            _repositoryManager.SaveChanges();
         }
 
         public List<CustomerDto> GetAll(bool isTrackChanges)
         {
             List<Customer> customers = _repositoryManager.Customer.GetAll(isTrackChanges);
-            return MappingTo<List<CustomerDto>>(customers);
+            return MappingToNewObj<List<CustomerDto>>(customers);
         }
 
         public CustomerDto? GetById(bool isTrackChanges, Guid id)
@@ -36,12 +48,13 @@ namespace Services.Models
             {
                 throw new NotFoundException404(nameof(CustomerService), nameof(GetById), typeof(Customer), id);
             }
-            return MappingTo<CustomerDto>(customer);
+            return MappingToNewObj<CustomerDto>(customer);
         }
 
         public bool IsValidCustomerId(Guid customerId)
         {
             return _repositoryManager.Customer.IsValidCustomerId(customerId);
         }
+
     }
 }

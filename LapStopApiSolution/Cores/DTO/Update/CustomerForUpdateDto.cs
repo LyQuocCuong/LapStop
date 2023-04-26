@@ -1,6 +1,6 @@
-﻿namespace DTO.Creation
+﻿namespace DTO.Update
 {
-    public sealed class CustomerForCreationDto
+    public sealed class CustomerForUpdateDto
     {
         public string? FirstName { get; set; }
 
