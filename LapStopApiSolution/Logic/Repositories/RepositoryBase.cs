@@ -8,8 +8,8 @@ namespace Repositories
 {
     internal abstract class RepositoryBase<TModel> : IRepositoryBase<TModel> where TModel : class
     {
-        protected LapStopContext _context;
-        protected DbSet<TModel> _dbSet;
+        protected readonly LapStopContext _context;
+        private readonly DbSet<TModel> _dbSet;
 
         public RepositoryBase(LapStopContext context)
         {
@@ -35,17 +35,17 @@ namespace Repositories
             return _dbSet.Where(expression).AsNoTracking();
         }
 
-        public void Create(TModel obj)
+        public void CreateModel(TModel obj)
         {
             _dbSet.Add(obj);
         }
 
-        public void Update(TModel obj)
+        public void UpdateModel(TModel obj)
         {
             _dbSet.Update(obj);
         }
 
-        public void Delete(TModel obj)
+        public void DeleteModel(TModel obj)
         {
             Type model = typeof(TModel);
             PropertyInfo? prop = model.GetProperty("IsRemoved");
@@ -55,7 +55,7 @@ namespace Repositories
             }
         }
 
-        public void DeletePermanently(TModel obj)
+        public void DeleteModelPermanently(TModel obj)
         {
             _dbSet.Remove(obj);
         }

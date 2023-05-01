@@ -10,9 +10,9 @@ namespace Repositories.Models
         {
         }
 
-        public void CreateCustomer(Customer customer)
+        public void Create(Customer customer)
         {
-            Create(customer);
+            base.CreateModel(customer);
         }
 
         public List<Customer> GetAll(bool isTrackChanges)
@@ -20,12 +20,12 @@ namespace Repositories.Models
             return FindAll(isTrackChanges).ToList();
         }
 
-        public Customer? GetById(bool isTrackChanges, Guid id)
+        public Customer? GetOneById(bool isTrackChanges, Guid customerId)
         {
-            return FindByCondition(isTrackChanges, customer => customer.Id == id).FirstOrDefault();
+            return FindByCondition(isTrackChanges, customer => customer.Id == customerId).FirstOrDefault();
         }
 
-        public bool IsValidCustomerId(Guid customerId)
+        public bool IsValidId(Guid customerId)
         {
             return FindByCondition(isTrackChanges: false, customer => customer.Id == customerId).Any();
         }

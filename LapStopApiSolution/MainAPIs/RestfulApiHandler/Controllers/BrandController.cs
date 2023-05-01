@@ -1,5 +1,6 @@
 ﻿using Contracts.ILog;
 using Contracts.IServices;
+using Domains.Models;
 using DTO.Creation;
 using DTO.Output;
 using DTO.Update;
@@ -22,30 +23,18 @@ namespace RestfulApiHandler.Controllers
         }
 
         [HttpGet]
-        [Route("brands")]
-        public IActionResult GetAll() 
+        [Route("brands", Name = "GetAllBrands")]
+        public IActionResult GetAllBrands() 
         {
             List<BrandDto> brandDtos = _serviceManager.Brand.GetAll(isTrackChanges: false);
             return Ok(brandDtos);
         }
 
-        [HttpPost]
-        [Route("brands")]
-        public IActionResult CreateBrand([FromBody] BrandForCreationDto creationDto)
-        {
-            if (creationDto == null)
-            {
-                return BadRequest(CommonMessages.ERROR.NullObject(nameof(BrandForCreationDto)));
-            }
-            BrandDto newBrandDto = _serviceManager.Brand.CreateBrand(creationDto);
-            return CreatedAtRoute("GetBrandById", new { id = newBrandDto.Id }, newBrandDto);
-        }
-
         [HttpGet]
-        [Route("brands/{id:guid}", Name = "GetBrandById")]
-        public IActionResult GetById(Guid id)
+        [Route("brands/{brandId:guid}", Name = "GetBrandById")]
+        public IActionResult GetBrandById(Guid brandId)
         {
-            BrandDto? brandDto = _serviceManager.Brand.GetById(isTrackChanges: false, id);
+            BrandDto? brandDto = _serviceManager.Brand.GetOneById(isTrackChanges: false, brandId);
             if (brandDto == null)
             {
                 return NotFound();
@@ -53,19 +42,31 @@ namespace RestfulApiHandler.Controllers
             return Ok(brandDto);
         }
 
-        [HttpDelete]
-        [Route("brands/{id:guid}")]
-        public IActionResult DeleteBrand(Guid id)
+        [HttpPost]
+        [Route("brands", Name = "CreateBrand")]
+        public IActionResult CreateBrand([FromBody] BrandForCreationDto creationDto)
         {
-            _serviceManager.Brand.DeleteBrand(id);
+            if (creationDto == null)
+            {
+                return BadRequest(CommonMessages.ERROR.NullObject(nameof(BrandForCreationDto)));
+            }
+            BrandDto newBrandDto = _serviceManager.Brand.Create(creationDto);
+            return CreatedAtRoute("GetBrandById", new { id = newBrandDto.Id }, newBrandDto);
+        }
+
+        [HttpDelete]
+        [Route("brands/{brandId:guid}", Name = "DeleteBrand")]
+        public IActionResult DeleteBrand(Guid brandId)
+        {
+            _serviceManager.Brand.Delete(brandId);
             return NoContent();
         }
 
         [HttpPut]
-        [Route("brands/{id:guid}")]
-        public IActionResult UpdateBrand(Guid id, [FromBody] BrandForUpdateDto updateDto)
+        [Route("brands/{brandId:guid}", Name = "UpdateBrand")]
+        public IActionResult UpdateBrand(Guid brandId, [FromBody] BrandForUpdateDto updateDto)
         {
-            _serviceManager.Brand.UpdateBrand(id, updateDto);
+            _serviceManager.Brand.Update(brandId, updateDto);
             return NoContent();
         }
 

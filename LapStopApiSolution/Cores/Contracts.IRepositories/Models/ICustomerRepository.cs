@@ -6,10 +6,10 @@ namespace Contracts.IRepositories.Models
     {
         List<Customer> GetAll(bool isTrackChanges);
 
-        Customer? GetById(bool isTrackChanges, Guid id);
+        Customer? GetOneById(bool isTrackChanges, Guid customerId);
 
-        bool IsValidCustomerId(Guid customerId);
+        bool IsValidId(Guid customerId);
 
-        void CreateCustomer(Customer customer);
+        void Create(Customer customer);
     }
 }

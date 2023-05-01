@@ -13,13 +13,13 @@ namespace Services.Models
         {
         }
 
-        public List<CartItemDto> GetByCartId(bool isTrackChanges, Guid cartId)
+        public List<CartItemDto> GetAllByCartId(bool isTrackChanges, Guid cartId)
         {
-            if (_repositoryManager.Cart.IsValidCartId(cartId) == false)
+            if (_repositoryManager.Cart.IsValidId(cartId) == false)
             {
-                throw new ExNotFoundInDB(nameof(CartItemService), nameof(GetByCartId), typeof(Cart), cartId);
+                throw new ExNotFoundInDB(nameof(CartItemService), nameof(GetAllByCartId), typeof(Cart), cartId);
             }
-            List<CartItem> cartItems = _repositoryManager.CartItem.GetByCartId(isTrackChanges: false, cartId);
+            List<CartItem> cartItems = _repositoryManager.CartItem.GetAllByCartId(isTrackChanges: false, cartId);
             return MappingToNewObj<List<CartItemDto>>(cartItems);
         }
     }

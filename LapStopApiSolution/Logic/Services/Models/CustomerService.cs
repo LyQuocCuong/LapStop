@@ -15,21 +15,21 @@ namespace Services.Models
         {
         }
 
-        public CustomerDto CreateCustomer(CustomerForCreationDto creationDto)
+        public CustomerDto Create(CustomerForCreationDto creationDto)
         {
             Customer newCustomer = MappingToNewObj<Customer>(creationDto);
-            _repositoryManager.Customer.CreateCustomer(newCustomer);
+            _repositoryManager.Customer.Create(newCustomer);
             _repositoryManager.SaveChanges();
 
             return MappingToNewObj<CustomerDto>(newCustomer);
         }
 
-        public void UpdateCustomer(Guid id, CustomerForUpdateDto updateDto)
+        public void Update(Guid customerId, CustomerForUpdateDto updateDto)
         {
-            Customer? customer = _repositoryManager.Customer.GetById(isTrackChanges: true, id);
+            Customer? customer = _repositoryManager.Customer.GetOneById(isTrackChanges: true, customerId);
             if (customer == null)
             {
-                throw new ExNotFoundInDB(nameof(CustomerService), nameof(UpdateCustomer), typeof(Customer), id);
+                throw new ExNotFoundInDB(nameof(CustomerService), nameof(Update), typeof(Customer), customerId);
             }
             MappingToExistingObj(updateDto, customer);
             _repositoryManager.SaveChanges();
@@ -41,19 +41,19 @@ namespace Services.Models
             return MappingToNewObj<List<CustomerDto>>(customers);
         }
 
-        public CustomerDto? GetById(bool isTrackChanges, Guid id)
+        public CustomerDto? GetOneById(bool isTrackChanges, Guid customerId)
         {
-            Customer? customer = _repositoryManager.Customer.GetById(isTrackChanges, id);
+            Customer? customer = _repositoryManager.Customer.GetOneById(isTrackChanges, customerId);
             if (customer == null)
             {
-                throw new ExNotFoundInDB(nameof(CustomerService), nameof(GetById), typeof(Customer), id);
+                throw new ExNotFoundInDB(nameof(CustomerService), nameof(GetOneById), typeof(Customer), customerId);
             }
             return MappingToNewObj<CustomerDto>(customer);
         }
 
-        public bool IsValidCustomerId(Guid customerId)
+        public bool IsValidId(Guid customerId)
         {
-            return _repositoryManager.Customer.IsValidCustomerId(customerId);
+            return _repositoryManager.Customer.IsValidId(customerId);
         }
 
     }

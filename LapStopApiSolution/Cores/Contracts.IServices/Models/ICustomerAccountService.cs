@@ -8,10 +8,10 @@ namespace Contracts.IServices.Models
     {
         List<CustomerAccountDto> GetAll(bool isTrackChanges);
 
-        CustomerAccountDto? GetByCustomerId(bool isTrackChanges, Guid customerId);
+        CustomerAccountDto? GetOneByCustomerId(bool isTrackChanges, Guid customerId);
 
-        CustomerAccountDto CreateCustomerAccount(Guid customerId, CustomerAccountForCreationDto creationDto);
+        CustomerAccountDto Create(Guid customerId, CustomerAccountForCreationDto creationDto);
 
-        void UpdateCustomerAccount(Guid customerId, CustomerAccountForUpdateDto updateDto);
+        void Update(Guid customerId, CustomerAccountForUpdateDto updateDto);
     }
 }

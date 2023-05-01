@@ -10,14 +10,14 @@ namespace Repositories.Models
         {
         }
 
-        public void CreateBrand(Brand brand)
+        public void Create(Brand brand)
         {
-            Create(brand);
+            base.CreateModel(brand);
         }
 
-        public void DeleteBrand(Brand brand)
+        public void Delete(Brand brand)
         {
-            Delete(brand);
+            base.DeleteModel(brand);
         }
 
         public List<Brand> GetAll(bool isTrackChanges)
@@ -25,7 +25,7 @@ namespace Repositories.Models
             return FindAll(isTrackChanges).ToList();
         }
 
-        public Brand? GetById(bool isTrackChanges, Guid id)
+        public Brand? GetOneById(bool isTrackChanges, Guid id)
         {
             return FindByCondition(isTrackChanges, brand => brand.Id == id).FirstOrDefault();
         }

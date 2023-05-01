@@ -6,10 +6,10 @@ namespace Contracts.IRepositories.Models
     {
         List<Brand> GetAll(bool isTrackChanges);
 
-        Brand? GetById(bool isTrackChanges, Guid id);
+        Brand? GetOneById(bool isTrackChanges, Guid brandId);
 
-        void CreateBrand(Brand brand);
+        void Create(Brand brand);
 
-        void DeleteBrand(Brand brand);
+        void Delete(Brand brand);
     }
 }

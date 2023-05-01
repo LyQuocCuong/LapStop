@@ -8,12 +8,12 @@ namespace Contracts.IRepositories
 
         IQueryable<TModel> FindByCondition(bool isTrackChanges, Expression<Func<TModel, bool>> expression);
         
-        void Create(TModel obj);
+        void CreateModel(TModel obj);
         
-        void Update(TModel obj);
+        void UpdateModel(TModel obj);
         
-        void Delete(TModel obj);
+        void DeleteModel(TModel obj);
 
-        void DeletePermanently(TModel obj);
+        void DeleteModelPermanently(TModel obj);
     }
 }

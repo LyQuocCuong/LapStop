@@ -15,12 +15,12 @@ namespace Repositories.Models
             return FindAll(isTrackChanges).ToList();
         }
 
-        public Cart? GetByCustomerId(bool isTrackChanges, Guid customerId)
+        public Cart? GetOneByCustomerId(bool isTrackChanges, Guid customerId)
         {
             return FindByCondition(isTrackChanges, cart => cart.CustomerId == customerId).FirstOrDefault();
         }
 
-        public bool IsValidCartId(Guid cartId)
+        public bool IsValidId(Guid cartId)
         {
             return FindByCondition(isTrackChanges: false, cart => cart.Id == cartId).Any();
         }

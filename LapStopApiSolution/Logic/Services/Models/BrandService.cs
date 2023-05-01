@@ -15,34 +15,34 @@ namespace Services.Models
         {
         }
 
-        public BrandDto CreateBrand(BrandForCreationDto creationDto)
+        public BrandDto Create(BrandForCreationDto creationDto)
         {
             Brand newBrand = MappingToNewObj<Brand>(creationDto);
-            _repositoryManager.Brand.CreateBrand(newBrand);
+            _repositoryManager.Brand.Create(newBrand);
             _repositoryManager.SaveChanges();
 
             return MappingToNewObj<BrandDto>(newBrand);
         }
 
-        public void UpdateBrand(Guid id, BrandForUpdateDto updateDto)
+        public void Update(Guid brandId, BrandForUpdateDto updateDto)
         {
-            Brand? brand = _repositoryManager.Brand.GetById(isTrackChanges: true, id);
+            Brand? brand = _repositoryManager.Brand.GetOneById(isTrackChanges: true, brandId);
             if (brand == null)
             {
-                throw new ExNotFoundInDB(nameof(BrandService), nameof(UpdateBrand), typeof(Brand), id);
+                throw new ExNotFoundInDB(nameof(BrandService), nameof(Update), typeof(Brand), brandId);
             }
             MappingToExistingObj(updateDto, brand);
             _repositoryManager.SaveChanges();
         }
 
-        public void DeleteBrand(Guid id)
+        public void Delete(Guid brandId)
         {
-            Brand? brand = _repositoryManager.Brand.GetById(isTrackChanges: true, id);
+            Brand? brand = _repositoryManager.Brand.GetOneById(isTrackChanges: true, brandId);
             if (brand == null)
             {
-                throw new ExNotFoundInDB(nameof(BrandService), nameof(GetById), typeof(Brand), id);
+                throw new ExNotFoundInDB(nameof(BrandService), nameof(Delete), typeof(Brand), brandId);
             }
-            _repositoryManager.Brand.DeleteBrand(brand);
+            _repositoryManager.Brand.Delete(brand);
             _repositoryManager.SaveChanges();
         }
 
@@ -52,12 +52,12 @@ namespace Services.Models
             return MappingToNewObj<List<BrandDto>>(brands);
         }
 
-        public BrandDto? GetById(bool isTrackChanges, Guid id)
+        public BrandDto? GetOneById(bool isTrackChanges, Guid brandId)
         {
-            Brand? brand = _repositoryManager.Brand.GetById(isTrackChanges, id);
+            Brand? brand = _repositoryManager.Brand.GetOneById(isTrackChanges, brandId);
             if (brand == null)
             {
-                throw new ExNotFoundInDB(nameof(BrandService), nameof(GetById),typeof(Brand), id);
+                throw new ExNotFoundInDB(nameof(BrandService), nameof(GetOneById),typeof(Brand), brandId);
             }
             return MappingToNewObj<BrandDto>(brand);
         }

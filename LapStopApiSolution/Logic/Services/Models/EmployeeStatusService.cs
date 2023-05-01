@@ -19,12 +19,12 @@ namespace Services.Models
             return MappingToNewObj<List<EmployeeStatusDto>>(employeeStatuses);
         }
 
-        public EmployeeStatusDto? GetById(bool isTrackChanges, Guid id)
+        public EmployeeStatusDto? GetOneById(bool isTrackChanges, Guid employeeStatusId)
         {
-            EmployeeStatus? employeeStatus = _repositoryManager.EmployeeStatus.GetById(isTrackChanges, id);
+            EmployeeStatus? employeeStatus = _repositoryManager.EmployeeStatus.GetOneById(isTrackChanges, employeeStatusId);
             if (employeeStatus == null)
             {
-                throw new ExNotFoundInDB(nameof(EmployeeStatus), nameof(GetById), typeof(EmployeeStatus), id);
+                throw new ExNotFoundInDB(nameof(EmployeeStatus), nameof(GetOneById), typeof(EmployeeStatus), employeeStatusId);
             }
             return MappingToNewObj<EmployeeStatusDto>(employeeStatus); 
         }

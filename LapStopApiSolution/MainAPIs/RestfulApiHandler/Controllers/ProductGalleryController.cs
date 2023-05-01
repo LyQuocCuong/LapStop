@@ -18,10 +18,11 @@ namespace RestfulApiHandler.Controllers
             _serviceManager = serviceManager;
         }
 
-        [HttpGet("products/{id}/galleries")]
-        public IActionResult GetByProductId(Guid id)
+        [HttpGet]
+        [Route("products/{productId:guid}/galleries", Name = "GetAllProductGalleriesByProductId")]
+        public IActionResult GetAllProductGalleriesByProductId(Guid productId)
         {
-            List<ProductGalleryDto> productGalleryDtos = _serviceManager.ProductGallery.GetByProductId(isTrackChanges: false, id);
+            List<ProductGalleryDto> productGalleryDtos = _serviceManager.ProductGallery.GetAllByProductId(isTrackChanges: false, productId);
             return Ok(productGalleryDtos);
         }
 

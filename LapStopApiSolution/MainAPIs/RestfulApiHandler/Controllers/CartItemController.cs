@@ -19,10 +19,10 @@ namespace RestfulApiHandler.Controllers
         }
 
         [HttpGet]
-        [Route("carts/{cartId:guid}/cartitems")]
-        public IActionResult GetByCartId(Guid cartId)
+        [Route("carts/{cartId:guid}/cartitems", Name = "GetAllCartItemsByCartId")]
+        public IActionResult GetAllCartItemsByCartId(Guid cartId)
         {
-            List<CartItemDto> cartItemDtos = _serviceManager.CartItem.GetByCartId(isTrackChanges: false, cartId);
+            List<CartItemDto> cartItemDtos = _serviceManager.CartItem.GetAllByCartId(isTrackChanges: false, cartId);
             return Ok(cartItemDtos);
         }
 

@@ -19,19 +19,19 @@ namespace Services.Models
             return MappingToNewObj<List<ProductDto>>(products);
         }
 
-        public ProductDto? GetById(bool isTrackChanges, Guid id)
+        public ProductDto? GetOneById(bool isTrackChanges, Guid productId)
         {
-            Product? product = _repositoryManager.Product.GetById(isTrackChanges, id);
+            Product? product = _repositoryManager.Product.GetOneById(isTrackChanges, productId);
             if (product == null)
             {
-                throw new ExNotFoundInDB(nameof(ProductService), nameof(GetById), typeof(Product), id);
+                throw new ExNotFoundInDB(nameof(ProductService), nameof(GetOneById), typeof(Product), productId);
             }
             return MappingToNewObj<ProductDto>(product);
         }
 
-        public bool IsValidProductId(Guid id)
+        public bool IsValidId(Guid productId)
         {
-            return _repositoryManager.Product.IsValidProductId(id);
+            return _repositoryManager.Product.IsValidId(productId);
         }
     }
 }

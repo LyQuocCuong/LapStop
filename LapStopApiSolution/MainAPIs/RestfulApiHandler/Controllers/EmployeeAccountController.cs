@@ -19,18 +19,18 @@ namespace RestfulApiHandler.Controllers
         }
 
         [HttpGet]
-        [Route("employees/accounts")]
-        public IActionResult GetAll()
+        [Route("employees/accounts", Name = "GetAllEmployeeAccounts")]
+        public IActionResult GetAllEmployeeAccounts()
         {
             List<EmployeeAccountDto> employeeAccountDtos = _serviceManager.EmployeeAccount.GetAll(isTrackChanges: false);
             return Ok(employeeAccountDtos);
         }
 
         [HttpGet]
-        [Route("employees/{id:guid}/account")]
-        public IActionResult GetByEmployeeId(Guid id)
+        [Route("employees/{employeeId:guid}/account", Name = "GetEmployeeAccountByEmployeeId")]
+        public IActionResult GetEmployeeAccountByEmployeeId(Guid employeeId)
         {
-            EmployeeAccountDto? employeeAccountDto = _serviceManager.EmployeeAccount.GetByEmployeeId(isTrackChanges: false, id);
+            EmployeeAccountDto? employeeAccountDto = _serviceManager.EmployeeAccount.GetOneByEmployeeId(isTrackChanges: false, employeeId);
             if (employeeAccountDto == null)
             {
                 return NotFound();

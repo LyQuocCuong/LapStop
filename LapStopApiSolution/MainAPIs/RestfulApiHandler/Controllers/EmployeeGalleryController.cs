@@ -19,10 +19,10 @@ namespace RestfulApiHandler.Controllers
         }
 
         [HttpGet]
-        [Route("employees/{id:guid}/galleries")]
-        public IActionResult GetByEmployeeId(Guid id)
+        [Route("employees/{employeeId:guid}/galleries", Name = "GetAllEmployeeGalleriesByEmployeeId")]
+        public IActionResult GetAllEmployeeGalleriesByEmployeeId(Guid employeeId)
         {
-            List<EmployeeGalleryDto> employeeGalleryDtos = _serviceManager.EmployeeGallery.GetByEmployeeId(isTrackChanges: false, id);
+            List<EmployeeGalleryDto> employeeGalleryDtos = _serviceManager.EmployeeGallery.GetAllByEmployeeId(isTrackChanges: false, employeeId);
             return Ok(employeeGalleryDtos);
         }
 

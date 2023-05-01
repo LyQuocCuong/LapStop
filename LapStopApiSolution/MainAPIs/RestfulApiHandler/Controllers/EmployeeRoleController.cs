@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace RestfulApiHandler.Controllers
 {
     [ApiController]
-    [Route("api/employeeroles")]
+    [Route("api")]
     public class EmployeeRoleController : ControllerBase
     {
         private readonly ILogService _logService;
@@ -19,19 +19,18 @@ namespace RestfulApiHandler.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        [Route("employeeroles", Name = "GetAllEmployeeRoles")]
+        public IActionResult GetAllEmployeeRoles()
         {
             List<EmployeeRoleDto> employeeRoleDtos = _serviceManager.EmployeeRole.GetAll(isTrackChanges: false);
             return Ok(employeeRoleDtos);
         }
 
         [HttpGet]
-        [Route("{id:guid}")]
-        public IActionResult GetById(Guid id)
+        [Route("employeeroles/{employeeRoleId:guid}", Name = "GetEmployeeRoleById")]
+        public IActionResult GetEmployeeRoleById(Guid employeeRoleId)
         {
-            //Using example:
-            //throw new Exception("Hello Ex");
-            EmployeeRoleDto? employeeRoleDto = _serviceManager.EmployeeRole.GetById(isTrackChanges: false, id);
+            EmployeeRoleDto? employeeRoleDto = _serviceManager.EmployeeRole.GetOneById(isTrackChanges: false, employeeRoleId);
             if (employeeRoleDto == null)
             {
                 return NotFound();

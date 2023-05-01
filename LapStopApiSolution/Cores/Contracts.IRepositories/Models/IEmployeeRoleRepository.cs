@@ -5,6 +5,7 @@ namespace Contracts.IRepositories.Models
     public interface IEmployeeRoleRepository
     {
         List<EmployeeRole> GetAll(bool isTrackChanges);
-        EmployeeRole? GetById(bool isTrackChanges, Guid id);
+
+        EmployeeRole? GetOneById(bool isTrackChanges, Guid employeeRoleId);
     }
 }

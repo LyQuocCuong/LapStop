@@ -15,14 +15,14 @@ namespace Repositories.Models
             return FindAll(isTrackChanges).ToList();
         }
 
-        public Product? GetById(bool isTrackChanges, Guid id)
+        public Product? GetOneById(bool isTrackChanges, Guid productId)
         {
-            return FindByCondition(isTrackChanges, e => e.Id == id).FirstOrDefault();
+            return FindByCondition(isTrackChanges, e => e.Id == productId).FirstOrDefault();
         }
 
-        public bool IsValidProductId(Guid id)
+        public bool IsValidId(Guid productId)
         {
-            return FindByCondition(isTrackChanges: false, e => e.Id == id).Any();
+            return FindByCondition(isTrackChanges: false, e => e.Id == productId).Any();
         }
     }
 }
