@@ -5,6 +5,7 @@ namespace Contracts.IServices.Models
     public interface IInvoiceStatusService
     {
         List<InvoiceStatusDto> GetAll(bool isTrackChanges);
-        InvoiceStatusDto? GetById(bool isTrackChanges, Guid id);
+
+        InvoiceStatusDto? GetOneById(bool isTrackChanges, Guid invoiceStatusId);
     }
 }

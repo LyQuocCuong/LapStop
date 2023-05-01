@@ -4,6 +4,6 @@ namespace Contracts.IServices.Models
 {
     public interface IProductGalleryService
     {
-        List<ProductGalleryDto> GetByProductId(bool isTrackChanges, Guid id);
+        List<ProductGalleryDto> GetAllByProductId(bool isTrackChanges, Guid productId);
     }
 }

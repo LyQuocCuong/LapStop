@@ -5,7 +5,9 @@ namespace Contracts.IServices.Models
     public interface IEmployeeService
     {
         List<EmployeeDto> GetAll(bool isTrackChanges);
-        EmployeeDto? GetById(bool isTrackChanges, Guid id);
-        bool IsValidEmployeeId(Guid id);
+
+        EmployeeDto? GetOneById(bool isTrackChanges, Guid employeeId);
+
+        bool IsValidId(Guid employeeId);
     }
 }

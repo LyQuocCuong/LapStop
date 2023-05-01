@@ -21,18 +21,18 @@ namespace RestfulApiHandler.Controllers
         }
 
         [HttpGet]
-        [Route("customers/accounts")]
-        public IActionResult GetAll()
+        [Route("customers/accounts", Name = "GetAllCustomerAccounts")]
+        public IActionResult GetAllCustomerAccounts()
         {
             List<CustomerAccountDto> customerAccountDtos = _serviceManager.CustomerAccount.GetAll(isTrackChanges: false);
             return Ok(customerAccountDtos);
         }
 
         [HttpGet]
-        [Route("customers/{customerId:guid}/account", Name = "GetAccountByCustomerId")]
-        public IActionResult GetByCustomerId(bool isTrackChanges, Guid customerId)
+        [Route("customers/{customerId:guid}/account", Name = "GetCustomerAccountByCustomerId")]
+        public IActionResult GetCustomerAccountByCustomerId(Guid customerId)
         {
-            CustomerAccountDto? customerAccountDto = _serviceManager.CustomerAccount.GetByCustomerId(isTrackChanges, customerId);
+            CustomerAccountDto? customerAccountDto = _serviceManager.CustomerAccount.GetOneByCustomerId(isTrackChanges: false, customerId);
             if (customerAccountDto == null)
             {
                 return NotFound();
@@ -41,22 +41,22 @@ namespace RestfulApiHandler.Controllers
         }
 
         [HttpPost]
-        [Route("customers/{customerId:guid}/account")]
+        [Route("customers/{customerId:guid}/account", Name = "CreateCustomerAccount")]
         public IActionResult CreateCustomerAccount(Guid customerId, [FromBody] CustomerAccountForCreationDto creationDto)
         {
             if (creationDto == null)
             {
                 return BadRequest(Shared.Common.Messages.CommonMessages.ERROR.NullObject(nameof(CustomerAccountForCreationDto)));
             }
-            CustomerAccountDto newCustomerAccountDto = _serviceManager.CustomerAccount.CreateCustomerAccount(customerId, creationDto);
-            return CreatedAtRoute("GetAccountByCustomerId", new { customerId = newCustomerAccountDto.CustomerId }, newCustomerAccountDto);
+            CustomerAccountDto newCustomerAccountDto = _serviceManager.CustomerAccount.Create(customerId, creationDto);
+            return CreatedAtRoute("GetCustomerAccountByCustomerId", new { customerId = newCustomerAccountDto.CustomerId }, newCustomerAccountDto);
         }
 
         [HttpPut]
-        [Route("customers/{customerId:guid}/account")]
+        [Route("customers/{customerId:guid}/account", Name = "UpdateCustomerAccount")]
         public IActionResult UpdateCustomerAccount(Guid customerId, [FromBody] CustomerAccountForUpdateDto updateDto)
         {
-            _serviceManager.CustomerAccount.UpdateCustomerAccount(customerId, updateDto);
+            _serviceManager.CustomerAccount.Update(customerId, updateDto);
             return NoContent();
         }
 

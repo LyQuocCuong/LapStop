@@ -8,12 +8,12 @@ namespace Contracts.IServices.Models
     {
         List<BrandDto> GetAll(bool isTrackChanges);
 
-        BrandDto? GetById(bool isTrackChanges, Guid id);
+        BrandDto? GetOneById(bool isTrackChanges, Guid brandId);
 
-        BrandDto CreateBrand(BrandForCreationDto creationDto);
+        BrandDto Create(BrandForCreationDto creationDto);
 
-        void UpdateBrand(Guid id, BrandForUpdateDto updateDto);
+        void Update(Guid brandId, BrandForUpdateDto updateDto);
 
-        void DeleteBrand(Guid id);
+        void Delete(Guid brandId);
     }
 }

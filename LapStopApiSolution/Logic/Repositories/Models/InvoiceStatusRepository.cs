@@ -15,9 +15,9 @@ namespace Repositories.Models
             return FindAll(isTrackChanges).ToList();
         }
 
-        public InvoiceStatus? GetById(bool isTrackChanges, Guid id)
+        public InvoiceStatus? GetOneById(bool isTrackChanges, Guid invoiceStatusId)
         {
-            return FindByCondition(isTrackChanges, i => i.Id == id).FirstOrDefault();
+            return FindByCondition(isTrackChanges, i => i.Id == invoiceStatusId).FirstOrDefault();
         }
     }
 }

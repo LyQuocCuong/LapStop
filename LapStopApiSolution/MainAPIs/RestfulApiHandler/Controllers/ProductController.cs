@@ -1,5 +1,6 @@
 ﻿using Contracts.ILog;
 using Contracts.IServices;
+using Domains.Models;
 using DTO.Output;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,17 +19,19 @@ namespace RestfulApiHandler.Controllers
             _serviceManager = serviceManager;
         }
 
-        [HttpGet("products")]
-        public IActionResult GetAll()
+        [HttpGet]
+        [Route("products", Name = "GetAllProducts")]
+        public IActionResult GetAllProducts()
         {
             List<ProductDto> productDtos = _serviceManager.Product.GetAll(isTrackChanges: false);
             return Ok(productDtos);
         }
 
-        [HttpGet("products/{id:guid}")]
-        public IActionResult GetById(Guid id)
+        [HttpGet]
+        [Route("products/{productId:guid}", Name = "GetProductById")]
+        public IActionResult GetProductById(Guid productId)
         {
-            ProductDto? productDto = _serviceManager.Product.GetById(isTrackChanges: false, id);
+            ProductDto? productDto = _serviceManager.Product.GetOneById(isTrackChanges: false, productId);
             if(productDto == null)
             {
                 return NotFound();

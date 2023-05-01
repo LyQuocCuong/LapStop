@@ -10,9 +10,9 @@ namespace Repositories.Models
         {
         }
 
-        public List<ProductGallery> GetByProductId(bool isTrackChanges, Guid id)
+        public List<ProductGallery> GetAllByProductId(bool isTrackChanges, Guid productId)
         {
-            return FindByCondition(isTrackChanges, e => e.ProductId == id).ToList();
+            return FindByCondition(isTrackChanges, e => e.ProductId == productId).ToList();
         }
     }
 }

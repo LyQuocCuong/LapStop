@@ -16,9 +16,9 @@ namespace Repositories.Models
             return employeeRoles;
         }
 
-        public EmployeeRole? GetById(bool isTrackChanges, Guid id)
+        public EmployeeRole? GetOneById(bool isTrackChanges, Guid employeeRoleId)
         {
-            return FindByCondition(isTrackChanges, e => e.Id == id).FirstOrDefault();
+            return FindByCondition(isTrackChanges, e => e.Id == employeeRoleId).FirstOrDefault();
         }
     }
 }

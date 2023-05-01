@@ -4,6 +4,6 @@ namespace Contracts.IRepositories.Models
 {
     public interface ICartItemRepository
     {
-        List<CartItem> GetByCartId(bool isTrackChanges, Guid cartId);
+        List<CartItem> GetAllByCartId(bool isTrackChanges, Guid cartId);
     }
 }

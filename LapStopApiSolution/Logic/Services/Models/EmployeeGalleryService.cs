@@ -13,13 +13,13 @@ namespace Services.Models
         {
         }
 
-        public List<EmployeeGalleryDto> GetByEmployeeId(bool isTrackChanges, Guid employeeId)
+        public List<EmployeeGalleryDto> GetAllByEmployeeId(bool isTrackChanges, Guid employeeId)
         {
-            if (_repositoryManager.Employee.IsValidEmployeeId(employeeId) == false)
+            if (_repositoryManager.Employee.IsValidId(employeeId) == false)
             {
-                throw new ExNotFoundInDB(nameof(EmployeeAccountService), nameof(GetByEmployeeId), typeof(Employee), employeeId);
+                throw new ExNotFoundInDB(nameof(EmployeeAccountService), nameof(GetAllByEmployeeId), typeof(Employee), employeeId);
             }
-            List<EmployeeGallery> employeeGalleries = _repositoryManager.EmployeeGallery.GetByEmployeeId(isTrackChanges, employeeId);
+            List<EmployeeGallery> employeeGalleries = _repositoryManager.EmployeeGallery.GetAllByEmployeeId(isTrackChanges, employeeId);
             return MappingToNewObj<List<EmployeeGalleryDto>>(employeeGalleries);
         }
     }

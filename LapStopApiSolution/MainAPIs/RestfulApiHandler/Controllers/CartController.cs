@@ -18,22 +18,24 @@ namespace RestfulApiHandler.Controllers
             _serviceManager = serviceManager;
         }
 
-        [Route("customers/{customerId:guid}/cart")]
-        public IActionResult GetByCustomerId(Guid customerId)
+        [HttpGet]
+        [Route("carts", Name = "GetAllCarts")]
+        public IActionResult GetAllCarts()
         {
-            CartDto? cartDto = _serviceManager.Cart.GetByCustomerId(isTrackChanges: false, customerId);
+            List<CartDto> cartDtos = _serviceManager.Cart.GetAll(isTrackChanges: false);
+            return Ok(cartDtos);
+        }
+
+        [HttpGet]
+        [Route("customers/{customerId:guid}/cart", Name = "GetCartByCustomerId")]
+        public IActionResult GetCartByCustomerId(Guid customerId)
+        {
+            CartDto? cartDto = _serviceManager.Cart.GetOneByCustomerId(isTrackChanges: false, customerId);
             if (cartDto == null)
             {
                 return NotFound();
             }
             return Ok(cartDto);
-        }
-
-        [HttpGet("carts")]
-        public IActionResult GetAll()
-        {
-            List<CartDto> cartDtos = _serviceManager.Cart.GetAll(isTrackChanges: false);
-            return Ok(cartDtos);
         }
 
     }

@@ -2,16 +2,11 @@
 using Contracts.IServices;
 using DTO.Output;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RestfulApiHandler.Controllers
 {
     [ApiController]
-    [Route("api/salesorderstatuses")]
+    [Route("api")]
     public class SalesOrderStatusController : ControllerBase
     {
         private readonly ILogService _logService;
@@ -24,17 +19,18 @@ namespace RestfulApiHandler.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        [Route("salesorderstatuses", Name = "GetAllSalesOrderStatuses")]
+        public IActionResult GetAllSalesOrderStatuses()
         {
             List<SalesOrderStatusDto> salesOrderStatusDtos = _serviceManager.SalesOrderStatus.GetAll(isTrackChanges: false);
             return Ok(salesOrderStatusDtos);
         }
 
         [HttpGet]
-        [Route("{id:guid}")]
-        public IActionResult GetById(Guid id)
+        [Route("salesorderstatuses/{salesOrderStatusId:guid}", Name = "GetSalesOrderStatusById")]
+        public IActionResult GetSalesOrderStatusById(Guid salesOrderStatusId)
         {
-            SalesOrderStatusDto? salesOrderStatusDto = _serviceManager.SalesOrderStatus.GetById(isTrackChanges: false, id);
+            SalesOrderStatusDto? salesOrderStatusDto = _serviceManager.SalesOrderStatus.GetOneById(isTrackChanges: false, salesOrderStatusId);
             if (salesOrderStatusDto == null)
             {
                 return NotFound();

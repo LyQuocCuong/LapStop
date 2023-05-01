@@ -15,9 +15,9 @@ namespace Repositories.Models
             return FindAll(isTrackChanges).ToList();
         }
 
-        public EmployeeStatus? GetById(bool isTrackChanges, Guid id)
+        public EmployeeStatus? GetOneById(bool isTrackChanges, Guid employeeStatusId)
         {
-            return FindByCondition(isTrackChanges, e => e.Id == id).FirstOrDefault();
+            return FindByCondition(isTrackChanges, e => e.Id == employeeStatusId).FirstOrDefault();
         }
     }
 }

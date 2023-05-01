@@ -8,13 +8,13 @@ namespace Contracts.IServices.Models
     {
         List<CustomerDto> GetAll(bool isTrackChanges);
 
-        CustomerDto? GetById(bool isTrackChanges, Guid id);
+        CustomerDto? GetOneById(bool isTrackChanges, Guid customerId);
 
-        bool IsValidCustomerId(Guid customerId);
+        bool IsValidId(Guid customerId);
 
-        CustomerDto CreateCustomer(CustomerForCreationDto creationDto);
+        CustomerDto Create(CustomerForCreationDto creationDto);
 
-        void UpdateCustomer(Guid id, CustomerForUpdateDto updateDto);
+        void Update(Guid customerId, CustomerForUpdateDto updateDto);
 
     }
 }

@@ -15,22 +15,22 @@ namespace Services.Models
         {
         }
 
-        public CustomerAccountDto CreateCustomerAccount(Guid customerId, CustomerAccountForCreationDto creationDto)
+        public CustomerAccountDto Create(Guid customerId, CustomerAccountForCreationDto creationDto)
         {
             CustomerAccount newCustomerAccount = MappingToNewObj<CustomerAccount> (creationDto);
             newCustomerAccount.CustomerId = customerId;
-            _repositoryManager.CustomerAccount.CreateCustomerAccount(newCustomerAccount);
+            _repositoryManager.CustomerAccount.Create(newCustomerAccount);
             _repositoryManager.SaveChanges();
 
             return MappingToNewObj<CustomerAccountDto>(newCustomerAccount);
         }
 
-        public void UpdateCustomerAccount(Guid customerId, CustomerAccountForUpdateDto updateDto)
+        public void Update(Guid customerId, CustomerAccountForUpdateDto updateDto)
         {
-            CustomerAccount? customerAccount = _repositoryManager.CustomerAccount.GetByCustomerId(isTrackChanges: true, customerId);
+            CustomerAccount? customerAccount = _repositoryManager.CustomerAccount.GetOneByCustomerId(isTrackChanges: true, customerId);
             if (customerAccount == null)
             {
-                throw new ExNotFoundInDB(nameof(CustomerAccountService), nameof(UpdateCustomerAccount), typeof(CustomerAccount), customerId);
+                throw new ExNotFoundInDB(nameof(CustomerAccountService), nameof(Update), typeof(CustomerAccount), customerId);
             }
             MappingToExistingObj(updateDto, customerAccount);
             _repositoryManager.SaveChanges();
@@ -42,16 +42,16 @@ namespace Services.Models
             return MappingToNewObj<List<CustomerAccountDto>>(customerAccounts);
         }
 
-        public CustomerAccountDto? GetByCustomerId(bool isTrackChanges, Guid customerId)
+        public CustomerAccountDto? GetOneByCustomerId(bool isTrackChanges, Guid customerId)
         {
-            if (_repositoryManager.Customer.IsValidCustomerId(customerId) == false)
+            if (_repositoryManager.Customer.IsValidId(customerId) == false)
             {
-                throw new ExNotFoundInDB(nameof(CustomerAccountService), nameof(GetByCustomerId), typeof(Customer), customerId);
+                throw new ExNotFoundInDB(nameof(CustomerAccountService), nameof(GetOneByCustomerId), typeof(Customer), customerId);
             }
-            CustomerAccount? customerAccount = _repositoryManager.CustomerAccount.GetByCustomerId(isTrackChanges, customerId);
+            CustomerAccount? customerAccount = _repositoryManager.CustomerAccount.GetOneByCustomerId(isTrackChanges, customerId);
             if (customerAccount == null)
             {
-                throw new ExNotFoundInDB(nameof(CustomerAccountService), nameof(GetByCustomerId), typeof(CustomerAccount), customerId);
+                throw new ExNotFoundInDB(nameof(CustomerAccountService), nameof(GetOneByCustomerId), typeof(CustomerAccount), customerId);
             }
             return MappingToNewObj<CustomerAccountDto>(customerAccount);
         }

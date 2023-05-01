@@ -19,12 +19,12 @@ namespace Services.Models
             return MappingToNewObj<List<EmployeeRoleDto>>(employeeRoles);
         }
 
-        public EmployeeRoleDto? GetById(bool isTrackChanges, Guid id)
+        public EmployeeRoleDto? GetOneById(bool isTrackChanges, Guid employeeRoleId)
         {
-            EmployeeRole? employeeRole = _repositoryManager.EmployeeRole.GetById(isTrackChanges, id);
+            EmployeeRole? employeeRole = _repositoryManager.EmployeeRole.GetOneById(isTrackChanges, employeeRoleId);
             if (employeeRole == null)
             {
-                throw new ExNotFoundInDB(nameof(EmployeeRoleService), nameof(GetById), typeof(EmployeeRole), id);
+                throw new ExNotFoundInDB(nameof(EmployeeRoleService), nameof(GetOneById), typeof(EmployeeRole), employeeRoleId);
             }
             return MappingToNewObj<EmployeeRoleDto>(employeeRole);
         }

@@ -10,7 +10,7 @@ namespace Repositories.Models
         {
         }
 
-        public List<EmployeeGallery> GetByEmployeeId(bool isTrackChanges, Guid employeeId)
+        public List<EmployeeGallery> GetAllByEmployeeId(bool isTrackChanges, Guid employeeId)
         {
             return FindByCondition(isTrackChanges, e => e.EmployeeId == employeeId).ToList();
         }

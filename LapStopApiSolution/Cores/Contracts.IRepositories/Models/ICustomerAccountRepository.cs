@@ -6,8 +6,8 @@ namespace Contracts.IRepositories.Models
     {
         List<CustomerAccount> GetAll(bool isTrackChanges);
 
-        CustomerAccount? GetByCustomerId(bool isTrackChanges, Guid customerId);
+        CustomerAccount? GetOneByCustomerId(bool isTrackChanges, Guid customerId);
 
-        void CreateCustomerAccount(CustomerAccount newCustomerAccount);
+        void Create(CustomerAccount customerAccount);
     }
 }
