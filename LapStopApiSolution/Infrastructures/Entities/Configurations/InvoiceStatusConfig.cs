@@ -1,7 +1,7 @@
-﻿using Contracts.Constants;
-using Domains.Models;
+﻿using Domains.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Shared.Common.SeedingData;
 
 namespace Entities.Configurations
 {
@@ -11,33 +11,9 @@ namespace Entities.Configurations
         {
             // Seeding Data
             builder.HasData(
-                new InvoiceStatus()
-                {
-                    Id = ConstSeedingData.INVOICE_STATUS.Processing.Id,
-                    Name = ConstSeedingData.INVOICE_STATUS.Processing.Name,
-                    IsEnable = true,
-                    IsRemoved = false,
-                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                },
-                new InvoiceStatus()
-                {
-                    Id = ConstSeedingData.INVOICE_STATUS.Completed.Id,
-                    Name = ConstSeedingData.INVOICE_STATUS.Completed.Name,
-                    IsEnable = true,
-                    IsRemoved = false,
-                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                },
-                new InvoiceStatus()
-                {
-                    Id = ConstSeedingData.INVOICE_STATUS.Blocked.Id,
-                    Name = ConstSeedingData.INVOICE_STATUS.Blocked.Name,
-                    IsEnable = true,
-                    IsRemoved = false,
-                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                }
+                CommonSeedingData.Invoice_Status.COMPLETED,
+                CommonSeedingData.Invoice_Status.PROCESSING,
+                CommonSeedingData.Invoice_Status.BLOCKED
             );
         }
     }

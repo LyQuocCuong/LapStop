@@ -3,7 +3,7 @@ using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
 using DTO.Output;
-using Shared.CustomedExceptions;
+using Shared.CustomModels.Exceptions;
 
 namespace Services.Models
 {
@@ -17,7 +17,7 @@ namespace Services.Models
         {
             if (_repositoryManager.Cart.IsValidCartId(cartId) == false)
             {
-                throw new NotFoundException404(nameof(CartItemService), nameof(GetByCartId), typeof(Cart), cartId);
+                throw new ExNotFoundInDB(nameof(CartItemService), nameof(GetByCartId), typeof(Cart), cartId);
             }
             List<CartItem> cartItems = _repositoryManager.CartItem.GetByCartId(isTrackChanges: false, cartId);
             return MappingToNewObj<List<CartItemDto>>(cartItems);

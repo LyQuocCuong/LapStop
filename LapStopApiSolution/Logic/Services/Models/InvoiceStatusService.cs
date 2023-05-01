@@ -3,7 +3,7 @@ using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
 using DTO.Output;
-using Shared.CustomedExceptions;
+using Shared.CustomModels.Exceptions;
 
 namespace Services.Models
 {
@@ -24,7 +24,7 @@ namespace Services.Models
             InvoiceStatus? invoiceStatus = _repositoryManager.InvoiceStatus.GetById(isTrackChanges, id);
             if (invoiceStatus == null)
             {
-                throw new NotFoundException404(nameof(InvoiceStatusService), nameof(GetById), typeof(InvoiceStatus), id);
+                throw new ExNotFoundInDB(nameof(InvoiceStatusService), nameof(GetById), typeof(InvoiceStatus), id);
             }
             return MappingToNewObj<InvoiceStatusDto>(invoiceStatus);
         }

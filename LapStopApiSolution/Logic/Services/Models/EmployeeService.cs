@@ -3,7 +3,7 @@ using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
 using DTO.Output;
-using Shared.CustomedExceptions;
+using Shared.CustomModels.Exceptions;
 
 namespace Services.Models
 {
@@ -24,7 +24,7 @@ namespace Services.Models
             Employee? employee = _repositoryManager.Employee.GetById(isTrackChanges, id);
             if (employee == null)
             {
-                throw new NotFoundException404(nameof(EmployeeService), nameof(GetById), typeof(Employee), id);
+                throw new ExNotFoundInDB(nameof(EmployeeService), nameof(GetById), typeof(Employee), id);
             }
             return MappingToNewObj<EmployeeDto>(employee);
         }

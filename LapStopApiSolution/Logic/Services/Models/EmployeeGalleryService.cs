@@ -3,7 +3,7 @@ using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
 using DTO.Output;
-using Shared.CustomedExceptions;
+using Shared.CustomModels.Exceptions;
 
 namespace Services.Models
 {
@@ -17,7 +17,7 @@ namespace Services.Models
         {
             if (_repositoryManager.Employee.IsValidEmployeeId(employeeId) == false)
             {
-                throw new NotFoundException404(nameof(EmployeeAccountService), nameof(GetByEmployeeId), typeof(Employee), employeeId);
+                throw new ExNotFoundInDB(nameof(EmployeeAccountService), nameof(GetByEmployeeId), typeof(Employee), employeeId);
             }
             List<EmployeeGallery> employeeGalleries = _repositoryManager.EmployeeGallery.GetByEmployeeId(isTrackChanges, employeeId);
             return MappingToNewObj<List<EmployeeGalleryDto>>(employeeGalleries);

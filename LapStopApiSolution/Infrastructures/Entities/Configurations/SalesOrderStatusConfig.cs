@@ -1,7 +1,7 @@
-﻿using Contracts.Constants;
-using Domains.Models;
+﻿using Domains.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Shared.Common.SeedingData;
 
 namespace Entities.Configurations
 {
@@ -11,42 +11,10 @@ namespace Entities.Configurations
         {
             // Seeding Data
             builder.HasData(
-                new SalesOrderStatus()
-                {
-                    Id = ConstSeedingData.SALES_ORDER_STATUS.Waiting.Id,
-                    Name = ConstSeedingData.SALES_ORDER_STATUS.Waiting.Name,
-                    IsEnable = true,
-                    IsRemoved = false,
-                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                },
-                new SalesOrderStatus()
-                {
-                    Id = ConstSeedingData.SALES_ORDER_STATUS.Processing.Id,
-                    Name = ConstSeedingData.SALES_ORDER_STATUS.Processing.Name,
-                    IsEnable = true,
-                    IsRemoved = false,
-                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                },
-                new SalesOrderStatus()
-                {
-                    Id = ConstSeedingData.SALES_ORDER_STATUS.Completed.Id,
-                    Name = ConstSeedingData.SALES_ORDER_STATUS.Completed.Name,
-                    IsEnable = true,
-                    IsRemoved = false,
-                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                },
-                new SalesOrderStatus()
-                {
-                    Id = ConstSeedingData.SALES_ORDER_STATUS.Blocked.Id,
-                    Name = ConstSeedingData.SALES_ORDER_STATUS.Blocked.Name,
-                    IsEnable = true,
-                    IsRemoved = false,
-                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                }
+                CommonSeedingData.SalesOrder_Status.WAITING,
+                CommonSeedingData.SalesOrder_Status.BLOCKED,
+                CommonSeedingData.SalesOrder_Status.PROCESSING,
+                CommonSeedingData.SalesOrder_Status.COMPLETED
             );
         }
     }

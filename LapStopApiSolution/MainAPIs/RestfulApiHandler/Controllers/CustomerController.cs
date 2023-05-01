@@ -1,10 +1,10 @@
-﻿using Contracts.Constants;
-using Contracts.ILog;
+﻿using Contracts.ILog;
 using Contracts.IServices;
 using DTO.Creation;
 using DTO.Output;
 using DTO.Update;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Common.Messages;
 
 namespace RestfulApiHandler.Controllers
 {
@@ -35,7 +35,7 @@ namespace RestfulApiHandler.Controllers
         {
             if (creationDto == null)
             {
-                return BadRequest(ConstMessages.OBJECT_IS_NULL(nameof(CustomerForCreationDto)));
+                return BadRequest(CommonMessages.ERROR.NullObject(nameof(CustomerForCreationDto)));
             }
             CustomerDto newCustomerDto = _serviceManager.Customer.CreateCustomer(creationDto);
             return CreatedAtRoute("GetCustomerById", new { id = newCustomerDto.Id }, newCustomerDto);
