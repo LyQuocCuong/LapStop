@@ -3,7 +3,7 @@ using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
 using DTO.Output;
-using Shared.CustomedExceptions;
+using Shared.CustomModels.Exceptions;
 
 namespace Services.Models
 {
@@ -17,7 +17,7 @@ namespace Services.Models
         {
             if (_repositoryManager.Product.IsValidProductId(id) == false) 
             { 
-                throw new NotFoundException404(nameof(ProductGalleryService), nameof(GetByProductId), typeof(Product), id);
+                throw new ExNotFoundInDB(nameof(ProductGalleryService), nameof(GetByProductId), typeof(Product), id);
             }
             List<ProductGallery> productGalleries = _repositoryManager.ProductGallery.GetByProductId(isTrackChanges, id);
             return MappingToNewObj<List<ProductGalleryDto>>(productGalleries);

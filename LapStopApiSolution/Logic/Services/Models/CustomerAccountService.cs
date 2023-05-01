@@ -5,7 +5,7 @@ using Domains.Models;
 using DTO.Creation;
 using DTO.Output;
 using DTO.Update;
-using Shared.CustomedExceptions;
+using Shared.CustomModels.Exceptions;
 
 namespace Services.Models
 {
@@ -30,7 +30,7 @@ namespace Services.Models
             CustomerAccount? customerAccount = _repositoryManager.CustomerAccount.GetByCustomerId(isTrackChanges: true, customerId);
             if (customerAccount == null)
             {
-                throw new NotFoundException404(nameof(CustomerAccountService), nameof(UpdateCustomerAccount), typeof(CustomerAccount), customerId);
+                throw new ExNotFoundInDB(nameof(CustomerAccountService), nameof(UpdateCustomerAccount), typeof(CustomerAccount), customerId);
             }
             MappingToExistingObj(updateDto, customerAccount);
             _repositoryManager.SaveChanges();
@@ -46,12 +46,12 @@ namespace Services.Models
         {
             if (_repositoryManager.Customer.IsValidCustomerId(customerId) == false)
             {
-                throw new NotFoundException404(nameof(CustomerAccountService), nameof(GetByCustomerId), typeof(Customer), customerId);
+                throw new ExNotFoundInDB(nameof(CustomerAccountService), nameof(GetByCustomerId), typeof(Customer), customerId);
             }
             CustomerAccount? customerAccount = _repositoryManager.CustomerAccount.GetByCustomerId(isTrackChanges, customerId);
             if (customerAccount == null)
             {
-                throw new NotFoundException404(nameof(CustomerAccountService), nameof(GetByCustomerId), typeof(CustomerAccount), customerId);
+                throw new ExNotFoundInDB(nameof(CustomerAccountService), nameof(GetByCustomerId), typeof(CustomerAccount), customerId);
             }
             return MappingToNewObj<CustomerAccountDto>(customerAccount);
         }

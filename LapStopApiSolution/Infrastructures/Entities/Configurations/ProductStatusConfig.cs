@@ -1,7 +1,7 @@
-﻿using Contracts.Constants;
-using Domains.Models;
+﻿using Domains.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Shared.Common.SeedingData;
 
 namespace Entities.Configurations
 {
@@ -11,33 +11,9 @@ namespace Entities.Configurations
         {
             // Seeding Data
             builder.HasData(
-                new ProductStatus()
-                {
-                    Id = ConstSeedingData.PRODUCT_STATUS.InStock.Id,
-                    Name = ConstSeedingData.PRODUCT_STATUS.InStock.Name,
-                    IsEnable = true,
-                    IsRemoved = false,
-                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                },
-                new ProductStatus()
-                {
-                    Id = ConstSeedingData.PRODUCT_STATUS.OutOfStock.Id,
-                    Name = ConstSeedingData.PRODUCT_STATUS.OutOfStock.Name,
-                    IsEnable = true,
-                    IsRemoved = false,
-                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                },
-                new ProductStatus()
-                {
-                    Id = ConstSeedingData.PRODUCT_STATUS.SoldOut.Id,
-                    Name = ConstSeedingData.PRODUCT_STATUS.SoldOut.Name,
-                    IsEnable = true,
-                    IsRemoved = false,
-                    CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                    UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                }
+                CommonSeedingData.Product_Status.IN_STOCK,
+                CommonSeedingData.Product_Status.OUT_OF_STOCK,
+                CommonSeedingData.Product_Status.SOLD_OUT
             );
         }
     }

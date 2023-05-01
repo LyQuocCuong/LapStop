@@ -5,7 +5,7 @@ using Domains.Models;
 using DTO.Creation;
 using DTO.Output;
 using DTO.Update;
-using Shared.CustomedExceptions;
+using Shared.CustomModels.Exceptions;
 
 namespace Services.Models
 {
@@ -29,7 +29,7 @@ namespace Services.Models
             Brand? brand = _repositoryManager.Brand.GetById(isTrackChanges: true, id);
             if (brand == null)
             {
-                throw new NotFoundException404(nameof(BrandService), nameof(UpdateBrand), typeof(Brand), id);
+                throw new ExNotFoundInDB(nameof(BrandService), nameof(UpdateBrand), typeof(Brand), id);
             }
             MappingToExistingObj(updateDto, brand);
             _repositoryManager.SaveChanges();
@@ -40,7 +40,7 @@ namespace Services.Models
             Brand? brand = _repositoryManager.Brand.GetById(isTrackChanges: true, id);
             if (brand == null)
             {
-                throw new NotFoundException404(nameof(BrandService), nameof(GetById), typeof(Brand), id);
+                throw new ExNotFoundInDB(nameof(BrandService), nameof(GetById), typeof(Brand), id);
             }
             _repositoryManager.Brand.DeleteBrand(brand);
             _repositoryManager.SaveChanges();
@@ -57,7 +57,7 @@ namespace Services.Models
             Brand? brand = _repositoryManager.Brand.GetById(isTrackChanges, id);
             if (brand == null)
             {
-                throw new NotFoundException404(nameof(BrandService), nameof(GetById),typeof(Brand), id);
+                throw new ExNotFoundInDB(nameof(BrandService), nameof(GetById),typeof(Brand), id);
             }
             return MappingToNewObj<BrandDto>(brand);
         }

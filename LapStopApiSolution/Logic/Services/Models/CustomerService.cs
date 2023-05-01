@@ -5,7 +5,7 @@ using Domains.Models;
 using DTO.Creation;
 using DTO.Output;
 using DTO.Update;
-using Shared.CustomedExceptions;
+using Shared.CustomModels.Exceptions;
 
 namespace Services.Models
 {
@@ -29,7 +29,7 @@ namespace Services.Models
             Customer? customer = _repositoryManager.Customer.GetById(isTrackChanges: true, id);
             if (customer == null)
             {
-                throw new NotFoundException404(nameof(CustomerService), nameof(UpdateCustomer), typeof(Customer), id);
+                throw new ExNotFoundInDB(nameof(CustomerService), nameof(UpdateCustomer), typeof(Customer), id);
             }
             MappingToExistingObj(updateDto, customer);
             _repositoryManager.SaveChanges();
@@ -46,7 +46,7 @@ namespace Services.Models
             Customer? customer = _repositoryManager.Customer.GetById(isTrackChanges, id);
             if (customer == null)
             {
-                throw new NotFoundException404(nameof(CustomerService), nameof(GetById), typeof(Customer), id);
+                throw new ExNotFoundInDB(nameof(CustomerService), nameof(GetById), typeof(Customer), id);
             }
             return MappingToNewObj<CustomerDto>(customer);
         }
