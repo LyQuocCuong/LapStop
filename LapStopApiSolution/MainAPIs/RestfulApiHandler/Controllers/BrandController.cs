@@ -58,6 +58,10 @@ namespace RestfulApiHandler.Controllers
         [Route("brands/{brandId:guid}", Name = "DeleteBrand")]
         public IActionResult DeleteBrand(Guid brandId)
         {
+            if (_serviceManager.Brand.IsValidId(brandId) == false)
+            {
+                return NotFound();
+            }
             _serviceManager.Brand.Delete(brandId);
             return NoContent();
         }
@@ -66,6 +70,14 @@ namespace RestfulApiHandler.Controllers
         [Route("brands/{brandId:guid}", Name = "UpdateBrand")]
         public IActionResult UpdateBrand(Guid brandId, [FromBody] BrandForUpdateDto updateDto)
         {
+            if (updateDto == null)
+            {
+                return BadRequest(CommonMessages.ERROR.NullObject(nameof(BrandForUpdateDto)));
+            }
+            if (_serviceManager.Brand.IsValidId(brandId) == false)
+            {
+                return NotFound();
+            }
             _serviceManager.Brand.Update(brandId, updateDto);
             return NoContent();
         }
