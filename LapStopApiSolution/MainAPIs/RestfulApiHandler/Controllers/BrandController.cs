@@ -4,6 +4,7 @@ using Domains.Models;
 using DTO.Creation;
 using DTO.Output;
 using DTO.Update;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Common.Messages;
 
@@ -51,7 +52,7 @@ namespace RestfulApiHandler.Controllers
                 return BadRequest(CommonMessages.ERROR.NullObject(nameof(BrandForCreationDto)));
             }
             BrandDto newBrandDto = _serviceManager.Brand.Create(creationDto);
-            return CreatedAtRoute("GetBrandById", new { id = newBrandDto.Id }, newBrandDto);
+            return CreatedAtRoute("GetBrandById", new { brandId = newBrandDto.Id }, newBrandDto);
         }
 
         [HttpDelete]
@@ -79,6 +80,29 @@ namespace RestfulApiHandler.Controllers
                 return NotFound();
             }
             _serviceManager.Brand.Update(brandId, updateDto);
+            return NoContent();
+        }
+
+        [HttpPatch]
+        [Route("brands/{brandId:guid}", Name = "UpdateBrandPartially")]
+        public IActionResult UpdateBrandPartially(Guid brandId,
+                        [FromBody] JsonPatchDocument<BrandForUpdateDto> patchDocument)
+        {
+            if (patchDocument == null)
+            {
+                return BadRequest(CommonMessages.ERROR.NullObject(nameof(JsonPatchDocument<BrandForUpdateDto>)));
+            }
+            else if (_serviceManager.Brand.IsValidId(brandId) == false)
+            {
+                return NotFound();
+            }
+            // get data from DB
+            BrandForUpdateDto updateDto = _serviceManager.Brand.GetDtoForPatch(brandId);
+            // apply Patch operation
+            patchDocument.ApplyTo(updateDto);
+            // update
+            _serviceManager.Brand.Update(brandId, updateDto);
+
             return NoContent();
         }
 

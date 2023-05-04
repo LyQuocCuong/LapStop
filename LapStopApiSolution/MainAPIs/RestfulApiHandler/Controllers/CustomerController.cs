@@ -1,8 +1,10 @@
-﻿using Contracts.ILog;
+﻿using Azure;
+using Contracts.ILog;
 using Contracts.IServices;
 using DTO.Creation;
 using DTO.Output;
 using DTO.Update;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Common.Messages;
 
@@ -58,6 +60,33 @@ namespace RestfulApiHandler.Controllers
         public IActionResult UpdateCustomer(Guid customerId, [FromBody] CustomerForUpdateDto updateDto)
         {
             _serviceManager.Customer.Update(customerId, updateDto);
+            return NoContent();
+        }
+
+        [HttpPatch]
+        [Route("customers/{customerId:guid}")]
+        public IActionResult UpdateCustomerPartially(Guid customerId, 
+                                    [FromBody] JsonPatchDocument<CustomerForUpdateDto> patchDocument)
+        {
+
+            JsonPatchDocument<CustomerForUpdateDto> abc = new JsonPatchDocument<CustomerForUpdateDto>();
+            abc.Replace(s => s.FirstName, "xyz");
+
+            if (_serviceManager.Customer.IsValidId(customerId) == false)
+            {
+                return NotFound();
+            }
+            else if (patchDocument == null)
+            {
+                return BadRequest(CommonMessages.ERROR.NullObject(nameof(JsonPatchDocument<CustomerForUpdateDto>)));
+            }
+
+            CustomerForUpdateDto updateDto = _serviceManager.Customer.GetDtoForPatch(customerId);
+
+            abc.ApplyTo(updateDto);
+
+            _serviceManager.Customer.Update(customerId, updateDto);
+
             return NoContent();
         }
 

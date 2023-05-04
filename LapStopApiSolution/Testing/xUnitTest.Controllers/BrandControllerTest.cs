@@ -1,6 +1,7 @@
 ﻿using DTO.Creation;
 using DTO.Output;
 using DTO.Update;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using RestfulApiHandler.Controllers;
@@ -280,6 +281,77 @@ namespace xUnitTest.Controllers
 
             //Act
             var result = _brandController.UpdateBrand(existingBrandId, updateDto);
+
+            //Assert
+            Assert.IsType<NoContentResult>(result);
+        }
+
+        [Fact]
+        public void UpdatePartially_UnknownBrandIdPassed_ReturnsNotFoundResult()
+        {
+            //Arrange
+            var patchDocument = new JsonPatchDocument<BrandForUpdateDto>();
+            patchDocument.Replace(b => b.Name, "Yonex");
+
+            Guid brandId = Guid.NewGuid();
+
+            _mockServiceManager
+                .Setup(s => s.Brand.IsValidId(brandId))
+                .Returns(false);
+
+            //Act
+            var result = _brandController.UpdateBrandPartially(brandId, patchDocument);
+
+            //Assert
+            Assert.IsType<NotFoundResult>(result);
+        }
+
+        [Fact]
+        public void UpdatePartially_NullObjectPassed_ReturnsBadRequest()
+        {
+            //Arrange
+            Guid brandId = _brandList.FirstOrDefault().Id;
+
+            _mockServiceManager
+                .Setup(s => s.Brand.IsValidId(brandId))
+                .Returns(false);
+
+            //Act
+            var result = _brandController.UpdateBrandPartially(brandId, null);
+
+            //Assert
+            Assert.IsType<BadRequestObjectResult>(result);
+        }
+
+        [Fact]
+        public void UpdatePartially_ValidObjectPassed_ReturnsNoContent()
+        {
+            //Arrange
+            var patchDocument = new JsonPatchDocument<BrandForUpdateDto>();
+            patchDocument.Replace(b => b.Name, "Yonex");
+
+            //brandId
+            Guid brandId = _brandList.FirstOrDefault().Id;
+            _mockServiceManager
+                .Setup(s => s.Brand.IsValidId(brandId))
+                .Returns(true);
+
+            //updateDto
+            BrandForUpdateDto updateDto = new BrandForUpdateDto()
+            {
+                Name = "Addidas",
+                Description = "Addidas"
+            };
+            var x = _mockServiceManager
+                .Setup(s => s.Brand.GetDtoForPatch(brandId))
+                .Returns(updateDto);
+
+            //update method
+            _mockServiceManager
+                .Setup(s => s.Brand.Update(brandId, updateDto));
+
+            //Act
+            var result = _brandController.UpdateBrandPartially(brandId, patchDocument);
 
             //Assert
             Assert.IsType<NoContentResult>(result);

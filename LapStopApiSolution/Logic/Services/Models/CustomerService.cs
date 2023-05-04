@@ -51,6 +51,12 @@ namespace Services.Models
             return MappingToNewObj<CustomerDto>(customer);
         }
 
+        public CustomerForUpdateDto GetDtoForPatch(Guid customerId)
+        {
+            Customer? customer = _repositoryManager.Customer.GetOneById(isTrackChanges: false, customerId);
+            return MappingToNewObj<CustomerForUpdateDto>(customer);
+        }
+
         public bool IsValidId(Guid customerId)
         {
             return _repositoryManager.Customer.IsValidId(customerId);

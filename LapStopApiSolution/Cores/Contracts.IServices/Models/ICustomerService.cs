@@ -10,6 +10,8 @@ namespace Contracts.IServices.Models
 
         CustomerDto? GetOneById(bool isTrackChanges, Guid customerId);
 
+        CustomerForUpdateDto GetDtoForPatch(Guid customerId);
+
         bool IsValidId(Guid customerId);
 
         CustomerDto Create(CustomerForCreationDto creationDto);
