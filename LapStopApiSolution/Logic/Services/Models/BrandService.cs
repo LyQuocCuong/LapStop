@@ -18,6 +18,9 @@ namespace Services.Models
         public BrandDto Create(BrandForCreationDto creationDto)
         {
             Brand newBrand = MappingToNewObj<Brand>(creationDto);
+            newBrand.IsRemoved = false;
+            newBrand.CreatedDate = DateTime.Now;
+            newBrand.UpdatedDate = DateTime.Now;
             _repositoryManager.Brand.Create(newBrand);
             _repositoryManager.SaveChanges();
 
@@ -60,6 +63,12 @@ namespace Services.Models
                 throw new ExNotFoundInDB(nameof(BrandService), nameof(GetOneById),typeof(Brand), brandId);
             }
             return MappingToNewObj<BrandDto>(brand);
+        }
+
+        public BrandForUpdateDto GetDtoForPatch(Guid brandId)
+        {
+            Brand? brand = _repositoryManager.Brand.GetOneById(isTrackChanges: false, brandId);
+            return MappingToNewObj<BrandForUpdateDto>(brand);
         }
 
         public bool IsValidId(Guid brandId)

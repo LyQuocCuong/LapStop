@@ -62,8 +62,8 @@ namespace AutoMapperLib
                            model_field => model_field.MapFrom(e => e.AvatarUrl));
             #endregion
 
-            #region BrandForUpdateDto --> Brand
-            CreateMap<BrandForUpdateDto, Brand>()
+            #region BrandForUpdateDto <--> Brand
+            CreateMap<BrandForUpdateDto, Brand>().ReverseMap()
                 .ForMember(model => model.Name,
                            model_field => model_field.MapFrom(e => e.Name))
                 .ForMember(model => model.Description,
@@ -169,8 +169,8 @@ namespace AutoMapperLib
                            model_field => model_field.MapFrom(e => e.Phone));
             #endregion
 
-            #region CustomerForUpdateDto --> Customer
-            CreateMap<CustomerForUpdateDto, Customer>()
+            #region CustomerForUpdateDto <--> Customer
+            CreateMap<CustomerForUpdateDto, Customer>().ReverseMap()
                 .ForMember(model => model.FirstName,
                            model_field => model_field.MapFrom(e => e.FirstName))
                 .ForMember(model => model.LastName,

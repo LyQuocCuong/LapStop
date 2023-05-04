@@ -10,6 +10,8 @@ namespace Contracts.IServices.Models
 
         BrandDto? GetOneById(bool isTrackChanges, Guid brandId);
 
+        BrandForUpdateDto GetDtoForPatch(Guid brandId);
+
         BrandDto Create(BrandForCreationDto creationDto);
 
         bool IsValidId(Guid brandId);

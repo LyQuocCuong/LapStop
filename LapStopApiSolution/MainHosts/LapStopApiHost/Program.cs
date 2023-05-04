@@ -28,7 +28,8 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 // Add services to the container.
 builder.Services.AddAutoMapper(typeof(AutoMapperLib.MappingProfile));
 builder.Services.AddControllers()
-    .AddApplicationPart(typeof(RestfulApiHandler.AssemblyReference).Assembly);
+    .AddApplicationPart(typeof(RestfulApiHandler.AssemblyReference).Assembly)
+    .AddNewtonsoftJson();
 builder.Services.AddDbContext<LapStopContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("LapStopConnection"))
 );
