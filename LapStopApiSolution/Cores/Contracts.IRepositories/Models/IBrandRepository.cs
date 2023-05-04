@@ -8,6 +8,8 @@ namespace Contracts.IRepositories.Models
 
         Brand? GetOneById(bool isTrackChanges, Guid brandId);
 
+        bool IsValidId(Guid id);
+
         void Create(Brand brand);
 
         void Delete(Brand brand);

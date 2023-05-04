@@ -62,5 +62,13 @@ namespace Services.Models
             return MappingToNewObj<BrandDto>(brand);
         }
 
+        public bool IsValidId(Guid brandId)
+        {
+            if (_repositoryManager.Brand.IsValidId(brandId) == false)
+            {
+                throw new ExNotFoundInDB(nameof(BrandService), nameof(IsValidId), typeof(Brand), brandId);
+            }
+            return true;
+        }
     }
 }

@@ -12,6 +12,8 @@ namespace Contracts.IServices.Models
 
         BrandDto Create(BrandForCreationDto creationDto);
 
+        bool IsValidId(Guid brandId);
+
         void Update(Guid brandId, BrandForUpdateDto updateDto);
 
         void Delete(Guid brandId);

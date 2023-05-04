@@ -39,6 +39,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTO", "Cores\DTO\DTO.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Cores\Shared\Shared.csproj", "{67CB15B7-17A8-4B8B-A81E-F45DDF6416A2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{0F792115-7330-416A-8C29-74EE466B3170}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xUnitTest.Controllers", "Testing\xUnitTest.Controllers\xUnitTest.Controllers.csproj", "{E26BDDF9-6FBC-419E-9BAD-8872FE867FD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +101,10 @@ Global
 		{67CB15B7-17A8-4B8B-A81E-F45DDF6416A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67CB15B7-17A8-4B8B-A81E-F45DDF6416A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67CB15B7-17A8-4B8B-A81E-F45DDF6416A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E26BDDF9-6FBC-419E-9BAD-8872FE867FD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E26BDDF9-6FBC-419E-9BAD-8872FE867FD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E26BDDF9-6FBC-419E-9BAD-8872FE867FD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E26BDDF9-6FBC-419E-9BAD-8872FE867FD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -115,6 +123,7 @@ Global
 		{74A88E12-43EE-4D4F-971F-4DF758F20963} = {515B0A31-9C45-438A-8411-EBAA8D0A8081}
 		{9663896C-2E86-4324-B848-76D329CB8058} = {D3491721-9A6F-48F8-B95E-5D7604B5AAD5}
 		{67CB15B7-17A8-4B8B-A81E-F45DDF6416A2} = {D3491721-9A6F-48F8-B95E-5D7604B5AAD5}
+		{E26BDDF9-6FBC-419E-9BAD-8872FE867FD1} = {0F792115-7330-416A-8C29-74EE466B3170}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {14A8E5F8-492F-4B22-8DC7-0BFF3E7666F9}
