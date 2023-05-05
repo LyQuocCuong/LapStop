@@ -106,8 +106,17 @@ namespace RestfulApiHandler.Controllers
             }
             // get data from DB
             BrandForUpdateDto updateDto = _serviceManager.Brand.GetDtoForPatch(brandId);
-            // apply Patch operation
-            patchDocument.ApplyTo(updateDto);
+
+            // apply Patch operation + log Errors in ModelState
+            patchDocument.ApplyTo(updateDto, ModelState);
+
+            TryValidateModel(updateDto);
+
+            if (ModelState.IsValid == false)
+            {
+                return UnprocessableEntity(ModelState);
+            }
+
             // update
             _serviceManager.Brand.Update(brandId, updateDto);
 
