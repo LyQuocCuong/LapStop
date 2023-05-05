@@ -35,15 +35,15 @@ namespace Services.Models
             _repositoryManager.SaveChanges();
         }
 
-        public List<CustomerDto> GetAll(bool isTrackChanges)
+        public List<CustomerDto> GetAll()
         {
-            List<Customer> customers = _repositoryManager.Customer.GetAll(isTrackChanges);
+            List<Customer> customers = _repositoryManager.Customer.GetAll(isTrackChanges: false);
             return MappingToNewObj<List<CustomerDto>>(customers);
         }
 
-        public CustomerDto? GetOneById(bool isTrackChanges, Guid customerId)
+        public CustomerDto? GetOneById(Guid customerId)
         {
-            Customer? customer = _repositoryManager.Customer.GetOneById(isTrackChanges, customerId);
+            Customer? customer = _repositoryManager.Customer.GetOneById(isTrackChanges: false, customerId);
             if (customer == null)
             {
                 throw new ExNotFoundInDB(nameof(CustomerService), nameof(GetOneById), typeof(Customer), customerId);

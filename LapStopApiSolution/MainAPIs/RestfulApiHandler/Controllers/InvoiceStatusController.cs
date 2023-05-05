@@ -22,7 +22,7 @@ namespace RestfulApiHandler.Controllers
         [Route("invoicestatuses", Name = "GetAllInvoiceStatuses")]
         public IActionResult GetAllInvoiceStatuses()
         {
-            List<InvoiceStatusDto> invoiceStatusDtos = _serviceManager.InvoiceStatus.GetAll(isTrackChanges: false);
+            List<InvoiceStatusDto> invoiceStatusDtos = _serviceManager.InvoiceStatus.GetAll();
             return Ok(invoiceStatusDtos);
         }
 
@@ -30,7 +30,7 @@ namespace RestfulApiHandler.Controllers
         [Route("invoicestatuses/{invoiceStatusId:guid}", Name = "GetInvoiceStatusById")]
         public IActionResult GetInvoiceStatusById(Guid invoiceStatusId)
         {
-            InvoiceStatusDto? invoiceStatusDto = _serviceManager.InvoiceStatus.GetOneById(isTrackChanges: false, invoiceStatusId);
+            InvoiceStatusDto? invoiceStatusDto = _serviceManager.InvoiceStatus.GetOneById(invoiceStatusId);
             if (invoiceStatusDto == null)
             {
                 return NotFound();

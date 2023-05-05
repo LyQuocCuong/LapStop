@@ -6,9 +6,9 @@ namespace Contracts.IServices.Models
 {
     public interface ICustomerService
     {
-        List<CustomerDto> GetAll(bool isTrackChanges);
+        List<CustomerDto> GetAll();
 
-        CustomerDto? GetOneById(bool isTrackChanges, Guid customerId);
+        CustomerDto? GetOneById(Guid customerId);
 
         CustomerForUpdateDto GetDtoForPatch(Guid customerId);
 

@@ -22,7 +22,7 @@ namespace RestfulApiHandler.Controllers
         [Route("employeestatuses", Name = "GetAllEmployeeStatuses")]
         public IActionResult GetAllEmployeeStatuses()
         {
-            List<EmployeeStatusDto> employeeStatusDtos = _serviceManager.EmployeeStatus.GetAll(isTrackChanges: false);
+            List<EmployeeStatusDto> employeeStatusDtos = _serviceManager.EmployeeStatus.GetAll();
             return Ok(employeeStatusDtos);
         }
 
@@ -30,7 +30,7 @@ namespace RestfulApiHandler.Controllers
         [Route("employeestatuses/{employeeStatusId:guid}", Name = "GetEmployeeStatusById")]
         public IActionResult GetEmployeeStatusById(Guid employeeStatusId)
         {
-            EmployeeStatusDto? employeeStatusDto = _serviceManager.EmployeeStatus.GetOneById(isTrackChanges: false, employeeStatusId);
+            EmployeeStatusDto? employeeStatusDto = _serviceManager.EmployeeStatus.GetOneById(employeeStatusId);
             if (employeeStatusDto == null)
             {
                 return NotFound();

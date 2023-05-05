@@ -49,15 +49,15 @@ namespace Services.Models
             _repositoryManager.SaveChanges();
         }
 
-        public List<BrandDto> GetAll(bool isTrackChanges)
+        public List<BrandDto> GetAll()
         {
-            List<Brand> brands = _repositoryManager.Brand.GetAll(isTrackChanges);
+            List<Brand> brands = _repositoryManager.Brand.GetAll(isTrackChanges: false);
             return MappingToNewObj<List<BrandDto>>(brands);
         }
 
-        public BrandDto? GetOneById(bool isTrackChanges, Guid brandId)
+        public BrandDto? GetOneById(Guid brandId)
         {
-            Brand? brand = _repositoryManager.Brand.GetOneById(isTrackChanges, brandId);
+            Brand? brand = _repositoryManager.Brand.GetOneById(isTrackChanges: false, brandId);
             if (brand == null)
             {
                 throw new ExNotFoundInDB(nameof(BrandService), nameof(GetOneById),typeof(Brand), brandId);

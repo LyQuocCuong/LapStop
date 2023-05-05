@@ -6,9 +6,9 @@ namespace Contracts.IServices.Models
 {
     public interface ICustomerAccountService
     {
-        List<CustomerAccountDto> GetAll(bool isTrackChanges);
+        List<CustomerAccountDto> GetAll();
 
-        CustomerAccountDto? GetOneByCustomerId(bool isTrackChanges, Guid customerId);
+        CustomerAccountDto? GetOneByCustomerId(Guid customerId);
 
         CustomerAccountDto Create(Guid customerId, CustomerAccountForCreationDto creationDto);
 

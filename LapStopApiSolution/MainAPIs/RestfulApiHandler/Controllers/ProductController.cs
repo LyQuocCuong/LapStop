@@ -23,7 +23,7 @@ namespace RestfulApiHandler.Controllers
         [Route("products", Name = "GetAllProducts")]
         public IActionResult GetAllProducts()
         {
-            List<ProductDto> productDtos = _serviceManager.Product.GetAll(isTrackChanges: false);
+            List<ProductDto> productDtos = _serviceManager.Product.GetAll();
             return Ok(productDtos);
         }
 
@@ -31,7 +31,7 @@ namespace RestfulApiHandler.Controllers
         [Route("products/{productId:guid}", Name = "GetProductById")]
         public IActionResult GetProductById(Guid productId)
         {
-            ProductDto? productDto = _serviceManager.Product.GetOneById(isTrackChanges: false, productId);
+            ProductDto? productDto = _serviceManager.Product.GetOneById(productId);
             if(productDto == null)
             {
                 return NotFound();
