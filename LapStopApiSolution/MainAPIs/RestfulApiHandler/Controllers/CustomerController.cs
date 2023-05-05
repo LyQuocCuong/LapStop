@@ -47,6 +47,10 @@ namespace RestfulApiHandler.Controllers
         [Route("customers", Name = "CreateCustomer")]
         public IActionResult CreateCustomer([FromBody] CustomerForCreationDto creationDto)
         {
+            if (ModelState.IsValid == false)
+            {
+                return UnprocessableEntity(ModelState);
+            }
             if (creationDto == null)
             {
                 return BadRequest(CommonMessages.ERROR.NullObject(nameof(CustomerForCreationDto)));
@@ -59,6 +63,18 @@ namespace RestfulApiHandler.Controllers
         [Route("customers/{customerId:guid}")]
         public IActionResult UpdateCustomer(Guid customerId, [FromBody] CustomerForUpdateDto updateDto)
         {
+            if (ModelState.IsValid == false)
+            {
+                return UnprocessableEntity(ModelState);
+            }
+            if (updateDto == null)
+            {
+                return BadRequest(CommonMessages.ERROR.NullObject(nameof(CustomerForUpdateDto)));
+            }
+            if (_serviceManager.Customer.IsValidId(customerId) == false)
+            {
+                return NotFound();
+            }
             _serviceManager.Customer.Update(customerId, updateDto);
             return NoContent();
         }
