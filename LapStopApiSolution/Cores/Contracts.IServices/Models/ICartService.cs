@@ -4,9 +4,9 @@ namespace Contracts.IServices.Models
 {
     public interface ICartService
     {
-        List<CartDto> GetAll(bool isTrackChanges);
+        List<CartDto> GetAll();
 
-        CartDto? GetOneByCustomerId(bool isTrackChanges, Guid customerId);
+        CartDto? GetOneByCustomerId(Guid customerId);
 
         bool IsValidId(Guid cartId);
     }

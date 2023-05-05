@@ -13,7 +13,7 @@ namespace Services.Models
         {
         }
 
-        public List<CartItemDto> GetAllByCartId(bool isTrackChanges, Guid cartId)
+        public List<CartItemDto> GetAllByCartId(Guid cartId)
         {
             if (_repositoryManager.Cart.IsValidId(cartId) == false)
             {

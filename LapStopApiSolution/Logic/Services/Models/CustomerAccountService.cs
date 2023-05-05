@@ -36,19 +36,19 @@ namespace Services.Models
             _repositoryManager.SaveChanges();
         }
 
-        public List<CustomerAccountDto> GetAll(bool isTrackChanges)
+        public List<CustomerAccountDto> GetAll()
         {
-            List<CustomerAccount> customerAccounts = _repositoryManager.CustomerAccount.GetAll(isTrackChanges);
+            List<CustomerAccount> customerAccounts = _repositoryManager.CustomerAccount.GetAll(isTrackChanges: false);
             return MappingToNewObj<List<CustomerAccountDto>>(customerAccounts);
         }
 
-        public CustomerAccountDto? GetOneByCustomerId(bool isTrackChanges, Guid customerId)
+        public CustomerAccountDto? GetOneByCustomerId(Guid customerId)
         {
             if (_repositoryManager.Customer.IsValidId(customerId) == false)
             {
                 throw new ExNotFoundInDB(nameof(CustomerAccountService), nameof(GetOneByCustomerId), typeof(Customer), customerId);
             }
-            CustomerAccount? customerAccount = _repositoryManager.CustomerAccount.GetOneByCustomerId(isTrackChanges, customerId);
+            CustomerAccount? customerAccount = _repositoryManager.CustomerAccount.GetOneByCustomerId(isTrackChanges: false, customerId);
             if (customerAccount == null)
             {
                 throw new ExNotFoundInDB(nameof(CustomerAccountService), nameof(GetOneByCustomerId), typeof(CustomerAccount), customerId);

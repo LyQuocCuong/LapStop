@@ -6,9 +6,9 @@ namespace Contracts.IServices.Models
 {
     public interface IBrandService
     {
-        List<BrandDto> GetAll(bool isTrackChanges);
+        List<BrandDto> GetAll();
 
-        BrandDto? GetOneById(bool isTrackChanges, Guid brandId);
+        BrandDto? GetOneById(Guid brandId);
 
         BrandForUpdateDto GetDtoForPatch(Guid brandId);
 

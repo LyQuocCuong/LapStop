@@ -27,7 +27,7 @@ namespace RestfulApiHandler.Controllers
         [Route("brands", Name = "GetAllBrands")]
         public IActionResult GetAllBrands() 
         {
-            List<BrandDto> brandDtos = _serviceManager.Brand.GetAll(isTrackChanges: false);
+            List<BrandDto> brandDtos = _serviceManager.Brand.GetAll();
             return Ok(brandDtos);
         }
 
@@ -35,7 +35,7 @@ namespace RestfulApiHandler.Controllers
         [Route("brands/{brandId:guid}", Name = "GetBrandById")]
         public IActionResult GetBrandById(Guid brandId)
         {
-            BrandDto? brandDto = _serviceManager.Brand.GetOneById(isTrackChanges: false, brandId);
+            BrandDto? brandDto = _serviceManager.Brand.GetOneById(brandId);
             if (brandDto == null)
             {
                 return NotFound();

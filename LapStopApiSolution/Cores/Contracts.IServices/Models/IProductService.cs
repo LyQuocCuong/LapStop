@@ -4,9 +4,9 @@ namespace Contracts.IServices.Models
 {
     public interface IProductService
     {
-        List<ProductDto> GetAll(bool isTrackChanges);
+        List<ProductDto> GetAll();
 
-        ProductDto? GetOneById(bool isTrackChanges, Guid productId);
+        ProductDto? GetOneById(Guid productId);
 
         bool IsValidId(Guid productId);
     }

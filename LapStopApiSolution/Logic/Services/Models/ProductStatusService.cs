@@ -13,15 +13,15 @@ namespace Services.Models
         {
         }
 
-        public List<ProductStatusDto> GetAll(bool isTrackChanges)
+        public List<ProductStatusDto> GetAll()
         {
-            List<ProductStatus> productStatuses = _repositoryManager.ProductStatus.GetAll(isTrackChanges);
+            List<ProductStatus> productStatuses = _repositoryManager.ProductStatus.GetAll(isTrackChanges: false);
             return MappingToNewObj<List<ProductStatusDto>>(productStatuses);
         }
 
-        public ProductStatusDto? GetOneById(bool isTrackChanges, Guid productStatusId)
+        public ProductStatusDto? GetOneById(Guid productStatusId)
         {
-            ProductStatus? productStatus = _repositoryManager.ProductStatus.GetOneById(isTrackChanges, productStatusId);
+            ProductStatus? productStatus = _repositoryManager.ProductStatus.GetOneById(isTrackChanges: false, productStatusId);
             if (productStatus == null)
             {
                 throw new ExNotFoundInDB(nameof(ProductStatusService), nameof(GetOneById), typeof(ProductStatus), productStatusId);

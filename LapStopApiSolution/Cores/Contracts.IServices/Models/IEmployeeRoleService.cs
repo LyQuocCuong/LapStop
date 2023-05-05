@@ -4,8 +4,8 @@ namespace Contracts.IServices.Models
 {
     public interface IEmployeeRoleService
     {
-        List<EmployeeRoleDto> GetAll(bool isTrackChanges);
+        List<EmployeeRoleDto> GetAll();
 
-        EmployeeRoleDto? GetOneById(bool isTrackChanges, Guid employeeRoleId);
+        EmployeeRoleDto? GetOneById(Guid employeeRoleId);
     }
 }

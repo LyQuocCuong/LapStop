@@ -13,19 +13,19 @@ namespace Services.Models
         {
         }
 
-        public List<EmployeeAccountDto> GetAll(bool isTrackChanges)
+        public List<EmployeeAccountDto> GetAll()
         {
-            List<EmployeeAccount> employeeAccounts = _repositoryManager.EmployeeAccount.GetAll(isTrackChanges);
+            List<EmployeeAccount> employeeAccounts = _repositoryManager.EmployeeAccount.GetAll(isTrackChanges: false);
             return MappingToNewObj<List<EmployeeAccountDto>>(employeeAccounts);
         }
 
-        public EmployeeAccountDto? GetOneByEmployeeId(bool isTrackChanges, Guid employeeId)
+        public EmployeeAccountDto? GetOneByEmployeeId(Guid employeeId)
         {
             if (_repositoryManager.Employee.IsValidId(employeeId) == false)
             {
                 throw new ExNotFoundInDB(nameof(EmployeeAccountService), nameof(GetOneByEmployeeId), typeof(Employee), employeeId);
             }
-            EmployeeAccount? employeeAccount = _repositoryManager.EmployeeAccount.GetOneByEmployeeId(isTrackChanges, employeeId);
+            EmployeeAccount? employeeAccount = _repositoryManager.EmployeeAccount.GetOneByEmployeeId(isTrackChanges: false, employeeId);
             if (employeeAccount == null)
             {
                 throw new ExNotFoundInDB(nameof(EmployeeAccountService), nameof(GetOneByEmployeeId), typeof(EmployeeAccount), employeeId);

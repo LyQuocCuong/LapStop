@@ -13,15 +13,15 @@ namespace Services.Models
         {
         }
 
-        public List<EmployeeStatusDto> GetAll(bool isTrackChanges)
+        public List<EmployeeStatusDto> GetAll()
         {
-            List<EmployeeStatus> employeeStatuses = _repositoryManager.EmployeeStatus.GetAll(isTrackChanges);
+            List<EmployeeStatus> employeeStatuses = _repositoryManager.EmployeeStatus.GetAll(isTrackChanges: false);
             return MappingToNewObj<List<EmployeeStatusDto>>(employeeStatuses);
         }
 
-        public EmployeeStatusDto? GetOneById(bool isTrackChanges, Guid employeeStatusId)
+        public EmployeeStatusDto? GetOneById(Guid employeeStatusId)
         {
-            EmployeeStatus? employeeStatus = _repositoryManager.EmployeeStatus.GetOneById(isTrackChanges, employeeStatusId);
+            EmployeeStatus? employeeStatus = _repositoryManager.EmployeeStatus.GetOneById(isTrackChanges: false, employeeStatusId);
             if (employeeStatus == null)
             {
                 throw new ExNotFoundInDB(nameof(EmployeeStatus), nameof(GetOneById), typeof(EmployeeStatus), employeeStatusId);

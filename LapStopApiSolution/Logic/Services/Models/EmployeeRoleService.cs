@@ -13,15 +13,15 @@ namespace Services.Models
         {
         }
 
-        public List<EmployeeRoleDto> GetAll(bool isTrackChanges)
+        public List<EmployeeRoleDto> GetAll()
         {
-            List<EmployeeRole> employeeRoles = _repositoryManager.EmployeeRole.GetAll(isTrackChanges);
+            List<EmployeeRole> employeeRoles = _repositoryManager.EmployeeRole.GetAll(isTrackChanges: false);
             return MappingToNewObj<List<EmployeeRoleDto>>(employeeRoles);
         }
 
-        public EmployeeRoleDto? GetOneById(bool isTrackChanges, Guid employeeRoleId)
+        public EmployeeRoleDto? GetOneById(Guid employeeRoleId)
         {
-            EmployeeRole? employeeRole = _repositoryManager.EmployeeRole.GetOneById(isTrackChanges, employeeRoleId);
+            EmployeeRole? employeeRole = _repositoryManager.EmployeeRole.GetOneById(isTrackChanges: false, employeeRoleId);
             if (employeeRole == null)
             {
                 throw new ExNotFoundInDB(nameof(EmployeeRoleService), nameof(GetOneById), typeof(EmployeeRole), employeeRoleId);

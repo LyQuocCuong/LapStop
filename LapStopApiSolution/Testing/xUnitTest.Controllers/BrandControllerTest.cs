@@ -49,7 +49,7 @@ namespace xUnitTest.Controllers
         {
             // Arrange
             _mockServiceManager
-                .Setup(s => s.Brand.GetAll(false))
+                .Setup(s => s.Brand.GetAll())
                 .Returns(_brandList);
 
             //Act
@@ -67,7 +67,7 @@ namespace xUnitTest.Controllers
         {
             // Arrange
             _mockServiceManager
-                .Setup(s => s.Brand.GetAll(false))
+                .Setup(s => s.Brand.GetAll())
                 .Returns(_brandList);
 
             //Act
@@ -84,7 +84,7 @@ namespace xUnitTest.Controllers
             Guid unknownBrandId = Guid.NewGuid();
 
             _mockServiceManager
-                .Setup(s => s.Brand.GetOneById(false, unknownBrandId))
+                .Setup(s => s.Brand.GetOneById(unknownBrandId))
                 .Returns((BrandDto)null);
 
             //Action
@@ -101,7 +101,7 @@ namespace xUnitTest.Controllers
             Guid existingBrandId = new Guid("00000000-0000-0000-0000-000000000001");
 
             _mockServiceManager
-                .Setup(s => s.Brand.GetOneById(false, existingBrandId))
+                .Setup(s => s.Brand.GetOneById(existingBrandId))
                 .Returns(_brandList.FirstOrDefault(b => b.Id == existingBrandId));
 
             //Act
@@ -118,7 +118,7 @@ namespace xUnitTest.Controllers
             Guid existingBrandId = new Guid("00000000-0000-0000-0000-000000000001");
 
             _mockServiceManager
-                .Setup(s => s.Brand.GetOneById(false, existingBrandId))
+                .Setup(s => s.Brand.GetOneById(existingBrandId))
                 .Returns(_brandList.FirstOrDefault(b => b.Id == existingBrandId));
 
             //Act

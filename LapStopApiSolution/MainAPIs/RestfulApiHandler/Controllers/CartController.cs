@@ -22,7 +22,7 @@ namespace RestfulApiHandler.Controllers
         [Route("carts", Name = "GetAllCarts")]
         public IActionResult GetAllCarts()
         {
-            List<CartDto> cartDtos = _serviceManager.Cart.GetAll(isTrackChanges: false);
+            List<CartDto> cartDtos = _serviceManager.Cart.GetAll();
             return Ok(cartDtos);
         }
 
@@ -30,7 +30,7 @@ namespace RestfulApiHandler.Controllers
         [Route("customers/{customerId:guid}/cart", Name = "GetCartByCustomerId")]
         public IActionResult GetCartByCustomerId(Guid customerId)
         {
-            CartDto? cartDto = _serviceManager.Cart.GetOneByCustomerId(isTrackChanges: false, customerId);
+            CartDto? cartDto = _serviceManager.Cart.GetOneByCustomerId(customerId);
             if (cartDto == null)
             {
                 return NotFound();

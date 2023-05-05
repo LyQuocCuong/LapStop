@@ -22,7 +22,7 @@ namespace RestfulApiHandler.Controllers
         [Route("products/{productId:guid}/galleries", Name = "GetAllProductGalleriesByProductId")]
         public IActionResult GetAllProductGalleriesByProductId(Guid productId)
         {
-            List<ProductGalleryDto> productGalleryDtos = _serviceManager.ProductGallery.GetAllByProductId(isTrackChanges: false, productId);
+            List<ProductGalleryDto> productGalleryDtos = _serviceManager.ProductGallery.GetAllByProductId(productId);
             return Ok(productGalleryDtos);
         }
 

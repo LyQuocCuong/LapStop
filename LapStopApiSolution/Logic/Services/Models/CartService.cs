@@ -13,19 +13,19 @@ namespace Services.Models
         {
         }
 
-        public List<CartDto> GetAll(bool isTrackChanges)
+        public List<CartDto> GetAll()
         {
-            List<Cart> carts = _repositoryManager.Cart.GetAll(isTrackChanges);
+            List<Cart> carts = _repositoryManager.Cart.GetAll(isTrackChanges: false);
             return MappingToNewObj<List<CartDto>>(carts);
         }
 
-        public CartDto? GetOneByCustomerId(bool isTrackChanges, Guid customerId)
+        public CartDto? GetOneByCustomerId(Guid customerId)
         {
             if (_repositoryManager.Customer.IsValidId(customerId) == false)
             {
                 throw new ExNotFoundInDB(nameof(CartService), nameof(GetOneByCustomerId), typeof(Customer), customerId);
             }
-            Cart? cart = _repositoryManager.Cart.GetOneByCustomerId(isTrackChanges, customerId);
+            Cart? cart = _repositoryManager.Cart.GetOneByCustomerId(isTrackChanges: false, customerId);
             if (cart == null)
             {
                 throw new ExNotFoundInDB(nameof(CartService), nameof(GetOneByCustomerId), typeof(Cart), customerId);

@@ -13,15 +13,15 @@ namespace Services.Models
         {
         }
 
-        public List<InvoiceStatusDto> GetAll(bool isTrackChanges)
+        public List<InvoiceStatusDto> GetAll()
         {
-            List<InvoiceStatus> invoiceStatuses = _repositoryManager.InvoiceStatus.GetAll(isTrackChanges);
+            List<InvoiceStatus> invoiceStatuses = _repositoryManager.InvoiceStatus.GetAll(isTrackChanges: false);
             return MappingToNewObj<List<InvoiceStatusDto>>(invoiceStatuses);
         }
 
-        public InvoiceStatusDto? GetOneById(bool isTrackChanges, Guid invoiceStatusId)
+        public InvoiceStatusDto? GetOneById(Guid invoiceStatusId)
         {
-            InvoiceStatus? invoiceStatus = _repositoryManager.InvoiceStatus.GetOneById(isTrackChanges, invoiceStatusId);
+            InvoiceStatus? invoiceStatus = _repositoryManager.InvoiceStatus.GetOneById(isTrackChanges: false, invoiceStatusId);
             if (invoiceStatus == null)
             {
                 throw new ExNotFoundInDB(nameof(InvoiceStatusService), nameof(GetOneById), typeof(InvoiceStatus), invoiceStatusId);
