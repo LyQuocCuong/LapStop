@@ -47,6 +47,10 @@ namespace RestfulApiHandler.Controllers
         [Route("brands", Name = "CreateBrand")]
         public IActionResult CreateBrand([FromBody] BrandForCreationDto creationDto)
         {
+            if (ModelState.IsValid == false)
+            {
+                return UnprocessableEntity(ModelState);
+            }
             if (creationDto == null)
             {
                 return BadRequest(CommonMessages.ERROR.NullObject(nameof(BrandForCreationDto)));
@@ -71,6 +75,10 @@ namespace RestfulApiHandler.Controllers
         [Route("brands/{brandId:guid}", Name = "UpdateBrand")]
         public IActionResult UpdateBrand(Guid brandId, [FromBody] BrandForUpdateDto updateDto)
         {
+            if (ModelState.IsValid == false)
+            {
+                return UnprocessableEntity(ModelState);
+            }
             if (updateDto == null)
             {
                 return BadRequest(CommonMessages.ERROR.NullObject(nameof(BrandForUpdateDto)));
