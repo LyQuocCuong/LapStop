@@ -10,9 +10,9 @@ namespace Repositories.Models
         {
         }
 
-        public List<ProductStatus> GetAll(bool isTrackChanges)
+        public IEnumerable<ProductStatus> GetAll(bool isTrackChanges)
         {
-            return FindAll(isTrackChanges).ToList();
+            return FindAll(isTrackChanges);
         }
 
         public ProductStatus? GetOneById(bool isTrackChanges, Guid productStatusId)

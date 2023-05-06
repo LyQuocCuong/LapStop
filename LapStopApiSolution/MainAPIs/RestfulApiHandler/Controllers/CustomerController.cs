@@ -27,7 +27,7 @@ namespace RestfulApiHandler.Controllers
         [Route("customers", Name = "GetAllCustomers")]
         public IActionResult GetAllCustomers()
         {
-            List<CustomerDto> customerDtos = _serviceManager.Customer.GetAll();
+            IEnumerable<CustomerDto> customerDtos = _serviceManager.Customer.GetAll();
             return Ok(customerDtos);
         }
 

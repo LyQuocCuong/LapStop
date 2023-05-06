@@ -13,10 +13,10 @@ namespace Services.Models
         {
         }
 
-        public List<InvoiceStatusDto> GetAll()
+        public IEnumerable<InvoiceStatusDto> GetAll()
         {
-            List<InvoiceStatus> invoiceStatuses = _repositoryManager.InvoiceStatus.GetAll(isTrackChanges: false);
-            return MappingToNewObj<List<InvoiceStatusDto>>(invoiceStatuses);
+            IEnumerable<InvoiceStatus> invoiceStatuses = _repositoryManager.InvoiceStatus.GetAll(isTrackChanges: false);
+            return MappingToNewObj<IEnumerable<InvoiceStatusDto>>(invoiceStatuses);
         }
 
         public InvoiceStatusDto? GetOneById(Guid invoiceStatusId)

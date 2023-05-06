@@ -4,7 +4,7 @@ namespace Contracts.IRepositories.Models
 {
     public interface IProductRepository
     {
-        List<Product> GetAll(bool isTrackChanges);
+        IEnumerable<Product> GetAll(bool isTrackChanges);
 
         Product? GetOneById(bool isTrackChanges, Guid productId);
 

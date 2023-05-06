@@ -15,9 +15,9 @@ namespace Repositories.Models
             base.CreateModel(customer);
         }
 
-        public List<Customer> GetAll(bool isTrackChanges)
+        public IEnumerable<Customer> GetAll(bool isTrackChanges)
         {
-            return FindAll(isTrackChanges).ToList();
+            return FindAll(isTrackChanges);
         }
 
         public Customer? GetOneById(bool isTrackChanges, Guid customerId)

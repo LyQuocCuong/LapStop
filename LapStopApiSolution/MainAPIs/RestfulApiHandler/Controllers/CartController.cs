@@ -22,7 +22,7 @@ namespace RestfulApiHandler.Controllers
         [Route("carts", Name = "GetAllCarts")]
         public IActionResult GetAllCarts()
         {
-            List<CartDto> cartDtos = _serviceManager.Cart.GetAll();
+            IEnumerable<CartDto> cartDtos = _serviceManager.Cart.GetAll();
             return Ok(cartDtos);
         }
 

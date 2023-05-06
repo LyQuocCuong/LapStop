@@ -4,6 +4,6 @@ namespace Contracts.IServices.Models
 {
     public interface IProductGalleryService
     {
-        List<ProductGalleryDto> GetAllByProductId(Guid productId);
+        IEnumerable<ProductGalleryDto> GetAllByProductId(Guid productId);
     }
 }

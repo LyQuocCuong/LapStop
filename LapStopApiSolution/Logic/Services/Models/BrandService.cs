@@ -49,10 +49,10 @@ namespace Services.Models
             _repositoryManager.SaveChanges();
         }
 
-        public List<BrandDto> GetAll()
+        public IEnumerable<BrandDto> GetAll()
         {
-            List<Brand> brands = _repositoryManager.Brand.GetAll(isTrackChanges: false);
-            return MappingToNewObj<List<BrandDto>>(brands);
+            IEnumerable<Brand> brands = _repositoryManager.Brand.GetAll(isTrackChanges: false);
+            return MappingToNewObj<IEnumerable<BrandDto>>(brands);
         }
 
         public BrandDto? GetOneById(Guid brandId)

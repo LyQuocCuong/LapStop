@@ -22,7 +22,7 @@ namespace RestfulApiHandler.Controllers
         [Route("productstatuses", Name = "GetAllProductStatuses")]
         public IActionResult GetAllProductStatuses()
         {
-            List<ProductStatusDto> productStatusDtos = _serviceManager.ProductStatus.GetAll();
+            IEnumerable<ProductStatusDto> productStatusDtos = _serviceManager.ProductStatus.GetAll();
             return Ok(productStatusDtos);
         }
 
