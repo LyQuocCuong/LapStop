@@ -3,6 +3,7 @@ using DTO.Output;
 using DTO.Update;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Moq;
 using RestfulApiHandler.Controllers;
 using Xunit;
@@ -133,20 +134,20 @@ namespace xUnitTest.Controllers
         }
 
         [Fact]
-        public void Wait_Create_InvalidObjectPassed_ReturnsBadRequest()
+        public void Create_InvalidObjectPassed_ReturnsUnprocessableEntity()
         {
-            ////Arrange
-            //BrandForCreationDto nameMissingBrand = new BrandForCreationDto()
-            //{
-            //    Description = "Test"
-            //};
-            //_brandController.ModelState.AddModelError("Name", "Required");
+            //Arrange
+            BrandForCreationDto nameMissingBrand = new BrandForCreationDto()
+            {
+                Description = "Test"
+            };
+            _brandController.ModelState.AddModelError("Name", "Required");
 
-            ////Act
-            //var result = _brandController.CreateBrand(nameMissingBrand);
+            //Act
+            var result = _brandController.CreateBrand(nameMissingBrand);
 
-            ////Assert
-            //Assert.IsType<BadRequestObjectResult>(result);
+            //Assert
+            Assert.IsType<UnprocessableEntityObjectResult>(result);
         }
 
         [Fact]
@@ -224,6 +225,24 @@ namespace xUnitTest.Controllers
         }
 
         [Fact]
+        public void Update_InvalidObjectPassed_ReturnsUnprocessableEntity()
+        {
+            //Arrange
+            Guid brandId = _brandList.FirstOrDefault().Id;
+            BrandForUpdateDto updateDto = new BrandForUpdateDto()
+            {
+                Description = "Test",
+            };
+            _brandController.ModelState.AddModelError("Name", "required");
+
+            // Act
+            var result = _brandController.UpdateBrand(brandId, updateDto);
+
+            //Assert
+            Assert.IsType<UnprocessableEntityObjectResult>(result);
+        }
+
+        [Fact]
         public void Update_NullObjectPassed_ReturnsBadRequest()
         {
             //Arrange
@@ -284,6 +303,33 @@ namespace xUnitTest.Controllers
 
             //Assert
             Assert.IsType<NoContentResult>(result);
+        }
+
+        [Fact]
+        public void UpdatePartially_InvalidObjectPassed_ReturnsUnprocessableEntity()
+        {
+            //Arrange
+            Guid brandId = _brandList.FirstOrDefault().Id;
+            var patchDocument = new JsonPatchDocument<BrandForUpdateDto>();
+            patchDocument.Replace(b => b.Name, null);  // Name can NOT be NULL
+
+            _mockServiceManager
+                .Setup(s => s.Brand.IsValidId(brandId))
+                .Returns(true);
+
+            _mockServiceManager
+                .Setup(s => s.Brand.GetDtoForPatch(brandId))
+                .Returns(new BrandForUpdateDto()
+                {
+                    Name = "Addidas",
+                    Description = "Test"
+                });
+
+            //Act
+            var result =_brandController.UpdateBrandPartially(brandId, patchDocument);
+
+            //Assert
+            Assert.IsType<UnprocessableEntityObjectResult>(result);
         }
 
         [Fact]
