@@ -6,12 +6,12 @@ namespace Contracts.IServices.Models
 {
     public interface ICustomerAccountService
     {
-        IEnumerable<CustomerAccountDto> GetAll();
+        Task<IEnumerable<CustomerAccountDto>> GetAllAsync();
 
-        CustomerAccountDto? GetOneByCustomerId(Guid customerId);
+        Task<CustomerAccountDto?> GetOneByCustomerIdAsync(Guid customerId);
 
-        CustomerAccountDto Create(Guid customerId, CustomerAccountForCreationDto creationDto);
+        Task<CustomerAccountDto> CreateAsync(Guid customerId, CustomerAccountForCreationDto creationDto);
 
-        void Update(Guid customerId, CustomerAccountForUpdateDto updateDto);
+        Task UpdateAsync(Guid customerId, CustomerAccountForUpdateDto updateDto);
     }
 }

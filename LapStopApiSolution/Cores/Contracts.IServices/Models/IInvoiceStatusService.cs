@@ -4,8 +4,8 @@ namespace Contracts.IServices.Models
 {
     public interface IInvoiceStatusService
     {
-        IEnumerable<InvoiceStatusDto> GetAll();
+        Task<IEnumerable<InvoiceStatusDto>> GetAllAsync();
 
-        InvoiceStatusDto? GetOneById(Guid invoiceStatusId);
+        Task<InvoiceStatusDto?> GetOneByIdAsync(Guid invoiceStatusId);
     }
 }

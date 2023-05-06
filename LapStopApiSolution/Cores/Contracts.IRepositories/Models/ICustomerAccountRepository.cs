@@ -4,9 +4,9 @@ namespace Contracts.IRepositories.Models
 {
     public interface ICustomerAccountRepository
     {
-        IEnumerable<CustomerAccount> GetAll(bool isTrackChanges);
+        Task<IEnumerable<CustomerAccount>> GetAllAsync(bool isTrackChanges);
 
-        CustomerAccount? GetOneByCustomerId(bool isTrackChanges, Guid customerId);
+        Task<CustomerAccount?> GetOneByCustomerIdAsync(bool isTrackChanges, Guid customerId);
 
         void Create(CustomerAccount customerAccount);
     }

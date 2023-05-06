@@ -4,11 +4,11 @@ namespace Contracts.IRepositories.Models
 {
     public interface ICustomerRepository
     {
-        IEnumerable<Customer> GetAll(bool isTrackChanges);
+        Task<IEnumerable<Customer>> GetAllAsync(bool isTrackChanges);
 
-        Customer? GetOneById(bool isTrackChanges, Guid customerId);
+        Task<Customer?> GetOneByIdAsync(bool isTrackChanges, Guid customerId);
 
-        bool IsValidId(Guid customerId);
+        Task<bool> IsValidIdAsync(Guid customerId);
 
         void Create(Customer customer);
     }

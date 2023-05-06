@@ -15,51 +15,51 @@ namespace Services.Models
         {
         }
 
-        public CustomerDto Create(CustomerForCreationDto creationDto)
+        public async Task<CustomerDto> CreateAsync(CustomerForCreationDto creationDto)
         {
             Customer newCustomer = MappingToNewObj<Customer>(creationDto);
             _repositoryManager.Customer.Create(newCustomer);
-            _repositoryManager.SaveChanges();
+            await _repositoryManager.SaveChangesAsync();
 
             return MappingToNewObj<CustomerDto>(newCustomer);
         }
 
-        public void Update(Guid customerId, CustomerForUpdateDto updateDto)
+        public async Task UpdateAsync(Guid customerId, CustomerForUpdateDto updateDto)
         {
-            Customer? customer = _repositoryManager.Customer.GetOneById(isTrackChanges: true, customerId);
+            Customer? customer = await _repositoryManager.Customer.GetOneByIdAsync(isTrackChanges: true, customerId);
             if (customer == null)
             {
-                throw new ExNotFoundInDB(nameof(CustomerService), nameof(Update), typeof(Customer), customerId);
+                throw new ExNotFoundInDB(nameof(CustomerService), nameof(UpdateAsync), typeof(Customer), customerId);
             }
             MappingToExistingObj(updateDto, customer);
-            _repositoryManager.SaveChanges();
+            await _repositoryManager.SaveChangesAsync();
         }
 
-        public IEnumerable<CustomerDto> GetAll()
+        public async Task<IEnumerable<CustomerDto>> GetAllAsync()
         {
-            IEnumerable<Customer> customers = _repositoryManager.Customer.GetAll(isTrackChanges: false);
+            IEnumerable<Customer> customers = await _repositoryManager.Customer.GetAllAsync(isTrackChanges: false);
             return MappingToNewObj<IEnumerable<CustomerDto>>(customers);
         }
 
-        public CustomerDto? GetOneById(Guid customerId)
+        public async Task<CustomerDto?> GetOneByIdAsync(Guid customerId)
         {
-            Customer? customer = _repositoryManager.Customer.GetOneById(isTrackChanges: false, customerId);
+            Customer? customer = await _repositoryManager.Customer.GetOneByIdAsync(isTrackChanges: false, customerId);
             if (customer == null)
             {
-                throw new ExNotFoundInDB(nameof(CustomerService), nameof(GetOneById), typeof(Customer), customerId);
+                throw new ExNotFoundInDB(nameof(CustomerService), nameof(GetOneByIdAsync), typeof(Customer), customerId);
             }
             return MappingToNewObj<CustomerDto>(customer);
         }
 
-        public CustomerForUpdateDto GetDtoForPatch(Guid customerId)
+        public async Task<CustomerForUpdateDto> GetDtoForPatchAsync(Guid customerId)
         {
-            Customer? customer = _repositoryManager.Customer.GetOneById(isTrackChanges: false, customerId);
+            Customer? customer = await _repositoryManager.Customer.GetOneByIdAsync(isTrackChanges: false, customerId);
             return MappingToNewObj<CustomerForUpdateDto>(customer);
         }
 
-        public bool IsValidId(Guid customerId)
+        public async Task<bool> IsValidIdAsync(Guid customerId)
         {
-            return _repositoryManager.Customer.IsValidId(customerId);
+            return await _repositoryManager.Customer.IsValidIdAsync(customerId);
         }
 
     }

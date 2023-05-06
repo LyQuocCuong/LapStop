@@ -1,6 +1,7 @@
 ﻿using Contracts.IRepositories.Models;
 using Domains.Models;
 using Entities.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.Models
 {
@@ -10,9 +11,9 @@ namespace Repositories.Models
         {
         }
 
-        public IEnumerable<CartItem> GetAllByCartId(bool isTrackChanges, Guid cartId)
+        public async Task<IEnumerable<CartItem>> GetAllByCartIdAsync(bool isTrackChanges, Guid cartId)
         {
-            return FindByCondition(isTrackChanges, cartItem => cartItem.CartId == cartId);
+            return await FindByCondition(isTrackChanges, cartItem => cartItem.CartId == cartId).ToListAsync();
         }
     }
 }

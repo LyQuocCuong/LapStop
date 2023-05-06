@@ -21,17 +21,17 @@ namespace RestfulApiHandler.Controllers
 
         [HttpGet]
         [Route("products", Name = "GetAllProducts")]
-        public IActionResult GetAllProducts()
+        public async Task<IActionResult> GetAllProducts()
         {
-            IEnumerable<ProductDto> productDtos = _serviceManager.Product.GetAll();
+            IEnumerable<ProductDto> productDtos = await _serviceManager.Product.GetAllAsync();
             return Ok(productDtos);
         }
 
         [HttpGet]
         [Route("products/{productId:guid}", Name = "GetProductById")]
-        public IActionResult GetProductById(Guid productId)
+        public async Task<IActionResult> GetProductById(Guid productId)
         {
-            ProductDto? productDto = _serviceManager.Product.GetOneById(productId);
+            ProductDto? productDto = await _serviceManager.Product.GetOneByIdAsync(productId);
             if(productDto == null)
             {
                 return NotFound();

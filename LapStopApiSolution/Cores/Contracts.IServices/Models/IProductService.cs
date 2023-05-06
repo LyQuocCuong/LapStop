@@ -4,10 +4,10 @@ namespace Contracts.IServices.Models
 {
     public interface IProductService
     {
-        IEnumerable<ProductDto> GetAll();
+        Task<IEnumerable<ProductDto>> GetAllAsync();
 
-        ProductDto? GetOneById(Guid productId);
+        Task<ProductDto?> GetOneByIdAsync(Guid productId);
 
-        bool IsValidId(Guid productId);
+        Task<bool> IsValidIdAsync(Guid productId);
     }
 }

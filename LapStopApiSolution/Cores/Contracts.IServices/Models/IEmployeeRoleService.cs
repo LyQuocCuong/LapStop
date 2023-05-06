@@ -4,8 +4,8 @@ namespace Contracts.IServices.Models
 {
     public interface IEmployeeRoleService
     {
-        IEnumerable<EmployeeRoleDto> GetAll();
+        Task<IEnumerable<EmployeeRoleDto>> GetAllAsync();
 
-        EmployeeRoleDto? GetOneById(Guid employeeRoleId);
+        Task<EmployeeRoleDto?> GetOneByIdAsync(Guid employeeRoleId);
     }
 }

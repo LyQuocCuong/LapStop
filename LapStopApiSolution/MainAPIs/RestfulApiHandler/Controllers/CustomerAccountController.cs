@@ -22,17 +22,17 @@ namespace RestfulApiHandler.Controllers
 
         [HttpGet]
         [Route("customers/accounts", Name = "GetAllCustomerAccounts")]
-        public IActionResult GetAllCustomerAccounts()
+        public async Task<IActionResult> GetAllCustomerAccounts()
         {
-            IEnumerable<CustomerAccountDto> customerAccountDtos = _serviceManager.CustomerAccount.GetAll();
+            IEnumerable<CustomerAccountDto> customerAccountDtos = await _serviceManager.CustomerAccount.GetAllAsync();
             return Ok(customerAccountDtos);
         }
 
         [HttpGet]
         [Route("customers/{customerId:guid}/account", Name = "GetCustomerAccountByCustomerId")]
-        public IActionResult GetCustomerAccountByCustomerId(Guid customerId)
+        public async Task<IActionResult> GetCustomerAccountByCustomerId(Guid customerId)
         {
-            CustomerAccountDto? customerAccountDto = _serviceManager.CustomerAccount.GetOneByCustomerId(customerId);
+            CustomerAccountDto? customerAccountDto = await _serviceManager.CustomerAccount.GetOneByCustomerIdAsync(customerId);
             if (customerAccountDto == null)
             {
                 return NotFound();
@@ -42,21 +42,21 @@ namespace RestfulApiHandler.Controllers
 
         [HttpPost]
         [Route("customers/{customerId:guid}/account", Name = "CreateCustomerAccount")]
-        public IActionResult CreateCustomerAccount(Guid customerId, [FromBody] CustomerAccountForCreationDto creationDto)
+        public async Task<IActionResult> CreateCustomerAccount(Guid customerId, [FromBody] CustomerAccountForCreationDto creationDto)
         {
             if (creationDto == null)
             {
                 return BadRequest(Shared.Common.Messages.CommonMessages.ERROR.NullObject(nameof(CustomerAccountForCreationDto)));
             }
-            CustomerAccountDto newCustomerAccountDto = _serviceManager.CustomerAccount.Create(customerId, creationDto);
+            CustomerAccountDto newCustomerAccountDto = await _serviceManager.CustomerAccount.CreateAsync(customerId, creationDto);
             return CreatedAtRoute("GetCustomerAccountByCustomerId", new { customerId = newCustomerAccountDto.CustomerId }, newCustomerAccountDto);
         }
 
         [HttpPut]
         [Route("customers/{customerId:guid}/account", Name = "UpdateCustomerAccount")]
-        public IActionResult UpdateCustomerAccount(Guid customerId, [FromBody] CustomerAccountForUpdateDto updateDto)
+        public async Task<IActionResult> UpdateCustomerAccount(Guid customerId, [FromBody] CustomerAccountForUpdateDto updateDto)
         {
-            _serviceManager.CustomerAccount.Update(customerId, updateDto);
+            await _serviceManager.CustomerAccount.UpdateAsync(customerId, updateDto);
             return NoContent();
         }
 

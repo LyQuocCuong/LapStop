@@ -4,8 +4,8 @@ namespace Contracts.IServices.Models
 {
     public interface IEmployeeStatusService
     {
-        IEnumerable<EmployeeStatusDto> GetAll();
+        Task<IEnumerable<EmployeeStatusDto>> GetAllAsync();
 
-        EmployeeStatusDto? GetOneById(Guid employeeStatusId);
+        Task<EmployeeStatusDto?> GetOneByIdAsync(Guid employeeStatusId);
     }
 }

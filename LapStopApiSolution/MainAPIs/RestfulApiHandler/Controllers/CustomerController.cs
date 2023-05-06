@@ -1,5 +1,4 @@
-﻿using Azure;
-using Contracts.ILog;
+﻿using Contracts.ILog;
 using Contracts.IServices;
 using DTO.Creation;
 using DTO.Output;
@@ -25,17 +24,17 @@ namespace RestfulApiHandler.Controllers
 
         [HttpGet]
         [Route("customers", Name = "GetAllCustomers")]
-        public IActionResult GetAllCustomers()
+        public async Task<IActionResult> GetAllCustomers()
         {
-            IEnumerable<CustomerDto> customerDtos = _serviceManager.Customer.GetAll();
+            IEnumerable<CustomerDto> customerDtos = await _serviceManager.Customer.GetAllAsync();
             return Ok(customerDtos);
         }
 
         [HttpGet]
         [Route("customers/{customerId:guid}", Name = "GetCustomerById")]
-        public IActionResult GetCustomerById(Guid customerId)
+        public async Task<IActionResult> GetCustomerById(Guid customerId)
         {
-            CustomerDto? customerDto = _serviceManager.Customer.GetOneById(customerId);
+            CustomerDto? customerDto = await _serviceManager.Customer.GetOneByIdAsync(customerId);
             if (customerDto == null)
             {
                 return NotFound();
@@ -45,7 +44,7 @@ namespace RestfulApiHandler.Controllers
 
         [HttpPost]
         [Route("customers", Name = "CreateCustomer")]
-        public IActionResult CreateCustomer([FromBody] CustomerForCreationDto creationDto)
+        public async Task<IActionResult> CreateCustomer([FromBody] CustomerForCreationDto creationDto)
         {
             if (ModelState.IsValid == false)
             {
@@ -55,13 +54,13 @@ namespace RestfulApiHandler.Controllers
             {
                 return BadRequest(CommonMessages.ERROR.NullObject(nameof(CustomerForCreationDto)));
             }
-            CustomerDto newCustomerDto = _serviceManager.Customer.Create(creationDto);
+            CustomerDto newCustomerDto = await _serviceManager.Customer.CreateAsync(creationDto);
             return CreatedAtRoute("GetCustomerById", new { customerId = newCustomerDto.Id }, newCustomerDto);
         }
 
         [HttpPut]
         [Route("customers/{customerId:guid}")]
-        public IActionResult UpdateCustomer(Guid customerId, [FromBody] CustomerForUpdateDto updateDto)
+        public async Task<IActionResult> UpdateCustomer(Guid customerId, [FromBody] CustomerForUpdateDto updateDto)
         {
             if (ModelState.IsValid == false)
             {
@@ -71,24 +70,24 @@ namespace RestfulApiHandler.Controllers
             {
                 return BadRequest(CommonMessages.ERROR.NullObject(nameof(CustomerForUpdateDto)));
             }
-            if (_serviceManager.Customer.IsValidId(customerId) == false)
+            if (await _serviceManager.Customer.IsValidIdAsync(customerId) == false)
             {
                 return NotFound();
             }
-            _serviceManager.Customer.Update(customerId, updateDto);
+            await _serviceManager.Customer.UpdateAsync(customerId, updateDto);
             return NoContent();
         }
 
         [HttpPatch]
         [Route("customers/{customerId:guid}")]
-        public IActionResult UpdateCustomerPartially(Guid customerId, 
+        public async Task<IActionResult> UpdateCustomerPartially(Guid customerId, 
                                     [FromBody] JsonPatchDocument<CustomerForUpdateDto> patchDocument)
         {
 
             JsonPatchDocument<CustomerForUpdateDto> abc = new JsonPatchDocument<CustomerForUpdateDto>();
             abc.Replace(s => s.FirstName, "xyz");
 
-            if (_serviceManager.Customer.IsValidId(customerId) == false)
+            if (await _serviceManager.Customer.IsValidIdAsync(customerId) == false)
             {
                 return NotFound();
             }
@@ -97,11 +96,11 @@ namespace RestfulApiHandler.Controllers
                 return BadRequest(CommonMessages.ERROR.NullObject(nameof(JsonPatchDocument<CustomerForUpdateDto>)));
             }
 
-            CustomerForUpdateDto updateDto = _serviceManager.Customer.GetDtoForPatch(customerId);
+            CustomerForUpdateDto updateDto = await _serviceManager.Customer.GetDtoForPatchAsync(customerId);
 
             abc.ApplyTo(updateDto);
 
-            _serviceManager.Customer.Update(customerId, updateDto);
+            await _serviceManager.Customer.UpdateAsync(customerId, updateDto);
 
             return NoContent();
         }

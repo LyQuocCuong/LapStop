@@ -13,13 +13,13 @@ namespace Services.Models
         {
         }
 
-        public IEnumerable<ProductGalleryDto> GetAllByProductId(Guid productId)
+        public async Task<IEnumerable<ProductGalleryDto>> GetAllByProductIdAsync(Guid productId)
         {
-            if (_repositoryManager.Product.IsValidId(productId) == false) 
+            if (await _repositoryManager.Product.IsValidIdAsync(productId) == false) 
             { 
-                throw new ExNotFoundInDB(nameof(ProductGalleryService), nameof(GetAllByProductId), typeof(Product), productId);
+                throw new ExNotFoundInDB(nameof(ProductGalleryService), nameof(GetAllByProductIdAsync), typeof(Product), productId);
             }
-            IEnumerable<ProductGallery> productGalleries = _repositoryManager.ProductGallery.GetAllByProductId(isTrackChanges: false, productId);
+            IEnumerable<ProductGallery> productGalleries = await _repositoryManager.ProductGallery.GetAllByProductIdAsync(isTrackChanges: false, productId);
             return MappingToNewObj<IEnumerable<ProductGalleryDto>>(productGalleries);
         }
     }
