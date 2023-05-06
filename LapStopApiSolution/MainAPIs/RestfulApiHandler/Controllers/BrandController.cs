@@ -27,7 +27,7 @@ namespace RestfulApiHandler.Controllers
         [Route("brands", Name = "GetAllBrands")]
         public IActionResult GetAllBrands() 
         {
-            List<BrandDto> brandDtos = _serviceManager.Brand.GetAll();
+            IEnumerable<BrandDto> brandDtos = _serviceManager.Brand.GetAll();
             return Ok(brandDtos);
         }
 

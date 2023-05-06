@@ -36,10 +36,10 @@ namespace Services.Models
             _repositoryManager.SaveChanges();
         }
 
-        public List<CustomerAccountDto> GetAll()
+        public IEnumerable<CustomerAccountDto> GetAll()
         {
-            List<CustomerAccount> customerAccounts = _repositoryManager.CustomerAccount.GetAll(isTrackChanges: false);
-            return MappingToNewObj<List<CustomerAccountDto>>(customerAccounts);
+            IEnumerable<CustomerAccount> customerAccounts = _repositoryManager.CustomerAccount.GetAll(isTrackChanges: false);
+            return MappingToNewObj<IEnumerable<CustomerAccountDto>>(customerAccounts);
         }
 
         public CustomerAccountDto? GetOneByCustomerId(Guid customerId)

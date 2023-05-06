@@ -4,7 +4,7 @@ namespace Contracts.IServices.Models
 {
     public interface ICartService
     {
-        List<CartDto> GetAll();
+        IEnumerable<CartDto> GetAll();
 
         CartDto? GetOneByCustomerId(Guid customerId);
 

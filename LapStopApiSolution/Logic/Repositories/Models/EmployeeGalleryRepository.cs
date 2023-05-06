@@ -10,9 +10,9 @@ namespace Repositories.Models
         {
         }
 
-        public List<EmployeeGallery> GetAllByEmployeeId(bool isTrackChanges, Guid employeeId)
+        public IEnumerable<EmployeeGallery> GetAllByEmployeeId(bool isTrackChanges, Guid employeeId)
         {
-            return FindByCondition(isTrackChanges, e => e.EmployeeId == employeeId).ToList();
+            return FindByCondition(isTrackChanges, e => e.EmployeeId == employeeId);
         }
     }
 }

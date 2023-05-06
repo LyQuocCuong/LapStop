@@ -22,7 +22,7 @@ namespace RestfulApiHandler.Controllers
         [Route("employeestatuses", Name = "GetAllEmployeeStatuses")]
         public IActionResult GetAllEmployeeStatuses()
         {
-            List<EmployeeStatusDto> employeeStatusDtos = _serviceManager.EmployeeStatus.GetAll();
+            IEnumerable<EmployeeStatusDto> employeeStatusDtos = _serviceManager.EmployeeStatus.GetAll();
             return Ok(employeeStatusDtos);
         }
 

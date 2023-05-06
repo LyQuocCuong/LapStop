@@ -6,7 +6,7 @@ namespace Contracts.IServices.Models
 {
     public interface IBrandService
     {
-        List<BrandDto> GetAll();
+        IEnumerable<BrandDto> GetAll();
 
         BrandDto? GetOneById(Guid brandId);
 

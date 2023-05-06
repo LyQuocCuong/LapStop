@@ -4,7 +4,7 @@ namespace Contracts.IRepositories.Models
 {
     public interface IBrandRepository
     {
-        List<Brand> GetAll(bool isTrackChanges);
+        IEnumerable<Brand> GetAll(bool isTrackChanges);
 
         Brand? GetOneById(bool isTrackChanges, Guid brandId);
 

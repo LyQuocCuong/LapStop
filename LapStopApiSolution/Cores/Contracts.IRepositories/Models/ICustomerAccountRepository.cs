@@ -4,7 +4,7 @@ namespace Contracts.IRepositories.Models
 {
     public interface ICustomerAccountRepository
     {
-        List<CustomerAccount> GetAll(bool isTrackChanges);
+        IEnumerable<CustomerAccount> GetAll(bool isTrackChanges);
 
         CustomerAccount? GetOneByCustomerId(bool isTrackChanges, Guid customerId);
 

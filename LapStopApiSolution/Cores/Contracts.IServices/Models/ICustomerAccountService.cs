@@ -6,7 +6,7 @@ namespace Contracts.IServices.Models
 {
     public interface ICustomerAccountService
     {
-        List<CustomerAccountDto> GetAll();
+        IEnumerable<CustomerAccountDto> GetAll();
 
         CustomerAccountDto? GetOneByCustomerId(Guid customerId);
 

@@ -4,7 +4,7 @@ namespace Contracts.IServices.Models
 {
     public interface ISalesOrderStatusService
     {
-        List<SalesOrderStatusDto> GetAll();
+        IEnumerable<SalesOrderStatusDto> GetAll();
 
         SalesOrderStatusDto? GetOneById(Guid salesOrderStatusId);
     }

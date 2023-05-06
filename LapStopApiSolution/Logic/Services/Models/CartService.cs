@@ -13,10 +13,10 @@ namespace Services.Models
         {
         }
 
-        public List<CartDto> GetAll()
+        public IEnumerable<CartDto> GetAll()
         {
-            List<Cart> carts = _repositoryManager.Cart.GetAll(isTrackChanges: false);
-            return MappingToNewObj<List<CartDto>>(carts);
+            IEnumerable<Cart> carts = _repositoryManager.Cart.GetAll(isTrackChanges: false);
+            return MappingToNewObj<IEnumerable<CartDto>>(carts);
         }
 
         public CartDto? GetOneByCustomerId(Guid customerId)

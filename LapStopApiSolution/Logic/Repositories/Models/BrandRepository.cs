@@ -20,9 +20,9 @@ namespace Repositories.Models
             base.DeleteModel(brand);
         }
 
-        public List<Brand> GetAll(bool isTrackChanges)
+        public IEnumerable<Brand> GetAll(bool isTrackChanges)
         {
-            return FindAll(isTrackChanges).ToList();
+            return FindAll(isTrackChanges);
         }
 
         public Brand? GetOneById(bool isTrackChanges, Guid brandId)

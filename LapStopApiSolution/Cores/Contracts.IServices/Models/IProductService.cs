@@ -4,7 +4,7 @@ namespace Contracts.IServices.Models
 {
     public interface IProductService
     {
-        List<ProductDto> GetAll();
+        IEnumerable<ProductDto> GetAll();
 
         ProductDto? GetOneById(Guid productId);
 

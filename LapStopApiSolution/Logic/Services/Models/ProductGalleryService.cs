@@ -13,14 +13,14 @@ namespace Services.Models
         {
         }
 
-        public List<ProductGalleryDto> GetAllByProductId(Guid productId)
+        public IEnumerable<ProductGalleryDto> GetAllByProductId(Guid productId)
         {
             if (_repositoryManager.Product.IsValidId(productId) == false) 
             { 
                 throw new ExNotFoundInDB(nameof(ProductGalleryService), nameof(GetAllByProductId), typeof(Product), productId);
             }
-            List<ProductGallery> productGalleries = _repositoryManager.ProductGallery.GetAllByProductId(isTrackChanges: false, productId);
-            return MappingToNewObj<List<ProductGalleryDto>>(productGalleries);
+            IEnumerable<ProductGallery> productGalleries = _repositoryManager.ProductGallery.GetAllByProductId(isTrackChanges: false, productId);
+            return MappingToNewObj<IEnumerable<ProductGalleryDto>>(productGalleries);
         }
     }
 }

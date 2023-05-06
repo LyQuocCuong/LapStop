@@ -4,7 +4,7 @@ namespace Contracts.IServices.Models
 {
     public interface IEmployeeService
     {
-        List<EmployeeDto> GetAll();
+        IEnumerable<EmployeeDto> GetAll();
 
         EmployeeDto? GetOneById(Guid employeeId);
 

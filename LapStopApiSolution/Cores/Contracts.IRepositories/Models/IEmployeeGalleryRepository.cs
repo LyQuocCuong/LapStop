@@ -4,6 +4,6 @@ namespace Contracts.IRepositories.Models
 {
     public interface IEmployeeGalleryRepository
     {
-        List<EmployeeGallery> GetAllByEmployeeId(bool isTrackChanges, Guid employeeId);
+        IEnumerable<EmployeeGallery> GetAllByEmployeeId(bool isTrackChanges, Guid employeeId);
     }
 }

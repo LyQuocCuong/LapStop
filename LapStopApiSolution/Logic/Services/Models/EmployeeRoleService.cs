@@ -13,10 +13,10 @@ namespace Services.Models
         {
         }
 
-        public List<EmployeeRoleDto> GetAll()
+        public IEnumerable<EmployeeRoleDto> GetAll()
         {
-            List<EmployeeRole> employeeRoles = _repositoryManager.EmployeeRole.GetAll(isTrackChanges: false);
-            return MappingToNewObj<List<EmployeeRoleDto>>(employeeRoles);
+            IEnumerable<EmployeeRole> employeeRoles = _repositoryManager.EmployeeRole.GetAll(isTrackChanges: false);
+            return MappingToNewObj<IEnumerable<EmployeeRoleDto>>(employeeRoles);
         }
 
         public EmployeeRoleDto? GetOneById(Guid employeeRoleId)
