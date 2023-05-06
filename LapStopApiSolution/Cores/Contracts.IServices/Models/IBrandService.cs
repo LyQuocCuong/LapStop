@@ -6,18 +6,18 @@ namespace Contracts.IServices.Models
 {
     public interface IBrandService
     {
-        IEnumerable<BrandDto> GetAll();
+        Task<IEnumerable<BrandDto>> GetAllAsync();
 
-        BrandDto? GetOneById(Guid brandId);
+        Task<BrandDto?> GetOneByIdAsync(Guid brandId);
 
-        BrandForUpdateDto GetDtoForPatch(Guid brandId);
+        Task<BrandForUpdateDto> GetDtoForPatchAsync(Guid brandId);
 
-        BrandDto Create(BrandForCreationDto creationDto);
+        Task<BrandDto> CreateAsync(BrandForCreationDto creationDto);
 
-        bool IsValidId(Guid brandId);
+        Task<bool> IsValidIdAsync(Guid brandId);
 
-        void Update(Guid brandId, BrandForUpdateDto updateDto);
+        Task UpdateAsync(Guid brandId, BrandForUpdateDto updateDto);
 
-        void Delete(Guid brandId);
+        Task DeleteAsync(Guid brandId);
     }
 }

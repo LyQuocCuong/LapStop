@@ -25,17 +25,17 @@ namespace RestfulApiHandler.Controllers
 
         [HttpGet]
         [Route("brands", Name = "GetAllBrands")]
-        public IActionResult GetAllBrands() 
+        public async Task<IActionResult> GetAllBrands() 
         {
-            IEnumerable<BrandDto> brandDtos = _serviceManager.Brand.GetAll();
+            IEnumerable<BrandDto> brandDtos = await _serviceManager.Brand.GetAllAsync();
             return Ok(brandDtos);
         }
 
         [HttpGet]
         [Route("brands/{brandId:guid}", Name = "GetBrandById")]
-        public IActionResult GetBrandById(Guid brandId)
+        public async Task<IActionResult> GetBrandById(Guid brandId)
         {
-            BrandDto? brandDto = _serviceManager.Brand.GetOneById(brandId);
+            BrandDto? brandDto = await _serviceManager.Brand.GetOneByIdAsync(brandId);
             if (brandDto == null)
             {
                 return NotFound();
@@ -45,7 +45,7 @@ namespace RestfulApiHandler.Controllers
 
         [HttpPost]
         [Route("brands", Name = "CreateBrand")]
-        public IActionResult CreateBrand([FromBody] BrandForCreationDto creationDto)
+        public async Task<IActionResult> CreateBrand([FromBody] BrandForCreationDto creationDto)
         {
             if (ModelState.IsValid == false)
             {
@@ -55,25 +55,25 @@ namespace RestfulApiHandler.Controllers
             {
                 return BadRequest(CommonMessages.ERROR.NullObject(nameof(BrandForCreationDto)));
             }
-            BrandDto newBrandDto = _serviceManager.Brand.Create(creationDto);
+            BrandDto newBrandDto = await _serviceManager.Brand.CreateAsync(creationDto);
             return CreatedAtRoute("GetBrandById", new { brandId = newBrandDto.Id }, newBrandDto);
         }
 
         [HttpDelete]
         [Route("brands/{brandId:guid}", Name = "DeleteBrand")]
-        public IActionResult DeleteBrand(Guid brandId)
+        public async Task<IActionResult> DeleteBrand(Guid brandId)
         {
-            if (_serviceManager.Brand.IsValidId(brandId) == false)
+            if (await _serviceManager.Brand.IsValidIdAsync(brandId) == false)
             {
                 return NotFound();
             }
-            _serviceManager.Brand.Delete(brandId);
+            await _serviceManager.Brand.DeleteAsync(brandId);
             return NoContent();
         }
 
         [HttpPut]
         [Route("brands/{brandId:guid}", Name = "UpdateBrand")]
-        public IActionResult UpdateBrand(Guid brandId, [FromBody] BrandForUpdateDto updateDto)
+        public async Task<IActionResult> UpdateBrand(Guid brandId, [FromBody] BrandForUpdateDto updateDto)
         {
             if (ModelState.IsValid == false)
             {
@@ -83,29 +83,29 @@ namespace RestfulApiHandler.Controllers
             {
                 return BadRequest(CommonMessages.ERROR.NullObject(nameof(BrandForUpdateDto)));
             }
-            if (_serviceManager.Brand.IsValidId(brandId) == false)
+            if (await _serviceManager.Brand.IsValidIdAsync(brandId) == false)
             {
                 return NotFound();
             }
-            _serviceManager.Brand.Update(brandId, updateDto);
+            await _serviceManager.Brand.UpdateAsync(brandId, updateDto);
             return NoContent();
         }
 
         [HttpPatch]
         [Route("brands/{brandId:guid}", Name = "UpdateBrandPartially")]
-        public IActionResult UpdateBrandPartially(Guid brandId,
+        public async Task<IActionResult> UpdateBrandPartially(Guid brandId,
                         [FromBody] JsonPatchDocument<BrandForUpdateDto> patchDocument)
         {
             if (patchDocument == null)
             {
                 return BadRequest(CommonMessages.ERROR.NullObject(nameof(JsonPatchDocument<BrandForUpdateDto>)));
             }
-            else if (_serviceManager.Brand.IsValidId(brandId) == false)
+            else if (await _serviceManager.Brand.IsValidIdAsync(brandId) == false)
             {
                 return NotFound();
             }
             // get data from DB
-            BrandForUpdateDto updateDto = _serviceManager.Brand.GetDtoForPatch(brandId);
+            BrandForUpdateDto updateDto = await _serviceManager.Brand.GetDtoForPatchAsync(brandId);
 
             // apply Patch operation + log Errors in ModelState
             patchDocument.ApplyTo(updateDto, ModelState);
@@ -118,7 +118,7 @@ namespace RestfulApiHandler.Controllers
             }
 
             // update
-            _serviceManager.Brand.Update(brandId, updateDto);
+            await _serviceManager.Brand.UpdateAsync(brandId, updateDto);
 
             return NoContent();
         }

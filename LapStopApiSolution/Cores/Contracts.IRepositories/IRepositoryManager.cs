@@ -4,6 +4,8 @@ namespace Contracts.IRepositories
 {
     public interface IRepositoryManager
     {
+        Task SaveChangesAsync();
+
         void SaveChanges();
 
         IBrandRepository Brand { get; }

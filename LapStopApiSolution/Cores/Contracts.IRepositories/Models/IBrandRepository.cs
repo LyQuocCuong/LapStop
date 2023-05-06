@@ -4,11 +4,11 @@ namespace Contracts.IRepositories.Models
 {
     public interface IBrandRepository
     {
-        IEnumerable<Brand> GetAll(bool isTrackChanges);
+        Task<IEnumerable<Brand>> GetAllAsync(bool isTrackChanges);
 
-        Brand? GetOneById(bool isTrackChanges, Guid brandId);
+        Task<Brand?> GetOneByIdAsync(bool isTrackChanges, Guid brandId);
 
-        bool IsValidId(Guid id);
+        Task<bool> IsValidIdAsync(Guid id);
 
         void Create(Brand brand);
 

@@ -60,6 +60,11 @@ namespace Repositories
             _salesOrderStatusRepository = new Lazy<ISalesOrderStatusRepository>(()  => new SalesOrderStatusRepository(context));
         }
 
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();

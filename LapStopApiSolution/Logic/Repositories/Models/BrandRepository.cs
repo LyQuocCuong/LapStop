@@ -1,6 +1,7 @@
 ﻿using Contracts.IRepositories.Models;
 using Domains.Models;
 using Entities.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.Models
 {
@@ -20,19 +21,19 @@ namespace Repositories.Models
             base.DeleteModel(brand);
         }
 
-        public IEnumerable<Brand> GetAll(bool isTrackChanges)
+        public async Task<IEnumerable<Brand>> GetAllAsync(bool isTrackChanges)
         {
-            return FindAll(isTrackChanges);
+            return await FindAll(isTrackChanges).ToListAsync();
         }
 
-        public Brand? GetOneById(bool isTrackChanges, Guid brandId)
+        public async Task<Brand?> GetOneByIdAsync(bool isTrackChanges, Guid brandId)
         {
-            return FindByCondition(isTrackChanges, brand => brand.Id == brandId).FirstOrDefault();
+            return await FindByCondition(isTrackChanges, brand => brand.Id == brandId).FirstOrDefaultAsync();
         }
 
-        public bool IsValidId(Guid brandId)
+        public async Task<bool> IsValidIdAsync(Guid brandId)
         {
-            return FindByCondition(isTrackChanges: false, b => b.Id == brandId).Any();
+            return await FindByCondition(isTrackChanges: false, b => b.Id == brandId).AnyAsync();
         }
     }
 }
