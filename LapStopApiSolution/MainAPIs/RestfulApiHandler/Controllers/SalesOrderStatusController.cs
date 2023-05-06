@@ -20,17 +20,17 @@ namespace RestfulApiHandler.Controllers
 
         [HttpGet]
         [Route("salesorderstatuses", Name = "GetAllSalesOrderStatuses")]
-        public IActionResult GetAllSalesOrderStatuses()
+        public async Task<IActionResult> GetAllSalesOrderStatuses()
         {
-            IEnumerable<SalesOrderStatusDto> salesOrderStatusDtos = _serviceManager.SalesOrderStatus.GetAll();
+            IEnumerable<SalesOrderStatusDto> salesOrderStatusDtos = await _serviceManager.SalesOrderStatus.GetAllAsync();
             return Ok(salesOrderStatusDtos);
         }
 
         [HttpGet]
         [Route("salesorderstatuses/{salesOrderStatusId:guid}", Name = "GetSalesOrderStatusById")]
-        public IActionResult GetSalesOrderStatusById(Guid salesOrderStatusId)
+        public async Task<IActionResult> GetSalesOrderStatusById(Guid salesOrderStatusId)
         {
-            SalesOrderStatusDto? salesOrderStatusDto = _serviceManager.SalesOrderStatus.GetOneById(salesOrderStatusId);
+            SalesOrderStatusDto? salesOrderStatusDto = await _serviceManager.SalesOrderStatus.GetOneByIdAsync(salesOrderStatusId);
             if (salesOrderStatusDto == null)
             {
                 return NotFound();

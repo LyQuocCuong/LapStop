@@ -13,29 +13,29 @@ namespace Services.Models
         {
         }
 
-        public IEnumerable<CartDto> GetAll()
+        public async Task<IEnumerable<CartDto>> GetAllAsync()
         {
-            IEnumerable<Cart> carts = _repositoryManager.Cart.GetAll(isTrackChanges: false);
+            IEnumerable<Cart> carts = await _repositoryManager.Cart.GetAllAsync(isTrackChanges: false);
             return MappingToNewObj<IEnumerable<CartDto>>(carts);
         }
 
-        public CartDto? GetOneByCustomerId(Guid customerId)
+        public async Task<CartDto?> GetOneByCustomerIdAsync(Guid customerId)
         {
-            if (_repositoryManager.Customer.IsValidId(customerId) == false)
+            if (await _repositoryManager.Customer.IsValidIdAsync(customerId) == false)
             {
-                throw new ExNotFoundInDB(nameof(CartService), nameof(GetOneByCustomerId), typeof(Customer), customerId);
+                throw new ExNotFoundInDB(nameof(CartService), nameof(GetOneByCustomerIdAsync), typeof(Customer), customerId);
             }
-            Cart? cart = _repositoryManager.Cart.GetOneByCustomerId(isTrackChanges: false, customerId);
+            Cart? cart = await _repositoryManager.Cart.GetOneByCustomerIdAsync(isTrackChanges: false, customerId);
             if (cart == null)
             {
-                throw new ExNotFoundInDB(nameof(CartService), nameof(GetOneByCustomerId), typeof(Cart), customerId);
+                throw new ExNotFoundInDB(nameof(CartService), nameof(GetOneByCustomerIdAsync), typeof(Cart), customerId);
             }
             return MappingToNewObj<CartDto>(cart);
         }
 
-        public bool IsValidId(Guid cartId)
+        public async Task<bool> IsValidIdAsync(Guid cartId)
         {
-            return _repositoryManager.Cart.IsValidId(cartId);
+            return await _repositoryManager.Cart.IsValidIdAsync(cartId);
         }
     }
 }

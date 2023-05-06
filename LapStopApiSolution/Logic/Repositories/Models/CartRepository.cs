@@ -1,6 +1,7 @@
 ﻿using Contracts.IRepositories.Models;
 using Domains.Models;
 using Entities.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.Models
 {
@@ -10,19 +11,19 @@ namespace Repositories.Models
         {
         }
 
-        public IEnumerable<Cart> GetAll(bool isTrackChanges)
+        public async Task<IEnumerable<Cart>> GetAllAsync(bool isTrackChanges)
         {
-            return FindAll(isTrackChanges);
+            return await FindAll(isTrackChanges).ToListAsync();
         }
 
-        public Cart? GetOneByCustomerId(bool isTrackChanges, Guid customerId)
+        public async Task<Cart?> GetOneByCustomerIdAsync(bool isTrackChanges, Guid customerId)
         {
-            return FindByCondition(isTrackChanges, cart => cart.CustomerId == customerId).FirstOrDefault();
+            return await FindByCondition(isTrackChanges, cart => cart.CustomerId == customerId).FirstOrDefaultAsync();
         }
 
-        public bool IsValidId(Guid cartId)
+        public async Task<bool> IsValidIdAsync(Guid cartId)
         {
-            return FindByCondition(isTrackChanges: false, cart => cart.Id == cartId).Any();
+            return await FindByCondition(isTrackChanges: false, cart => cart.Id == cartId).AnyAsync();
         }
     }
 }

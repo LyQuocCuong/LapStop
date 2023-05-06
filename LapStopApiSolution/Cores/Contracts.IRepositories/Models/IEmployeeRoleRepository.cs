@@ -4,8 +4,8 @@ namespace Contracts.IRepositories.Models
 {
     public interface IEmployeeRoleRepository
     {
-        IEnumerable<EmployeeRole> GetAll(bool isTrackChanges);
+        Task<IEnumerable<EmployeeRole>> GetAllAsync(bool isTrackChanges);
 
-        EmployeeRole? GetOneById(bool isTrackChanges, Guid employeeRoleId);
+        Task<EmployeeRole?> GetOneByIdAsync(bool isTrackChanges, Guid employeeRoleId);
     }
 }

@@ -6,8 +6,6 @@ namespace Contracts.IRepositories
     {
         Task SaveChangesAsync();
 
-        void SaveChanges();
-
         IBrandRepository Brand { get; }
         
         ICartRepository Cart { get; }

@@ -4,10 +4,10 @@ namespace Contracts.IRepositories.Models
 {
     public interface IProductRepository
     {
-        IEnumerable<Product> GetAll(bool isTrackChanges);
+        Task<IEnumerable<Product>> GetAllAsync(bool isTrackChanges);
 
-        Product? GetOneById(bool isTrackChanges, Guid productId);
+        Task<Product?> GetOneByIdAsync(bool isTrackChanges, Guid productId);
 
-        bool IsValidId(Guid productId);
+        Task<bool> IsValidIdAsync(Guid productId);
     }
 }

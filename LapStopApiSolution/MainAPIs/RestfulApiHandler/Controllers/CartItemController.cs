@@ -20,9 +20,9 @@ namespace RestfulApiHandler.Controllers
 
         [HttpGet]
         [Route("carts/{cartId:guid}/cartitems", Name = "GetAllCartItemsByCartId")]
-        public IActionResult GetAllCartItemsByCartId(Guid cartId)
+        public async Task<IActionResult> GetAllCartItemsByCartId(Guid cartId)
         {
-            IEnumerable<CartItemDto> cartItemDtos = _serviceManager.CartItem.GetAllByCartId(cartId);
+            IEnumerable<CartItemDto> cartItemDtos = await _serviceManager.CartItem.GetAllByCartIdAsync(cartId);
             return Ok(cartItemDtos);
         }
 

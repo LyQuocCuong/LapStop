@@ -4,6 +4,6 @@ namespace Contracts.IServices.Models
 {
     public interface ICartItemService
     {
-        IEnumerable<CartItemDto> GetAllByCartId(Guid cartId);
+        Task<IEnumerable<CartItemDto>> GetAllByCartIdAsync(Guid cartId);
     }
 }

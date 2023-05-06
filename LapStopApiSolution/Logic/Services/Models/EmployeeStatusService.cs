@@ -13,18 +13,18 @@ namespace Services.Models
         {
         }
 
-        public IEnumerable<EmployeeStatusDto> GetAll()
+        public async Task<IEnumerable<EmployeeStatusDto>> GetAllAsync()
         {
-            IEnumerable<EmployeeStatus> employeeStatuses = _repositoryManager.EmployeeStatus.GetAll(isTrackChanges: false);
+            IEnumerable<EmployeeStatus> employeeStatuses = await _repositoryManager.EmployeeStatus.GetAllAsync(isTrackChanges: false);
             return MappingToNewObj<IEnumerable<EmployeeStatusDto>>(employeeStatuses);
         }
 
-        public EmployeeStatusDto? GetOneById(Guid employeeStatusId)
+        public async Task<EmployeeStatusDto?> GetOneByIdAsync(Guid employeeStatusId)
         {
-            EmployeeStatus? employeeStatus = _repositoryManager.EmployeeStatus.GetOneById(isTrackChanges: false, employeeStatusId);
+            EmployeeStatus? employeeStatus = await _repositoryManager.EmployeeStatus.GetOneByIdAsync(isTrackChanges: false, employeeStatusId);
             if (employeeStatus == null)
             {
-                throw new ExNotFoundInDB(nameof(EmployeeStatus), nameof(GetOneById), typeof(EmployeeStatus), employeeStatusId);
+                throw new ExNotFoundInDB(nameof(EmployeeStatus), nameof(GetOneByIdAsync), typeof(EmployeeStatus), employeeStatusId);
             }
             return MappingToNewObj<EmployeeStatusDto>(employeeStatus); 
         }

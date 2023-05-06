@@ -65,11 +65,6 @@ namespace Repositories
             await _context.SaveChangesAsync();
         }
 
-        public void SaveChanges()
-        {
-            _context.SaveChanges();
-        }
-
         public IBrandRepository Brand => _brandRepository.Value;
 
         public ICartRepository Cart => _cartRepository.Value;

@@ -13,25 +13,25 @@ namespace Services.Models
         {
         }
 
-        public IEnumerable<ProductDto> GetAll()
+        public async Task<IEnumerable<ProductDto>> GetAllAsync()
         {
-            IEnumerable<Product> products = _repositoryManager.Product.GetAll(isTrackChanges: false);
+            IEnumerable<Product> products = await _repositoryManager.Product.GetAllAsync(isTrackChanges: false);
             return MappingToNewObj<IEnumerable<ProductDto>>(products);
         }
 
-        public ProductDto? GetOneById(Guid productId)
+        public async Task<ProductDto?> GetOneByIdAsync(Guid productId)
         {
-            Product? product = _repositoryManager.Product.GetOneById(isTrackChanges: false, productId);
+            Product? product = await _repositoryManager.Product.GetOneByIdAsync(isTrackChanges: false, productId);
             if (product == null)
             {
-                throw new ExNotFoundInDB(nameof(ProductService), nameof(GetOneById), typeof(Product), productId);
+                throw new ExNotFoundInDB(nameof(ProductService), nameof(GetOneByIdAsync), typeof(Product), productId);
             }
             return MappingToNewObj<ProductDto>(product);
         }
 
-        public bool IsValidId(Guid productId)
+        public async Task<bool> IsValidIdAsync(Guid productId)
         {
-            return _repositoryManager.Product.IsValidId(productId);
+            return await _repositoryManager.Product.IsValidIdAsync(productId);
         }
     }
 }

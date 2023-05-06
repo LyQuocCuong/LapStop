@@ -13,13 +13,13 @@ namespace Services.Models
         {
         }
 
-        public IEnumerable<CartItemDto> GetAllByCartId(Guid cartId)
+        public async Task<IEnumerable<CartItemDto>> GetAllByCartIdAsync(Guid cartId)
         {
-            if (_repositoryManager.Cart.IsValidId(cartId) == false)
+            if (await _repositoryManager.Cart.IsValidIdAsync(cartId) == false)
             {
-                throw new ExNotFoundInDB(nameof(CartItemService), nameof(GetAllByCartId), typeof(Cart), cartId);
+                throw new ExNotFoundInDB(nameof(CartItemService), nameof(GetAllByCartIdAsync), typeof(Cart), cartId);
             }
-            IEnumerable<CartItem> cartItems = _repositoryManager.CartItem.GetAllByCartId(isTrackChanges: false, cartId);
+            IEnumerable<CartItem> cartItems = await _repositoryManager.CartItem.GetAllByCartIdAsync(isTrackChanges: false, cartId);
             return MappingToNewObj<IEnumerable<CartItemDto>>(cartItems);
         }
     }

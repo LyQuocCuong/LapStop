@@ -4,6 +4,6 @@ namespace Contracts.IRepositories.Models
 {
     public interface IProductGalleryRepository
     {
-        IEnumerable<ProductGallery> GetAllByProductId(bool isTrackChanges, Guid productId);
+        Task<IEnumerable<ProductGallery>> GetAllByProductIdAsync(bool isTrackChanges, Guid productId);
     }
 }

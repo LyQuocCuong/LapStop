@@ -4,10 +4,10 @@ namespace Contracts.IServices.Models
 {
     public interface IEmployeeService
     {
-        IEnumerable<EmployeeDto> GetAll();
+        Task<IEnumerable<EmployeeDto>> GetAllAsync();
 
-        EmployeeDto? GetOneById(Guid employeeId);
+        Task<EmployeeDto?> GetOneByIdAsync(Guid employeeId);
 
-        bool IsValidId(Guid employeeId);
+        Task<bool> IsValidIdAsync(Guid employeeId);
     }
 }

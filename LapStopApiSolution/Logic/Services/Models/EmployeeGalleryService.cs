@@ -13,13 +13,13 @@ namespace Services.Models
         {
         }
 
-        public IEnumerable<EmployeeGalleryDto> GetAllByEmployeeId(Guid employeeId)
+        public async Task<IEnumerable<EmployeeGalleryDto>> GetAllByEmployeeIdAsync(Guid employeeId)
         {
-            if (_repositoryManager.Employee.IsValidId(employeeId) == false)
+            if (await _repositoryManager.Employee.IsValidIdAsync(employeeId) == false)
             {
-                throw new ExNotFoundInDB(nameof(EmployeeAccountService), nameof(GetAllByEmployeeId), typeof(Employee), employeeId);
+                throw new ExNotFoundInDB(nameof(EmployeeAccountService), nameof(GetAllByEmployeeIdAsync), typeof(Employee), employeeId);
             }
-            IEnumerable<EmployeeGallery> employeeGalleries = _repositoryManager.EmployeeGallery.GetAllByEmployeeId(isTrackChanges: false, employeeId);
+            IEnumerable<EmployeeGallery> employeeGalleries = await _repositoryManager.EmployeeGallery.GetAllByEmployeeIdAsync(isTrackChanges: false, employeeId);
             return MappingToNewObj<IEnumerable<EmployeeGalleryDto>>(employeeGalleries);
         }
     }

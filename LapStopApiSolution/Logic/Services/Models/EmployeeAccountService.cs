@@ -13,22 +13,22 @@ namespace Services.Models
         {
         }
 
-        public IEnumerable<EmployeeAccountDto> GetAll()
+        public async Task<IEnumerable<EmployeeAccountDto>> GetAllAsync()
         {
-            IEnumerable<EmployeeAccount> employeeAccounts = _repositoryManager.EmployeeAccount.GetAll(isTrackChanges: false);
+            IEnumerable<EmployeeAccount> employeeAccounts = await _repositoryManager.EmployeeAccount.GetAllAsync(isTrackChanges: false);
             return MappingToNewObj<IEnumerable<EmployeeAccountDto>>(employeeAccounts);
         }
 
-        public EmployeeAccountDto? GetOneByEmployeeId(Guid employeeId)
+        public async Task<EmployeeAccountDto?> GetOneByEmployeeIdAsync(Guid employeeId)
         {
-            if (_repositoryManager.Employee.IsValidId(employeeId) == false)
+            if (await _repositoryManager.Employee.IsValidIdAsync(employeeId) == false)
             {
-                throw new ExNotFoundInDB(nameof(EmployeeAccountService), nameof(GetOneByEmployeeId), typeof(Employee), employeeId);
+                throw new ExNotFoundInDB(nameof(EmployeeAccountService), nameof(GetOneByEmployeeIdAsync), typeof(Employee), employeeId);
             }
-            EmployeeAccount? employeeAccount = _repositoryManager.EmployeeAccount.GetOneByEmployeeId(isTrackChanges: false, employeeId);
+            EmployeeAccount? employeeAccount = await _repositoryManager.EmployeeAccount.GetOneByEmployeeIdAsync(isTrackChanges: false, employeeId);
             if (employeeAccount == null)
             {
-                throw new ExNotFoundInDB(nameof(EmployeeAccountService), nameof(GetOneByEmployeeId), typeof(EmployeeAccount), employeeId);
+                throw new ExNotFoundInDB(nameof(EmployeeAccountService), nameof(GetOneByEmployeeIdAsync), typeof(EmployeeAccount), employeeId);
             }
             return MappingToNewObj<EmployeeAccountDto>(employeeAccount);
         }

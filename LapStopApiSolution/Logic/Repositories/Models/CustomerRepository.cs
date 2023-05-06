@@ -1,6 +1,7 @@
 ﻿using Contracts.IRepositories.Models;
 using Domains.Models;
 using Entities.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.Models
 {
@@ -15,19 +16,19 @@ namespace Repositories.Models
             base.CreateModel(customer);
         }
 
-        public IEnumerable<Customer> GetAll(bool isTrackChanges)
+        public async Task<IEnumerable<Customer>> GetAllAsync(bool isTrackChanges)
         {
-            return FindAll(isTrackChanges);
+            return await FindAll(isTrackChanges).ToListAsync();
         }
 
-        public Customer? GetOneById(bool isTrackChanges, Guid customerId)
+        public async Task<Customer?> GetOneByIdAsync(bool isTrackChanges, Guid customerId)
         {
-            return FindByCondition(isTrackChanges, customer => customer.Id == customerId).FirstOrDefault();
+            return await FindByCondition(isTrackChanges, customer => customer.Id == customerId).FirstOrDefaultAsync();
         }
 
-        public bool IsValidId(Guid customerId)
+        public async Task<bool> IsValidIdAsync(Guid customerId)
         {
-            return FindByCondition(isTrackChanges: false, customer => customer.Id == customerId).Any();
+            return await FindByCondition(isTrackChanges: false, customer => customer.Id == customerId).AnyAsync();
         }
     }
 }

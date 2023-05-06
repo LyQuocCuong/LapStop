@@ -13,25 +13,25 @@ namespace Services.Models
         {
         }
 
-        public IEnumerable<EmployeeDto> GetAll()
+        public async Task<IEnumerable<EmployeeDto>> GetAllAsync()
         {
-            IEnumerable<Employee> employees = _repositoryManager.Employee.GetAll(isTrackChanges: false);
+            IEnumerable<Employee> employees = await _repositoryManager.Employee.GetAllAsync(isTrackChanges: false);
             return MappingToNewObj<IEnumerable<EmployeeDto>>(employees);
         }
 
-        public EmployeeDto? GetOneById(Guid employeeId)
+        public async Task<EmployeeDto?> GetOneByIdAsync(Guid employeeId)
         {
-            Employee? employee = _repositoryManager.Employee.GetOneById(isTrackChanges: false, employeeId);
+            Employee? employee = await _repositoryManager.Employee.GetOneByIdAsync(isTrackChanges: false, employeeId);
             if (employee == null)
             {
-                throw new ExNotFoundInDB(nameof(EmployeeService), nameof(GetOneById), typeof(Employee), employeeId);
+                throw new ExNotFoundInDB(nameof(EmployeeService), nameof(GetOneByIdAsync), typeof(Employee), employeeId);
             }
             return MappingToNewObj<EmployeeDto>(employee);
         }
 
-        public bool IsValidId(Guid employeeId)
+        public async Task<bool> IsValidIdAsync(Guid employeeId)
         {
-            return _repositoryManager.Employee.IsValidId(employeeId);
+            return await _repositoryManager.Employee.IsValidIdAsync(employeeId);
         }
     }
 }

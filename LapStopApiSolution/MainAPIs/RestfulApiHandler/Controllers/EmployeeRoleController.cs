@@ -20,17 +20,17 @@ namespace RestfulApiHandler.Controllers
 
         [HttpGet]
         [Route("employeeroles", Name = "GetAllEmployeeRoles")]
-        public IActionResult GetAllEmployeeRoles()
+        public async Task<IActionResult> GetAllEmployeeRoles()
         {
-            IEnumerable<EmployeeRoleDto> employeeRoleDtos = _serviceManager.EmployeeRole.GetAll();
+            IEnumerable<EmployeeRoleDto> employeeRoleDtos = await _serviceManager.EmployeeRole.GetAllAsync();
             return Ok(employeeRoleDtos);
         }
 
         [HttpGet]
         [Route("employeeroles/{employeeRoleId:guid}", Name = "GetEmployeeRoleById")]
-        public IActionResult GetEmployeeRoleById(Guid employeeRoleId)
+        public async Task<IActionResult> GetEmployeeRoleById(Guid employeeRoleId)
         {
-            EmployeeRoleDto? employeeRoleDto = _serviceManager.EmployeeRole.GetOneById(employeeRoleId);
+            EmployeeRoleDto? employeeRoleDto = await _serviceManager.EmployeeRole.GetOneByIdAsync(employeeRoleId);
             if (employeeRoleDto == null)
             {
                 return NotFound();

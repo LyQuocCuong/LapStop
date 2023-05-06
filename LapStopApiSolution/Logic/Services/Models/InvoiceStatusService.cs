@@ -13,18 +13,18 @@ namespace Services.Models
         {
         }
 
-        public IEnumerable<InvoiceStatusDto> GetAll()
+        public async Task<IEnumerable<InvoiceStatusDto>> GetAllAsync()
         {
-            IEnumerable<InvoiceStatus> invoiceStatuses = _repositoryManager.InvoiceStatus.GetAll(isTrackChanges: false);
+            IEnumerable<InvoiceStatus> invoiceStatuses = await _repositoryManager.InvoiceStatus.GetAllAsync(isTrackChanges: false);
             return MappingToNewObj<IEnumerable<InvoiceStatusDto>>(invoiceStatuses);
         }
 
-        public InvoiceStatusDto? GetOneById(Guid invoiceStatusId)
+        public async Task<InvoiceStatusDto?> GetOneByIdAsync(Guid invoiceStatusId)
         {
-            InvoiceStatus? invoiceStatus = _repositoryManager.InvoiceStatus.GetOneById(isTrackChanges: false, invoiceStatusId);
+            InvoiceStatus? invoiceStatus = await _repositoryManager.InvoiceStatus.GetOneByIdAsync(isTrackChanges: false, invoiceStatusId);
             if (invoiceStatus == null)
             {
-                throw new ExNotFoundInDB(nameof(InvoiceStatusService), nameof(GetOneById), typeof(InvoiceStatus), invoiceStatusId);
+                throw new ExNotFoundInDB(nameof(InvoiceStatusService), nameof(GetOneByIdAsync), typeof(InvoiceStatus), invoiceStatusId);
             }
             return MappingToNewObj<InvoiceStatusDto>(invoiceStatus);
         }

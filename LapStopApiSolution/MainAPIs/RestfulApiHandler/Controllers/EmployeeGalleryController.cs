@@ -20,9 +20,9 @@ namespace RestfulApiHandler.Controllers
 
         [HttpGet]
         [Route("employees/{employeeId:guid}/galleries", Name = "GetAllEmployeeGalleriesByEmployeeId")]
-        public IActionResult GetAllEmployeeGalleriesByEmployeeId(Guid employeeId)
+        public async Task<IActionResult> GetAllEmployeeGalleriesByEmployeeId(Guid employeeId)
         {
-            IEnumerable<EmployeeGalleryDto> employeeGalleryDtos = _serviceManager.EmployeeGallery.GetAllByEmployeeId(employeeId);
+            IEnumerable<EmployeeGalleryDto> employeeGalleryDtos = await _serviceManager.EmployeeGallery.GetAllByEmployeeIdAsync(employeeId);
             return Ok(employeeGalleryDtos);
         }
 

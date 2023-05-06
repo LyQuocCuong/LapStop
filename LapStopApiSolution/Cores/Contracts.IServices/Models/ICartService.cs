@@ -4,10 +4,10 @@ namespace Contracts.IServices.Models
 {
     public interface ICartService
     {
-        IEnumerable<CartDto> GetAll();
+        Task<IEnumerable<CartDto>> GetAllAsync();
 
-        CartDto? GetOneByCustomerId(Guid customerId);
+        Task<CartDto?> GetOneByCustomerIdAsync(Guid customerId);
 
-        bool IsValidId(Guid cartId);
+        Task<bool> IsValidIdAsync(Guid cartId);
     }
 }
