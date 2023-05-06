@@ -15,67 +15,67 @@ namespace Services.Models
         {
         }
 
-        public BrandDto Create(BrandForCreationDto creationDto)
+        public async Task<BrandDto> CreateAsync(BrandForCreationDto creationDto)
         {
             Brand newBrand = MappingToNewObj<Brand>(creationDto);
             newBrand.IsRemoved = false;
             newBrand.CreatedDate = DateTime.Now;
             newBrand.UpdatedDate = DateTime.Now;
             _repositoryManager.Brand.Create(newBrand);
-            _repositoryManager.SaveChanges();
+            await _repositoryManager.SaveChangesAsync();
 
             return MappingToNewObj<BrandDto>(newBrand);
         }
 
-        public void Update(Guid brandId, BrandForUpdateDto updateDto)
+        public async Task UpdateAsync(Guid brandId, BrandForUpdateDto updateDto)
         {
-            Brand? brand = _repositoryManager.Brand.GetOneById(isTrackChanges: true, brandId);
+            Brand? brand = await _repositoryManager.Brand.GetOneByIdAsync(isTrackChanges: true, brandId);
             if (brand == null)
             {
-                throw new ExNotFoundInDB(nameof(BrandService), nameof(Update), typeof(Brand), brandId);
+                throw new ExNotFoundInDB(nameof(BrandService), nameof(UpdateAsync), typeof(Brand), brandId);
             }
             MappingToExistingObj(updateDto, brand);
-            _repositoryManager.SaveChanges();
+            await _repositoryManager.SaveChangesAsync();
         }
 
-        public void Delete(Guid brandId)
+        public async Task DeleteAsync(Guid brandId)
         {
-            Brand? brand = _repositoryManager.Brand.GetOneById(isTrackChanges: true, brandId);
+            Brand? brand = await _repositoryManager.Brand.GetOneByIdAsync(isTrackChanges: true, brandId);
             if (brand == null)
             {
-                throw new ExNotFoundInDB(nameof(BrandService), nameof(Delete), typeof(Brand), brandId);
+                throw new ExNotFoundInDB(nameof(BrandService), nameof(DeleteAsync), typeof(Brand), brandId);
             }
             _repositoryManager.Brand.Delete(brand);
-            _repositoryManager.SaveChanges();
+            await _repositoryManager.SaveChangesAsync();
         }
 
-        public IEnumerable<BrandDto> GetAll()
+        public async Task<IEnumerable<BrandDto>> GetAllAsync()
         {
-            IEnumerable<Brand> brands = _repositoryManager.Brand.GetAll(isTrackChanges: false);
+            IEnumerable<Brand> brands = await _repositoryManager.Brand.GetAllAsync(isTrackChanges: false);
             return MappingToNewObj<IEnumerable<BrandDto>>(brands);
         }
 
-        public BrandDto? GetOneById(Guid brandId)
+        public async Task<BrandDto?> GetOneByIdAsync(Guid brandId)
         {
-            Brand? brand = _repositoryManager.Brand.GetOneById(isTrackChanges: false, brandId);
+            Brand? brand = await _repositoryManager.Brand.GetOneByIdAsync(isTrackChanges: false, brandId);
             if (brand == null)
             {
-                throw new ExNotFoundInDB(nameof(BrandService), nameof(GetOneById),typeof(Brand), brandId);
+                throw new ExNotFoundInDB(nameof(BrandService), nameof(GetOneByIdAsync),typeof(Brand), brandId);
             }
             return MappingToNewObj<BrandDto>(brand);
         }
 
-        public BrandForUpdateDto GetDtoForPatch(Guid brandId)
+        public async Task<BrandForUpdateDto> GetDtoForPatchAsync(Guid brandId)
         {
-            Brand? brand = _repositoryManager.Brand.GetOneById(isTrackChanges: false, brandId);
+            Brand? brand = await _repositoryManager.Brand.GetOneByIdAsync(isTrackChanges: false, brandId);
             return MappingToNewObj<BrandForUpdateDto>(brand);
         }
 
-        public bool IsValidId(Guid brandId)
+        public async Task<bool> IsValidIdAsync(Guid brandId)
         {
-            if (_repositoryManager.Brand.IsValidId(brandId) == false)
+            if (await _repositoryManager.Brand.IsValidIdAsync(brandId) == false)
             {
-                throw new ExNotFoundInDB(nameof(BrandService), nameof(IsValidId), typeof(Brand), brandId);
+                throw new ExNotFoundInDB(nameof(BrandService), nameof(IsValidIdAsync), typeof(Brand), brandId);
             }
             return true;
         }
