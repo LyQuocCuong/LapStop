@@ -1,19 +1,13 @@
 ﻿using Domains.Base;
 using Domains.Models;
-using Entities.Configurations;
 using Entities.Extensions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entities.Context
 {
     public sealed class LapStopContext : DbContext
     {
-        public LapStopContext(DbContextOptions<LapStopContext> options) : base(options) 
+        public LapStopContext(DbContextOptions<LapStopContext> options) : base(options)
         {
 
         }
@@ -29,6 +23,25 @@ namespace Entities.Context
             modelBuilder.ApplySeedingDataExt();
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        public override int SaveChanges()
+        {
+            var entries = ChangeTracker
+                            .Entries()
+                            .Where(e => e.Entity is BaseModel && 
+                                       (e.State == EntityState.Added ||
+                                        e.State == EntityState.Modified));
+            foreach (var entityEntry in entries)
+            {
+                ((BaseModel)entityEntry.Entity).UpdatedDate = DateTime.Now;
+
+                if (entityEntry.State == EntityState.Added)
+                {
+                    ((BaseModel)entityEntry.Entity).CreatedDate = DateTime.Now;
+                }
+            }
+            return base.SaveChanges();
         }
 
         public DbSet<Brand> Brands { get; set; }
