@@ -4,6 +4,7 @@ using Contracts.IServices.Models;
 using Domains.Models;
 using DTO.Creation;
 using DTO.Output;
+using DTO.Parameters;
 using DTO.Update;
 using Shared.CustomModels.Exceptions;
 
@@ -49,9 +50,9 @@ namespace Services.Models
             await _repositoryManager.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<BrandDto>> GetAllAsync()
+        public async Task<IEnumerable<BrandDto>> GetAllAsync(BrandParameters parameters)
         {
-            IEnumerable<Brand> brands = await _repositoryManager.Brand.GetAllAsync(isTrackChanges: false);
+            IEnumerable<Brand> brands = await _repositoryManager.Brand.GetAllAsync(isTrackChanges: false, parameters);
             return MappingToNewObj<IEnumerable<BrandDto>>(brands);
         }
 

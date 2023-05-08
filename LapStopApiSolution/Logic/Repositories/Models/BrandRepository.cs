@@ -1,5 +1,6 @@
 ﻿using Contracts.IRepositories.Models;
 using Domains.Models;
+using DTO.Parameters;
 using Entities.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,9 +22,13 @@ namespace Repositories.Models
             base.DeleteModel(brand);
         }
 
-        public async Task<IEnumerable<Brand>> GetAllAsync(bool isTrackChanges)
+        public async Task<IEnumerable<Brand>> GetAllAsync(bool isTrackChanges, BrandParameters parameters)
         {
-            return await FindAll(isTrackChanges).ToListAsync();
+            return await FindAll(isTrackChanges)
+                            .OrderBy(b => b.Name)
+                            .Skip((parameters.PageNumber - 1) * parameters.PageSize)
+                            .Take(parameters.PageSize)
+                            .ToListAsync();
         }
 
         public async Task<Brand?> GetOneByIdAsync(bool isTrackChanges, Guid brandId)
