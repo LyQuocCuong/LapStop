@@ -3,6 +3,7 @@ using Contracts.IServices;
 using Domains.Models;
 using DTO.Creation;
 using DTO.Output;
+using DTO.Parameters;
 using DTO.Update;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -25,9 +26,9 @@ namespace RestfulApiHandler.Controllers
 
         [HttpGet]
         [Route("brands", Name = "GetAllBrands")]
-        public async Task<IActionResult> GetAllBrands() 
+        public async Task<IActionResult> GetAllBrands([FromQuery]BrandParameters parameters) 
         {
-            IEnumerable<BrandDto> brandDtos = await _serviceManager.Brand.GetAllAsync();
+            IEnumerable<BrandDto> brandDtos = await _serviceManager.Brand.GetAllAsync(parameters);
             return Ok(brandDtos);
         }
 

@@ -1,12 +1,13 @@
 ﻿using DTO.Creation;
 using DTO.Output;
+using DTO.Parameters;
 using DTO.Update;
 
 namespace Contracts.IServices.Models
 {
     public interface IBrandService
     {
-        Task<IEnumerable<BrandDto>> GetAllAsync();
+        Task<IEnumerable<BrandDto>> GetAllAsync(BrandParameters parameters);
 
         Task<BrandDto?> GetOneByIdAsync(Guid brandId);
 
