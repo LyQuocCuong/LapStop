@@ -7,6 +7,8 @@ namespace Contracts.IRepositories.Models
     {
         Task<IEnumerable<Brand>> GetAllAsync(bool isTrackChanges, BrandParameters parameters);
 
+        Task<int> CountAllAsync(BrandParameters parameters);
+
         Task<Brand?> GetOneByIdAsync(bool isTrackChanges, Guid brandId);
 
         Task<bool> IsValidIdAsync(Guid id);

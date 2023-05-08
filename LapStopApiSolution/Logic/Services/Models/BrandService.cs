@@ -6,6 +6,7 @@ using DTO.Input.FromBody.Creation;
 using DTO.Input.FromBody.Update;
 using DTO.Input.FromQuery.Parameters;
 using DTO.Output.Data;
+using DTO.Output.PagedList;
 using Shared.CustomModels.Exceptions;
 
 namespace Services.Models
@@ -50,10 +51,13 @@ namespace Services.Models
             await _repositoryManager.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<BrandDto>> GetAllAsync(BrandParameters parameters)
+        public async Task<PagedList<BrandDto>> GetAllAsync(BrandParameters parameters)
         {
             IEnumerable<Brand> brands = await _repositoryManager.Brand.GetAllAsync(isTrackChanges: false, parameters);
-            return MappingToNewObj<IEnumerable<BrandDto>>(brands);
+            int totalRecords = await _repositoryManager.Brand.CountAllAsync(parameters);
+
+            IEnumerable<BrandDto> sourceDto = MappingToNewObj<IEnumerable<BrandDto>>(brands);
+            return new PagedList<BrandDto>(sourceDto.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
         }
 
         public async Task<BrandDto?> GetOneByIdAsync(Guid brandId)

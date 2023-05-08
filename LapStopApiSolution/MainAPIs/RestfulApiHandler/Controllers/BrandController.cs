@@ -1,13 +1,14 @@
 ﻿using Contracts.ILog;
 using Contracts.IServices;
-using Domains.Models;
 using DTO.Input.FromBody.Creation;
 using DTO.Input.FromBody.Update;
 using DTO.Input.FromQuery.Parameters;
 using DTO.Output.Data;
+using DTO.Output.PagedList;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Common.Messages;
+using System.Text.Json;
 
 namespace RestfulApiHandler.Controllers
 {
@@ -28,8 +29,11 @@ namespace RestfulApiHandler.Controllers
         [Route("brands", Name = "GetAllBrands")]
         public async Task<IActionResult> GetAllBrands([FromQuery]BrandParameters parameters) 
         {
-            IEnumerable<BrandDto> brandDtos = await _serviceManager.Brand.GetAllAsync(parameters);
-            return Ok(brandDtos);
+            PagedList<BrandDto> pagedResult = await _serviceManager.Brand.GetAllAsync(parameters);
+
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
+
+            return Ok(pagedResult);
         }
 
         [HttpGet]

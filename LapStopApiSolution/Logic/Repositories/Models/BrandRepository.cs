@@ -31,6 +31,12 @@ namespace Repositories.Models
                             .ToListAsync();
         }
 
+        public async Task<int> CountAllAsync(BrandParameters parameters)
+        {
+            return await FindAll(isTrackChanges: false)
+                            .CountAsync();
+        }
+
         public async Task<Brand?> GetOneByIdAsync(bool isTrackChanges, Guid brandId)
         {
             return await FindByCondition(isTrackChanges, brand => brand.Id == brandId).FirstOrDefaultAsync();
