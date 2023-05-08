@@ -1,12 +1,13 @@
 ﻿using DTO.Creation;
 using DTO.Output;
+using DTO.Parameters;
 using DTO.Update;
 
 namespace Contracts.IServices.Models
 {
     public interface ICustomerService
     {
-        Task<IEnumerable<CustomerDto>> GetAllAsync();
+        Task<IEnumerable<CustomerDto>> GetAllAsync(CustomerParameters parameters);
 
         Task<CustomerDto?> GetOneByIdAsync(Guid customerId);
 

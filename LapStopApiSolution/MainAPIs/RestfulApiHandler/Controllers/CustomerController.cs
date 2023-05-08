@@ -2,6 +2,7 @@
 using Contracts.IServices;
 using DTO.Creation;
 using DTO.Output;
+using DTO.Parameters;
 using DTO.Update;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -24,9 +25,9 @@ namespace RestfulApiHandler.Controllers
 
         [HttpGet]
         [Route("customers", Name = "GetAllCustomers")]
-        public async Task<IActionResult> GetAllCustomers()
+        public async Task<IActionResult> GetAllCustomers([FromQuery]CustomerParameters parameters)
         {
-            IEnumerable<CustomerDto> customerDtos = await _serviceManager.Customer.GetAllAsync();
+            IEnumerable<CustomerDto> customerDtos = await _serviceManager.Customer.GetAllAsync(parameters);
             return Ok(customerDtos);
         }
 
