@@ -1,9 +1,9 @@
 ﻿using Contracts.ILog;
 using Contracts.IServices;
-using DTO.Creation;
-using DTO.Output;
-using DTO.Parameters;
-using DTO.Update;
+using DTO.Input.FromBody.Creation;
+using DTO.Input.FromBody.Update;
+using DTO.Input.FromQuery.Parameters;
+using DTO.Output.Data;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Common.Messages;

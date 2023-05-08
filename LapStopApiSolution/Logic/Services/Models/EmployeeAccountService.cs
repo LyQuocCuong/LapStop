@@ -2,7 +2,7 @@
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
-using DTO.Output;
+using DTO.Output.Data;
 using Shared.CustomModels.Exceptions;
 
 namespace Services.Models

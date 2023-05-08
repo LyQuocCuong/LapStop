@@ -1,8 +1,8 @@
 ﻿using Contracts.ILog;
 using Contracts.IServices;
 using Domains.Models;
-using DTO.Output;
-using DTO.Parameters;
+using DTO.Input.FromQuery.Parameters;
+using DTO.Output.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace RestfulApiHandler.Controllers

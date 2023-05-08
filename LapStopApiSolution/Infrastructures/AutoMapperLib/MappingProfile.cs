@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Domains.Models;
-using DTO.Creation;
-using DTO.Output;
-using DTO.Update;
+using DTO.Input.FromBody.Creation;
+using DTO.Input.FromBody.Update;
+using DTO.Output.Data;
 
 namespace AutoMapperLib
 {

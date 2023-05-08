@@ -1,8 +1,8 @@
 ﻿using Contracts.ILog;
 using Contracts.IServices;
-using DTO.Creation;
-using DTO.Output;
-using DTO.Update;
+using DTO.Input.FromBody.Creation;
+using DTO.Input.FromBody.Update;
+using DTO.Output.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace RestfulApiHandler.Controllers
