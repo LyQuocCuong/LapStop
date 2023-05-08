@@ -2,6 +2,7 @@
 using Contracts.IServices;
 using Domains.Models;
 using DTO.Output;
+using DTO.Parameters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace RestfulApiHandler.Controllers
@@ -21,9 +22,9 @@ namespace RestfulApiHandler.Controllers
 
         [HttpGet]
         [Route("products", Name = "GetAllProducts")]
-        public async Task<IActionResult> GetAllProducts()
+        public async Task<IActionResult> GetAllProducts([FromQuery] ProductParameters parameters)
         {
-            IEnumerable<ProductDto> productDtos = await _serviceManager.Product.GetAllAsync();
+            IEnumerable<ProductDto> productDtos = await _serviceManager.Product.GetAllAsync(parameters);
             return Ok(productDtos);
         }
 

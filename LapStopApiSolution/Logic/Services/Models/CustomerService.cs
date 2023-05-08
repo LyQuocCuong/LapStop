@@ -4,6 +4,7 @@ using Contracts.IServices.Models;
 using Domains.Models;
 using DTO.Creation;
 using DTO.Output;
+using DTO.Parameters;
 using DTO.Update;
 using Shared.CustomModels.Exceptions;
 
@@ -35,9 +36,9 @@ namespace Services.Models
             await _repositoryManager.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<CustomerDto>> GetAllAsync()
+        public async Task<IEnumerable<CustomerDto>> GetAllAsync(CustomerParameters parameters)
         {
-            IEnumerable<Customer> customers = await _repositoryManager.Customer.GetAllAsync(isTrackChanges: false);
+            IEnumerable<Customer> customers = await _repositoryManager.Customer.GetAllAsync(isTrackChanges: false, parameters);
             return MappingToNewObj<IEnumerable<CustomerDto>>(customers);
         }
 

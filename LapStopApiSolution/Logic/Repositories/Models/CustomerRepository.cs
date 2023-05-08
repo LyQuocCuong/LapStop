@@ -1,5 +1,6 @@
 ﻿using Contracts.IRepositories.Models;
 using Domains.Models;
+using DTO.Parameters;
 using Entities.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,9 +17,13 @@ namespace Repositories.Models
             base.CreateModel(customer);
         }
 
-        public async Task<IEnumerable<Customer>> GetAllAsync(bool isTrackChanges)
+        public async Task<IEnumerable<Customer>> GetAllAsync(bool isTrackChanges, CustomerParameters parameters)
         {
-            return await FindAll(isTrackChanges).ToListAsync();
+            return await FindAll(isTrackChanges)
+                            .OrderBy(c => c.FirstName)
+                            .Skip((parameters.PageNumber - 1) * parameters.PageSize)
+                            .Take(parameters.PageSize)
+                            .ToListAsync();
         }
 
         public async Task<Customer?> GetOneByIdAsync(bool isTrackChanges, Guid customerId)

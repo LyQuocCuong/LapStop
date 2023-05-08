@@ -3,6 +3,7 @@ using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
 using DTO.Output;
+using DTO.Parameters;
 using Shared.CustomModels.Exceptions;
 
 namespace Services.Models
@@ -13,9 +14,9 @@ namespace Services.Models
         {
         }
 
-        public async Task<IEnumerable<ProductDto>> GetAllAsync()
+        public async Task<IEnumerable<ProductDto>> GetAllAsync(ProductParameters parameters)
         {
-            IEnumerable<Product> products = await _repositoryManager.Product.GetAllAsync(isTrackChanges: false);
+            IEnumerable<Product> products = await _repositoryManager.Product.GetAllAsync(isTrackChanges: false, parameters);
             return MappingToNewObj<IEnumerable<ProductDto>>(products);
         }
 

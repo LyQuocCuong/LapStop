@@ -2,7 +2,7 @@
 
 namespace DTO.Parameters
 {
-    public sealed class BrandParameters : RequestParameters
+    public class ProductParameters : RequestParameters
     {
     }
 }

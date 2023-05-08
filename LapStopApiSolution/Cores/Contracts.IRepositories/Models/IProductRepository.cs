@@ -1,10 +1,11 @@
 ﻿using Domains.Models;
+using DTO.Parameters;
 
 namespace Contracts.IRepositories.Models
 {
     public interface IProductRepository
     {
-        Task<IEnumerable<Product>> GetAllAsync(bool isTrackChanges);
+        Task<IEnumerable<Product>> GetAllAsync(bool isTrackChanges, ProductParameters parameters);
 
         Task<Product?> GetOneByIdAsync(bool isTrackChanges, Guid productId);
 
