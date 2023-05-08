@@ -1,6 +1,6 @@
-﻿using DTO.Creation;
-using DTO.Output;
-using DTO.Update;
+﻿using DTO.Input.FromBody.Creation;
+using DTO.Input.FromBody.Update;
+using DTO.Output.Data;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;

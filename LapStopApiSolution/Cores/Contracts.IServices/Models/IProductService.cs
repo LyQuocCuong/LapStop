@@ -1,5 +1,5 @@
-﻿using DTO.Output;
-using DTO.Parameters;
+﻿using DTO.Input.FromQuery.Parameters;
+using DTO.Output.Data;
 
 namespace Contracts.IServices.Models
 {

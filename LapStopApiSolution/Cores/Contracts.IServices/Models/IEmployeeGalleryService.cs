@@ -1,4 +1,4 @@
-﻿using DTO.Output;
+﻿using DTO.Output.Data;
 
 namespace Contracts.IServices.Models
 {

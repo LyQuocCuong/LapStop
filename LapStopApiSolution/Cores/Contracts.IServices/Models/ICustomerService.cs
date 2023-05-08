@@ -1,7 +1,7 @@
-﻿using DTO.Creation;
-using DTO.Output;
-using DTO.Parameters;
-using DTO.Update;
+﻿using DTO.Input.FromBody.Creation;
+using DTO.Input.FromBody.Update;
+using DTO.Input.FromQuery.Parameters;
+using DTO.Output.Data;
 
 namespace Contracts.IServices.Models
 {

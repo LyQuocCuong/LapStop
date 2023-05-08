@@ -1,6 +1,6 @@
 ﻿using Contracts.ILog;
 using Contracts.IServices;
-using DTO.Output;
+using DTO.Output.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace RestfulApiHandler.Controllers

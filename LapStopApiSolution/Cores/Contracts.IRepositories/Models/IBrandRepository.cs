@@ -1,5 +1,5 @@
 ﻿using Domains.Models;
-using DTO.Parameters;
+using DTO.Input.FromQuery.Parameters;
 
 namespace Contracts.IRepositories.Models
 {
