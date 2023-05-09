@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using NLog;
 using NLogLib;
 using Repositories;
+using RestfulApiHandler.ActionFilters;
 using Services;
 
 LogManager.LoadConfiguration(
@@ -27,15 +28,21 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 
 // Add services to the container.
 builder.Services.AddAutoMapper(typeof(AutoMapperLib.MappingProfile));
+
 builder.Services.AddControllers()
     .AddApplicationPart(typeof(RestfulApiHandler.AssemblyReference).Assembly)
     .AddNewtonsoftJson();
+
 builder.Services.AddDbContext<LapStopContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("LapStopConnection"))
 );
+
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 builder.Services.AddScoped<IServiceManager, ServiceManager>();
 builder.Services.AddSingleton<ILogService, NLogService>();
+
+// Register ActionFilter to Services
+builder.Services.AddScoped<ValidationFilterAttribute>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

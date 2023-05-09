@@ -7,6 +7,7 @@ using DTO.Output.Data;
 using DTO.Output.PagedList;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using RestfulApiHandler.ActionFilters;
 using Shared.Common.Messages;
 using System.Text.Json;
 
@@ -49,17 +50,10 @@ namespace RestfulApiHandler.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         [Route("brands", Name = "CreateBrand")]
         public async Task<IActionResult> CreateBrand([FromBody] BrandForCreationDto creationDto)
         {
-            if (ModelState.IsValid == false)
-            {
-                return UnprocessableEntity(ModelState);
-            }
-            if (creationDto == null)
-            {
-                return BadRequest(CommonMessages.ERROR.NullObject(nameof(BrandForCreationDto)));
-            }
             BrandDto newBrandDto = await _serviceManager.Brand.CreateAsync(creationDto);
             return CreatedAtRoute("GetBrandById", new { brandId = newBrandDto.Id }, newBrandDto);
         }
@@ -78,16 +72,9 @@ namespace RestfulApiHandler.Controllers
 
         [HttpPut]
         [Route("brands/{brandId:guid}", Name = "UpdateBrand")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> UpdateBrand(Guid brandId, [FromBody] BrandForUpdateDto updateDto)
         {
-            if (ModelState.IsValid == false)
-            {
-                return UnprocessableEntity(ModelState);
-            }
-            if (updateDto == null)
-            {
-                return BadRequest(CommonMessages.ERROR.NullObject(nameof(BrandForUpdateDto)));
-            }
             if (await _serviceManager.Brand.IsValidIdAsync(brandId) == false)
             {
                 return NotFound();
