@@ -17,6 +17,16 @@ namespace Services.Models
         {
         }
 
+        private async Task<Brand> GetBrandAndCheckIfItExists(bool isTrackChanges, Guid brandId)
+        {
+            Brand? brand = await _repositoryManager.Brand.GetOneByIdAsync(isTrackChanges, brandId);
+            if (brand == null)
+            {
+                throw new ExNotFoundInDB(nameof(BrandService), nameof(GetBrandAndCheckIfItExists), typeof(Brand), brandId);
+            }
+            return brand;
+        }
+
         public async Task<BrandDto> CreateAsync(BrandForCreationDto creationDto)
         {
             Brand newBrand = MappingToNewObj<Brand>(creationDto);
@@ -28,22 +38,14 @@ namespace Services.Models
 
         public async Task UpdateAsync(Guid brandId, BrandForUpdateDto updateDto)
         {
-            Brand? brand = await _repositoryManager.Brand.GetOneByIdAsync(isTrackChanges: true, brandId);
-            if (brand == null)
-            {
-                throw new ExNotFoundInDB(nameof(BrandService), nameof(UpdateAsync), typeof(Brand), brandId);
-            }
+            Brand brand = await GetBrandAndCheckIfItExists(isTrackChanges: true, brandId);
             MappingToExistingObj(updateDto, brand);
             await _repositoryManager.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(Guid brandId)
         {
-            Brand? brand = await _repositoryManager.Brand.GetOneByIdAsync(isTrackChanges: true, brandId);
-            if (brand == null)
-            {
-                throw new ExNotFoundInDB(nameof(BrandService), nameof(DeleteAsync), typeof(Brand), brandId);
-            }
+            Brand brand = await GetBrandAndCheckIfItExists(isTrackChanges: true, brandId);
             _repositoryManager.Brand.Delete(brand);
             await _repositoryManager.SaveChangesAsync();
         }
@@ -59,11 +61,7 @@ namespace Services.Models
 
         public async Task<BrandDto?> GetOneByIdAsync(Guid brandId)
         {
-            Brand? brand = await _repositoryManager.Brand.GetOneByIdAsync(isTrackChanges: false, brandId);
-            if (brand == null)
-            {
-                throw new ExNotFoundInDB(nameof(BrandService), nameof(GetOneByIdAsync),typeof(Brand), brandId);
-            }
+            Brand brand = await GetBrandAndCheckIfItExists(isTrackChanges: false, brandId);
             return MappingToNewObj<BrandDto>(brand);
         }
 
