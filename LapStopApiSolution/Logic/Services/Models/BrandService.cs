@@ -20,9 +20,6 @@ namespace Services.Models
         public async Task<BrandDto> CreateAsync(BrandForCreationDto creationDto)
         {
             Brand newBrand = MappingToNewObj<Brand>(creationDto);
-            newBrand.IsRemoved = false;
-            newBrand.CreatedDate = DateTime.Now;
-            newBrand.UpdatedDate = DateTime.Now;
             _repositoryManager.Brand.Create(newBrand);
             await _repositoryManager.SaveChangesAsync();
 
