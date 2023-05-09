@@ -16,6 +16,16 @@ namespace Services.Models
         {
         }
 
+        private async Task<Product> GetProductAndCheckIfItExists(bool isTrackChanges, Guid productId)
+        {
+            Product? product = await _repositoryManager.Product.GetOneByIdAsync(isTrackChanges, productId);
+            if (product == null)
+            {
+                throw new ExNotFoundInDB(nameof(ProductService), nameof(GetProductAndCheckIfItExists), typeof(Product), productId);
+            }
+            return product;
+        }
+
         public async Task<IEnumerable<ProductDto>> GetAllAsync(ProductParameters parameters)
         {
             IEnumerable<Product> products = await _repositoryManager.Product.GetAllAsync(isTrackChanges: false, parameters);
@@ -24,11 +34,7 @@ namespace Services.Models
 
         public async Task<ProductDto?> GetOneByIdAsync(Guid productId)
         {
-            Product? product = await _repositoryManager.Product.GetOneByIdAsync(isTrackChanges: false, productId);
-            if (product == null)
-            {
-                throw new ExNotFoundInDB(nameof(ProductService), nameof(GetOneByIdAsync), typeof(Product), productId);
-            }
+            Product product = await GetProductAndCheckIfItExists(isTrackChanges: false, productId);
             return MappingToNewObj<ProductDto>(product);
         }
 
@@ -49,22 +55,14 @@ namespace Services.Models
 
         public async Task UpdateAsync(Guid productId, ProductForUpdateDto updateDto)
         {
-            Product? product = await _repositoryManager.Product.GetOneByIdAsync(isTrackChanges: true, productId);
-            if (product == null)
-            {
-                throw new ExNotFoundInDB(nameof(ProductService), nameof(UpdateAsync), typeof(Product), productId);  
-            }
+            Product product = await GetProductAndCheckIfItExists(isTrackChanges: true, productId);
             MappingToExistingObj(updateDto, product);
             await _repositoryManager.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(Guid productId)
         {
-            Product? product = await _repositoryManager.Product.GetOneByIdAsync(isTrackChanges: true, productId);
-            if (product == null)
-            {
-                throw new ExNotFoundInDB(nameof(ProductService), nameof(DeleteAsync), typeof(Product), productId);
-            }
+            Product product = await GetProductAndCheckIfItExists(isTrackChanges: true, productId);
             _repositoryManager.Product.Delete(product);
             await _repositoryManager.SaveChangesAsync();
         }
