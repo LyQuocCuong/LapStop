@@ -10,5 +10,9 @@ namespace Contracts.IRepositories.Models
         Task<Product?> GetOneByIdAsync(bool isTrackChanges, Guid productId);
 
         Task<bool> IsValidIdAsync(Guid productId);
+
+        void Create(Product product);
+
+        void Delete(Product product);
     }
 }

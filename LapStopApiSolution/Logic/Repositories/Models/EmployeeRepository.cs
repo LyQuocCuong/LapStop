@@ -25,5 +25,15 @@ namespace Repositories.Models
         {
             return await FindByCondition(isTrackChanges: false, e => e.Id == employeeId).AnyAsync();
         }
+
+        public void Create(Employee employee)
+        {
+            base.CreateModel(employee);
+        }
+
+        public void Delete(Employee employee)
+        {
+            base.DeleteModel(employee);
+        }
     }
 }

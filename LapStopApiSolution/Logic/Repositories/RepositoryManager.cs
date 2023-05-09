@@ -62,7 +62,7 @@ namespace Repositories
 
         public async Task SaveChangesAsync()
         {
-            await _context.SaveChangesAsync();
+            await _context.CustomSaveChangesAsync();
         }
 
         public IBrandRepository Brand => _brandRepository.Value;
