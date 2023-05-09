@@ -9,5 +9,9 @@ namespace Contracts.IRepositories.Models
         Task<Employee?> GetOneByIdAsync(bool isTrackChanges, Guid employeeId);
 
         Task<bool> IsValidIdAsync(Guid employeeId);
+
+        void Create(Employee employee);
+
+        void Delete(Employee employee);
     }
 }

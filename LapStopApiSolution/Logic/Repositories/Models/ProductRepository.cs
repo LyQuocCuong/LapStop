@@ -11,7 +11,7 @@ namespace Repositories.Models
         public ProductRepository(LapStopContext context) : base(context)
         {
         }
-
+                
         public async Task<IEnumerable<Product>> GetAllAsync(bool isTrackChanges, ProductParameters parameters)
         {
             return await FindAll(isTrackChanges)
@@ -29,6 +29,16 @@ namespace Repositories.Models
         public async Task<bool> IsValidIdAsync(Guid productId)
         {
             return await FindByCondition(isTrackChanges: false, e => e.Id == productId).AnyAsync();
+        }
+
+        public void Create(Product product)
+        {
+            base.CreateModel(product);
+        }
+
+        public void Delete(Product product)
+        {
+            base.DeleteModel(product);
         }
     }
 }

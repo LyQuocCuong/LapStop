@@ -1,4 +1,6 @@
-﻿using DTO.Output.Data;
+﻿using DTO.Input.FromBody.Creation;
+using DTO.Input.FromBody.Update;
+using DTO.Output.Data;
 
 namespace Contracts.IServices.Models
 {
@@ -9,5 +11,11 @@ namespace Contracts.IServices.Models
         Task<EmployeeDto?> GetOneByIdAsync(Guid employeeId);
 
         Task<bool> IsValidIdAsync(Guid employeeId);
+
+        Task<EmployeeDto> CreateAsync(EmployeeForCreationDto creationDto);
+
+        Task UpdateAsync(Guid employeeId, EmployeeForUpdateDto updatedDto);
+
+        Task DeleteAsync(Guid employeeId);
     }
 }

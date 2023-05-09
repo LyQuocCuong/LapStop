@@ -3,6 +3,7 @@ using Domains.Models;
 using DTO.Input.FromBody.Creation;
 using DTO.Input.FromBody.Update;
 using DTO.Output.Data;
+using System.Reflection;
 
 namespace AutoMapperLib
 {
@@ -204,7 +205,7 @@ namespace AutoMapperLib
                 .ForMember(dto => dto.Id,
                            dto_field => dto_field.MapFrom(e => e.Id))
                 .ForMember(dto => dto.EmployeeRoleId,
-                           dto_field => dto_field.MapFrom(e => e.EmployeeStatusId))
+                           dto_field => dto_field.MapFrom(e => e.EmployeeRoleId))
                 .ForMember(dto => dto.EmployeeRoleName,
                            dto_field => dto_field.MapFrom(e => e.EmployeeRole != null ? e.EmployeeRole.Name : ""))
                 .ForMember(dto => dto.EmployeeStatusId,
@@ -227,8 +228,66 @@ namespace AutoMapperLib
                            dto_field => dto_field.MapFrom(e => e.Email))
                 .ForMember(dto => dto.Phone,
                            dto_field => dto_field.MapFrom(e => e.Phone))
+                .ForMember(dto => dto.IsRemoved,
+                           dto_field => dto_field.MapFrom(e => e.IsRemoved))
                 .ForMember(dto => dto.AvatarUrl,
-                           dto_field => dto_field.MapFrom(e => e.AvatarUrl));
+                           dto_field => dto_field.MapFrom(e => e.AvatarUrl))
+                .ForMember(dto => dto.CreatedDate,
+                           dto_field => dto_field.MapFrom(e => e.CreatedDate))
+                .ForMember(dto => dto.UpdatedDate,
+                           dto_field => dto_field.MapFrom(e => e.UpdatedDate));
+            #endregion
+
+            #region EmployeeForCreationDto --> Employee
+            CreateMap<EmployeeForCreationDto, Employee>()
+                .ForMember(model => model.EmployeeRoleId,
+                           model_field => model_field.MapFrom(e => e.EmployeeRoleId))
+                .ForMember(model => model.EmployeeStatusId,
+                           model_field => model_field.MapFrom(e => e.EmployeeStatusId))
+                .ForMember(model => model.EmployeeCode,
+                           model_field => model_field.MapFrom(e => e.EmployeeCode))
+                .ForMember(model => model.FirstName,
+                           model_field => model_field.MapFrom(e => e.FirstName))
+                .ForMember(model => model.LastName,
+                           model_field => model_field.MapFrom(e => e.LastName))
+                .ForMember(model => model.IsMale,
+                           model_field => model_field.MapFrom(e => e.IsMale))
+                .ForMember(model => model.DOB,
+                           model_field => model_field.MapFrom(e => e.DOB))
+                .ForMember(model => model.Address,
+                           model_field => model_field.MapFrom(e => e.Address))
+                .ForMember(model => model.Email,
+                           model_field => model_field.MapFrom(e => e.Email))
+                .ForMember(model => model.Phone,
+                           model_field => model_field.MapFrom(e => e.Phone))
+                .ForMember(model => model.AvatarUrl,
+                           model_field => model_field.MapFrom(e => e.AvatarUrl));
+            #endregion
+
+            #region EmployeeForUpdateDto <--> Employee
+            CreateMap<EmployeeForUpdateDto, Employee>().ReverseMap()
+                .ForMember(model => model.EmployeeRoleId,
+                           model_field => model_field.MapFrom(e => e.EmployeeRoleId))
+                .ForMember(model => model.EmployeeStatusId,
+                           model_field => model_field.MapFrom(e => e.EmployeeStatusId))
+                .ForMember(model => model.EmployeeCode,
+                           model_field => model_field.MapFrom(e => e.EmployeeCode))
+                .ForMember(model => model.FirstName,
+                           model_field => model_field.MapFrom(e => e.FirstName))
+                .ForMember(model => model.LastName,
+                           model_field => model_field.MapFrom(e => e.LastName))
+                .ForMember(model => model.IsMale,
+                           model_field => model_field.MapFrom(e => e.IsMale))
+                .ForMember(model => model.DOB,
+                           model_field => model_field.MapFrom(e => e.DOB))
+                .ForMember(model => model.Address,
+                           model_field => model_field.MapFrom(e => e.Address))
+                .ForMember(model => model.Email,
+                           model_field => model_field.MapFrom(e => e.Email))
+                .ForMember(model => model.Phone,
+                           model_field => model_field.MapFrom(e => e.Phone))
+                .ForMember(model => model.AvatarUrl,
+                           model_field => model_field.MapFrom(e => e.AvatarUrl));
             #endregion
 
         }
@@ -301,6 +360,7 @@ namespace AutoMapperLib
 
         private void MappingProduct()
         {
+            #region Product --> ProductDto
             CreateMap<Product, ProductDto>()
                 .ForMember(dto => dto.Id,
                            dto_Id => dto_Id.MapFrom(e => e.Id))
@@ -324,6 +384,52 @@ namespace AutoMapperLib
                            dto_SellingPrice => dto_SellingPrice.MapFrom(e => e.SellingPrice))
                 .ForMember(dto => dto.IsHiddenInStore,
                            dto_IsHiddenInStore => dto_IsHiddenInStore.MapFrom(e => e.IsHiddenInStore));
+            #endregion
+
+            #region ProductForCreationDto --> Product
+            CreateMap<ProductForCreationDto, Product>()
+                .ForMember(model => model.ProductStatusId,
+                           model_field => model_field.MapFrom(e => e.ProductStatusId))
+                .ForMember(model => model.ProductCode,
+                           model_field => model_field.MapFrom(e => e.ProductCode))
+                .ForMember(model => model.Name,
+                           model_field => model_field.MapFrom(e => e.Name))
+                .ForMember(model => model.Description,
+                           model_field => model_field.MapFrom(e => e.Description))
+                .ForMember(model => model.AvatarUrl,
+                           model_field => model_field.MapFrom(e => e.AvatarUrl))
+                .ForMember(model => model.OriginalPrice,
+                           model_field => model_field.MapFrom(e => e.OriginalPrice))
+                .ForMember(model => model.CurrentPrice,
+                           model_field => model_field.MapFrom(e => e.CurrentPrice))
+                .ForMember(model => model.SellingPrice,
+                           model_field => model_field.MapFrom(e => e.SellingPrice))
+                .ForMember(model => model.IsHiddenInStore,
+                           model_field => model_field.MapFrom(e => e.IsHiddenInStore));
+            #endregion
+
+            #region ProductForUpdateDto --> Product
+            CreateMap<ProductForUpdateDto, Product>()
+                .ForMember(model => model.ProductStatusId,
+                           model_field => model_field.MapFrom(e => e.ProductStatusId))
+                .ForMember(model => model.ProductCode,
+                           model_field => model_field.MapFrom(e => e.ProductCode))
+                .ForMember(model => model.Name,
+                           model_field => model_field.MapFrom(e => e.Name))
+                .ForMember(model => model.Description,
+                           model_field => model_field.MapFrom(e => e.Description))
+                .ForMember(model => model.AvatarUrl,
+                           model_field => model_field.MapFrom(e => e.AvatarUrl))
+                .ForMember(model => model.OriginalPrice,
+                           model_field => model_field.MapFrom(e => e.OriginalPrice))
+                .ForMember(model => model.CurrentPrice,
+                           model_field => model_field.MapFrom(e => e.CurrentPrice))
+                .ForMember(model => model.SellingPrice,
+                           model_field => model_field.MapFrom(e => e.SellingPrice))
+                .ForMember(model => model.IsHiddenInStore,
+                           model_field => model_field.MapFrom(e => e.IsHiddenInStore));
+            #endregion
+
         }
 
         private void MappingProductGallery()

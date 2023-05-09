@@ -25,7 +25,7 @@ namespace Entities.Context
             base.OnModelCreating(modelBuilder);
         }
 
-        public override int SaveChanges()
+        public async Task<int> CustomSaveChangesAsync()
         {
             var entries = ChangeTracker
                             .Entries()
@@ -41,7 +41,7 @@ namespace Entities.Context
                     ((BaseModel)entityEntry.Entity).CreatedDate = DateTime.Now;
                 }
             }
-            return base.SaveChanges();
+            return await base.SaveChangesAsync();
         }
 
         public DbSet<Brand> Brands { get; set; }
