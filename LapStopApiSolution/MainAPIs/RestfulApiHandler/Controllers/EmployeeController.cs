@@ -33,6 +33,10 @@ namespace RestfulApiHandler.Controllers
         [Route("employees", Name = "CreateEmployee")]
         public async Task<IActionResult> CreateEmployee([FromBody] EmployeeForCreationDto creationDto)
         {
+            if (ModelState.IsValid == false)
+            {
+                return UnprocessableEntity(ModelState);
+            }
             if (creationDto == null)
             {
                 return BadRequest(CommonMessages.ERROR.NullObject(nameof(EmployeeForCreationDto)));
@@ -69,6 +73,10 @@ namespace RestfulApiHandler.Controllers
         [Route("employees/{employeeId:guid}", Name = "UpdateEmployee")]
         public async Task<IActionResult> UpdateEmployee(Guid employeeId, [FromBody]EmployeeForUpdateDto updateDto)
         {
+            if(ModelState.IsValid == false)
+            {
+                return UnprocessableEntity(ModelState);
+            }
             if (updateDto == null)
             {
                 return BadRequest(CommonMessages.ERROR.NullObject(nameof(EmployeeForCreationDto)));
@@ -80,7 +88,6 @@ namespace RestfulApiHandler.Controllers
             await _serviceManager.Employee.UpdateAsync(employeeId, updateDto);
             return NoContent();
         }
-
 
     }
 }
