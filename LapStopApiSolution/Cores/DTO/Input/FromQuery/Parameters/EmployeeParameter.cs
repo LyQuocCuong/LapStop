@@ -7,5 +7,7 @@ namespace DTO.Input.FromQuery.Parameters
         public uint MinAge { get; set; }
 
         public uint MaxAge { get; set; } = uint.MaxValue;
+
+        public string? SearchTerm { get; set; }
     }
 }
