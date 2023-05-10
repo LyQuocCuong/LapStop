@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Cores\Contracts.IRepositories\Contracts.IRepositories.csproj" />
     <ProjectReference Include="..\..\Infrastructures\Entities\Entities.csproj" />
   </ItemGroup>
