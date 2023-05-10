@@ -58,18 +58,6 @@ namespace RestfulApiHandler.Controllers
             return CreatedAtRoute("GetBrandById", new { brandId = newBrandDto.Id }, newBrandDto);
         }
 
-        [HttpDelete]
-        [Route("brands/{brandId:guid}", Name = "DeleteBrand")]
-        public async Task<IActionResult> DeleteBrand(Guid brandId)
-        {
-            if (await _serviceManager.Brand.IsValidIdAsync(brandId) == false)
-            {
-                return NotFound();
-            }
-            await _serviceManager.Brand.DeleteAsync(brandId);
-            return NoContent();
-        }
-
         [HttpPut]
         [Route("brands/{brandId:guid}", Name = "UpdateBrand")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
@@ -115,5 +103,16 @@ namespace RestfulApiHandler.Controllers
             return NoContent();
         }
 
+        [HttpDelete]
+        [Route("brands/{brandId:guid}", Name = "DeleteBrand")]
+        public async Task<IActionResult> DeleteBrand(Guid brandId)
+        {
+            if (await _serviceManager.Brand.IsValidIdAsync(brandId) == false)
+            {
+                return NotFound();
+            }
+            await _serviceManager.Brand.DeleteAsync(brandId);
+            return NoContent();
+        }
     }
 }

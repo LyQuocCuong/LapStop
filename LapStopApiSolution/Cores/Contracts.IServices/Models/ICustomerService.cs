@@ -19,5 +19,7 @@ namespace Contracts.IServices.Models
 
         Task UpdateAsync(Guid customerId, CustomerForUpdateDto updateDto);
 
+        Task DeleteAsync(Guid customerId);
+
     }
 }

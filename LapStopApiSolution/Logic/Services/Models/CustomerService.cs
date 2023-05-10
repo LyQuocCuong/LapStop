@@ -26,22 +26,6 @@ namespace Services.Models
             return customer;
         }
 
-        public async Task<CustomerDto> CreateAsync(CustomerForCreationDto creationDto)
-        {
-            Customer newCustomer = MappingToNewObj<Customer>(creationDto);
-            _repositoryManager.Customer.Create(newCustomer);
-            await _repositoryManager.SaveChangesAsync();
-
-            return MappingToNewObj<CustomerDto>(newCustomer);
-        }
-
-        public async Task UpdateAsync(Guid customerId, CustomerForUpdateDto updateDto)
-        {
-            Customer customer = await GetCustomerAndCheckIfItExists(isTrackChanges: true, customerId);
-            MappingToExistingObj(updateDto, customer);
-            await _repositoryManager.SaveChangesAsync();
-        }
-
         public async Task<IEnumerable<CustomerDto>> GetAllAsync(CustomerParameters parameters)
         {
             IEnumerable<Customer> customers = await _repositoryManager.Customer.GetAllAsync(isTrackChanges: false, parameters);
@@ -65,5 +49,27 @@ namespace Services.Models
             return await _repositoryManager.Customer.IsValidIdAsync(customerId);
         }
 
+        public async Task<CustomerDto> CreateAsync(CustomerForCreationDto creationDto)
+        {
+            Customer newCustomer = MappingToNewObj<Customer>(creationDto);
+            _repositoryManager.Customer.Create(newCustomer);
+            await _repositoryManager.SaveChangesAsync();
+
+            return MappingToNewObj<CustomerDto>(newCustomer);
+        }
+
+        public async Task UpdateAsync(Guid customerId, CustomerForUpdateDto updateDto)
+        {
+            Customer customer = await GetCustomerAndCheckIfItExists(isTrackChanges: true, customerId);
+            MappingToExistingObj(updateDto, customer);
+            await _repositoryManager.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(Guid customerId)
+        {
+            Customer customer = await GetCustomerAndCheckIfItExists(isTrackChanges: true, customerId);
+            _repositoryManager.Customer.Delete(customer);
+            await _repositoryManager.SaveChangesAsync();
+        }
     }
 }

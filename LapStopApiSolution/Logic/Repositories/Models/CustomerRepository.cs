@@ -12,11 +12,6 @@ namespace Repositories.Models
         {
         }
 
-        public void Create(Customer customer)
-        {
-            base.CreateModel(customer);
-        }
-
         public async Task<IEnumerable<Customer>> GetAllAsync(bool isTrackChanges, CustomerParameters parameters)
         {
             return await FindAll(isTrackChanges)
@@ -35,5 +30,16 @@ namespace Repositories.Models
         {
             return await FindByCondition(isTrackChanges: false, customer => customer.Id == customerId).AnyAsync();
         }
+
+        public void Create(Customer customer)
+        {
+            base.CreateModel(customer);
+        }
+
+        public void Delete(Customer customer)
+        {
+            base.DeleteModel(customer);
+        }
+
     }
 }

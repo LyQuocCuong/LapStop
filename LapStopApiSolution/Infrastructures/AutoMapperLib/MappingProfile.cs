@@ -409,7 +409,7 @@ namespace AutoMapperLib
             #endregion
 
             #region ProductForUpdateDto --> Product
-            CreateMap<ProductForUpdateDto, Product>()
+            CreateMap<ProductForUpdateDto, Product>().ReverseMap()
                 .ForMember(model => model.ProductStatusId,
                            model_field => model_field.MapFrom(e => e.ProductStatusId))
                 .ForMember(model => model.ProductCode,

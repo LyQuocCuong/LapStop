@@ -12,5 +12,7 @@ namespace Contracts.IRepositories.Models
         Task<bool> IsValidIdAsync(Guid customerId);
 
         void Create(Customer customer);
+
+        void Delete(Customer customer);
     }
 }

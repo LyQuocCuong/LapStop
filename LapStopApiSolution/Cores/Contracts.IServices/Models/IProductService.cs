@@ -11,6 +11,8 @@ namespace Contracts.IServices.Models
 
         Task<ProductDto?> GetOneByIdAsync(Guid productId);
 
+        Task<ProductForUpdateDto> GetDtoForPatchAsync(Guid productId);
+
         Task<bool> IsValidIdAsync(Guid productId);
 
         Task<ProductDto> CreateAsync(ProductForCreationDto creationDto);
