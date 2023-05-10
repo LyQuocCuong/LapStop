@@ -3,6 +3,7 @@ using Domains.Models;
 using DTO.Input.FromQuery.Parameters;
 using Entities.Context;
 using Microsoft.EntityFrameworkCore;
+using Repositories.Extensions;
 
 namespace Repositories.Models
 {
@@ -14,9 +15,9 @@ namespace Repositories.Models
 
         public async Task<IEnumerable<Employee>> GetAllAsync(bool isTrackChanges, EmployeeParameter parameter)
         {
-            return await FindByCondition(isTrackChanges, 
-                            e => DateTime.Now.Year - e.DOB.Year >= parameter.MinAge &&
-                                 DateTime.Now.Year - e.DOB.Year <= parameter.MaxAge)
+            return await FindAll(isTrackChanges)
+                            .FilterAgeExt(parameter)
+                            .SearchExt(parameter)
                             .Skip((parameter.PageNumber - 1) * parameter.PageSize)
                             .Take(parameter.PageSize)
                             .ToListAsync();
@@ -24,9 +25,9 @@ namespace Repositories.Models
 
         public async Task<int> CountAllAsync(EmployeeParameter parameter)
         {
-            return await FindByCondition(isTrackChanges: false,
-                            e => DateTime.Now.Year - e.DOB.Year >= parameter.MinAge &&
-                                 DateTime.Now.Year - e.DOB.Year <= parameter.MaxAge)
+            return await FindAll(isTrackChanges: false)
+                            .FilterAgeExt(parameter)
+                            .SearchExt(parameter)
                             .CountAsync();
         }
 
