@@ -16,6 +16,16 @@ namespace Services.Models
         {
         }
 
+        private async Task<Customer> GetCustomerAndCheckIfItExists(bool isTrackChanges, Guid customerId)
+        {
+            Customer? customer = await _repositoryManager.Customer.GetOneByIdAsync(isTrackChanges, customerId);
+            if (customer == null)
+            {
+                throw new ExNotFoundInDB(nameof(CustomerService), nameof(GetCustomerAndCheckIfItExists), typeof(Customer), customerId);
+            }
+            return customer;
+        }
+
         public async Task<CustomerDto> CreateAsync(CustomerForCreationDto creationDto)
         {
             Customer newCustomer = MappingToNewObj<Customer>(creationDto);
@@ -27,11 +37,7 @@ namespace Services.Models
 
         public async Task UpdateAsync(Guid customerId, CustomerForUpdateDto updateDto)
         {
-            Customer? customer = await _repositoryManager.Customer.GetOneByIdAsync(isTrackChanges: true, customerId);
-            if (customer == null)
-            {
-                throw new ExNotFoundInDB(nameof(CustomerService), nameof(UpdateAsync), typeof(Customer), customerId);
-            }
+            Customer customer = await GetCustomerAndCheckIfItExists(isTrackChanges: true, customerId);
             MappingToExistingObj(updateDto, customer);
             await _repositoryManager.SaveChangesAsync();
         }
@@ -44,11 +50,7 @@ namespace Services.Models
 
         public async Task<CustomerDto?> GetOneByIdAsync(Guid customerId)
         {
-            Customer? customer = await _repositoryManager.Customer.GetOneByIdAsync(isTrackChanges: false, customerId);
-            if (customer == null)
-            {
-                throw new ExNotFoundInDB(nameof(CustomerService), nameof(GetOneByIdAsync), typeof(Customer), customerId);
-            }
+            Customer customer = await GetCustomerAndCheckIfItExists(isTrackChanges: false, customerId);
             return MappingToNewObj<CustomerDto>(customer);
         }
 

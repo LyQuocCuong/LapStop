@@ -15,6 +15,16 @@ namespace Services.Models
         {
         }
 
+        private async Task<Employee> GetEmployeeAndCheckIfItExists(bool isTrackChanges, Guid employeeId)
+        {
+            Employee? employee = await _repositoryManager.Employee.GetOneByIdAsync(isTrackChanges, employeeId);
+            if (employee == null)
+            {
+                throw new ExNotFoundInDB(nameof(EmployeeService), nameof(GetEmployeeAndCheckIfItExists), typeof(Employee), employeeId);
+            }
+            return employee;
+        }
+
         public async Task<IEnumerable<EmployeeDto>> GetAllAsync()
         {
             IEnumerable<Employee> employees = await _repositoryManager.Employee.GetAllAsync(isTrackChanges: false);
@@ -23,11 +33,7 @@ namespace Services.Models
 
         public async Task<EmployeeDto?> GetOneByIdAsync(Guid employeeId)
         {
-            Employee? employee = await _repositoryManager.Employee.GetOneByIdAsync(isTrackChanges: false, employeeId);
-            if (employee == null)
-            {
-                throw new ExNotFoundInDB(nameof(EmployeeService), nameof(GetOneByIdAsync), typeof(Employee), employeeId);
-            }
+            Employee employee = await GetEmployeeAndCheckIfItExists(isTrackChanges: false, employeeId);
             return MappingToNewObj<EmployeeDto>(employee);
         }
 
@@ -47,22 +53,14 @@ namespace Services.Models
 
         public async Task UpdateAsync(Guid employeeId, EmployeeForUpdateDto updatedDto)
         {
-            Employee? employee = await _repositoryManager.Employee.GetOneByIdAsync(isTrackChanges: true, employeeId);
-            if (employee == null)
-            {
-                throw new ExNotFoundInDB(nameof(BrandService), nameof(UpdateAsync), typeof(Employee), employeeId);
-            }
+            Employee employee = await GetEmployeeAndCheckIfItExists(isTrackChanges: true, employeeId);
             MappingToExistingObj(updatedDto, employee);
             await _repositoryManager.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(Guid employeeId)
         {
-            Employee? employee = await _repositoryManager.Employee.GetOneByIdAsync(isTrackChanges: true, employeeId);
-            if (employee == null)
-            {
-                throw new ExNotFoundInDB(nameof(EmployeeService), nameof(DeleteAsync), typeof(Employee), employeeId);
-            }
+            Employee employee = await GetEmployeeAndCheckIfItExists(isTrackChanges: true, employeeId);
             _repositoryManager.Employee.Delete(employee);
             await _repositoryManager.SaveChangesAsync();
         }
