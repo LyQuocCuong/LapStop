@@ -4,6 +4,7 @@ using DTO.Input.FromBody.Creation;
 using DTO.Input.FromBody.Update;
 using DTO.Output.Data;
 using Microsoft.AspNetCore.Mvc;
+using RestfulApiHandler.ActionFilters;
 using Shared.Common.Messages;
 
 namespace RestfulApiHandler.Controllers
@@ -31,16 +32,9 @@ namespace RestfulApiHandler.Controllers
 
         [HttpPost]
         [Route("employees", Name = "CreateEmployee")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateEmployee([FromBody] EmployeeForCreationDto creationDto)
         {
-            if (ModelState.IsValid == false)
-            {
-                return UnprocessableEntity(ModelState);
-            }
-            if (creationDto == null)
-            {
-                return BadRequest(CommonMessages.ERROR.NullObject(nameof(EmployeeForCreationDto)));
-            }
             EmployeeDto newEmployeeDto = await _serviceManager.Employee.CreateAsync(creationDto);
             return CreatedAtRoute("GetEmployeeById", new { employeeId = newEmployeeDto.Id }, newEmployeeDto);
         }
@@ -71,16 +65,9 @@ namespace RestfulApiHandler.Controllers
 
         [HttpPut]
         [Route("employees/{employeeId:guid}", Name = "UpdateEmployee")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> UpdateEmployee(Guid employeeId, [FromBody]EmployeeForUpdateDto updateDto)
         {
-            if(ModelState.IsValid == false)
-            {
-                return UnprocessableEntity(ModelState);
-            }
-            if (updateDto == null)
-            {
-                return BadRequest(CommonMessages.ERROR.NullObject(nameof(EmployeeForCreationDto)));
-            }
             if (await _serviceManager.Employee.IsValidIdAsync(employeeId) == false)
             {
                 return NotFound();

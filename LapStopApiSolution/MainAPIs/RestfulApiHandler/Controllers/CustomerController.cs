@@ -6,6 +6,7 @@ using DTO.Input.FromQuery.Parameters;
 using DTO.Output.Data;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using RestfulApiHandler.ActionFilters;
 using Shared.Common.Messages;
 
 namespace RestfulApiHandler.Controllers
@@ -45,32 +46,18 @@ namespace RestfulApiHandler.Controllers
 
         [HttpPost]
         [Route("customers", Name = "CreateCustomer")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateCustomer([FromBody] CustomerForCreationDto creationDto)
         {
-            if (ModelState.IsValid == false)
-            {
-                return UnprocessableEntity(ModelState);
-            }
-            if (creationDto == null)
-            {
-                return BadRequest(CommonMessages.ERROR.NullObject(nameof(CustomerForCreationDto)));
-            }
             CustomerDto newCustomerDto = await _serviceManager.Customer.CreateAsync(creationDto);
             return CreatedAtRoute("GetCustomerById", new { customerId = newCustomerDto.Id }, newCustomerDto);
         }
 
         [HttpPut]
         [Route("customers/{customerId:guid}")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> UpdateCustomer(Guid customerId, [FromBody] CustomerForUpdateDto updateDto)
         {
-            if (ModelState.IsValid == false)
-            {
-                return UnprocessableEntity(ModelState);
-            }
-            if (updateDto == null)
-            {
-                return BadRequest(CommonMessages.ERROR.NullObject(nameof(CustomerForUpdateDto)));
-            }
             if (await _serviceManager.Customer.IsValidIdAsync(customerId) == false)
             {
                 return NotFound();
