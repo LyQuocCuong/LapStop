@@ -50,8 +50,8 @@ namespace RestfulApiHandler.Controllers
         }
 
         [HttpPost]
-        [ServiceFilter(typeof(ValidationFilterAttribute))]
         [Route("brands", Name = "CreateBrand")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateBrand([FromBody] BrandForCreationDto creationDto)
         {
             BrandDto newBrandDto = await _serviceManager.Brand.CreateAsync(creationDto);

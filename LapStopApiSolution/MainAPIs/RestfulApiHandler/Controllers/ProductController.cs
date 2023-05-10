@@ -6,6 +6,7 @@ using DTO.Input.FromBody.Update;
 using DTO.Input.FromQuery.Parameters;
 using DTO.Output.Data;
 using Microsoft.AspNetCore.Mvc;
+using RestfulApiHandler.ActionFilters;
 using Shared.Common.Messages;
 
 namespace RestfulApiHandler.Controllers
@@ -33,16 +34,9 @@ namespace RestfulApiHandler.Controllers
 
         [HttpPost]
         [Route("products", Name = "CreateProduct")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateProduct([FromBody]ProductForCreationDto creationDto)
         {
-            if (ModelState.IsValid == false)
-            {
-                return UnprocessableEntity(ModelState);
-            }
-            if (creationDto == null)
-            {
-                return BadRequest(CommonMessages.ERROR.NullObject(nameof(ProductForCreationDto)));
-            }
             ProductDto newProductDto = await _serviceManager.Product.CreateAsync(creationDto);
             return CreatedAtRoute("GetProductById", new { productId = newProductDto.Id }, newProductDto);
         }
@@ -61,16 +55,9 @@ namespace RestfulApiHandler.Controllers
 
         [HttpPut]
         [Route("products/{productId:guid}", Name = "UpdateProduct")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> UpdateProduct(Guid productId, [FromBody]ProductForUpdateDto updateDto)
         {
-            if (ModelState.IsValid == false)
-            {
-                return UnprocessableEntity(ModelState);
-            }
-            if (updateDto == null)
-            {
-                return BadRequest(CommonMessages.ERROR.NullObject(nameof(ProductForUpdateDto)));
-            }
             if (await _serviceManager.Product.IsValidIdAsync(productId) == false)
             {
                 return NotFound();
