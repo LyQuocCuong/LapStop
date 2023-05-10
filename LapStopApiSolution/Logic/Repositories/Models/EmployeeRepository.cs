@@ -18,6 +18,7 @@ namespace Repositories.Models
             return await FindAll(isTrackChanges)
                             .FilterAgeExt(parameter)
                             .SearchExt(parameter)
+                            .OrderByExt(parameter)
                             .Skip((parameter.PageNumber - 1) * parameter.PageSize)
                             .Take(parameter.PageSize)
                             .ToListAsync();

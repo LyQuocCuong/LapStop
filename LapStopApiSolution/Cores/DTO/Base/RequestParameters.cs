@@ -24,5 +24,7 @@ namespace DTO.Base
             }
         }
 
+        public string? OrderBy { get; set; }
+
     }
 }
