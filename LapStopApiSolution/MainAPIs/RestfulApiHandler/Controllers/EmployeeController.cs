@@ -2,10 +2,13 @@
 using Contracts.IServices;
 using DTO.Input.FromBody.Creation;
 using DTO.Input.FromBody.Update;
+using DTO.Input.FromQuery.Parameters;
 using DTO.Output.Data;
+using DTO.Output.PagedList;
 using Microsoft.AspNetCore.Mvc;
 using RestfulApiHandler.ActionFilters;
 using Shared.Common.Messages;
+using System.Text.Json;
 
 namespace RestfulApiHandler.Controllers
 {
@@ -24,10 +27,13 @@ namespace RestfulApiHandler.Controllers
 
         [HttpGet]
         [Route("employees", Name = "GetAllEmployees")]
-        public async Task<IActionResult> GetAllEmployees()
+        public async Task<IActionResult> GetAllEmployees([FromQuery]EmployeeParameter parameter)
         {
-            IEnumerable<EmployeeDto> employees = await _serviceManager.Employee.GetAllAsync();
-            return Ok(employees);
+            PagedList<EmployeeDto> pagedResult = await _serviceManager.Employee.GetAllAsync(parameter);
+
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
+
+            return Ok(pagedResult);
         }
 
         [HttpPost]

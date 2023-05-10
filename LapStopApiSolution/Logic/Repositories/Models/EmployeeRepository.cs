@@ -1,5 +1,6 @@
 ﻿using Contracts.IRepositories.Models;
 using Domains.Models;
+using DTO.Input.FromQuery.Parameters;
 using Entities.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,9 +12,18 @@ namespace Repositories.Models
         {
         }
 
-        public async Task<IEnumerable<Employee>> GetAllAsync(bool isTrackChanges)
+        public async Task<IEnumerable<Employee>> GetAllAsync(bool isTrackChanges, EmployeeParameter parameter)
         {
-            return await FindAll(isTrackChanges).ToListAsync();
+            return await FindAll(isTrackChanges)
+                            .Skip((parameter.PageNumber - 1) * parameter.PageSize)
+                            .Take(parameter.PageSize)
+                            .ToListAsync();
+        }
+
+        public async Task<int> CountAllAsync(EmployeeParameter parameter)
+        {
+            return await FindAll(isTrackChanges: false)
+                            .CountAsync();
         }
 
         public async Task<Employee?> GetOneByIdAsync(bool isTrackChanges, Guid employeeId)
