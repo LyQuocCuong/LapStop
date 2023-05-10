@@ -14,7 +14,9 @@ namespace Repositories.Models
 
         public async Task<IEnumerable<Employee>> GetAllAsync(bool isTrackChanges, EmployeeParameter parameter)
         {
-            return await FindAll(isTrackChanges)
+            return await FindByCondition(isTrackChanges, 
+                            e => DateTime.Now.Year - e.DOB.Year >= parameter.MinAge &&
+                                 DateTime.Now.Year - e.DOB.Year <= parameter.MaxAge)
                             .Skip((parameter.PageNumber - 1) * parameter.PageSize)
                             .Take(parameter.PageSize)
                             .ToListAsync();
@@ -22,7 +24,9 @@ namespace Repositories.Models
 
         public async Task<int> CountAllAsync(EmployeeParameter parameter)
         {
-            return await FindAll(isTrackChanges: false)
+            return await FindByCondition(isTrackChanges: false,
+                            e => DateTime.Now.Year - e.DOB.Year >= parameter.MinAge &&
+                                 DateTime.Now.Year - e.DOB.Year <= parameter.MaxAge)
                             .CountAsync();
         }
 

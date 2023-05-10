@@ -4,6 +4,8 @@
     {
         public static class ERROR
         {
+            public static readonly string InvalidAgeRange = $"Max age can't be less than min age.";
+
             public static string NullObject(string objName)
             {
                 return $"{objName} is NULL";
