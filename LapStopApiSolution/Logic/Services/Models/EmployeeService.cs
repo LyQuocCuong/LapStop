@@ -4,7 +4,9 @@ using Contracts.IServices.Models;
 using Domains.Models;
 using DTO.Input.FromBody.Creation;
 using DTO.Input.FromBody.Update;
+using DTO.Input.FromQuery.Parameters;
 using DTO.Output.Data;
+using DTO.Output.PagedList;
 using Shared.CustomModels.Exceptions;
 
 namespace Services.Models
@@ -25,10 +27,13 @@ namespace Services.Models
             return employee;
         }
 
-        public async Task<IEnumerable<EmployeeDto>> GetAllAsync()
+        public async Task<PagedList<EmployeeDto>> GetAllAsync(EmployeeParameter parameter)
         {
-            IEnumerable<Employee> employees = await _repositoryManager.Employee.GetAllAsync(isTrackChanges: false);
-            return MappingToNewObj<IEnumerable<EmployeeDto>>(employees);
+            IEnumerable<Employee> employees = await _repositoryManager.Employee.GetAllAsync(isTrackChanges: false, parameter);
+            int totalRecords = await _repositoryManager.Employee.CountAllAsync(parameter);
+            
+            var sourceDto = MappingToNewObj<IEnumerable<EmployeeDto>>(employees);
+            return new PagedList<EmployeeDto>(sourceDto.ToList(), totalRecords, parameter.PageNumber, parameter.PageSize); ;
         }
 
         public async Task<EmployeeDto?> GetOneByIdAsync(Guid employeeId)

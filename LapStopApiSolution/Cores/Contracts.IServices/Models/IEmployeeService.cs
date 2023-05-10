@@ -1,12 +1,14 @@
 ﻿using DTO.Input.FromBody.Creation;
 using DTO.Input.FromBody.Update;
+using DTO.Input.FromQuery.Parameters;
 using DTO.Output.Data;
+using DTO.Output.PagedList;
 
 namespace Contracts.IServices.Models
 {
     public interface IEmployeeService
     {
-        Task<IEnumerable<EmployeeDto>> GetAllAsync();
+        Task<PagedList<EmployeeDto>> GetAllAsync(EmployeeParameter parameter);
 
         Task<EmployeeDto?> GetOneByIdAsync(Guid employeeId);
 
