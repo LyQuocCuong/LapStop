@@ -4,6 +4,7 @@ using DTO.Input.FromQuery.Parameters;
 using Entities.Context;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Extensions;
+using System.Linq.Dynamic.Core;
 
 namespace Repositories.Models
 {
