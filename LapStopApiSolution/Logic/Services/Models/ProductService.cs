@@ -38,11 +38,16 @@ namespace Services.Models
             return MappingToNewObj<ProductDto>(product);
         }
 
+        public async Task<ProductForUpdateDto> GetDtoForPatchAsync(Guid productId)
+        {
+            Product product = await GetProductAndCheckIfItExists(isTrackChanges: false, productId);
+            return MappingToNewObj<ProductForUpdateDto>(product);
+        }
+
         public async Task<bool> IsValidIdAsync(Guid productId)
         {
             return await _repositoryManager.Product.IsValidIdAsync(productId);
         }
-
 
         public async Task<ProductDto> CreateAsync(ProductForCreationDto creationDto)
         {

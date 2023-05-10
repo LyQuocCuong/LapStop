@@ -54,7 +54,7 @@ namespace RestfulApiHandler.Controllers
         }
 
         [HttpPut]
-        [Route("customers/{customerId:guid}")]
+        [Route("customers/{customerId:guid}", Name = "UpdateCustomer")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> UpdateCustomer(Guid customerId, [FromBody] CustomerForUpdateDto updateDto)
         {
@@ -67,7 +67,7 @@ namespace RestfulApiHandler.Controllers
         }
 
         [HttpPatch]
-        [Route("customers/{customerId:guid}")]
+        [Route("customers/{customerId:guid}", Name = "UpdateCustomerPartially")]
         public async Task<IActionResult> UpdateCustomerPartially(Guid customerId, 
                                     [FromBody] JsonPatchDocument<CustomerForUpdateDto> patchDocument)
         {
@@ -90,6 +90,18 @@ namespace RestfulApiHandler.Controllers
 
             await _serviceManager.Customer.UpdateAsync(customerId, updateDto);
 
+            return NoContent();
+        }
+
+        [HttpDelete]
+        [Route("customers/{customerId:guid}", Name = "DeleteCustomer")]
+        public async Task<IActionResult> DeleteCustomer(Guid customerId)
+        {
+            if (await _serviceManager.Customer.IsValidIdAsync(customerId) == false)
+            {
+                return NotFound();
+            }
+            await _serviceManager.Customer.DeleteAsync(customerId);
             return NoContent();
         }
 

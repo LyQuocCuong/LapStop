@@ -42,6 +42,12 @@ namespace Services.Models
             return MappingToNewObj<EmployeeDto>(employee);
         }
 
+        public async Task<EmployeeForUpdateDto> GetDtoForPatchAsync(Guid employeeId)
+        {
+            Employee employee = await GetEmployeeAndCheckIfItExists(isTrackChanges: false, employeeId);
+            return MappingToNewObj<EmployeeForUpdateDto>(employee);
+        }
+
         public async Task<bool> IsValidIdAsync(Guid employeeId)
         {
             return await _repositoryManager.Employee.IsValidIdAsync(employeeId);

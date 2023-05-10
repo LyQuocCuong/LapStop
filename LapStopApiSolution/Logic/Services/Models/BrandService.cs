@@ -27,6 +27,36 @@ namespace Services.Models
             return brand;
         }
 
+        public async Task<PagedList<BrandDto>> GetAllAsync(BrandParameters parameters)
+        {
+            IEnumerable<Brand> brands = await _repositoryManager.Brand.GetAllAsync(isTrackChanges: false, parameters);
+            int totalRecords = await _repositoryManager.Brand.CountAllAsync(parameters);
+
+            IEnumerable<BrandDto> sourceDto = MappingToNewObj<IEnumerable<BrandDto>>(brands);
+            return new PagedList<BrandDto>(sourceDto.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
+        }
+
+        public async Task<BrandDto?> GetOneByIdAsync(Guid brandId)
+        {
+            Brand brand = await GetBrandAndCheckIfItExists(isTrackChanges: false, brandId);
+            return MappingToNewObj<BrandDto>(brand);
+        }
+
+        public async Task<BrandForUpdateDto> GetDtoForPatchAsync(Guid brandId)
+        {
+            Brand brand = await GetBrandAndCheckIfItExists(isTrackChanges: false, brandId);
+            return MappingToNewObj<BrandForUpdateDto>(brand);
+        }
+
+        public async Task<bool> IsValidIdAsync(Guid brandId)
+        {
+            if (await _repositoryManager.Brand.IsValidIdAsync(brandId) == false)
+            {
+                throw new ExNotFoundInDB(nameof(BrandService), nameof(IsValidIdAsync), typeof(Brand), brandId);
+            }
+            return true;
+        }
+
         public async Task<BrandDto> CreateAsync(BrandForCreationDto creationDto)
         {
             Brand newBrand = MappingToNewObj<Brand>(creationDto);
@@ -48,36 +78,6 @@ namespace Services.Models
             Brand brand = await GetBrandAndCheckIfItExists(isTrackChanges: true, brandId);
             _repositoryManager.Brand.Delete(brand);
             await _repositoryManager.SaveChangesAsync();
-        }
-
-        public async Task<PagedList<BrandDto>> GetAllAsync(BrandParameters parameters)
-        {
-            IEnumerable<Brand> brands = await _repositoryManager.Brand.GetAllAsync(isTrackChanges: false, parameters);
-            int totalRecords = await _repositoryManager.Brand.CountAllAsync(parameters);
-
-            IEnumerable<BrandDto> sourceDto = MappingToNewObj<IEnumerable<BrandDto>>(brands);
-            return new PagedList<BrandDto>(sourceDto.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
-        }
-
-        public async Task<BrandDto?> GetOneByIdAsync(Guid brandId)
-        {
-            Brand brand = await GetBrandAndCheckIfItExists(isTrackChanges: false, brandId);
-            return MappingToNewObj<BrandDto>(brand);
-        }
-
-        public async Task<BrandForUpdateDto> GetDtoForPatchAsync(Guid brandId)
-        {
-            Brand? brand = await _repositoryManager.Brand.GetOneByIdAsync(isTrackChanges: false, brandId);
-            return MappingToNewObj<BrandForUpdateDto>(brand);
-        }
-
-        public async Task<bool> IsValidIdAsync(Guid brandId)
-        {
-            if (await _repositoryManager.Brand.IsValidIdAsync(brandId) == false)
-            {
-                throw new ExNotFoundInDB(nameof(BrandService), nameof(IsValidIdAsync), typeof(Brand), brandId);
-            }
-            return true;
         }
     }
 }
