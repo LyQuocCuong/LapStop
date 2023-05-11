@@ -28,6 +28,7 @@ namespace RestfulApiHandler.Controllers
             _serviceManager = serviceManager;
         }
 
+        [HttpHead]
         [HttpGet]
         [Route("employees", Name = "GetAllEmployees")]
         public async Task<IActionResult> GetAllEmployees([FromQuery]EmployeeParameter parameter)
