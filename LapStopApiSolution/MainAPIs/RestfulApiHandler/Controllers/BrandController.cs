@@ -26,6 +26,7 @@ namespace RestfulApiHandler.Controllers
             _serviceManager = serviceManager;
         }
 
+        [HttpHead]
         [HttpGet]
         [Route("brands", Name = "GetAllBrands")]
         public async Task<IActionResult> GetAllBrands([FromQuery]BrandParameters parameters) 
