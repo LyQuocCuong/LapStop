@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using RestfulApiHandler.ActionFilters;
 using Shared.Common.Messages;
+using System.Dynamic;
 using System.Text.Json;
 
 namespace RestfulApiHandler.Controllers
@@ -36,7 +37,7 @@ namespace RestfulApiHandler.Controllers
                 return BadRequest(CommonMessages.ERROR.InvalidAgeRange);
             }
 
-            PagedList<EmployeeDto> pagedResult = await _serviceManager.Employee.GetAllAsync(parameter);
+            PagedList<ExpandoObject> pagedResult = await _serviceManager.Employee.GetAllAsync(parameter);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
 

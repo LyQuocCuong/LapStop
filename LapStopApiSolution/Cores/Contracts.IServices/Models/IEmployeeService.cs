@@ -3,12 +3,13 @@ using DTO.Input.FromBody.Update;
 using DTO.Input.FromQuery.Parameters;
 using DTO.Output.Data;
 using DTO.Output.PagedList;
+using System.Dynamic;
 
 namespace Contracts.IServices.Models
 {
     public interface IEmployeeService
     {
-        Task<PagedList<EmployeeDto>> GetAllAsync(EmployeeParameter parameter);
+        Task<PagedList<ExpandoObject>> GetAllAsync(EmployeeParameter parameter);
 
         Task<EmployeeDto?> GetOneByIdAsync(Guid employeeId);
 
