@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Contracts.IDataShaper;
 using Contracts.IRepositories;
 using Contracts.IRepositories.Models;
 using Contracts.IServices;
 using Contracts.IServices.Models;
+using DTO.Output.Data;
 using Entities.Context;
 using Repositories;
 using Services.Models;
@@ -39,7 +41,9 @@ namespace Services
         private readonly Lazy<ISalesOrderDetailService> _salesOrderDetailService;
         private readonly Lazy<ISalesOrderStatusService> _salesOrderStatusService;
 
-        public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper)
+        public ServiceManager(IRepositoryManager repositoryManager, 
+                              IMapper mapper, 
+                              IDataShaper<EmployeeDto> dataShaper)
         {
             _brandService = new Lazy<IBrandService>(() => new BrandService(repositoryManager, mapper));
             _cartService = new Lazy<ICartService>(() => new CartService(repositoryManager, mapper));
@@ -48,7 +52,7 @@ namespace Services
             _customerService = new Lazy<ICustomerService>(() => new CustomerService(repositoryManager, mapper));
             _employeeAccountService = new Lazy<IEmployeeAccountService>(() => new EmployeeAccountService(repositoryManager, mapper));
             _employeeGalleryService = new Lazy<IEmployeeGalleryService>(() => new EmployeeGalleryService(repositoryManager, mapper));
-            _employeeService = new Lazy<IEmployeeService>(() => new EmployeeService(repositoryManager, mapper));
+            _employeeService = new Lazy<IEmployeeService>(() => new EmployeeService(repositoryManager, mapper, dataShaper));
             _employeeRoleService = new Lazy<IEmployeeRoleService>(() => new EmployeeRoleService(repositoryManager, mapper));
             _employeeStatusService = new Lazy<IEmployeeStatusService>(() => new EmployeeStatusService(repositoryManager, mapper));
             _exportedInvoiceService = new Lazy<IExportedInvoiceService>(() => new ExportedInvoiceService(repositoryManager, mapper));

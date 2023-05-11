@@ -14,14 +14,16 @@ namespace Repositories.Models
         {
         }
 
-        public async Task<IEnumerable<Employee>> GetAllAsync(bool isTrackChanges, EmployeeParameter parameter)
+        public async Task<IEnumerable<Employee>> GetAllAsync(bool isTrackChanges, 
+                                                             EmployeeParameter parameter)
         {
             return await FindAll(isTrackChanges)
                             .FilterAgeExt(parameter)
                             .SearchExt(parameter)
                             .OrderByExt(parameter)
-                            .Skip((parameter.PageNumber - 1) * parameter.PageSize)
-                            .Take(parameter.PageSize)
+                            //.Skip((parameter.PageNumber - 1) * parameter.PageSize)
+                            //.Take(parameter.PageSize)
+                            .Page(parameter.PageNumber, parameter.PageSize)
                             .ToListAsync();
         }
 

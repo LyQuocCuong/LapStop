@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DTO.Base
+﻿namespace DTO.Base
 {
     public abstract class RequestParameters
     {
@@ -26,5 +20,6 @@ namespace DTO.Base
 
         public string? OrderBy { get; set; }
 
+        public string? Fields { get; set; }
     }
 }

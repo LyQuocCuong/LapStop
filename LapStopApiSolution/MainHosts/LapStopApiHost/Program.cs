@@ -1,7 +1,9 @@
 using Azure;
+using Contracts.IDataShaper;
 using Contracts.ILog;
 using Contracts.IRepositories;
 using Contracts.IServices;
+using DTO.Output.Data;
 using Entities.Context;
 using LapStopApiHost.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +13,7 @@ using NLogLib;
 using Repositories;
 using RestfulApiHandler.ActionFilters;
 using Services;
+using Services.DataShaping;
 
 LogManager.LoadConfiguration(
     Path.Combine(Directory.GetCurrentDirectory(), 
@@ -40,6 +43,9 @@ builder.Services.AddDbContext<LapStopContext>(
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 builder.Services.AddScoped<IServiceManager, ServiceManager>();
 builder.Services.AddSingleton<ILogService, NLogService>();
+
+// Register for IDataShaper
+builder.Services.AddScoped<IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>();
 
 // Register ActionFilter to Services
 builder.Services.AddScoped<ValidationFilterAttribute>();
