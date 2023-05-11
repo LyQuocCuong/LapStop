@@ -23,6 +23,12 @@ namespace Repositories.Models
                             .ToListAsync();
         }
 
+        public async Task<int> CountAllAsync(ProductParameters parameters)
+        {
+            return await FindAll(isTrackChanges: false)
+                            .CountAsync();
+        }
+
         public async Task<Product?> GetOneByIdAsync(bool isTrackChanges, Guid productId)
         {
             return await FindByCondition(isTrackChanges, e => e.Id == productId).FirstOrDefaultAsync();

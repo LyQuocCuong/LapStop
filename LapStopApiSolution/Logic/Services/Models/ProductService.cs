@@ -6,6 +6,7 @@ using DTO.Input.FromBody.Creation;
 using DTO.Input.FromBody.Update;
 using DTO.Input.FromQuery.Parameters;
 using DTO.Output.Data;
+using DTO.Output.PagedList;
 using Shared.CustomModels.Exceptions;
 
 namespace Services.Models
@@ -26,10 +27,13 @@ namespace Services.Models
             return product;
         }
 
-        public async Task<IEnumerable<ProductDto>> GetAllAsync(ProductParameters parameters)
+        public async Task<PagedList<ProductDto>> GetAllAsync(ProductParameters parameters)
         {
             IEnumerable<Product> products = await _repositoryManager.Product.GetAllAsync(isTrackChanges: false, parameters);
-            return MappingToNewObj<IEnumerable<ProductDto>>(products);
+            int totalRecords = await _repositoryManager.Product.CountAllAsync(parameters);
+
+            var sourceDto = MappingToNewObj<IEnumerable<ProductDto>>(products);
+            return new PagedList<ProductDto>(sourceDto.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
         }
 
         public async Task<ProductDto?> GetOneByIdAsync(Guid productId)
