@@ -3,6 +3,7 @@ using Domains.Models;
 using DTO.Input.FromQuery.Parameters;
 using Entities.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Dynamic.Core;
 
 namespace Repositories.Models
 {
@@ -26,8 +27,9 @@ namespace Repositories.Models
         {
             return await FindAll(isTrackChanges)
                             .OrderBy(b => b.Name)
-                            .Skip((parameters.PageNumber - 1) * parameters.PageSize)
-                            .Take(parameters.PageSize)
+                            //.Skip((parameters.PageNumber - 1) * parameters.PageSize)
+                            //.Take(parameters.PageSize)
+                            .Page(parameters.PageNumber, parameters.PageSize)
                             .ToListAsync();
         }
 
