@@ -105,5 +105,13 @@ namespace RestfulApiHandler.Controllers
             return NoContent();
         }
 
+        [HttpOptions]
+        [Route("customers", Name = "GetCustomerOptions")]
+        public IActionResult GetCustomerOptions()
+        {
+            Response.Headers.Add("Allow", "GET, OPTIONS, PUT, PATCH");
+            return Ok();
+        }
+
     }
 }

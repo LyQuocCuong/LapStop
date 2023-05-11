@@ -114,5 +114,14 @@ namespace RestfulApiHandler.Controllers
             await _serviceManager.Brand.DeleteAsync(brandId);
             return NoContent();
         }
+
+        [HttpOptions]
+        [Route("brands", Name = "GetBrandOptions")]
+        public IActionResult GetBrandOptions()
+        {
+            Response.Headers.Add("Allow", "GET, OPTION, POST, PUT, PATCH, DELETE");
+
+            return Ok();
+        }
     }
 }

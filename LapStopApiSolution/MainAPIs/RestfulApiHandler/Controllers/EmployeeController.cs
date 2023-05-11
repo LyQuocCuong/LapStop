@@ -123,5 +123,13 @@ namespace RestfulApiHandler.Controllers
             return NoContent();
         }
 
+        [HttpOptions]
+        [Route("employees", Name = "GetEmployeeOptions")]
+        public IActionResult GetEmployeeOptions()
+        {
+            Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            return Ok();
+        }
+
     }
 }
