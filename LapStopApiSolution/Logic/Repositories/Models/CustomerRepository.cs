@@ -23,6 +23,12 @@ namespace Repositories.Models
                             .ToListAsync();
         }
 
+        public async Task<int> CountAllAsync(CustomerParameters parameters)
+        {
+            return await FindAll(isTrackChanges: false)
+                            .CountAsync();
+        }
+
         public async Task<Customer?> GetOneByIdAsync(bool isTrackChanges, Guid customerId)
         {
             return await FindByCondition(isTrackChanges, customer => customer.Id == customerId).FirstOrDefaultAsync();
@@ -42,6 +48,5 @@ namespace Repositories.Models
         {
             base.DeleteModel(customer);
         }
-
     }
 }

@@ -11,6 +11,8 @@ namespace Contracts.IRepositories.Models
 
         Task<bool> IsValidIdAsync(Guid productId);
 
+        Task<int> CountAllAsync(ProductParameters parameters);
+
         void Create(Product product);
 
         void Delete(Product product);

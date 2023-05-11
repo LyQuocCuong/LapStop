@@ -4,10 +4,12 @@ using DTO.Input.FromBody.Creation;
 using DTO.Input.FromBody.Update;
 using DTO.Input.FromQuery.Parameters;
 using DTO.Output.Data;
+using DTO.Output.PagedList;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using RestfulApiHandler.ActionFilters;
 using Shared.Common.Messages;
+using System.Text.Json;
 
 namespace RestfulApiHandler.Controllers
 {
@@ -28,8 +30,11 @@ namespace RestfulApiHandler.Controllers
         [Route("customers", Name = "GetAllCustomers")]
         public async Task<IActionResult> GetAllCustomers([FromQuery]CustomerParameters parameters)
         {
-            IEnumerable<CustomerDto> customerDtos = await _serviceManager.Customer.GetAllAsync(parameters);
-            return Ok(customerDtos);
+            PagedList<CustomerDto> pagedResult = await _serviceManager.Customer.GetAllAsync(parameters);
+
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
+
+            return Ok(pagedResult);
         }
 
         [HttpGet]

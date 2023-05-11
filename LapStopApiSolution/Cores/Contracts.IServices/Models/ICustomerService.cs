@@ -2,12 +2,13 @@
 using DTO.Input.FromBody.Update;
 using DTO.Input.FromQuery.Parameters;
 using DTO.Output.Data;
+using DTO.Output.PagedList;
 
 namespace Contracts.IServices.Models
 {
     public interface ICustomerService
     {
-        Task<IEnumerable<CustomerDto>> GetAllAsync(CustomerParameters parameters);
+        Task<PagedList<CustomerDto>> GetAllAsync(CustomerParameters parameters);
 
         Task<CustomerDto?> GetOneByIdAsync(Guid customerId);
 
