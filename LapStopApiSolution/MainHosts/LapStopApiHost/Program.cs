@@ -32,7 +32,15 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 // Add services to the container.
 builder.Services.AddAutoMapper(typeof(AutoMapperLib.MappingProfile));
 
-builder.Services.AddControllers()
+builder.Services.AddControllers(config =>
+    {
+        // Tell a server to respect the Accept header
+        config.RespectBrowserAcceptHeader = true;
+        // Client tries to negotiate for the media type
+        // the server doesn’t support
+        config.ReturnHttpNotAcceptable = true; // 406 Not Acceptable
+    })
+    .AddXmlDataContractSerializerFormatters() // support XML formatters
     .AddApplicationPart(typeof(RestfulApiHandler.AssemblyReference).Assembly)
     .AddNewtonsoftJson();
 
