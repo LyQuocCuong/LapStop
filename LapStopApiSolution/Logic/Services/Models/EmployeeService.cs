@@ -15,7 +15,7 @@ namespace Services.Models
 {
     internal sealed class EmployeeService : ServiceBase, IEmployeeService
     {
-        private IDataShaper<EmployeeDto> _dataShaper;
+        private readonly IDataShaper<EmployeeDto> _dataShaper;
 
         public EmployeeService(IRepositoryManager repositoryManager, 
                                IMapper mapper, 
