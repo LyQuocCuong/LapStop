@@ -11,6 +11,7 @@ using NLog;
 using NLogLib;
 using Repositories;
 using RestfulApiHandler.ActionFilters;
+using RestfulApiHandler.Formatters;
 using Services;
 using Services.DataShaping;
 
@@ -41,6 +42,10 @@ builder.Services.AddControllers(config =>
         config.ReturnHttpNotAcceptable = true; // 406 Not Acceptable
     })
     .AddXmlDataContractSerializerFormatters() // support XML formatters
+    .AddMvcOptions(
+            // support CSV (custom formatter)
+            config => config.OutputFormatters.Add(new CsvOutputFormatter())
+    )
     .AddApplicationPart(typeof(RestfulApiHandler.AssemblyReference).Assembly)
     .AddNewtonsoftJson();
 
