@@ -1,4 +1,3 @@
-using Azure;
 using Contracts.IDataShaper;
 using Contracts.ILog;
 using Contracts.IRepositories;
@@ -25,7 +24,8 @@ var builder = WebApplication.CreateBuilder(args);
 // right ABOVE the AddControllers() method
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
-    options.SuppressModelStateInvalidFilter = true;  // disable 400 – Bad Request responses.
+    // disable 400 – Bad Request responses of [ApiController] attr
+    options.SuppressModelStateInvalidFilter = true;  
 });
 
 
@@ -46,6 +46,9 @@ builder.Services.AddSingleton<ILogService, NLogService>();
 
 // Register for IDataShaper
 builder.Services.AddScoped<IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>();
+builder.Services.AddScoped<IDataShaper<BrandDto>, DataShaper<BrandDto>>();
+builder.Services.AddScoped<IDataShaper<CustomerDto>, DataShaper<CustomerDto>>();
+builder.Services.AddScoped<IDataShaper<ProductDto>, DataShaper<ProductDto>>();
 
 // Register ActionFilter to Services
 builder.Services.AddScoped<ValidationFilterAttribute>();

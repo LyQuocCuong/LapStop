@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Contracts.IDataShaper;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
@@ -8,13 +9,20 @@ using DTO.Input.FromQuery.Parameters;
 using DTO.Output.Data;
 using DTO.Output.PagedList;
 using Shared.CustomModels.Exceptions;
+using System.Dynamic;
 
 namespace Services.Models
 {
     internal sealed class BrandService : ServiceBase, IBrandService
     {
-        public BrandService(IRepositoryManager repositoryManager, IMapper mapper) : base(repositoryManager, mapper)
+        private readonly IDataShaper<BrandDto> _dataShaper;
+
+        public BrandService(IRepositoryManager repositoryManager, 
+                            IMapper mapper,
+                            IDataShaper<BrandDto> dataShaper) : 
+                                base(repositoryManager, mapper)
         {
+            _dataShaper = dataShaper;
         }
 
         private async Task<Brand> GetBrandAndCheckIfItExists(bool isTrackChanges, Guid brandId)
@@ -27,13 +35,16 @@ namespace Services.Models
             return brand;
         }
 
-        public async Task<PagedList<BrandDto>> GetAllAsync(BrandParameters parameters)
+        public async Task<PagedList<ExpandoObject>> GetAllAsync(BrandParameters parameters)
         {
             IEnumerable<Brand> brands = await _repositoryManager.Brand.GetAllAsync(isTrackChanges: false, parameters);
             int totalRecords = await _repositoryManager.Brand.CountAllAsync(parameters);
 
             IEnumerable<BrandDto> sourceDto = MappingToNewObj<IEnumerable<BrandDto>>(brands);
-            return new PagedList<BrandDto>(sourceDto.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
+
+            var shapedData = _dataShaper.ShapeData(sourceDto, parameters.Fields);
+
+            return new PagedList<ExpandoObject>(shapedData.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
         }
 
         public async Task<BrandDto?> GetOneByIdAsync(Guid brandId)
