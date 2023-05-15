@@ -41,11 +41,11 @@ builder.Services.AddControllers(config =>
         // the server doesn’t support
         config.ReturnHttpNotAcceptable = true; // 406 Not Acceptable
     })
-    .AddXmlDataContractSerializerFormatters() // support XML formatters
-    .AddMvcOptions(
-            // support CSV (custom formatter)
-            config => config.OutputFormatters.Add(new CsvOutputFormatter())
-    )
+    //.AddXmlDataContractSerializerFormatters() // support XML formatters
+    //.AddMvcOptions(
+    //        // support CSV (custom formatter)
+    //        config => config.OutputFormatters.Add(new CsvOutputFormatter())
+    //)
     .AddApplicationPart(typeof(RestfulApiHandler.AssemblyReference).Assembly)
     .AddNewtonsoftJson();
 

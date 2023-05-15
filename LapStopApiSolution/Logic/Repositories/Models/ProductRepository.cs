@@ -59,6 +59,7 @@ namespace Repositories.Models
 
         public async Task BulkUpdateAsync(IEnumerable<Product> products)
         {
+            // if having Tracking, can use BulkSaveChangesAsync() 
             await _context.BulkUpdateAsync(products);
         }
 
