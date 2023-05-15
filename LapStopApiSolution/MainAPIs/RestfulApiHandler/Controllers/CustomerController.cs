@@ -28,9 +28,19 @@ namespace RestfulApiHandler.Controllers
         }
 
         [HttpHead]
+        [Route("customers", Name = "GetAllCustomersHead")]
+        public async Task<IActionResult> GetAllCustomersHead([FromQuery]CustomerParameters parameters)
+        {
+            PagedList<ExpandoObject> pagedResult = await _serviceManager.Customer.GetAllAsync(parameters);
+
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
+
+            return Ok();
+        }
+
         [HttpGet]
         [Route("customers", Name = "GetAllCustomers")]
-        public async Task<IActionResult> GetAllCustomers([FromQuery]CustomerParameters parameters)
+        public async Task<IActionResult> GetAllCustomers([FromQuery] CustomerParameters parameters)
         {
             PagedList<ExpandoObject> pagedResult = await _serviceManager.Customer.GetAllAsync(parameters);
 

@@ -29,9 +29,24 @@ namespace RestfulApiHandler.Controllers
         }
 
         [HttpHead]
+        [Route("employees", Name = "GetAllEmployeesHead")]
+        public async Task<IActionResult> GetAllEmployeesHead([FromQuery]EmployeeParameter parameter)
+        {
+            if (parameter.MinAge > parameter.MaxAge)
+            {
+                return BadRequest(CommonMessages.ERROR.InvalidAgeRange);
+            }
+
+            PagedList<ExpandoObject> pagedResult = await _serviceManager.Employee.GetAllAsync(parameter);
+
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
+
+            return Ok();
+        }
+
         [HttpGet]
         [Route("employees", Name = "GetAllEmployees")]
-        public async Task<IActionResult> GetAllEmployees([FromQuery]EmployeeParameter parameter)
+        public async Task<IActionResult> GetAllEmployees([FromQuery] EmployeeParameter parameter)
         {
             if (parameter.MinAge > parameter.MaxAge)
             {
