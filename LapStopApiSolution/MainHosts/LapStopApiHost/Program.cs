@@ -2,8 +2,11 @@ using Contracts.IDataShaper;
 using Contracts.ILog;
 using Contracts.IRepositories;
 using Contracts.IServices;
+using DTO.Input.FromBody.Creation;
 using DTO.Output.Data;
 using Entities.Context;
+using Entities.Validators.Creation;
+using FluentValidation;
 using LapStopApiHost.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +14,6 @@ using NLog;
 using NLogLib;
 using Repositories;
 using RestfulApiHandler.ActionFilters;
-using RestfulApiHandler.Formatters;
 using Services;
 using Services.DataShaping;
 
@@ -56,6 +58,8 @@ builder.Services.AddDbContext<LapStopContext>(
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 builder.Services.AddScoped<IServiceManager, ServiceManager>();
 builder.Services.AddSingleton<ILogService, NLogService>();
+
+builder.Services.AddScoped<IValidator<BrandForCreationDto>, BrandForCreationValidator>();
 
 // Register for IDataShaper
 builder.Services.AddScoped<IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>();

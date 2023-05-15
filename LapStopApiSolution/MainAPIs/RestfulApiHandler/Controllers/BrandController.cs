@@ -5,6 +5,9 @@ using DTO.Input.FromBody.Update;
 using DTO.Input.FromQuery.Parameters;
 using DTO.Output.Data;
 using DTO.Output.PagedList;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using RestfulApiHandler.ActionFilters;
@@ -63,9 +66,26 @@ namespace RestfulApiHandler.Controllers
 
         [HttpPost]
         [Route("brands", Name = "CreateBrand")]
-        [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> CreateBrand([FromBody] BrandForCreationDto creationDto)
+        public async Task<IActionResult> CreateBrand([FromServices] IValidator<BrandForCreationDto> creationValidator, 
+                                                     [FromBody] BrandForCreationDto creationDto)
         {
+            if (creationDto == null)
+            {
+                return BadRequest(CommonMessages.ERROR.NullObject(nameof(BrandForCreationDto)));
+            }
+
+            // apply Validation
+            ValidationResult result = await creationValidator.ValidateAsync(creationDto);
+            if (result.IsValid == false)
+            {
+                // Copy the validation results into ModelState.
+                // ASP.NET uses the ModelState collection to populate 
+                // error messages in the View.
+                result.AddToModelState(this.ModelState);
+
+                return UnprocessableEntity(ModelState);
+            }
+
             BrandDto newBrandDto = await _serviceManager.Brand.CreateAsync(creationDto);
             return CreatedAtRoute("GetBrandById", new { brandId = newBrandDto.Id }, newBrandDto);
         }
