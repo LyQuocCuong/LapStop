@@ -16,5 +16,11 @@ namespace Contracts.IRepositories.Models
         void Create(Product product);
 
         void Delete(Product product);
+
+        Task BulkCreateAsync(IEnumerable<Product> products);
+
+        Task BulkUpdateAsync(IEnumerable<Product> products);
+
+        Task BulkDeleteAsync(IEnumerable<Product> products);
     }
 }

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using RestfulApiHandler.ActionFilters;
 using Shared.Common.Messages;
+using Shared.Common.SeedingData;
 using System.Dynamic;
 using System.Text.Json;
 
@@ -125,6 +126,61 @@ namespace RestfulApiHandler.Controllers
         {
             Response.Headers.Add("Allow", "GET, PUT, PATCH");
             return Ok();
+        }
+
+        private static IEnumerable<ProductDto> productDtos;
+
+        [HttpPost]
+        [Route("products/bulk", Name = "BulkCreateProduct")]
+        public async Task<IActionResult> BulkCreateProduct()
+        {
+            List<ProductForCreationDto> data = new List<ProductForCreationDto>();
+            for (int index = 0; index < 1000; index++)
+            {
+                ProductForCreationDto product = new ProductForCreationDto()
+                {
+                    ProductStatusId = CommonSeedingData.Product_Status.IN_STOCK.Id,
+                    ProductCode = "AD0" + index,
+                    Name = "Adidas " + index,
+                    OriginalPrice = 1000 + index,
+                    SellingPrice = 1000 + index,
+                    CurrentPrice = 1000 + index,
+                };
+                data.Add(product);
+            }
+            productDtos = await _serviceManager.Product.BulkCreateAsync(data);
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("products/bulk", Name = "BulkUpdateProduct")]
+        public async Task<IActionResult> BulkUpdateProduct()
+        {
+            List<ProductForBulkUpdateDto> bulkUpdateDtos = new List<ProductForBulkUpdateDto>();
+            foreach(var product in productDtos)
+            {
+                bulkUpdateDtos.Add(new ProductForBulkUpdateDto()
+                {
+                    Id = product.Id,
+                    ProductStatusId = product.ProductStatusId,
+                    ProductCode = product.ProductCode + "EDITED",
+                    Name = product.Name,
+                    OriginalPrice = product.OriginalPrice,
+                    SellingPrice = product.SellingPrice,
+                    CurrentPrice = product.CurrentPrice
+                });
+            }
+            await _serviceManager.Product.BulkUpdateAsync(bulkUpdateDtos);
+            return NoContent();
+        }
+
+        [HttpDelete]
+        [Route("products/bulk", Name = "BulkDeleteProduct")]
+        public async Task<IActionResult> BulkDeleteProduct()
+        {
+            List<Guid> ids = productDtos.Select(p => p.Id).ToList();
+            await _serviceManager.Product.BulkDeleteAsync(ids);
+            return NoContent();
         }
 
     }

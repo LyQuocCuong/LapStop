@@ -85,5 +85,33 @@ namespace Services.Models
             _repositoryManager.Product.Delete(product);
             await _repositoryManager.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<ProductDto>> BulkCreateAsync(IEnumerable<ProductForCreationDto> creationDtos)
+        {
+            var newProducts = MappingToNewObj<IEnumerable<Product>>(creationDtos);
+            await _repositoryManager.Product.BulkCreateAsync(newProducts);
+
+            return MappingToNewObj<IEnumerable<ProductDto>>(newProducts);
+        }
+
+        public async Task BulkUpdateAsync(IEnumerable<ProductForBulkUpdateDto> bulkUpdateDtos)
+        {
+            var existingProducts = MappingToNewObj<IEnumerable<Product>>(bulkUpdateDtos);
+            await _repositoryManager.Product.BulkUpdateAsync(existingProducts);
+        }
+
+        public async Task BulkDeleteAsync(IEnumerable<Guid> productIds)
+        {
+            List<Product> productList = new List<Product>();
+            foreach(Guid id in productIds)
+            {
+                Product? product = await _repositoryManager.Product.GetOneByIdAsync(isTrackChanges: true, id);
+                if (product != null)
+                {
+                    productList.Add(product);
+                }
+            }
+            await _repositoryManager.Product.BulkDeleteAsync(productList);
+        }
     }
 }
