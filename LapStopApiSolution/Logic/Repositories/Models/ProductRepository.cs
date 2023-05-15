@@ -48,5 +48,28 @@ namespace Repositories.Models
         {
             base.DeleteModel(product);
         }
+
+        public async Task BulkCreateAsync(IEnumerable<Product> products)
+        {
+            await _context.BulkInsertAsync(products, options =>
+            {
+                options.InsertIfNotExists = true;
+            });
+        }
+
+        public async Task BulkUpdateAsync(IEnumerable<Product> products)
+        {
+            await _context.BulkUpdateAsync(products);
+        }
+
+        public async Task BulkDeleteAsync(IEnumerable<Product> products)
+        {
+            foreach(var product in products)
+            {
+                product.IsRemoved = true;
+            }
+            await _context.BulkUpdateAsync(products);
+        }
+
     }
 }

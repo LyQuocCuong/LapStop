@@ -22,5 +22,11 @@ namespace Contracts.IServices.Models
         Task UpdateAsync(Guid productId, ProductForUpdateDto updateDto);
 
         Task DeleteAsync(Guid productId);
+
+        Task<IEnumerable<ProductDto>> BulkCreateAsync(IEnumerable<ProductForCreationDto> creationDtos);
+
+        Task BulkUpdateAsync(IEnumerable<ProductForBulkUpdateDto> bulkUpdateDtos);
+
+        Task BulkDeleteAsync(IEnumerable<Guid> productIds);
     }
 }

@@ -430,6 +430,29 @@ namespace AutoMapperLib
                            model_field => model_field.MapFrom(e => e.IsHiddenInStore));
             #endregion
 
+            #region ProductForBulkUpdateDto --> Product
+            CreateMap<ProductForBulkUpdateDto, Product>().ReverseMap()
+                .ForMember(model => model.Id,
+                           model_field => model_field.MapFrom(e => e.Id))
+                .ForMember(model => model.ProductStatusId,
+                           model_field => model_field.MapFrom(e => e.ProductStatusId))
+                .ForMember(model => model.ProductCode,
+                           model_field => model_field.MapFrom(e => e.ProductCode))
+                .ForMember(model => model.Name,
+                           model_field => model_field.MapFrom(e => e.Name))
+                .ForMember(model => model.Description,
+                           model_field => model_field.MapFrom(e => e.Description))
+                .ForMember(model => model.AvatarUrl,
+                           model_field => model_field.MapFrom(e => e.AvatarUrl))
+                .ForMember(model => model.OriginalPrice,
+                           model_field => model_field.MapFrom(e => e.OriginalPrice))
+                .ForMember(model => model.CurrentPrice,
+                           model_field => model_field.MapFrom(e => e.CurrentPrice))
+                .ForMember(model => model.SellingPrice,
+                           model_field => model_field.MapFrom(e => e.SellingPrice))
+                .ForMember(model => model.IsHiddenInStore,
+                           model_field => model_field.MapFrom(e => e.IsHiddenInStore));
+            #endregion
         }
 
         private void MappingProductGallery()
