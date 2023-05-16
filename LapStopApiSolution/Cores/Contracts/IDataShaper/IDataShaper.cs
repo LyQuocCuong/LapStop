@@ -1,12 +1,12 @@
-﻿using System.Dynamic;
+﻿using Shared.CustomModels.DynamicObjects;
 
 namespace Contracts.IDataShaper
 {
     public interface IDataShaper<TModel>
     {
-        IEnumerable<ExpandoObject> ShapeData (IEnumerable<TModel> models, string fieldsStr);
+        IEnumerable<ShapedModel> ShapeData (IEnumerable<TModel> models, string fieldsStr);
 
-        ExpandoObject ShapeData(TModel model, string fieldsStr);
+        ShapedModel ShapeData(TModel model, string fieldsStr);
 
     }
 }

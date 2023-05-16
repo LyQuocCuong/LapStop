@@ -1,5 +1,5 @@
 ﻿using Contracts.IDataShaper;
-using System.Dynamic;
+using Shared.CustomModels.DynamicObjects;
 using System.Reflection;
 
 namespace Services.DataShaping
@@ -15,14 +15,14 @@ namespace Services.DataShaping
                                                          BindingFlags.Instance);
         }
 
-        public IEnumerable<ExpandoObject> ShapeData(IEnumerable<TModel> models, 
+        public IEnumerable<ShapedModel> ShapeData(IEnumerable<TModel> models, 
                                                     string fieldsStr)
         {
             var requiredProperties = GetRequiredProperties(fieldsStr);
             return FetchData(models, requiredProperties);
         }
 
-        public ExpandoObject ShapeData(TModel model, string fieldsStr)
+        public ShapedModel ShapeData(TModel model, string fieldsStr)
         {
             var requiredProperties = GetRequiredProperties(fieldsStr);
             return FetchDataForEntity(model, requiredProperties);
@@ -52,10 +52,10 @@ namespace Services.DataShaping
             return requiredProperties;
         }
 
-        private IEnumerable<ExpandoObject> FetchData(IEnumerable<TModel> models, 
+        private IEnumerable<ShapedModel> FetchData(IEnumerable<TModel> models, 
                                                      IEnumerable<PropertyInfo> requiredProperties)
         {
-            var shapedData = new List<ExpandoObject>();
+            var shapedData = new List<ShapedModel>();
             foreach (var model in models)
             {
                 var shapedObject = FetchDataForEntity(model, requiredProperties);
@@ -64,9 +64,9 @@ namespace Services.DataShaping
             return shapedData;
         }
 
-        private ExpandoObject FetchDataForEntity(TModel model, IEnumerable<PropertyInfo> requiredProperties)
+        private ShapedModel FetchDataForEntity(TModel model, IEnumerable<PropertyInfo> requiredProperties)
         {
-            var shapedObject = new ExpandoObject();
+            var shapedObject = new ShapedModel();
             foreach (var property in requiredProperties) 
             { 
                 var objectPropertyValue = property.GetValue(model); 

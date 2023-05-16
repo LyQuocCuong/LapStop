@@ -8,8 +8,8 @@ using DTO.Input.FromBody.Update;
 using DTO.Input.FromQuery.Parameters;
 using DTO.Output.Data;
 using DTO.Output.PagedList;
+using Shared.CustomModels.DynamicObjects;
 using Shared.CustomModels.Exceptions;
-using System.Dynamic;
 
 namespace Services.Models
 {
@@ -34,7 +34,7 @@ namespace Services.Models
             return employee;
         }
 
-        public async Task<PagedList<ExpandoObject>> GetAllAsync(EmployeeParameter parameter)
+        public async Task<PagedList<ShapedModel>> GetAllAsync(EmployeeParameter parameter)
         {
             IEnumerable<Employee> employees = await _repositoryManager.Employee.GetAllAsync(isTrackChanges: false, parameter);
             int totalRecords = await _repositoryManager.Employee.CountAllAsync(parameter);
@@ -43,7 +43,7 @@ namespace Services.Models
 
             var shapedData = _dataShaper.ShapeData(sourceDto, parameter.Fields);
 
-            return new PagedList<ExpandoObject>(shapedData.ToList(), totalRecords, parameter.PageNumber, parameter.PageSize); ;
+            return new PagedList<ShapedModel>(shapedData.ToList(), totalRecords, parameter.PageNumber, parameter.PageSize); ;
         }
 
         public async Task<EmployeeDto?> GetOneByIdAsync(Guid employeeId)
