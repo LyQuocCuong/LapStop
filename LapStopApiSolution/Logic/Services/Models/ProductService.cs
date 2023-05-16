@@ -8,8 +8,8 @@ using DTO.Input.FromBody.Update;
 using DTO.Input.FromQuery.Parameters;
 using DTO.Output.Data;
 using DTO.Output.PagedList;
+using Shared.CustomModels.DynamicObjects;
 using Shared.CustomModels.Exceptions;
-using System.Dynamic;
 
 namespace Services.Models
 {
@@ -34,7 +34,7 @@ namespace Services.Models
             return product;
         }
 
-        public async Task<PagedList<ExpandoObject>> GetAllAsync(ProductParameters parameters)
+        public async Task<PagedList<ShapedModel>> GetAllAsync(ProductParameters parameters)
         {
             IEnumerable<Product> products = await _repositoryManager.Product.GetAllAsync(isTrackChanges: false, parameters);
             int totalRecords = await _repositoryManager.Product.CountAllAsync(parameters);
@@ -43,7 +43,7 @@ namespace Services.Models
 
             var shapedData = _dataShaper.ShapeData(sourceDto, parameters.Fields);
 
-            return new PagedList<ExpandoObject>(shapedData.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
+            return new PagedList<ShapedModel>(shapedData.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
         }
 
         public async Task<ProductDto?> GetOneByIdAsync(Guid productId)

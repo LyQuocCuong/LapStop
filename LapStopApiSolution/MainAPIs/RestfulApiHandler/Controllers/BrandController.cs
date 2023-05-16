@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using RestfulApiHandler.ActionFilters;
 using Shared.Common.Messages;
+using Shared.CustomModels.DynamicObjects;
 using System.Dynamic;
 using System.Text.Json;
 
@@ -34,7 +35,7 @@ namespace RestfulApiHandler.Controllers
         [Route("brands", Name = "GetAllBrandsHead")]
         public async Task<IActionResult> GetAllBrandsHead([FromQuery]BrandParameters parameters) 
         {
-            PagedList<ExpandoObject> pagedResult = await _serviceManager.Brand.GetAllAsync(parameters);
+            PagedList<ShapedModel> pagedResult = await _serviceManager.Brand.GetAllAsync(parameters);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
 
@@ -45,7 +46,7 @@ namespace RestfulApiHandler.Controllers
         [Route("brands", Name = "GetAllBrands")]
         public async Task<IActionResult> GetAllBrands([FromQuery] BrandParameters parameters)
         {
-            PagedList<ExpandoObject> pagedResult = await _serviceManager.Brand.GetAllAsync(parameters);
+            PagedList<ShapedModel> pagedResult = await _serviceManager.Brand.GetAllAsync(parameters);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
 
