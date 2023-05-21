@@ -10,6 +10,7 @@ using FluentValidation;
 using LapStopApiHost.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using NLog;
 using NLogLib;
 using Repositories;
@@ -44,11 +45,11 @@ builder.Services.AddControllers(config =>
         // the server doesn’t support
         config.ReturnHttpNotAcceptable = true; // 406 Not Acceptable
     })
-    .AddXmlDataContractSerializerFormatters() // support XML formatters
-    .AddMvcOptions(
-            // support CSV (custom formatter)
-            config => config.OutputFormatters.Add(new CsvOutputFormatter())
-    )
+    //.AddXmlDataContractSerializerFormatters() // support XML formatters
+    //.AddMvcOptions(
+    //        // support CSV (custom formatter)
+    //        config => config.OutputFormatters.Add(new CsvOutputFormatter())
+    //)
     .AddApplicationPart(typeof(RestfulApiHandler.AssemblyReference).Assembly)
     .AddNewtonsoftJson();
 
@@ -71,6 +72,7 @@ builder.Services.AddScoped<IDataShaper<ProductDto>, DataShaper<ProductDto>>();
 // Register ActionFilter to Services
 builder.Services.AddScoped<ValidationFilterAttribute>();
 
+builder.Services.AddResponseCaching();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -93,6 +95,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// UseCors must be called before UseResponseCaching
+//app.UseCors();
+
+app.UseResponseCaching();
 
 app.UseAuthorization();
 
