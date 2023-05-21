@@ -44,6 +44,7 @@ namespace RestfulApiHandler.Controllers
 
         [HttpGet]
         [Route("brands", Name = "GetAllBrands")]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]        
         public async Task<IActionResult> GetAllBrands([FromQuery] BrandParameters parameters)
         {
             PagedList<ShapedModel> pagedResult = await _serviceManager.Brand.GetAllAsync(parameters);
