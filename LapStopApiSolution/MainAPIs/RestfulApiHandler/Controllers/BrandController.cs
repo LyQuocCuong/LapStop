@@ -8,12 +8,14 @@ using DTO.Output.PagedList;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using FluentValidation.Results;
+using Marvin.Cache.Headers;
+using Marvin.Cache.Headers.Domain;
+using Marvin.Cache.Headers.Interfaces;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using RestfulApiHandler.ActionFilters;
 using Shared.Common.Messages;
 using Shared.CustomModels.DynamicObjects;
-using System.Dynamic;
 using System.Text.Json;
 
 namespace RestfulApiHandler.Controllers
@@ -44,7 +46,7 @@ namespace RestfulApiHandler.Controllers
 
         [HttpGet]
         [Route("brands", Name = "GetAllBrands")]
-        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]        
+        //[ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         public async Task<IActionResult> GetAllBrands([FromQuery] BrandParameters parameters)
         {
             PagedList<ShapedModel> pagedResult = await _serviceManager.Brand.GetAllAsync(parameters);
@@ -56,6 +58,8 @@ namespace RestfulApiHandler.Controllers
 
         [HttpGet]
         [Route("brands/{brandId:guid}", Name = "GetBrandById")]
+        //[HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
+        //[HttpCacheValidation(MustRevalidate = true)]
         public async Task<IActionResult> GetBrandById(Guid brandId)
         {
             BrandDto? brandDto = await _serviceManager.Brand.GetOneByIdAsync(brandId);
@@ -95,13 +99,23 @@ namespace RestfulApiHandler.Controllers
         [HttpPut]
         [Route("brands/{brandId:guid}", Name = "UpdateBrand")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> UpdateBrand(Guid brandId, [FromBody] BrandForUpdateDto updateDto)
+        public async Task<IActionResult> UpdateBrand(Guid brandId, [FromBody] BrandForUpdateDto updateDto,
+                                                     [FromServices] IValidatorValueInvalidator validator,
+                                                     [FromServices] IStoreKeyAccessor keyAccessor)
         {
             if (await _serviceManager.Brand.IsValidIdAsync(brandId) == false)
             {
                 return NotFound();
             }
             await _serviceManager.Brand.UpdateAsync(brandId, updateDto);
+
+            // Mark the Invalidation to remove, because StoreKey is out-of-date
+            IEnumerable<StoreKey> currentURLStoreKeys = await keyAccessor.FindByCurrentResourcePath();
+            if (currentURLStoreKeys != null)
+            {
+                await validator.MarkForInvalidation(currentURLStoreKeys);
+            }
+
             return NoContent();
         }
 
