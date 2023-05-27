@@ -10,12 +10,10 @@ using FluentValidation;
 using LapStopApiHost.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using NLog;
 using NLogLib;
 using Repositories;
 using RestfulApiHandler.ActionFilters;
-using RestfulApiHandler.Formatters;
 using Services;
 using Services.DataShaping;
 
@@ -72,7 +70,24 @@ builder.Services.AddScoped<IDataShaper<ProductDto>, DataShaper<ProductDto>>();
 // Register ActionFilter to Services
 builder.Services.AddScoped<ValidationFilterAttribute>();
 
-builder.Services.AddResponseCaching();
+//Register to IOC
+//builder.Services.AddResponseCaching();
+
+builder.Services.AddHttpCacheHeaders(
+    (expirationOpt) =>
+    {
+        // Just use to decorate the Reponse's Header (NOT check Expiration)
+        expirationOpt.MaxAge = 10;
+        expirationOpt.CacheLocation = Marvin.Cache.Headers.CacheLocation.Public;
+    },
+    (validationOpt) =>
+    {
+        // [MustRevalidate = true] will STOPPING the [ResponseCaching - ReturnDataFromCache()].
+        // When [ResponseCaching] will get the data from Cache to return if MustRevalidate = false
+        // They are opposite each other.
+        validationOpt.MustRevalidate = true;
+    }
+);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -99,9 +114,12 @@ app.UseHttpsRedirection();
 // UseCors must be called before UseResponseCaching
 //app.UseCors();
 
-app.UseResponseCaching();
 
 app.UseAuthorization();
+
+//app.UseResponseCaching();
+
+app.UseHttpCacheHeaders();
 
 app.MapControllers();
 
