@@ -9,7 +9,6 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using FluentValidation.Results;
 using Marvin.Cache.Headers;
-using Marvin.Cache.Headers.Domain;
 using Marvin.Cache.Headers.Interfaces;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -109,12 +108,18 @@ namespace RestfulApiHandler.Controllers
             }
             await _serviceManager.Brand.UpdateAsync(brandId, updateDto);
 
-            // Mark the Invalidation to remove, because StoreKey is out-of-date
-            IEnumerable<StoreKey> currentURLStoreKeys = await keyAccessor.FindByCurrentResourcePath();
-            if (currentURLStoreKeys != null)
+            #region MARK FOR INVALIDATION 
+            // Mark for Invalidation to remove the out-of-date StoreKey
+            string currentUrl = HttpContext!.Request.Path.ToString();
+            // Parent URL -
+            // CHANGES: localhost:123321/brands/{brandId:guid} ===> localhost:123321/api/brands
+            string parentUrl = currentUrl.Replace(string.Concat("/", brandId.ToString()), "");
+            IEnumerable<StoreKey> storeKeysOfParentUrl = await keyAccessor.FindByKeyPart(parentUrl);
+            ; if (storeKeysOfParentUrl != null)
             {
-                await validator.MarkForInvalidation(currentURLStoreKeys);
+                await validator.MarkForInvalidation(storeKeysOfParentUrl);
             }
+            #endregion
 
             return NoContent();
         }
