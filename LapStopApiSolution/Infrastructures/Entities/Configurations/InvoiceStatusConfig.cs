@@ -1,7 +1,7 @@
-﻿using Domains.Models;
+﻿using Common.Variables;
+using Domains.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Shared.Common.SeedingData;
 
 namespace Entities.Configurations
 {
@@ -11,9 +11,30 @@ namespace Entities.Configurations
         {
             // Seeding Data
             builder.HasData(
-                CommonSeedingData.Invoice_Status.COMPLETED,
-                CommonSeedingData.Invoice_Status.PROCESSING,
-                CommonSeedingData.Invoice_Status.BLOCKED
+                new InvoiceStatus()
+                {
+                    Id = CommonVariables.Seeding.InvoiceStatus_Blocked_Id,
+                    Name = CommonVariables.Seeding.InvoiceStatus_Blocked_Name,
+                    IsRemoved = CommonVariables.Seeding.DefaultIsRemoved,
+                    CreatedDate = CommonVariables.Seeding.DefaultCreatedDate,
+                    UpdatedDate = CommonVariables.Seeding.DefaultUpdateDate,
+                },
+                new InvoiceStatus()
+                {
+                    Id = CommonVariables.Seeding.InvoiceStatus_Completed_Id,
+                    Name = CommonVariables.Seeding.InvoiceStatus_Completed_Name,
+                    IsRemoved = CommonVariables.Seeding.DefaultIsRemoved,
+                    CreatedDate = CommonVariables.Seeding.DefaultCreatedDate,
+                    UpdatedDate = CommonVariables.Seeding.DefaultUpdateDate,
+                },
+                new InvoiceStatus()
+                {
+                    Id = CommonVariables.Seeding.InvoiceStatus_Processing_Id,
+                    Name = CommonVariables.Seeding.InvoiceStatus_Processing_Name,
+                    IsRemoved = CommonVariables.Seeding.DefaultIsRemoved,
+                    CreatedDate = CommonVariables.Seeding.DefaultCreatedDate,
+                    UpdatedDate = CommonVariables.Seeding.DefaultUpdateDate,
+                }
             );
         }
     }

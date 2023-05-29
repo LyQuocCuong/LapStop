@@ -462,11 +462,11 @@ namespace Entities.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("00000000-0000-0000-0000-000000000101"),
+                            Id = new Guid("00000000-0000-0000-0000-000000000103"),
                             CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
                             IsEnable = false,
                             IsRemoved = false,
-                            Name = "On",
+                            Name = "Leaving",
                             UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
@@ -480,11 +480,11 @@ namespace Entities.Migrations
                         },
                         new
                         {
-                            Id = new Guid("00000000-0000-0000-0000-000000000103"),
+                            Id = new Guid("00000000-0000-0000-0000-000000000101"),
                             CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
                             IsEnable = false,
                             IsRemoved = false,
-                            Name = "Leaving",
+                            Name = "On",
                             UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local)
                         });
                 });
@@ -734,6 +734,15 @@ namespace Entities.Migrations
                     b.HasData(
                         new
                         {
+                            Id = new Guid("00000000-0000-0000-0000-000000000203"),
+                            CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                            IsEnable = false,
+                            IsRemoved = false,
+                            Name = "Blocked",
+                            UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local)
+                        },
+                        new
+                        {
                             Id = new Guid("00000000-0000-0000-0000-000000000202"),
                             CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
                             IsEnable = false,
@@ -748,15 +757,6 @@ namespace Entities.Migrations
                             IsEnable = false,
                             IsRemoved = false,
                             Name = "Processing",
-                            UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local)
-                        },
-                        new
-                        {
-                            Id = new Guid("00000000-0000-0000-0000-000000000203"),
-                            CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                            IsEnable = false,
-                            IsRemoved = false,
-                            Name = "Blocked",
                             UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local)
                         });
                 });
@@ -1095,20 +1095,20 @@ namespace Entities.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("00000000-0000-0000-0000-000000000401"),
-                            CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                            IsEnable = false,
-                            IsRemoved = false,
-                            Name = "Waiting",
-                            UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local)
-                        },
-                        new
-                        {
                             Id = new Guid("00000000-0000-0000-0000-000000000404"),
                             CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
                             IsEnable = false,
                             IsRemoved = false,
                             Name = "Blocked",
+                            UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local)
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000403"),
+                            CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                            IsEnable = false,
+                            IsRemoved = false,
+                            Name = "Completed",
                             UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
@@ -1122,11 +1122,11 @@ namespace Entities.Migrations
                         },
                         new
                         {
-                            Id = new Guid("00000000-0000-0000-0000-000000000403"),
+                            Id = new Guid("00000000-0000-0000-0000-000000000401"),
                             CreatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
                             IsEnable = false,
                             IsRemoved = false,
-                            Name = "Completed",
+                            Name = "Waiting",
                             UpdatedDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Local)
                         });
                 });

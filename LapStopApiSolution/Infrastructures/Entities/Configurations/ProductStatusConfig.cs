@@ -1,7 +1,7 @@
-﻿using Domains.Models;
+﻿using Common.Variables;
+using Domains.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Shared.Common.SeedingData;
 
 namespace Entities.Configurations
 {
@@ -11,9 +11,30 @@ namespace Entities.Configurations
         {
             // Seeding Data
             builder.HasData(
-                CommonSeedingData.Product_Status.IN_STOCK,
-                CommonSeedingData.Product_Status.OUT_OF_STOCK,
-                CommonSeedingData.Product_Status.SOLD_OUT
+                new ProductStatus()
+                {
+                    Id = CommonVariables.Seeding.ProductStatus_InStock_Id,
+                    Name = CommonVariables.Seeding.ProductStatus_InStock_Name,
+                    IsRemoved = CommonVariables.Seeding.DefaultIsRemoved,
+                    CreatedDate = CommonVariables.Seeding.DefaultCreatedDate,
+                    UpdatedDate = CommonVariables.Seeding.DefaultUpdateDate,
+                },
+                new ProductStatus()
+                {
+                    Id = CommonVariables.Seeding.ProductStatus_OutOfStock_Id,
+                    Name = CommonVariables.Seeding.ProductStatus_OutOfStock_Name,
+                    IsRemoved = CommonVariables.Seeding.DefaultIsRemoved,
+                    CreatedDate = CommonVariables.Seeding.DefaultCreatedDate,
+                    UpdatedDate = CommonVariables.Seeding.DefaultUpdateDate,
+                },
+                new ProductStatus()
+                {
+                    Id = CommonVariables.Seeding.ProductStatus_SoldOut_Id,
+                    Name = CommonVariables.Seeding.ProductStatus_SoldOut_Name,
+                    IsRemoved = CommonVariables.Seeding.DefaultIsRemoved,
+                    CreatedDate = CommonVariables.Seeding.DefaultCreatedDate,
+                    UpdatedDate = CommonVariables.Seeding.DefaultUpdateDate,
+                }
             );
         }
     }

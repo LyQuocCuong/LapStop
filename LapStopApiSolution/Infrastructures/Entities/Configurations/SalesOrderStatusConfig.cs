@@ -1,7 +1,7 @@
-﻿using Domains.Models;
+﻿using Common.Variables;
+using Domains.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Shared.Common.SeedingData;
 
 namespace Entities.Configurations
 {
@@ -11,10 +11,38 @@ namespace Entities.Configurations
         {
             // Seeding Data
             builder.HasData(
-                CommonSeedingData.SalesOrder_Status.WAITING,
-                CommonSeedingData.SalesOrder_Status.BLOCKED,
-                CommonSeedingData.SalesOrder_Status.PROCESSING,
-                CommonSeedingData.SalesOrder_Status.COMPLETED
+                new SalesOrderStatus()
+                {
+                    Id = CommonVariables.Seeding.SalesOrderStatus_Blocked_Id,
+                    Name = CommonVariables.Seeding.SalesOrderStatus_Blocked_Name,
+                    IsRemoved = CommonVariables.Seeding.DefaultIsRemoved,
+                    CreatedDate = CommonVariables.Seeding.DefaultCreatedDate,
+                    UpdatedDate = CommonVariables.Seeding.DefaultUpdateDate,
+                },
+                new SalesOrderStatus()
+                {
+                    Id = CommonVariables.Seeding.SalesOrderStatus_Completed_Id,
+                    Name = CommonVariables.Seeding.SalesOrderStatus_Completed_Name,
+                    IsRemoved = CommonVariables.Seeding.DefaultIsRemoved,
+                    CreatedDate = CommonVariables.Seeding.DefaultCreatedDate,
+                    UpdatedDate = CommonVariables.Seeding.DefaultUpdateDate,
+                },
+                new SalesOrderStatus()
+                {
+                    Id = CommonVariables.Seeding.SalesOrderStatus_Processing_Id,
+                    Name = CommonVariables.Seeding.SalesOrderStatus_Processing_Name,
+                    IsRemoved = CommonVariables.Seeding.DefaultIsRemoved,
+                    CreatedDate = CommonVariables.Seeding.DefaultCreatedDate,
+                    UpdatedDate = CommonVariables.Seeding.DefaultUpdateDate,
+                },
+                new SalesOrderStatus()
+                {
+                    Id = CommonVariables.Seeding.SalesOrderStatus_Waiting_Id,
+                    Name = CommonVariables.Seeding.SalesOrderStatus_Waiting_Name,
+                    IsRemoved = CommonVariables.Seeding.DefaultIsRemoved,
+                    CreatedDate = CommonVariables.Seeding.DefaultCreatedDate,
+                    UpdatedDate = CommonVariables.Seeding.DefaultUpdateDate,
+                }
             );
         }
     }

@@ -1,7 +1,7 @@
-﻿using Domains.Models;
+﻿using Common.Variables;
+using Domains.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Shared.Common.SeedingData;
 
 namespace Entities.Configurations
 {
@@ -11,9 +11,30 @@ namespace Entities.Configurations
         {
             // Seeding Data
             builder.HasData(
-                CommonSeedingData.Employee_Status.ON,
-                CommonSeedingData.Employee_Status.OFF,
-                CommonSeedingData.Employee_Status.LEAVING
+                new EmployeeStatus()
+                {
+                    Id = CommonVariables.Seeding.EmployeeStatus_Leaving_Id,
+                    Name = CommonVariables.Seeding.EmployeeStatus_Leaving_Name,
+                    IsRemoved = CommonVariables.Seeding.DefaultIsRemoved,
+                    CreatedDate = CommonVariables.Seeding.DefaultCreatedDate,
+                    UpdatedDate = CommonVariables.Seeding.DefaultUpdateDate,
+                },
+                new EmployeeStatus()
+                {
+                    Id = CommonVariables.Seeding.EmployeeStatus_Off_Id,
+                    Name = CommonVariables.Seeding.EmployeeStatus_Off_Name,
+                    IsRemoved = CommonVariables.Seeding.DefaultIsRemoved,
+                    CreatedDate = CommonVariables.Seeding.DefaultCreatedDate,
+                    UpdatedDate = CommonVariables.Seeding.DefaultUpdateDate,
+                },
+                new EmployeeStatus()
+                {
+                    Id = CommonVariables.Seeding.EmployeeStatus_On_Id,
+                    Name = CommonVariables.Seeding.EmployeeStatus_On_Name,
+                    IsRemoved = CommonVariables.Seeding.DefaultIsRemoved,
+                    CreatedDate = CommonVariables.Seeding.DefaultCreatedDate,
+                    UpdatedDate = CommonVariables.Seeding.DefaultUpdateDate,
+                }
             );
         }
     }

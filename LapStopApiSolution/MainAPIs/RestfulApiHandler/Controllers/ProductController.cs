@@ -1,6 +1,5 @@
 ﻿using Contracts.ILog;
 using Contracts.IServices;
-using Domains.Models;
 using DTO.Input.FromBody.Creation;
 using DTO.Input.FromBody.Update;
 using DTO.Input.FromQuery.Parameters;
@@ -10,9 +9,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using RestfulApiHandler.ActionFilters;
 using Shared.Common.Messages;
-using Shared.Common.SeedingData;
 using Shared.CustomModels.DynamicObjects;
-using System.Dynamic;
 using System.Text.Json;
 
 namespace RestfulApiHandler.Controllers
@@ -145,21 +142,21 @@ namespace RestfulApiHandler.Controllers
         [Route("products/bulk", Name = "BulkCreateProduct")]
         public async Task<IActionResult> BulkCreateProduct()
         {
-            List<ProductForCreationDto> data = new List<ProductForCreationDto>();
-            for (int index = 0; index < 1000; index++)
-            {
-                ProductForCreationDto product = new ProductForCreationDto()
-                {
-                    ProductStatusId = CommonSeedingData.Product_Status.IN_STOCK.Id,
-                    ProductCode = "AD0" + index,
-                    Name = "Adidas " + index,
-                    OriginalPrice = 1000 + index,
-                    SellingPrice = 1000 + index,
-                    CurrentPrice = 1000 + index,
-                };
-                data.Add(product);
-            }
-            productDtos = await _serviceManager.Product.BulkCreateAsync(data);
+            //List<ProductForCreationDto> data = new List<ProductForCreationDto>();
+            //for (int index = 0; index < 1000; index++)
+            //{
+            //    ProductForCreationDto product = new ProductForCreationDto()
+            //    {
+            //        ProductStatusId = CommonSeedingData.Product_Status.IN_STOCK.Id,
+            //        ProductCode = "AD0" + index,
+            //        Name = "Adidas " + index,
+            //        OriginalPrice = 1000 + index,
+            //        SellingPrice = 1000 + index,
+            //        CurrentPrice = 1000 + index,
+            //    };
+            //    data.Add(product);
+            //}
+            //productDtos = await _serviceManager.Product.BulkCreateAsync(data);
             return Ok();
         }
 
