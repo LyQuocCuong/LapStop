@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Cores\Shared\Shared.csproj" />
-    <ProjectReference Include="..\..\Infrastructures\AutoMapperLib\AutoMapperLib.csproj" />
     <ProjectReference Include="..\..\Infrastructures\Entities\Entities.csproj" />
     <ProjectReference Include="..\..\Infrastructures\NLogLib\NLogLib.csproj" />
     <ProjectReference Include="..\..\Logic\Services\Services.csproj" />

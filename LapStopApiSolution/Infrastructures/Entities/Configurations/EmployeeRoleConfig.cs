@@ -1,7 +1,7 @@
-﻿using Domains.Models;
+﻿using Common.Variables;
+using Domains.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Shared.Common.SeedingData;
 
 namespace Entities.Configurations
 {
@@ -11,9 +11,30 @@ namespace Entities.Configurations
         {
             // Seeding Data
             builder.HasData(
-                CommonSeedingData.Employee_Role.ADMIN,
-                CommonSeedingData.Employee_Role.MANAGER,
-                CommonSeedingData.Employee_Role.STAFF
+                new EmployeeRole()
+                {
+                    Id = CommonVariables.Seeding.EmployeeRole_Admin_Id,
+                    Name = CommonVariables.Seeding.EmployeeRole_Admin_Name,
+                    IsRemoved = CommonVariables.Seeding.DefaultIsRemoved,
+                    CreatedDate = CommonVariables.Seeding.DefaultCreatedDate,
+                    UpdatedDate = CommonVariables.Seeding.DefaultUpdateDate,
+                },
+                new EmployeeRole()
+                {
+                    Id = CommonVariables.Seeding.EmployeeRole_Manager_Id,
+                    Name = CommonVariables.Seeding.EmployeeRole_Manager_Name,
+                    IsRemoved = CommonVariables.Seeding.DefaultIsRemoved,
+                    CreatedDate = CommonVariables.Seeding.DefaultCreatedDate,
+                    UpdatedDate = CommonVariables.Seeding.DefaultUpdateDate,
+                },
+                new EmployeeRole()
+                {
+                    Id = CommonVariables.Seeding.EmployeeRole_Staff_Id,
+                    Name = CommonVariables.Seeding.EmployeeRole_Staff_Name,
+                    IsRemoved = CommonVariables.Seeding.DefaultIsRemoved,
+                    CreatedDate = CommonVariables.Seeding.DefaultCreatedDate,
+                    UpdatedDate = CommonVariables.Seeding.DefaultUpdateDate,
+                }
             );
         }
     }
