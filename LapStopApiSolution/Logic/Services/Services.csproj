@@ -9,8 +9,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Cores\Contracts.IServices\Contracts.IServices.csproj" />
     <ProjectReference Include="..\..\Cores\Contracts\Contracts.csproj" />
-    <ProjectReference Include="..\..\Cores\Domains\Domains.csproj" />
-    <ProjectReference Include="..\..\Cores\DTO\DTO.csproj" />
     <ProjectReference Include="..\..\Cores\Shared\Shared.csproj" />
     <ProjectReference Include="..\..\Infrastructures\AutoMapperLib\AutoMapperLib.csproj" />
     <ProjectReference Include="..\Repositories\Repositories.csproj" />
