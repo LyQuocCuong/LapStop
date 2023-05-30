@@ -2,20 +2,18 @@
 using Contracts.IServices;
 using DTO.Output.Data;
 using Microsoft.AspNetCore.Mvc;
+using RestfulApiHandler.Roots;
 
 namespace RestfulApiHandler.Controllers
 {
     [ApiController]
     [Route("api")]
-    public class ProductGalleryController : ControllerBase
+    public class ProductGalleryController : RootController
     {
-        private readonly ILogService _logService;
-        private readonly IServiceManager _serviceManager;
-
-        public ProductGalleryController(ILogService logService, IServiceManager serviceManager)
+        public ProductGalleryController(ILogService logService, 
+                                        IServiceManager serviceManager)
+                                 : base(logService, serviceManager)
         {
-            _logService = logService;
-            _serviceManager = serviceManager;
         }
 
         [HttpGet]

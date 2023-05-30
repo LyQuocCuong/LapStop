@@ -13,6 +13,7 @@ using Marvin.Cache.Headers.Interfaces;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using RestfulApiHandler.ActionFilters;
+using RestfulApiHandler.Roots;
 using Shared.Common.Messages;
 using Shared.CustomModels.DynamicObjects;
 using System.Text.Json;
@@ -21,15 +22,12 @@ namespace RestfulApiHandler.Controllers
 {
     [ApiController]
     [Route("api")]
-    public class BrandController : ControllerBase
+    public class BrandController : RootController
     {
-        private readonly ILogService _logService;
-        private readonly IServiceManager _serviceManager;
-
-        public BrandController(ILogService logService, IServiceManager serviceManager)
+        public BrandController(ILogService logService, 
+                               IServiceManager serviceManager)
+                        : base(logService, serviceManager)
         {
-            _logService = logService;
-            _serviceManager = serviceManager;
         }
 
         [HttpHead]

@@ -2,20 +2,18 @@
 using Contracts.IServices;
 using DTO.Output.Data;
 using Microsoft.AspNetCore.Mvc;
+using RestfulApiHandler.Roots;
 
 namespace RestfulApiHandler.Controllers
 {
     [ApiController]
     [Route("api")]
-    public class InvoiceStatusController : ControllerBase
+    public class InvoiceStatusController : RootController
     {
-        private readonly ILogService _logService;
-        private readonly IServiceManager _serviceManager;
-
-        public InvoiceStatusController(ILogService logService, IServiceManager serviceManager)
+        public InvoiceStatusController(ILogService logService, 
+                                       IServiceManager serviceManager)
+                                 :base(logService, serviceManager)
         {
-            _logService = logService;
-            _serviceManager = serviceManager;
         }
 
         [HttpGet]

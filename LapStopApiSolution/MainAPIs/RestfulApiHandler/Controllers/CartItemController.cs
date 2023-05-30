@@ -2,20 +2,18 @@
 using Contracts.IServices;
 using DTO.Output.Data;
 using Microsoft.AspNetCore.Mvc;
+using RestfulApiHandler.Roots;
 
 namespace RestfulApiHandler.Controllers
 {
     [ApiController]
     [Route("api")]
-    public class CartItemController : ControllerBase
+    public class CartItemController : RootController
     {
-        private readonly ILogService _logService;
-        private readonly IServiceManager _serviceManager;
-
-        public CartItemController(IServiceManager serviceManager, ILogService logService)
+        public CartItemController(ILogService logService, 
+                                  IServiceManager serviceManager)
+                           : base(logService, serviceManager)
         {
-            _serviceManager = serviceManager;
-            _logService = logService;
         }
 
         [HttpGet]
