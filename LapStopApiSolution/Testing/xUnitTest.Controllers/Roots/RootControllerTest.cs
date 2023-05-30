@@ -2,9 +2,9 @@
 using Contracts.IServices;
 using Moq;
 
-namespace xUnitTest.Controllers.Base
+namespace xUnitTest.Controllers.Roots
 {
-    public abstract class BaseControllerTest
+    public abstract class RootControllerTest
     {
         protected readonly Mock<ILogService> _mockLogService = new Mock<ILogService>();
         protected readonly Mock<IServiceManager> _mockServiceManager = new Mock<IServiceManager>();
