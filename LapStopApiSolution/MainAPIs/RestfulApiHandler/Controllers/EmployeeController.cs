@@ -1,6 +1,5 @@
 ﻿using Contracts.ILog;
 using Contracts.IServices;
-using Domains.Models;
 using DTO.Input.FromBody.Creation;
 using DTO.Input.FromBody.Update;
 using DTO.Input.FromQuery.Parameters;
@@ -9,24 +8,21 @@ using DTO.Output.PagedList;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using RestfulApiHandler.ActionFilters;
+using RestfulApiHandler.Roots;
 using Shared.Common.Messages;
 using Shared.CustomModels.DynamicObjects;
-using System.Dynamic;
 using System.Text.Json;
 
 namespace RestfulApiHandler.Controllers
 {
     [ApiController]
     [Route("api")]
-    public class EmployeeController : ControllerBase
+    public class EmployeeController : RootController
     {
-        private readonly ILogService _logService;
-        private readonly IServiceManager _serviceManager;
-
-        public EmployeeController(ILogService logService, IServiceManager serviceManager)
+        public EmployeeController(ILogService logService, 
+                                  IServiceManager serviceManager)
+                           : base(logService, serviceManager)
         {
-            _logService = logService;
-            _serviceManager = serviceManager;
         }
 
         [HttpHead]
