@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Common.Models.DynamicObjects;
+using Common.Models.Exceptions;
 using Contracts.IDataShaper;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
@@ -8,8 +10,6 @@ using DTO.Input.FromBody.Update;
 using DTO.Input.FromQuery.Parameters;
 using DTO.Output.Data;
 using DTO.Output.PagedList;
-using Shared.CustomModels.DynamicObjects;
-using Shared.CustomModels.Exceptions;
 
 namespace Services.Models
 {
@@ -30,21 +30,21 @@ namespace Services.Models
             Brand? brand = await _repositoryManager.Brand.GetOneByIdAsync(isTrackChanges, brandId);
             if (brand == null)
             {
-                throw new ExNotFoundInDB(nameof(BrandService), nameof(GetBrandAndCheckIfItExists), typeof(Brand), brandId);
+                throw new ExNotFoundInDBModel(nameof(BrandService), nameof(GetBrandAndCheckIfItExists), typeof(Brand), brandId);
             }
             return brand;
         }
 
-        public async Task<PagedList<ShapedModel>> GetAllAsync(BrandParameters parameters)
+        public async Task<PagedList<DynamicModel>> GetAllAsync(BrandParameters parameters)
         {
             IEnumerable<Brand> brands = await _repositoryManager.Brand.GetAllAsync(isTrackChanges: false, parameters);
             int totalRecords = await _repositoryManager.Brand.CountAllAsync(parameters);
 
             IEnumerable<BrandDto> sourceDto = MappingToNewObj<IEnumerable<BrandDto>>(brands);
 
-            var shapedData = _dataShaper.ShapeData(sourceDto, parameters.Fields);
+            var shapedData = _dataShaper.ShapingData(sourceDto, parameters.Fields);
 
-            return new PagedList<ShapedModel>(shapedData.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
+            return new PagedList<DynamicModel>(shapedData.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
         }
 
         public async Task<BrandDto?> GetOneByIdAsync(Guid brandId)
@@ -63,7 +63,7 @@ namespace Services.Models
         {
             if (await _repositoryManager.Brand.IsValidIdAsync(brandId) == false)
             {
-                throw new ExNotFoundInDB(nameof(BrandService), nameof(IsValidIdAsync), typeof(Brand), brandId);
+                throw new ExNotFoundInDBModel(nameof(BrandService), nameof(IsValidIdAsync), typeof(Brand), brandId);
             }
             return true;
         }

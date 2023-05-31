@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
+using Common.Models.Exceptions;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
 using DTO.Output.Data;
-using Shared.CustomModels.Exceptions;
 
 namespace Services.Models
 {
@@ -17,7 +17,7 @@ namespace Services.Models
         {
             if (await _repositoryManager.Product.IsValidIdAsync(productId) == false) 
             { 
-                throw new ExNotFoundInDB(nameof(ProductGalleryService), nameof(GetAllByProductIdAsync), typeof(Product), productId);
+                throw new ExNotFoundInDBModel(nameof(ProductGalleryService), nameof(GetAllByProductIdAsync), typeof(Product), productId);
             }
             IEnumerable<ProductGallery> productGalleries = await _repositoryManager.ProductGallery.GetAllByProductIdAsync(isTrackChanges: false, productId);
             return MappingToNewObj<IEnumerable<ProductGalleryDto>>(productGalleries);

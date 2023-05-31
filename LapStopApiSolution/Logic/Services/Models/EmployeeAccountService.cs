@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
+using Common.Models.Exceptions;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
 using DTO.Output.Data;
-using Shared.CustomModels.Exceptions;
 
 namespace Services.Models
 {
@@ -23,12 +23,12 @@ namespace Services.Models
         {
             if (await _repositoryManager.Employee.IsValidIdAsync(employeeId) == false)
             {
-                throw new ExNotFoundInDB(nameof(EmployeeAccountService), nameof(GetOneByEmployeeIdAsync), typeof(Employee), employeeId);
+                throw new ExNotFoundInDBModel(nameof(EmployeeAccountService), nameof(GetOneByEmployeeIdAsync), typeof(Employee), employeeId);
             }
             EmployeeAccount? employeeAccount = await _repositoryManager.EmployeeAccount.GetOneByEmployeeIdAsync(isTrackChanges: false, employeeId);
             if (employeeAccount == null)
             {
-                throw new ExNotFoundInDB(nameof(EmployeeAccountService), nameof(GetOneByEmployeeIdAsync), typeof(EmployeeAccount), employeeId);
+                throw new ExNotFoundInDBModel(nameof(EmployeeAccountService), nameof(GetOneByEmployeeIdAsync), typeof(EmployeeAccount), employeeId);
             }
             return MappingToNewObj<EmployeeAccountDto>(employeeAccount);
         }
