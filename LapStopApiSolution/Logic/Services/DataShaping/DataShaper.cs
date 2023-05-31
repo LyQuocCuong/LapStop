@@ -1,5 +1,5 @@
-﻿using Contracts.IDataShaper;
-using Shared.CustomModels.DynamicObjects;
+﻿using Common.Models.DynamicObjects;
+using Contracts.IDataShaper;
 using System.Reflection;
 
 namespace Services.DataShaping
@@ -15,14 +15,14 @@ namespace Services.DataShaping
                                                          BindingFlags.Instance);
         }
 
-        public IEnumerable<ShapedModel> ShapeData(IEnumerable<TModel> models, 
+        public IEnumerable<DynamicModel> ShapingData(IEnumerable<TModel> models, 
                                                     string fieldsStr)
         {
             var requiredProperties = GetRequiredProperties(fieldsStr);
             return FetchData(models, requiredProperties);
         }
 
-        public ShapedModel ShapeData(TModel model, string fieldsStr)
+        public DynamicModel ShapingData(TModel model, string fieldsStr)
         {
             var requiredProperties = GetRequiredProperties(fieldsStr);
             return FetchDataForEntity(model, requiredProperties);
@@ -52,10 +52,10 @@ namespace Services.DataShaping
             return requiredProperties;
         }
 
-        private IEnumerable<ShapedModel> FetchData(IEnumerable<TModel> models, 
+        private IEnumerable<DynamicModel> FetchData(IEnumerable<TModel> models, 
                                                      IEnumerable<PropertyInfo> requiredProperties)
         {
-            var shapedData = new List<ShapedModel>();
+            var shapedData = new List<DynamicModel>();
             foreach (var model in models)
             {
                 var shapedObject = FetchDataForEntity(model, requiredProperties);
@@ -64,9 +64,9 @@ namespace Services.DataShaping
             return shapedData;
         }
 
-        private ShapedModel FetchDataForEntity(TModel model, IEnumerable<PropertyInfo> requiredProperties)
+        private DynamicModel FetchDataForEntity(TModel model, IEnumerable<PropertyInfo> requiredProperties)
         {
-            var shapedObject = new ShapedModel();
+            var shapedObject = new DynamicModel();
             foreach (var property in requiredProperties) 
             { 
                 var objectPropertyValue = property.GetValue(model); 

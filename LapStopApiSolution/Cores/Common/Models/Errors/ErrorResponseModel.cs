@@ -1,8 +1,8 @@
 ﻿using System.Text.Json;
 
-namespace Shared.CustomModels.Errors
+namespace Common.Models.Errors
 {
-    public sealed class ErrorDetails
+    public sealed class ErrorResponseModel
     {
         public int StatusCode { get; set; }
         public string? Message { get; set; }

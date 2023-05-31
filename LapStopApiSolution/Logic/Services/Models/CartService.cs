@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
+using Common.Models.Exceptions;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
 using DTO.Output.Data;
-using Shared.CustomModels.Exceptions;
 
 namespace Services.Models
 {
@@ -23,12 +23,12 @@ namespace Services.Models
         {
             if (await _repositoryManager.Customer.IsValidIdAsync(customerId) == false)
             {
-                throw new ExNotFoundInDB(nameof(CartService), nameof(GetOneByCustomerIdAsync), typeof(Customer), customerId);
+                throw new ExNotFoundInDBModel(nameof(CartService), nameof(GetOneByCustomerIdAsync), typeof(Customer), customerId);
             }
             Cart? cart = await _repositoryManager.Cart.GetOneByCustomerIdAsync(isTrackChanges: false, customerId);
             if (cart == null)
             {
-                throw new ExNotFoundInDB(nameof(CartService), nameof(GetOneByCustomerIdAsync), typeof(Cart), customerId);
+                throw new ExNotFoundInDBModel(nameof(CartService), nameof(GetOneByCustomerIdAsync), typeof(Cart), customerId);
             }
             return MappingToNewObj<CartDto>(cart);
         }

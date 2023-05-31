@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
+using Common.Models.Exceptions;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
 using DTO.Output.Data;
-using Shared.CustomModels.Exceptions;
 
 namespace Services.Models
 {
@@ -17,7 +17,7 @@ namespace Services.Models
         {
             if (await _repositoryManager.Cart.IsValidIdAsync(cartId) == false)
             {
-                throw new ExNotFoundInDB(nameof(CartItemService), nameof(GetAllByCartIdAsync), typeof(Cart), cartId);
+                throw new ExNotFoundInDBModel(nameof(CartItemService), nameof(GetAllByCartIdAsync), typeof(Cart), cartId);
             }
             IEnumerable<CartItem> cartItems = await _repositoryManager.CartItem.GetAllByCartIdAsync(isTrackChanges: false, cartId);
             return MappingToNewObj<IEnumerable<CartItemDto>>(cartItems);

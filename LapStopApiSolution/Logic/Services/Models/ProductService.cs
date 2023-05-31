@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Common.Models.DynamicObjects;
+using Common.Models.Exceptions;
 using Contracts.IDataShaper;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
@@ -8,8 +10,6 @@ using DTO.Input.FromBody.Update;
 using DTO.Input.FromQuery.Parameters;
 using DTO.Output.Data;
 using DTO.Output.PagedList;
-using Shared.CustomModels.DynamicObjects;
-using Shared.CustomModels.Exceptions;
 
 namespace Services.Models
 {
@@ -29,21 +29,21 @@ namespace Services.Models
             Product? product = await _repositoryManager.Product.GetOneByIdAsync(isTrackChanges, productId);
             if (product == null)
             {
-                throw new ExNotFoundInDB(nameof(ProductService), nameof(GetProductAndCheckIfItExists), typeof(Product), productId);
+                throw new ExNotFoundInDBModel(nameof(ProductService), nameof(GetProductAndCheckIfItExists), typeof(Product), productId);
             }
             return product;
         }
 
-        public async Task<PagedList<ShapedModel>> GetAllAsync(ProductParameters parameters)
+        public async Task<PagedList<DynamicModel>> GetAllAsync(ProductParameters parameters)
         {
             IEnumerable<Product> products = await _repositoryManager.Product.GetAllAsync(isTrackChanges: false, parameters);
             int totalRecords = await _repositoryManager.Product.CountAllAsync(parameters);
 
             var sourceDto = MappingToNewObj<IEnumerable<ProductDto>>(products);
 
-            var shapedData = _dataShaper.ShapeData(sourceDto, parameters.Fields);
+            var shapedData = _dataShaper.ShapingData(sourceDto, parameters.Fields);
 
-            return new PagedList<ShapedModel>(shapedData.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
+            return new PagedList<DynamicModel>(shapedData.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
         }
 
         public async Task<ProductDto?> GetOneByIdAsync(Guid productId)

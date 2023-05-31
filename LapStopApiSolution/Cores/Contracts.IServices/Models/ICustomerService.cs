@@ -1,15 +1,15 @@
-﻿using DTO.Input.FromBody.Creation;
+﻿using Common.Models.DynamicObjects;
+using DTO.Input.FromBody.Creation;
 using DTO.Input.FromBody.Update;
 using DTO.Input.FromQuery.Parameters;
 using DTO.Output.Data;
 using DTO.Output.PagedList;
-using Shared.CustomModels.DynamicObjects;
 
 namespace Contracts.IServices.Models
 {
     public interface ICustomerService
     {
-        Task<PagedList<ShapedModel>> GetAllAsync(CustomerParameters parameters);
+        Task<PagedList<DynamicModel>> GetAllAsync(CustomerParameters parameters);
 
         Task<CustomerDto?> GetOneByIdAsync(Guid customerId);
 

@@ -1,4 +1,6 @@
-﻿using Contracts.ILog;
+﻿using Common.Functions;
+using Common.Models.DynamicObjects;
+using Contracts.ILog;
 using Contracts.IServices;
 using DTO.Input.FromBody.Creation;
 using DTO.Input.FromBody.Update;
@@ -9,8 +11,6 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using RestfulApiHandler.ActionFilters;
 using RestfulApiHandler.Roots;
-using Shared.Common.Messages;
-using Shared.CustomModels.DynamicObjects;
 using System.Text.Json;
 
 namespace RestfulApiHandler.Controllers
@@ -29,7 +29,7 @@ namespace RestfulApiHandler.Controllers
         [Route("products", Name = "GetAllProductsHead")]
         public async Task<IActionResult> GetAllProductsHead([FromQuery] ProductParameters parameters)
         {
-            PagedList<ShapedModel> pagedResult = await _serviceManager.Product.GetAllAsync(parameters);
+            PagedList<DynamicModel> pagedResult = await _serviceManager.Product.GetAllAsync(parameters);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
 
@@ -40,7 +40,7 @@ namespace RestfulApiHandler.Controllers
         [Route("products", Name = "GetAllProducts")]
         public async Task<IActionResult> GetAllProducts([FromQuery] ProductParameters parameters)
         {
-            PagedList<ShapedModel> pagedResult = await _serviceManager.Product.GetAllAsync(parameters);
+            PagedList<DynamicModel> pagedResult = await _serviceManager.Product.GetAllAsync(parameters);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
 
@@ -88,7 +88,7 @@ namespace RestfulApiHandler.Controllers
         {
             if (patchDocument == null)
             {
-                return BadRequest(CommonMessages.ERROR.NullObject(nameof(JsonPatchDocument<ProductForUpdateDto>)));
+                return BadRequest(CommonFunctions.DisplayErrors.ReturnNullObjectMessage(nameof(JsonPatchDocument<ProductForUpdateDto>)));
             }
             if (await _serviceManager.Product.IsValidIdAsync(productId) == false)
             {

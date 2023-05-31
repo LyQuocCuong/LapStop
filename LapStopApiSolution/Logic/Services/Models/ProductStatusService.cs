@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
+using Common.Models.Exceptions;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
 using DTO.Output.Data;
-using Shared.CustomModels.Exceptions;
 
 namespace Services.Models
 {
@@ -24,7 +24,7 @@ namespace Services.Models
             ProductStatus? productStatus = await _repositoryManager.ProductStatus.GetOneByIdAsync(isTrackChanges: false, productStatusId);
             if (productStatus == null)
             {
-                throw new ExNotFoundInDB(nameof(ProductStatusService), nameof(GetOneByIdAsync), typeof(ProductStatus), productStatusId);
+                throw new ExNotFoundInDBModel(nameof(ProductStatusService), nameof(GetOneByIdAsync), typeof(ProductStatus), productStatusId);
             }
             return MappingToNewObj<ProductStatusDto>(productStatus);
         }

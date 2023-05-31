@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
+using Common.Models.Exceptions;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
 using DTO.Input.FromBody.Creation;
 using DTO.Input.FromBody.Update;
 using DTO.Output.Data;
-using Shared.CustomModels.Exceptions;
 
 namespace Services.Models
 {
@@ -30,7 +30,7 @@ namespace Services.Models
             CustomerAccount? customerAccount = await _repositoryManager.CustomerAccount.GetOneByCustomerIdAsync(isTrackChanges: true, customerId);
             if (customerAccount == null)
             {
-                throw new ExNotFoundInDB(nameof(CustomerAccountService), nameof(UpdateAsync), typeof(CustomerAccount), customerId);
+                throw new ExNotFoundInDBModel(nameof(CustomerAccountService), nameof(UpdateAsync), typeof(CustomerAccount), customerId);
             }
             MappingToExistingObj(updateDto, customerAccount);
             await _repositoryManager.SaveChangesAsync();
@@ -46,12 +46,12 @@ namespace Services.Models
         {
             if (await _repositoryManager.Customer.IsValidIdAsync(customerId) == false)
             {
-                throw new ExNotFoundInDB(nameof(CustomerAccountService), nameof(GetOneByCustomerIdAsync), typeof(Customer), customerId);
+                throw new ExNotFoundInDBModel(nameof(CustomerAccountService), nameof(GetOneByCustomerIdAsync), typeof(Customer), customerId);
             }
             CustomerAccount? customerAccount = await _repositoryManager.CustomerAccount.GetOneByCustomerIdAsync(isTrackChanges: false, customerId);
             if (customerAccount == null)
             {
-                throw new ExNotFoundInDB(nameof(CustomerAccountService), nameof(GetOneByCustomerIdAsync), typeof(CustomerAccount), customerId);
+                throw new ExNotFoundInDBModel(nameof(CustomerAccountService), nameof(GetOneByCustomerIdAsync), typeof(CustomerAccount), customerId);
             }
             return MappingToNewObj<CustomerAccountDto>(customerAccount);
         }

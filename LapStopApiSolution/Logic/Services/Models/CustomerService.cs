@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Common.Models.DynamicObjects;
+using Common.Models.Exceptions;
 using Contracts.IDataShaper;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
@@ -8,8 +10,6 @@ using DTO.Input.FromBody.Update;
 using DTO.Input.FromQuery.Parameters;
 using DTO.Output.Data;
 using DTO.Output.PagedList;
-using Shared.CustomModels.DynamicObjects;
-using Shared.CustomModels.Exceptions;
 
 namespace Services.Models
 {
@@ -29,21 +29,21 @@ namespace Services.Models
             Customer? customer = await _repositoryManager.Customer.GetOneByIdAsync(isTrackChanges, customerId);
             if (customer == null)
             {
-                throw new ExNotFoundInDB(nameof(CustomerService), nameof(GetCustomerAndCheckIfItExists), typeof(Customer), customerId);
+                throw new ExNotFoundInDBModel(nameof(CustomerService), nameof(GetCustomerAndCheckIfItExists), typeof(Customer), customerId);
             }
             return customer;
         }
 
-        public async Task<PagedList<ShapedModel>> GetAllAsync(CustomerParameters parameters)
+        public async Task<PagedList<DynamicModel>> GetAllAsync(CustomerParameters parameters)
         {
             IEnumerable<Customer> customers = await _repositoryManager.Customer.GetAllAsync(isTrackChanges: false, parameters);
             int totalRecords = await _repositoryManager.Customer.CountAllAsync(parameters);
 
             var sourceDto = MappingToNewObj<IEnumerable<CustomerDto>>(customers);
 
-            var shapedData = _dataShaper.ShapeData(sourceDto, parameters.Fields);
+            var shapedData = _dataShaper.ShapingData(sourceDto, parameters.Fields);
 
-            return new PagedList<ShapedModel>(shapedData.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
+            return new PagedList<DynamicModel>(shapedData.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
         }
 
         public async Task<CustomerDto?> GetOneByIdAsync(Guid customerId)

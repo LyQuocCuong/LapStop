@@ -1,7 +1,7 @@
-﻿using Contracts.ILog;
+﻿using Common.Models.Errors;
+using Common.Models.Exceptions;
+using Contracts.ILog;
 using Microsoft.AspNetCore.Diagnostics;
-using Shared.CustomModels.Errors;
-using Shared.CustomModels.Exceptions;
 
 namespace LapStopApiHost.Extensions
 {
@@ -24,12 +24,12 @@ namespace LapStopApiHost.Extensions
                         //Custom Code:
                         context.Response.StatusCode = contextFeature.Error switch
                         {
-                            ExNotFoundInDB => StatusCodes.Status404NotFound,
+                            ExNotFoundInDBModel => StatusCodes.Status404NotFound,
                             _ => StatusCodes.Status500InternalServerError
                         };
 
                         logger.LogError($"Something went wrong: {contextFeature.Error}");
-                        await context.Response.WriteAsync(new ErrorDetails()
+                        await context.Response.WriteAsync(new ErrorResponseModel()
                         {
                             StatusCode = context.Response.StatusCode,
                             //Original Code: Message = "Internal Server Error.",

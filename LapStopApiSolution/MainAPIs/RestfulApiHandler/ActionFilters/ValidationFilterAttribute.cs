@@ -1,7 +1,6 @@
-﻿using DTO.Input.FromBody.Creation;
+﻿using Common.Functions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Shared.Common.Messages;
 
 namespace RestfulApiHandler.ActionFilters
 {
@@ -23,7 +22,7 @@ namespace RestfulApiHandler.ActionFilters
                                .FirstOrDefault(x => x.Value.ToString().Contains("Dto")).Value;
             if (param is null)
             {
-                context.Result = new BadRequestObjectResult(CommonMessages.ERROR.NullObject(nameof(param)));
+                context.Result = new BadRequestObjectResult(CommonFunctions.DisplayErrors.ReturnNullObjectMessage(nameof(param)));
                 return;
             }
 

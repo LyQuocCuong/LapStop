@@ -1,4 +1,6 @@
-﻿using Contracts.ILog;
+﻿using Common.Functions;
+using Common.Models.DynamicObjects;
+using Contracts.ILog;
 using Contracts.IServices;
 using DTO.Input.FromBody.Creation;
 using DTO.Input.FromBody.Update;
@@ -9,8 +11,6 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using RestfulApiHandler.ActionFilters;
 using RestfulApiHandler.Roots;
-using Shared.Common.Messages;
-using Shared.CustomModels.DynamicObjects;
 using System.Text.Json;
 
 namespace RestfulApiHandler.Controllers
@@ -29,7 +29,7 @@ namespace RestfulApiHandler.Controllers
         [Route("customers", Name = "GetAllCustomersHead")]
         public async Task<IActionResult> GetAllCustomersHead([FromQuery]CustomerParameters parameters)
         {
-            PagedList<ShapedModel> pagedResult = await _serviceManager.Customer.GetAllAsync(parameters);
+            PagedList<DynamicModel> pagedResult = await _serviceManager.Customer.GetAllAsync(parameters);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
 
@@ -40,7 +40,7 @@ namespace RestfulApiHandler.Controllers
         [Route("customers", Name = "GetAllCustomers")]
         public async Task<IActionResult> GetAllCustomers([FromQuery] CustomerParameters parameters)
         {
-            PagedList<ShapedModel> pagedResult = await _serviceManager.Customer.GetAllAsync(parameters);
+            PagedList<DynamicModel> pagedResult = await _serviceManager.Customer.GetAllAsync(parameters);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
 
@@ -96,7 +96,7 @@ namespace RestfulApiHandler.Controllers
             }
             else if (patchDocument == null)
             {
-                return BadRequest(CommonMessages.ERROR.NullObject(nameof(JsonPatchDocument<CustomerForUpdateDto>)));
+                return BadRequest(CommonFunctions.DisplayErrors.ReturnNullObjectMessage(nameof(JsonPatchDocument<CustomerForUpdateDto>)));
             }
 
             CustomerForUpdateDto updateDto = await _serviceManager.Customer.GetDtoForPatchAsync(customerId);

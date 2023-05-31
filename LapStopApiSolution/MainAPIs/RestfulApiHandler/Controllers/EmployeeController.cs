@@ -1,4 +1,6 @@
-﻿using Contracts.ILog;
+﻿using Common.Functions;
+using Common.Models.DynamicObjects;
+using Contracts.ILog;
 using Contracts.IServices;
 using DTO.Input.FromBody.Creation;
 using DTO.Input.FromBody.Update;
@@ -9,8 +11,6 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using RestfulApiHandler.ActionFilters;
 using RestfulApiHandler.Roots;
-using Shared.Common.Messages;
-using Shared.CustomModels.DynamicObjects;
 using System.Text.Json;
 
 namespace RestfulApiHandler.Controllers
@@ -31,10 +31,10 @@ namespace RestfulApiHandler.Controllers
         {
             if (parameter.MinAge > parameter.MaxAge)
             {
-                return BadRequest(CommonMessages.ERROR.InvalidAgeRange);
+                return BadRequest(CommonFunctions.DisplayErrors.ReturnInvalidAgeRangeMessage);
             }
 
-            PagedList<ShapedModel> pagedResult = await _serviceManager.Employee.GetAllAsync(parameter);
+            PagedList<DynamicModel> pagedResult = await _serviceManager.Employee.GetAllAsync(parameter);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
 
@@ -47,10 +47,10 @@ namespace RestfulApiHandler.Controllers
         {
             if (parameter.MinAge > parameter.MaxAge)
             {
-                return BadRequest(CommonMessages.ERROR.InvalidAgeRange);
+                return BadRequest(CommonFunctions.DisplayErrors.ReturnInvalidAgeRangeMessage);
             }
 
-            PagedList<ShapedModel> pagedResult = await _serviceManager.Employee.GetAllAsync(parameter);
+            PagedList<DynamicModel> pagedResult = await _serviceManager.Employee.GetAllAsync(parameter);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
 
@@ -98,7 +98,7 @@ namespace RestfulApiHandler.Controllers
         {
             if (patchDocument == null)
             {
-                return BadRequest(CommonMessages.ERROR.NullObject(nameof(JsonPatchDocument<EmployeeForUpdateDto>)));
+                return BadRequest(CommonFunctions.DisplayErrors.ReturnNullObjectMessage(nameof(JsonPatchDocument<EmployeeForUpdateDto>)));
             }
             if (await _serviceManager.Employee.IsValidIdAsync(employeeId) == false)
             {

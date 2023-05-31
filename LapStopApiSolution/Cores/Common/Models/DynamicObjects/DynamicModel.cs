@@ -4,14 +4,14 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace Shared.CustomModels.DynamicObjects
+namespace Common.Models.DynamicObjects
 {
-    public class ShapedModel : DynamicObject, IXmlSerializable, IDictionary<string, object>
+    public sealed class DynamicModel : DynamicObject, IXmlSerializable, IDictionary<string, object>
     {
         private readonly string _root = "Entity";
         private readonly IDictionary<string, object> _expando;
 
-        public ShapedModel()
+        public DynamicModel()
         {
             _expando = new ExpandoObject();
         }

@@ -1,4 +1,6 @@
-﻿using Contracts.ILog;
+﻿using Common.Functions;
+using Common.Models.DynamicObjects;
+using Contracts.ILog;
 using Contracts.IServices;
 using DTO.Input.FromBody.Creation;
 using DTO.Input.FromBody.Update;
@@ -14,8 +16,6 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using RestfulApiHandler.ActionFilters;
 using RestfulApiHandler.Roots;
-using Shared.Common.Messages;
-using Shared.CustomModels.DynamicObjects;
 using System.Text.Json;
 
 namespace RestfulApiHandler.Controllers
@@ -34,7 +34,7 @@ namespace RestfulApiHandler.Controllers
         [Route("brands", Name = "GetAllBrandsHead")]
         public async Task<IActionResult> GetAllBrandsHead([FromQuery]BrandParameters parameters) 
         {
-            PagedList<ShapedModel> pagedResult = await _serviceManager.Brand.GetAllAsync(parameters);
+            PagedList<DynamicModel> pagedResult = await _serviceManager.Brand.GetAllAsync(parameters);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
 
@@ -46,7 +46,7 @@ namespace RestfulApiHandler.Controllers
         //[ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         public async Task<IActionResult> GetAllBrands([FromQuery] BrandParameters parameters)
         {
-            PagedList<ShapedModel> pagedResult = await _serviceManager.Brand.GetAllAsync(parameters);
+            PagedList<DynamicModel> pagedResult = await _serviceManager.Brand.GetAllAsync(parameters);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
 
@@ -74,7 +74,7 @@ namespace RestfulApiHandler.Controllers
         {
             if (creationDto == null)
             {
-                return BadRequest(CommonMessages.ERROR.NullObject(nameof(BrandForCreationDto)));
+                return BadRequest(CommonFunctions.DisplayErrors.ReturnNullObjectMessage(nameof(BrandForCreationDto)));
             }
 
             // apply Validation
@@ -129,7 +129,7 @@ namespace RestfulApiHandler.Controllers
         {
             if (patchDocument == null)
             {
-                return BadRequest(CommonMessages.ERROR.NullObject(nameof(JsonPatchDocument<BrandForUpdateDto>)));
+                return BadRequest(CommonFunctions.DisplayErrors.ReturnNullObjectMessage(nameof(JsonPatchDocument<BrandForUpdateDto>)));
             }
             else if (await _serviceManager.Brand.IsValidIdAsync(brandId) == false)
             {

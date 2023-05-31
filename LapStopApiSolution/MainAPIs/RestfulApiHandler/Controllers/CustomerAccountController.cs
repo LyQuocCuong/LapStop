@@ -1,4 +1,5 @@
-﻿using Contracts.ILog;
+﻿using Common.Functions;
+using Contracts.ILog;
 using Contracts.IServices;
 using DTO.Input.FromBody.Creation;
 using DTO.Input.FromBody.Update;
@@ -44,7 +45,7 @@ namespace RestfulApiHandler.Controllers
         {
             if (creationDto == null)
             {
-                return BadRequest(Shared.Common.Messages.CommonMessages.ERROR.NullObject(nameof(CustomerAccountForCreationDto)));
+                return BadRequest(CommonFunctions.DisplayErrors.ReturnNullObjectMessage(nameof(CustomerAccountForCreationDto)));
             }
             CustomerAccountDto newCustomerAccountDto = await _serviceManager.CustomerAccount.CreateAsync(customerId, creationDto);
             return CreatedAtRoute("GetCustomerAccountByCustomerId", new { customerId = newCustomerAccountDto.CustomerId }, newCustomerAccountDto);
