@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Infrastructures\NLogLib\NLogLib.csproj" />
+    <ProjectReference Include="..\..\Cores\Contracts\Contracts.csproj" />
     <ProjectReference Include="..\..\Logic\Services\Services.csproj" />
   </ItemGroup>
 

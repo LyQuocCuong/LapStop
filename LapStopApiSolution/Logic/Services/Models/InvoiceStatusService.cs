@@ -1,5 +1,6 @@
-﻿using AutoMapper;
-using Common.Models.Exceptions;
+﻿using Common.Models.Exceptions;
+using Contracts.ILog;
+using Contracts.IMapping;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
@@ -9,14 +10,19 @@ namespace Services.Models
 {
     internal sealed class InvoiceStatusService : ServiceBase, IInvoiceStatusService
     {
-        public InvoiceStatusService(IRepositoryManager repositoryManager, IMapper mapper) : base(repositoryManager, mapper)
+        public InvoiceStatusService(ILogService logService,
+                               IMappingService mappingService,
+                               IRepositoryManager repositoryManager)
+            : base(logService,
+                  mappingService,
+                  repositoryManager)
         {
         }
 
         public async Task<IEnumerable<InvoiceStatusDto>> GetAllAsync()
         {
             IEnumerable<InvoiceStatus> invoiceStatuses = await _repositoryManager.InvoiceStatus.GetAllAsync(isTrackChanges: false);
-            return MappingToNewObj<IEnumerable<InvoiceStatusDto>>(invoiceStatuses);
+            return _mappingService.Map<IEnumerable<InvoiceStatus>, IEnumerable<InvoiceStatusDto>>(invoiceStatuses);
         }
 
         public async Task<InvoiceStatusDto?> GetOneByIdAsync(Guid invoiceStatusId)
@@ -26,7 +32,7 @@ namespace Services.Models
             {
                 throw new ExNotFoundInDBModel(nameof(InvoiceStatusService), nameof(GetOneByIdAsync), typeof(InvoiceStatus), invoiceStatusId);
             }
-            return MappingToNewObj<InvoiceStatusDto>(invoiceStatus);
+            return _mappingService.Map<InvoiceStatus, InvoiceStatusDto>(invoiceStatus);
         }
     }
 }

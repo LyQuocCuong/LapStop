@@ -1,5 +1,6 @@
-﻿using AutoMapper;
-using Common.Models.Exceptions;
+﻿using Common.Models.Exceptions;
+using Contracts.ILog;
+using Contracts.IMapping;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
@@ -9,7 +10,12 @@ namespace Services.Models
 {
     internal sealed class ProductGalleryService : ServiceBase, IProductGalleryService
     {
-        public ProductGalleryService(IRepositoryManager repositoryManager, IMapper mapper) : base(repositoryManager, mapper)
+        public ProductGalleryService(ILogService logService,
+                               IMappingService mappingService,
+                               IRepositoryManager repositoryManager)
+            : base(logService,
+                  mappingService,
+                  repositoryManager)
         {
         }
 
@@ -20,7 +26,7 @@ namespace Services.Models
                 throw new ExNotFoundInDBModel(nameof(ProductGalleryService), nameof(GetAllByProductIdAsync), typeof(Product), productId);
             }
             IEnumerable<ProductGallery> productGalleries = await _repositoryManager.ProductGallery.GetAllByProductIdAsync(isTrackChanges: false, productId);
-            return MappingToNewObj<IEnumerable<ProductGalleryDto>>(productGalleries);
+            return _mappingService.Map<IEnumerable<ProductGallery>, IEnumerable<ProductGalleryDto>>(productGalleries);
         }
     }
 }

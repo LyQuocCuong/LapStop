@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Cores\Contracts.IServices\Contracts.IServices.csproj" />
-    <ProjectReference Include="..\..\Infrastructures\AutoMapperLib\AutoMapperLib.csproj" />
     <ProjectReference Include="..\Repositories\Repositories.csproj" />
   </ItemGroup>
 

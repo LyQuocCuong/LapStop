@@ -1,5 +1,6 @@
-﻿using AutoMapper;
-using Common.Models.Exceptions;
+﻿using Common.Models.Exceptions;
+using Contracts.ILog;
+using Contracts.IMapping;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
@@ -9,14 +10,19 @@ namespace Services.Models
 {
     internal sealed class CartService : ServiceBase, ICartService
     {
-        public CartService(IRepositoryManager repositoryManager, IMapper mapper) : base(repositoryManager, mapper)
+        public CartService(ILogService logService,
+                            IMappingService mappingService,
+                            IRepositoryManager repositoryManager)
+            : base(logService,
+                  mappingService,
+                  repositoryManager)
         {
         }
 
         public async Task<IEnumerable<CartDto>> GetAllAsync()
         {
             IEnumerable<Cart> carts = await _repositoryManager.Cart.GetAllAsync(isTrackChanges: false);
-            return MappingToNewObj<IEnumerable<CartDto>>(carts);
+            return _mappingService.Map<IEnumerable<Cart>, IEnumerable<CartDto>>(carts);
         }
 
         public async Task<CartDto?> GetOneByCustomerIdAsync(Guid customerId)
@@ -30,7 +36,7 @@ namespace Services.Models
             {
                 throw new ExNotFoundInDBModel(nameof(CartService), nameof(GetOneByCustomerIdAsync), typeof(Cart), customerId);
             }
-            return MappingToNewObj<CartDto>(cart);
+            return _mappingService.Map<Cart, CartDto>(cart);
         }
 
         public async Task<bool> IsValidIdAsync(Guid cartId)

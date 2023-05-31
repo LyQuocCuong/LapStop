@@ -1,5 +1,6 @@
-﻿using AutoMapper;
-using Common.Models.Exceptions;
+﻿using Common.Models.Exceptions;
+using Contracts.ILog;
+using Contracts.IMapping;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
@@ -9,14 +10,19 @@ namespace Services.Models
 {
     internal sealed class ProductStatusService : ServiceBase, IProductStatusService
     {
-        public ProductStatusService(IRepositoryManager repositoryManager, IMapper mapper) : base(repositoryManager, mapper)
+        public ProductStatusService(ILogService logService,
+                               IMappingService mappingService,
+                               IRepositoryManager repositoryManager)
+            : base(logService,
+                  mappingService,
+                  repositoryManager)
         {
         }
 
         public async Task<IEnumerable<ProductStatusDto>> GetAllAsync()
         {
             IEnumerable<ProductStatus> productStatuses = await _repositoryManager.ProductStatus.GetAllAsync(isTrackChanges: false);
-            return MappingToNewObj<IEnumerable<ProductStatusDto>>(productStatuses);
+            return _mappingService.Map<IEnumerable<ProductStatus>, IEnumerable<ProductStatusDto>>(productStatuses);
         }
 
         public async Task<ProductStatusDto?> GetOneByIdAsync(Guid productStatusId)
@@ -26,7 +32,7 @@ namespace Services.Models
             {
                 throw new ExNotFoundInDBModel(nameof(ProductStatusService), nameof(GetOneByIdAsync), typeof(ProductStatus), productStatusId);
             }
-            return MappingToNewObj<ProductStatusDto>(productStatus);
+            return _mappingService.Map<ProductStatus, ProductStatusDto>(productStatus);
         }
     }
 }

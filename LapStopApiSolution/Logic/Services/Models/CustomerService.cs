@@ -1,7 +1,8 @@
-﻿using AutoMapper;
-using Common.Models.DynamicObjects;
+﻿using Common.Models.DynamicObjects;
 using Common.Models.Exceptions;
 using Contracts.IDataShaper;
+using Contracts.ILog;
+using Contracts.IMapping;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
@@ -17,9 +18,13 @@ namespace Services.Models
     {
         private readonly IDataShaper<CustomerDto> _dataShaper;
 
-        public CustomerService(IRepositoryManager repositoryManager, 
-                               IMapper mapper,
-                               IDataShaper<CustomerDto> dataShaper) : base(repositoryManager, mapper)
+        public CustomerService(ILogService logService,
+                            IMappingService mappingService,
+                            IRepositoryManager repositoryManager,
+                            IDataShaper<CustomerDto> dataShaper)
+            : base(logService,
+                  mappingService,
+                  repositoryManager)
         {
             _dataShaper = dataShaper;
         }
@@ -39,7 +44,7 @@ namespace Services.Models
             IEnumerable<Customer> customers = await _repositoryManager.Customer.GetAllAsync(isTrackChanges: false, parameters);
             int totalRecords = await _repositoryManager.Customer.CountAllAsync(parameters);
 
-            var sourceDto = MappingToNewObj<IEnumerable<CustomerDto>>(customers);
+            var sourceDto = _mappingService.Map<IEnumerable<Customer>, IEnumerable<CustomerDto>>(customers);
 
             var shapedData = _dataShaper.ShapingData(sourceDto, parameters.Fields);
 
@@ -49,13 +54,13 @@ namespace Services.Models
         public async Task<CustomerDto?> GetOneByIdAsync(Guid customerId)
         {
             Customer customer = await GetCustomerAndCheckIfItExists(isTrackChanges: false, customerId);
-            return MappingToNewObj<CustomerDto>(customer);
+            return _mappingService.Map<Customer, CustomerDto>(customer);
         }
 
         public async Task<CustomerForUpdateDto> GetDtoForPatchAsync(Guid customerId)
         {
             Customer? customer = await _repositoryManager.Customer.GetOneByIdAsync(isTrackChanges: false, customerId);
-            return MappingToNewObj<CustomerForUpdateDto>(customer);
+            return _mappingService.Map<Customer, CustomerForUpdateDto>(customer);
         }
 
         public async Task<bool> IsValidIdAsync(Guid customerId)
@@ -65,17 +70,17 @@ namespace Services.Models
 
         public async Task<CustomerDto> CreateAsync(CustomerForCreationDto creationDto)
         {
-            Customer newCustomer = MappingToNewObj<Customer>(creationDto);
+            Customer newCustomer = _mappingService.Map<CustomerForCreationDto, Customer>(creationDto);
             _repositoryManager.Customer.Create(newCustomer);
             await _repositoryManager.SaveChangesAsync();
 
-            return MappingToNewObj<CustomerDto>(newCustomer);
+            return _mappingService.Map<Customer, CustomerDto>(newCustomer);
         }
 
         public async Task UpdateAsync(Guid customerId, CustomerForUpdateDto updateDto)
         {
             Customer customer = await GetCustomerAndCheckIfItExists(isTrackChanges: true, customerId);
-            MappingToExistingObj(updateDto, customer);
+            _mappingService.Map<CustomerForUpdateDto, Customer>(updateDto, customer);
             await _repositoryManager.SaveChangesAsync();
         }
 
