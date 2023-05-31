@@ -1,7 +1,8 @@
-﻿using AutoMapper;
-using Common.Models.DynamicObjects;
+﻿using Common.Models.DynamicObjects;
 using Common.Models.Exceptions;
 using Contracts.IDataShaper;
+using Contracts.ILog;
+using Contracts.IMapping;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
@@ -17,10 +18,13 @@ namespace Services.Models
     {
         private readonly IDataShaper<BrandDto> _dataShaper;
 
-        public BrandService(IRepositoryManager repositoryManager, 
-                            IMapper mapper,
-                            IDataShaper<BrandDto> dataShaper) : 
-                                base(repositoryManager, mapper)
+        public BrandService(ILogService logService,
+                            IMappingService mappingService,    
+                            IRepositoryManager repositoryManager, 
+                            IDataShaper<BrandDto> dataShaper)
+            : base(logService, 
+                  mappingService, 
+                  repositoryManager)
         {
             _dataShaper = dataShaper;
         }
@@ -40,9 +44,9 @@ namespace Services.Models
             IEnumerable<Brand> brands = await _repositoryManager.Brand.GetAllAsync(isTrackChanges: false, parameters);
             int totalRecords = await _repositoryManager.Brand.CountAllAsync(parameters);
 
-            IEnumerable<BrandDto> sourceDto = MappingToNewObj<IEnumerable<BrandDto>>(brands);
+            IEnumerable<BrandDto> brandDtos = _mappingService.Map<IEnumerable<Brand>, IEnumerable<BrandDto>>(brands);
 
-            var shapedData = _dataShaper.ShapingData(sourceDto, parameters.Fields);
+            var shapedData = _dataShaper.ShapingData(brandDtos, parameters.Fields);
 
             return new PagedList<DynamicModel>(shapedData.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
         }
@@ -50,13 +54,13 @@ namespace Services.Models
         public async Task<BrandDto?> GetOneByIdAsync(Guid brandId)
         {
             Brand brand = await GetBrandAndCheckIfItExists(isTrackChanges: false, brandId);
-            return MappingToNewObj<BrandDto>(brand);
+            return _mappingService.Map<Brand, BrandDto>(brand);
         }
 
         public async Task<BrandForUpdateDto> GetDtoForPatchAsync(Guid brandId)
         {
             Brand brand = await GetBrandAndCheckIfItExists(isTrackChanges: false, brandId);
-            return MappingToNewObj<BrandForUpdateDto>(brand);
+            return _mappingService.Map<Brand, BrandForUpdateDto>(brand);
         }
 
         public async Task<bool> IsValidIdAsync(Guid brandId)
@@ -70,17 +74,17 @@ namespace Services.Models
 
         public async Task<BrandDto> CreateAsync(BrandForCreationDto creationDto)
         {
-            Brand newBrand = MappingToNewObj<Brand>(creationDto);
+            Brand newBrand = _mappingService.Map<BrandForCreationDto, Brand>(creationDto);
             _repositoryManager.Brand.Create(newBrand);
             await _repositoryManager.SaveChangesAsync();
 
-            return MappingToNewObj<BrandDto>(newBrand);
+            return _mappingService.Map<Brand, BrandDto>(newBrand);
         }
 
         public async Task UpdateAsync(Guid brandId, BrandForUpdateDto updateDto)
         {
             Brand brand = await GetBrandAndCheckIfItExists(isTrackChanges: true, brandId);
-            MappingToExistingObj(updateDto, brand);
+            _mappingService.Map<BrandForUpdateDto, Brand>(updateDto, brand);
             await _repositoryManager.SaveChangesAsync();
         }
 

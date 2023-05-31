@@ -1,5 +1,7 @@
+using AutoMapperLib;
 using Contracts.IDataShaper;
 using Contracts.ILog;
+using Contracts.IMapping;
 using Contracts.IRepositories;
 using Contracts.IServices;
 using DTO.Input.FromBody.Creation;
@@ -34,6 +36,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 
 // Add services to the container.
 builder.Services.AddAutoMapper(typeof(AutoMapperLib.MappingProfile));
+builder.Services.AddScoped<IMappingService, AutoMapperService>();
 
 builder.Services.AddControllers(config =>
     {

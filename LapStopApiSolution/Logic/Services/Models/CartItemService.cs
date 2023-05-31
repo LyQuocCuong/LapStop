@@ -1,5 +1,6 @@
-﻿using AutoMapper;
-using Common.Models.Exceptions;
+﻿using Common.Models.Exceptions;
+using Contracts.ILog;
+using Contracts.IMapping;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
@@ -9,7 +10,12 @@ namespace Services.Models
 {
     internal sealed class CartItemService : ServiceBase, ICartItemService
     {
-        public CartItemService(IRepositoryManager repositoryManager, IMapper mapper) : base(repositoryManager, mapper)
+        public CartItemService(ILogService logService,
+                               IMappingService mappingService,
+                               IRepositoryManager repositoryManager)
+            : base(logService,
+                  mappingService,
+                  repositoryManager)
         {
         }
 
@@ -19,8 +25,10 @@ namespace Services.Models
             {
                 throw new ExNotFoundInDBModel(nameof(CartItemService), nameof(GetAllByCartIdAsync), typeof(Cart), cartId);
             }
+            
             IEnumerable<CartItem> cartItems = await _repositoryManager.CartItem.GetAllByCartIdAsync(isTrackChanges: false, cartId);
-            return MappingToNewObj<IEnumerable<CartItemDto>>(cartItems);
+            
+            return _mappingService.Map<IEnumerable<CartItem>, IEnumerable<CartItemDto>>(cartItems);
         }
     }
 }

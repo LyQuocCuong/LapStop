@@ -1,5 +1,6 @@
-﻿using AutoMapper;
-using Common.Models.Exceptions;
+﻿using Common.Models.Exceptions;
+using Contracts.ILog;
+using Contracts.IMapping;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
@@ -9,14 +10,19 @@ namespace Services.Models
 {
     internal sealed class EmployeeAccountService : ServiceBase, IEmployeeAccountService
     {
-        public EmployeeAccountService(IRepositoryManager repositoryManager, IMapper mapper) : base(repositoryManager, mapper)
+        public EmployeeAccountService(ILogService logService,
+                                       IMappingService mappingService,
+                                       IRepositoryManager repositoryManager)
+            : base(logService,
+                  mappingService,
+                  repositoryManager)
         {
         }
 
         public async Task<IEnumerable<EmployeeAccountDto>> GetAllAsync()
         {
             IEnumerable<EmployeeAccount> employeeAccounts = await _repositoryManager.EmployeeAccount.GetAllAsync(isTrackChanges: false);
-            return MappingToNewObj<IEnumerable<EmployeeAccountDto>>(employeeAccounts);
+            return _mappingService.Map<IEnumerable<EmployeeAccount>, IEnumerable<EmployeeAccountDto>>(employeeAccounts);
         }
 
         public async Task<EmployeeAccountDto?> GetOneByEmployeeIdAsync(Guid employeeId)
@@ -30,7 +36,7 @@ namespace Services.Models
             {
                 throw new ExNotFoundInDBModel(nameof(EmployeeAccountService), nameof(GetOneByEmployeeIdAsync), typeof(EmployeeAccount), employeeId);
             }
-            return MappingToNewObj<EmployeeAccountDto>(employeeAccount);
+            return _mappingService.Map<EmployeeAccount, EmployeeAccountDto>(employeeAccount);
         }
     }
 }

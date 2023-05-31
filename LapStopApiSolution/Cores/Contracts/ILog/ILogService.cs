@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Contracts.ILog
+﻿namespace Contracts.ILog
 {
     public interface ILogService
     {

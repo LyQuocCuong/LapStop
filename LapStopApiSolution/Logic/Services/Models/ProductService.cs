@@ -1,7 +1,8 @@
-﻿using AutoMapper;
-using Common.Models.DynamicObjects;
+﻿using Common.Models.DynamicObjects;
 using Common.Models.Exceptions;
 using Contracts.IDataShaper;
+using Contracts.ILog;
+using Contracts.IMapping;
 using Contracts.IRepositories;
 using Contracts.IServices.Models;
 using Domains.Models;
@@ -17,9 +18,13 @@ namespace Services.Models
     {
         private readonly IDataShaper<ProductDto> _dataShaper;
 
-        public ProductService(IRepositoryManager repositoryManager, 
-                              IMapper mapper,
-                              IDataShaper<ProductDto> dataShaper) : base(repositoryManager, mapper)
+        public ProductService(ILogService logService,
+                            IMappingService mappingService,
+                            IRepositoryManager repositoryManager,
+                            IDataShaper<ProductDto> dataShaper)
+            : base(logService,
+                  mappingService,
+                  repositoryManager)
         {
             _dataShaper = dataShaper;
         }
@@ -39,7 +44,7 @@ namespace Services.Models
             IEnumerable<Product> products = await _repositoryManager.Product.GetAllAsync(isTrackChanges: false, parameters);
             int totalRecords = await _repositoryManager.Product.CountAllAsync(parameters);
 
-            var sourceDto = MappingToNewObj<IEnumerable<ProductDto>>(products);
+            var sourceDto = _mappingService.Map<IEnumerable<Product>, IEnumerable<ProductDto>>(products);
 
             var shapedData = _dataShaper.ShapingData(sourceDto, parameters.Fields);
 
@@ -49,13 +54,13 @@ namespace Services.Models
         public async Task<ProductDto?> GetOneByIdAsync(Guid productId)
         {
             Product product = await GetProductAndCheckIfItExists(isTrackChanges: false, productId);
-            return MappingToNewObj<ProductDto>(product);
+            return _mappingService.Map<Product, ProductDto>(product);
         }
 
         public async Task<ProductForUpdateDto> GetDtoForPatchAsync(Guid productId)
         {
             Product product = await GetProductAndCheckIfItExists(isTrackChanges: false, productId);
-            return MappingToNewObj<ProductForUpdateDto>(product);
+            return _mappingService.Map<Product, ProductForUpdateDto>(product);
         }
 
         public async Task<bool> IsValidIdAsync(Guid productId)
@@ -65,17 +70,17 @@ namespace Services.Models
 
         public async Task<ProductDto> CreateAsync(ProductForCreationDto creationDto)
         {
-            Product newProduct = MappingToNewObj<Product>(creationDto);
+            Product newProduct = _mappingService.Map<ProductForCreationDto, Product>(creationDto);
             _repositoryManager.Product.Create(newProduct);
             await _repositoryManager.SaveChangesAsync();
 
-            return MappingToNewObj<ProductDto>(newProduct);
+            return _mappingService.Map<Product, ProductDto>(newProduct);
         }
 
         public async Task UpdateAsync(Guid productId, ProductForUpdateDto updateDto)
         {
             Product product = await GetProductAndCheckIfItExists(isTrackChanges: true, productId);
-            MappingToExistingObj(updateDto, product);
+            _mappingService.Map<ProductForUpdateDto, Product>(updateDto, product);
             await _repositoryManager.SaveChangesAsync();
         }
 
@@ -88,15 +93,15 @@ namespace Services.Models
 
         public async Task<IEnumerable<ProductDto>> BulkCreateAsync(IEnumerable<ProductForCreationDto> creationDtos)
         {
-            var newProducts = MappingToNewObj<IEnumerable<Product>>(creationDtos);
+            var newProducts = _mappingService.Map<IEnumerable<ProductForCreationDto>, IEnumerable<Product>>(creationDtos);
             await _repositoryManager.Product.BulkCreateAsync(newProducts);
 
-            return MappingToNewObj<IEnumerable<ProductDto>>(newProducts);
+            return _mappingService.Map<IEnumerable<Product>, IEnumerable<ProductDto>>(newProducts);
         }
 
         public async Task BulkUpdateAsync(IEnumerable<ProductForBulkUpdateDto> bulkUpdateDtos)
         {
-            var existingProducts = MappingToNewObj<IEnumerable<Product>>(bulkUpdateDtos);
+            var existingProducts = _mappingService.Map<IEnumerable<ProductForBulkUpdateDto>, IEnumerable<Product>>(bulkUpdateDtos);
             await _repositoryManager.Product.BulkUpdateAsync(existingProducts);
         }
 
