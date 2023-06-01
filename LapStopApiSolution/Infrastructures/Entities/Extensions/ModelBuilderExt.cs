@@ -1,12 +1,6 @@
-﻿using Entities.Configurations;
-using Domains.Models;
+﻿using Domains.Models;
+using Entities.Configurations;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domains.Base;
 
 namespace Entities.Extensions
 {

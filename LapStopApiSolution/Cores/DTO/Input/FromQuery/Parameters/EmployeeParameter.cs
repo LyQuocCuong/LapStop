@@ -1,8 +1,8 @@
-﻿using DTO.Base;
+﻿using DTO.Bases;
 
 namespace DTO.Input.FromQuery.Parameters
 {
-    public class EmployeeParameter : RequestParameters
+    public class EmployeeParameter : BaseRequestParameters
     {
         public EmployeeParameter() 
         {

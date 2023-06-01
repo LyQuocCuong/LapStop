@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Infrastructures\AutoMapperLib\AutoMapperLib.csproj" />
+    <ProjectReference Include="..\..\Infrastructures\Helpers\Helpers.csproj" />
     <ProjectReference Include="..\..\Infrastructures\NLogLib\NLogLib.csproj" />
     <ProjectReference Include="..\..\MainAPIs\RestfulApiHandler\RestfulApiHandler.csproj" />
   </ItemGroup>

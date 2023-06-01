@@ -1,6 +1,6 @@
-﻿namespace DTO.Base
+﻿namespace DTO.Bases
 {
-    public abstract class RequestParameters
+    public abstract class BaseRequestParameters
     {
         const int maxPageSize = 50;
         public int PageNumber { get; set; } = 1;

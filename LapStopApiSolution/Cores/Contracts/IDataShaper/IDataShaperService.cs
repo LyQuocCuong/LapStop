@@ -2,7 +2,7 @@
 
 namespace Contracts.IDataShaper
 {
-    public interface IDataShaper<TModel>
+    public interface IDataShaperService<TModel>
     {
         IEnumerable<DynamicModel> ShapingData (IEnumerable<TModel> models, string fieldsStr);
 

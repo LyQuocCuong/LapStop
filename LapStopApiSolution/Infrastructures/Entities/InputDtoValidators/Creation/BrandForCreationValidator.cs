@@ -1,7 +1,7 @@
 ﻿using DTO.Input.FromBody.Creation;
 using FluentValidation;
 
-namespace Entities.Validators.Creation
+namespace Entities.InputDtoValidators.Creation
 {
     public sealed class BrandForCreationValidator : AbstractValidator<BrandForCreationDto>
     {
