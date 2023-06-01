@@ -1,4 +1,5 @@
 using AutoMapperLib;
+using AutoMapperLib.Profiles;
 using Contracts.IDataShaper;
 using Contracts.ILog;
 using Contracts.IMapping;
@@ -35,7 +36,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 
 
 // Add services to the container.
-builder.Services.AddAutoMapper(typeof(AutoMapperLib.MappingProfile));
+builder.Services.AddAutoMapper(typeof(MappingProfiles));
 builder.Services.AddScoped<IMappingService, AutoMapperService>();
 
 builder.Services.AddControllers(config =>
