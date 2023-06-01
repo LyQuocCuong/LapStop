@@ -16,12 +16,12 @@ namespace Services.Models
 {
     internal sealed class ProductService : ServiceBase, IProductService
     {
-        private readonly IDataShaper<ProductDto> _dataShaper;
+        private readonly IDataShaperService<ProductDto> _dataShaper;
 
         public ProductService(ILogService logService,
                             IMappingService mappingService,
                             IRepositoryManager repositoryManager,
-                            IDataShaper<ProductDto> dataShaper)
+                            IDataShaperService<ProductDto> dataShaper)
             : base(logService,
                   mappingService,
                   repositoryManager)

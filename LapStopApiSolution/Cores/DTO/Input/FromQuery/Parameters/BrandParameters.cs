@@ -1,8 +1,8 @@
-﻿using DTO.Base;
+﻿using DTO.Bases;
 
 namespace DTO.Input.FromQuery.Parameters
 {
-    public sealed class BrandParameters : RequestParameters
+    public sealed class BrandParameters : BaseRequestParameters
     {
     }
 }

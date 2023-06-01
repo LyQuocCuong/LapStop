@@ -2,21 +2,20 @@
 using Contracts.IDataShaper;
 using System.Reflection;
 
-namespace Services.DataShaping
+namespace Helpers.DataShaper
 {
-    public class DataShaper<TModel> : IDataShaper<TModel> where TModel : class
+    public class DataShaperService<TModel> : IDataShaperService<TModel> where TModel : class
     {
         public PropertyInfo[] propertyInfos { get; set; }   
 
-        public DataShaper()
+        public DataShaperService()
         {
             // get ALL props (DEFAULT)
             propertyInfos = typeof(TModel).GetProperties(BindingFlags.Public | 
                                                          BindingFlags.Instance);
         }
 
-        public IEnumerable<DynamicModel> ShapingData(IEnumerable<TModel> models, 
-                                                    string fieldsStr)
+        public IEnumerable<DynamicModel> ShapingData(IEnumerable<TModel> models, string fieldsStr)
         {
             var requiredProperties = GetRequiredProperties(fieldsStr);
             return FetchData(models, requiredProperties);

@@ -1,4 +1,4 @@
-﻿using DTO.Base;
+﻿using DTO.Bases;
 
 namespace DTO.Output.Data
 {

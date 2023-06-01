@@ -1,8 +1,8 @@
-﻿using DTO.Base;
+﻿using DTO.Bases;
 
 namespace DTO.Input.FromQuery.Parameters
 {
-    public class CustomerParameters : RequestParameters
+    public class CustomerParameters : BaseRequestParameters
     {
     }
 }

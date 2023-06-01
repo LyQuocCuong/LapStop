@@ -23,8 +23,8 @@ namespace Repositories.Extensions
             }
             string lowerCaseTerm = parameter.SearchTerm.ToLower();
 
-            return employees.Where(e => e.FirstName.ToLower().Contains(lowerCaseTerm) ||
-                                        e.LastName.ToLower().Contains(lowerCaseTerm));
+            return employees.Where(e => (e.FirstName != null && e.FirstName.ToLower().Contains(lowerCaseTerm)) ||
+                                        (e.LastName != null && e.LastName.ToLower().Contains(lowerCaseTerm)));
         }
 
         public static IQueryable<Employee> OrderByExt(this IQueryable<Employee> employees, 

@@ -16,12 +16,12 @@ namespace Services.Models
 {
     internal sealed class BrandService : ServiceBase, IBrandService
     {
-        private readonly IDataShaper<BrandDto> _dataShaper;
+        private readonly IDataShaperService<BrandDto> _dataShaper;
 
         public BrandService(ILogService logService,
                             IMappingService mappingService,    
                             IRepositoryManager repositoryManager, 
-                            IDataShaper<BrandDto> dataShaper)
+                            IDataShaperService<BrandDto> dataShaper)
             : base(logService, 
                   mappingService, 
                   repositoryManager)

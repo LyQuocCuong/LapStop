@@ -38,10 +38,10 @@ namespace Services
                               IMappingService mappingService,
                               IRepositoryManager repositoryManager, 
 
-                              IDataShaper<EmployeeDto> dataShaperEmployee,
-                              IDataShaper<CustomerDto> dataShaperCustomer,
-                              IDataShaper<ProductDto> dataShaperProduct,
-                              IDataShaper<BrandDto> dataShaperBrand)
+                              IDataShaperService<EmployeeDto> dataShaperEmployee,
+                              IDataShaperService<CustomerDto> dataShaperCustomer,
+                              IDataShaperService<ProductDto> dataShaperProduct,
+                              IDataShaperService<BrandDto> dataShaperBrand)
         {
             _brandService = new Lazy<IBrandService>(() => new BrandService(logService, mappingService, repositoryManager, dataShaperBrand));
             _cartService = new Lazy<ICartService>(() => new CartService(logService, mappingService, repositoryManager));

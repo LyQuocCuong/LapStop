@@ -19,7 +19,7 @@ namespace RestfulApiHandler.ActionFilters
             var action = context.RouteData.Values["action"];
             var controller = context.RouteData.Values["controller"];
             var param = context.ActionArguments
-                               .FirstOrDefault(x => x.Value.ToString().Contains("Dto")).Value;
+                               .FirstOrDefault(arg => arg.Value.ToString().Contains("Dto")).Value;
             if (param is null)
             {
                 context.Result = new BadRequestObjectResult(CommonFunctions.DisplayErrors.ReturnNullObjectMessage(nameof(param)));

@@ -1,24 +1,12 @@
-using AutoMapperLib;
-using AutoMapperLib.Profiles;
-using Contracts.IDataShaper;
 using Contracts.ILog;
-using Contracts.IMapping;
 using Contracts.IRepositories;
 using Contracts.IServices;
-using DTO.Input.FromBody.Creation;
-using DTO.Output.Data;
-using Entities.Context;
-using Entities.Validators.Creation;
-using FluentValidation;
 using LapStopApiHost.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using NLog;
 using NLogLib;
 using Repositories;
-using RestfulApiHandler.ActionFilters;
 using Services;
-using Services.DataShaping;
 
 LogManager.LoadConfiguration(
     Path.Combine(Directory.GetCurrentDirectory(), 
@@ -33,11 +21,6 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
     // disable 400 – Bad Request responses of [ApiController] attr
     options.SuppressModelStateInvalidFilter = true;  
 });
-
-
-// Add services to the container.
-builder.Services.AddAutoMapper(typeof(MappingProfiles));
-builder.Services.AddScoped<IMappingService, AutoMapperService>();
 
 builder.Services.AddControllers(config =>
     {
@@ -55,47 +38,19 @@ builder.Services.AddControllers(config =>
     .AddApplicationPart(typeof(RestfulApiHandler.AssemblyReference).Assembly)
     .AddNewtonsoftJson();
 
-builder.Services.AddDbContext<LapStopContext>(
-    options => options.UseSqlServer(builder.Configuration.GetConnectionString("LapStopConnection"))
-);
-
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 builder.Services.AddScoped<IServiceManager, ServiceManager>();
 builder.Services.AddSingleton<ILogService, NLogService>();
+builder.Services.RegisterDI_LapStopContext(builder.Configuration);
+builder.Services.RegisterDI_AutoMapper();
+builder.Services.RegisterDI_DataShaper();
+builder.Services.RegisterDI_CustomValidationAttribute();    // implement IActionFilter
+builder.Services.RegisterDI_FluentValidation();             // FluentValidation.AspNetCore package
+//builder.Services.RegisterDI_DotNetResponseCaching();      // [Expiration]
+builder.Services.RegisterDI_MarvinResponseCaching();        // [Validation] Marvin.Cache.Header package
+builder.Services.RegisterDI_Swagger();
 
-builder.Services.AddScoped<IValidator<BrandForCreationDto>, BrandForCreationValidator>();
 
-// Register for IDataShaper
-builder.Services.AddScoped<IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>();
-builder.Services.AddScoped<IDataShaper<BrandDto>, DataShaper<BrandDto>>();
-builder.Services.AddScoped<IDataShaper<CustomerDto>, DataShaper<CustomerDto>>();
-builder.Services.AddScoped<IDataShaper<ProductDto>, DataShaper<ProductDto>>();
-
-// Register ActionFilter to Services
-builder.Services.AddScoped<ValidationFilterAttribute>();
-
-//Register to IOC
-//builder.Services.AddResponseCaching();
-
-builder.Services.AddHttpCacheHeaders(
-    (expirationOpt) =>
-    {
-        // Just use to decorate the Reponse's Header (NOT check Expiration)
-        expirationOpt.MaxAge = 10;
-        expirationOpt.CacheLocation = Marvin.Cache.Headers.CacheLocation.Public;
-    },
-    (validationOpt) =>
-    {
-        // [MustRevalidate = true] will STOPPING the [ResponseCaching - ReturnDataFromCache()].
-        // When [ResponseCaching] will get the data from Cache to return if MustRevalidate = false
-        // They are opposite each other.
-        validationOpt.MustRevalidate = true;
-    }
-);
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -117,7 +72,6 @@ app.UseHttpsRedirection();
 
 // UseCors must be called before UseResponseCaching
 //app.UseCors();
-
 
 app.UseAuthorization();
 
