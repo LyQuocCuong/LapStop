@@ -4,7 +4,7 @@ using DTO.Input.FromBody.Creation;
 using DTO.Input.FromBody.Update;
 using DTO.Output.Data;
 
-namespace AutoMapperLib.Profiles
+namespace InfraServices.AutoMapper.Profiles
 {
     public partial class MappingProfiles : Profile
     {
