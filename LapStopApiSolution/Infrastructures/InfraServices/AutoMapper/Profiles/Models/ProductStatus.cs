@@ -2,18 +2,18 @@
 using Domains.Models;
 using DTO.Output.Data;
 
-namespace AutoMapperLib.Profiles
+namespace InfraServices.AutoMapper.Profiles
 {
     public partial class MappingProfiles : Profile
     {
-        private void MappingInvoiceStatus()
+        private void MappingProductStatus()
         {
-            Mapping_InvoiceStatus_To_InvoiceStatusDto();
+            Mapping_ProductStatus_To_ProductStatusDto();
         }
 
-        private void Mapping_InvoiceStatus_To_InvoiceStatusDto()
+        private void Mapping_ProductStatus_To_ProductStatusDto()
         {
-            CreateMap<InvoiceStatus, InvoiceStatusDto>()
+            CreateMap<ProductStatus, ProductStatusDto>()
                 .ForMember(dto => dto.Id,
                            dto_Id => dto_Id.MapFrom(e => e.Id))
                 .ForMember(dto => dto.Name,
@@ -24,7 +24,6 @@ namespace AutoMapperLib.Profiles
                            dto_IsEnable => dto_IsEnable.MapFrom(e => e.IsEnable))
                 .ForMember(dto => dto.IsRemoved,
                            dto_IsRemoved => dto_IsRemoved.MapFrom(e => e.IsRemoved));
-
         }
     }
 }

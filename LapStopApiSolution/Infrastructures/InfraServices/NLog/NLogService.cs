@@ -1,7 +1,7 @@
 ﻿using Contracts.ILog;
 using NLog;
 
-namespace NLogLib
+namespace InfraServices.NLog
 {
     public sealed class NLogService : ILogService
     {

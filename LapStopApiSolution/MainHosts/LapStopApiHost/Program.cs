@@ -4,17 +4,17 @@ using Contracts.ILog;
 using Contracts.IRepositories;
 using Contracts.IServices;
 using DTO.Output.Data;
+using InfraServices.NLog;
 using LapStopApiHost.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
-using NLogLib;
 using Repositories;
 using RestfulApiHandler.HATEOAS;
 using Services;
 
 LogManager.LoadConfiguration(
     Path.Combine(Directory.GetCurrentDirectory(), 
-    "../../Infrastructures/NLogLib/NLog.config")
+    "../../Infrastructures/InfraServices/NLog/NLog.config")
 );
 
 var builder = WebApplication.CreateBuilder(args);

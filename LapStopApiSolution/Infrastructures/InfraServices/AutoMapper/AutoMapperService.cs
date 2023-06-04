@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Contracts.IMapping;
 
-namespace AutoMapperLib
+namespace InfraServices.AutoMapper
 {
     public class AutoMapperService : IMappingService
     {
         private readonly IMapper _autoMapper;
 
-        public AutoMapperService(IMapper autoMapper) 
+        public AutoMapperService(IMapper autoMapper)
         {
             _autoMapper = autoMapper;
         }

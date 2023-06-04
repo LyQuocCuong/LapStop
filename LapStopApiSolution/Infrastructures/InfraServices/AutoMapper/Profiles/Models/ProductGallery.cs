@@ -2,7 +2,7 @@
 using Domains.Models;
 using DTO.Output.Data;
 
-namespace AutoMapperLib.Profiles
+namespace InfraServices.AutoMapper.Profiles
 {
     public partial class MappingProfiles : Profile
     {

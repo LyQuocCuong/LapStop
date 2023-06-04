@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace AutoMapperLib.Profiles
+namespace InfraServices.AutoMapper.Profiles
 {
     public partial class MappingProfiles : Profile
     {
