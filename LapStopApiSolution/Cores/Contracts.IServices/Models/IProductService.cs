@@ -9,7 +9,7 @@ namespace Contracts.IServices.Models
 {
     public interface IProductService
     {
-        Task<PagedList<DynamicModel>> GetAllAsync(ProductParameters parameters);
+        Task<PagedList<ExpandoForXmlObject>> GetAllAsync(ProductParameters parameters);
 
         Task<ProductDto?> GetOneByIdAsync(Guid productId);
 

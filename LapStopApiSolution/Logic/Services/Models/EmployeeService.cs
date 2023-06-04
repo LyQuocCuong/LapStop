@@ -1,6 +1,6 @@
 ﻿using Common.Models.DynamicObjects;
 using Common.Models.Exceptions;
-using Contracts.IDataShaper;
+using Contracts.DataShaper;
 using Contracts.ILog;
 using Contracts.IMapping;
 using Contracts.IRepositories;
@@ -16,12 +16,12 @@ namespace Services.Models
 {
     internal sealed class EmployeeService : ServiceBase, IEmployeeService
     {
-        private readonly IDataShaperService<EmployeeDto> _dataShaper;
+        private readonly IDataShaperService<EmployeeDto, ExpandoForXmlObject> _dataShaper;
 
         public EmployeeService(ILogService logService,
                             IMappingService mappingService,
                             IRepositoryManager repositoryManager,
-                            IDataShaperService<EmployeeDto> dataShaper)
+                            IDataShaperService<EmployeeDto, ExpandoForXmlObject> dataShaper)
             : base(logService,
                   mappingService,
                   repositoryManager)
@@ -39,16 +39,17 @@ namespace Services.Models
             return employee;
         }
 
-        public async Task<PagedList<DynamicModel>> GetAllAsync(EmployeeParameter parameter)
+        public async Task<PagedList<ExpandoForXmlObject>> GetAllAsync(EmployeeParameter parameter)
         {
             IEnumerable<Employee> employees = await _repositoryManager.Employee.GetAllAsync(isTrackChanges: false, parameter);
             int totalRecords = await _repositoryManager.Employee.CountAllAsync(parameter);
             
             var sourceDto = _mappingService.Map<IEnumerable<Employee>, IEnumerable<EmployeeDto>>(employees);
 
-            var shapedData = _dataShaper.ShapingData(sourceDto, parameter.Fields);
+            var shapedData = _dataShaper.ExecuteShapingData(sourceDto, parameter.Fields);
 
-            return new PagedList<DynamicModel>(shapedData.ToList(), totalRecords, parameter.PageNumber, parameter.PageSize); ;
+            //return new PagedList<DynamicModel>(shapedData.ToList(), totalRecords, parameter.PageNumber, parameter.PageSize); ;
+            return new PagedList<ExpandoForXmlObject>(new List<ExpandoForXmlObject>(), 0, 0, 0);
         }
 
         public async Task<EmployeeDto?> GetOneByIdAsync(Guid employeeId)

@@ -1,4 +1,6 @@
-﻿using Contracts.IDataShaper;
+﻿using Common.Models.DynamicObjects;
+using Contracts.DataShaper;
+using Contracts.HATEOAS;
 using Contracts.ILog;
 using Contracts.IMapping;
 using Contracts.IRepositories;
@@ -38,12 +40,14 @@ namespace Services
                               IMappingService mappingService,
                               IRepositoryManager repositoryManager, 
 
-                              IDataShaperService<EmployeeDto> dataShaperEmployee,
-                              IDataShaperService<CustomerDto> dataShaperCustomer,
-                              IDataShaperService<ProductDto> dataShaperProduct,
-                              IDataShaperService<BrandDto> dataShaperBrand)
+                              IHateoasService<BrandDto, ExpandoForXmlObject> brandHateoasService,
+
+                              IDataShaperService<EmployeeDto, ExpandoForXmlObject> dataShaperEmployee,
+                              IDataShaperService<CustomerDto, ExpandoForXmlObject> dataShaperCustomer,
+                              IDataShaperService<ProductDto, ExpandoForXmlObject> dataShaperProduct,
+                              IDataShaperService<BrandDto, ExpandoForXmlObject> dataShaperBrand)
         {
-            _brandService = new Lazy<IBrandService>(() => new BrandService(logService, mappingService, repositoryManager, dataShaperBrand));
+            _brandService = new Lazy<IBrandService>(() => new BrandService(logService, mappingService, repositoryManager, brandHateoasService, dataShaperBrand));
             _cartService = new Lazy<ICartService>(() => new CartService(logService, mappingService, repositoryManager));
             _cartItemService = new Lazy<ICartItemService>(() => new CartItemService(logService, mappingService, repositoryManager));
             _customerAccountService = new Lazy<ICustomerAccountService>(() => new CustomerAccountService(logService, mappingService, repositoryManager));

@@ -34,7 +34,7 @@ namespace RestfulApiHandler.Controllers
                 return BadRequest(CommonFunctions.DisplayErrors.ReturnInvalidAgeRangeMessage);
             }
 
-            PagedList<DynamicModel> pagedResult = await _serviceManager.Employee.GetAllAsync(parameter);
+            PagedList<ExpandoForXmlObject> pagedResult = await _serviceManager.Employee.GetAllAsync(parameter);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
 
@@ -50,7 +50,7 @@ namespace RestfulApiHandler.Controllers
                 return BadRequest(CommonFunctions.DisplayErrors.ReturnInvalidAgeRangeMessage);
             }
 
-            PagedList<DynamicModel> pagedResult = await _serviceManager.Employee.GetAllAsync(parameter);
+            PagedList<ExpandoForXmlObject> pagedResult = await _serviceManager.Employee.GetAllAsync(parameter);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
 

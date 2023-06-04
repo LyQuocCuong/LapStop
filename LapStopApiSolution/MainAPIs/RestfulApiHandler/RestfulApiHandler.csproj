@@ -14,8 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Cores\Contracts.IServices\Contracts.IServices.csproj" />
+    <ProjectReference Include="..\..\Cores\Contracts\Contracts.csproj" />
     <ProjectReference Include="..\..\Infrastructures\Entities\Entities.csproj" />
-    <ProjectReference Include="..\..\Logic\Services\Services.csproj" />
+    <ProjectReference Include="..\..\Logic\LogicServices\LogicServices.csproj" />
   </ItemGroup>
 
 </Project>

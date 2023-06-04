@@ -1,6 +1,6 @@
 ﻿using Common.Models.DynamicObjects;
 using Common.Models.Exceptions;
-using Contracts.IDataShaper;
+using Contracts.DataShaper;
 using Contracts.ILog;
 using Contracts.IMapping;
 using Contracts.IRepositories;
@@ -16,12 +16,12 @@ namespace Services.Models
 {
     internal sealed class CustomerService : ServiceBase, ICustomerService
     {
-        private readonly IDataShaperService<CustomerDto> _dataShaper;
+        private readonly IDataShaperService<CustomerDto, ExpandoForXmlObject> _dataShaper;
 
         public CustomerService(ILogService logService,
                             IMappingService mappingService,
                             IRepositoryManager repositoryManager,
-                            IDataShaperService<CustomerDto> dataShaper)
+                            IDataShaperService<CustomerDto, ExpandoForXmlObject> dataShaper)
             : base(logService,
                   mappingService,
                   repositoryManager)
@@ -39,16 +39,18 @@ namespace Services.Models
             return customer;
         }
 
-        public async Task<PagedList<DynamicModel>> GetAllAsync(CustomerParameters parameters)
+        public async Task<PagedList<ExpandoForXmlObject>> GetAllAsync(CustomerParameters parameters)
         {
-            IEnumerable<Customer> customers = await _repositoryManager.Customer.GetAllAsync(isTrackChanges: false, parameters);
-            int totalRecords = await _repositoryManager.Customer.CountAllAsync(parameters);
+            //IEnumerable<Customer> customers = await _repositoryManager.Customer.GetAllAsync(isTrackChanges: false, parameters);
+            //int totalRecords = await _repositoryManager.Customer.CountAllAsync(parameters);
 
-            var sourceDto = _mappingService.Map<IEnumerable<Customer>, IEnumerable<CustomerDto>>(customers);
+            //var sourceDto = _mappingService.Map<IEnumerable<Customer>, IEnumerable<CustomerDto>>(customers);
 
-            var shapedData = _dataShaper.ShapingData(sourceDto, parameters.Fields);
+            //var shapedData = _dataShaper.ShapingData(sourceDto, parameters.Fields);
 
-            return new PagedList<DynamicModel>(shapedData.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
+            //return new PagedList<DynamicModel>(shapedData.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
+
+            return new PagedList<ExpandoForXmlObject>(new List<ExpandoForXmlObject>(),0, 0, 0);
         }
 
         public async Task<CustomerDto?> GetOneByIdAsync(Guid customerId)
