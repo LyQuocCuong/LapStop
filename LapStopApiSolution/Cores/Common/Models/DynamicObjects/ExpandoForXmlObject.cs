@@ -6,12 +6,12 @@ using System.Xml.Serialization;
 
 namespace Common.Models.DynamicObjects
 {
-    public sealed class DynamicModel : DynamicObject, IXmlSerializable, IDictionary<string, object>
+    public sealed class ExpandoForXmlObject : DynamicObject, IXmlSerializable, IDictionary<string, object>
     {
         private readonly string _root = "Entity";
         private readonly IDictionary<string, object> _expando;
 
-        public DynamicModel()
+        public ExpandoForXmlObject()
         {
             _expando = new ExpandoObject();
         }

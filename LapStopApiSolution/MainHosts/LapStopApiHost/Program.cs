@@ -1,11 +1,15 @@
+using Common.Models.DynamicObjects;
+using Contracts.HATEOAS;
 using Contracts.ILog;
 using Contracts.IRepositories;
 using Contracts.IServices;
+using DTO.Output.Data;
 using LapStopApiHost.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
 using NLogLib;
 using Repositories;
+using RestfulApiHandler.HATEOAS;
 using Services;
 
 LogManager.LoadConfiguration(
@@ -38,12 +42,14 @@ builder.Services.AddControllers(config =>
     .AddApplicationPart(typeof(RestfulApiHandler.AssemblyReference).Assembly)
     .AddNewtonsoftJson();
 
+
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 builder.Services.AddScoped<IServiceManager, ServiceManager>();
 builder.Services.AddSingleton<ILogService, NLogService>();
 builder.Services.RegisterDI_LapStopContext(builder.Configuration);
 builder.Services.RegisterDI_AutoMapper();
 builder.Services.RegisterDI_DataShaper();
+builder.Services.AddScoped<IHateoasService<BrandDto, ExpandoForXmlObject>, BrandHateoasService>();
 builder.Services.RegisterDI_CustomValidationAttribute();    // implement IActionFilter
 builder.Services.RegisterDI_FluentValidation();             // FluentValidation.AspNetCore package
 //builder.Services.RegisterDI_DotNetResponseCaching();      // [Expiration]

@@ -1,4 +1,5 @@
 ﻿using Common.Models.DynamicObjects;
+using Common.Models.HATEOAS;
 using DTO.Input.FromBody.Creation;
 using DTO.Input.FromBody.Update;
 using DTO.Input.FromQuery.Parameters;
@@ -9,7 +10,7 @@ namespace Contracts.IServices.Models
 {
     public interface IBrandService
     {
-        Task<PagedList<DynamicModel>> GetAllAsync(BrandParameters parameters);
+        Task<PagedList<ExpandoForXmlObject>> GetAllAsync(HateoasParameters<BrandParameters> parameters);
 
         Task<BrandDto?> GetOneByIdAsync(Guid brandId);
 

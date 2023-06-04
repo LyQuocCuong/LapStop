@@ -29,7 +29,7 @@ namespace RestfulApiHandler.Controllers
         [Route("products", Name = "GetAllProductsHead")]
         public async Task<IActionResult> GetAllProductsHead([FromQuery] ProductParameters parameters)
         {
-            PagedList<DynamicModel> pagedResult = await _serviceManager.Product.GetAllAsync(parameters);
+            PagedList<ExpandoForXmlObject> pagedResult = await _serviceManager.Product.GetAllAsync(parameters);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
 
@@ -40,7 +40,7 @@ namespace RestfulApiHandler.Controllers
         [Route("products", Name = "GetAllProducts")]
         public async Task<IActionResult> GetAllProducts([FromQuery] ProductParameters parameters)
         {
-            PagedList<DynamicModel> pagedResult = await _serviceManager.Product.GetAllAsync(parameters);
+            PagedList<ExpandoForXmlObject> pagedResult = await _serviceManager.Product.GetAllAsync(parameters);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
 

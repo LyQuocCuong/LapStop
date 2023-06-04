@@ -9,7 +9,7 @@ namespace Contracts.IServices.Models
 {
     public interface IEmployeeService
     {
-        Task<PagedList<DynamicModel>> GetAllAsync(EmployeeParameter parameter);
+        Task<PagedList<ExpandoForXmlObject>> GetAllAsync(EmployeeParameter parameter);
 
         Task<EmployeeDto?> GetOneByIdAsync(Guid employeeId);
 

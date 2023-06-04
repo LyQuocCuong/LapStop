@@ -1,6 +1,6 @@
 ﻿using Common.Models.DynamicObjects;
 using Common.Models.Exceptions;
-using Contracts.IDataShaper;
+using Contracts.DataShaper;
 using Contracts.ILog;
 using Contracts.IMapping;
 using Contracts.IRepositories;
@@ -16,12 +16,12 @@ namespace Services.Models
 {
     internal sealed class ProductService : ServiceBase, IProductService
     {
-        private readonly IDataShaperService<ProductDto> _dataShaper;
+        private readonly IDataShaperService<ProductDto, ExpandoForXmlObject> _dataShaper;
 
         public ProductService(ILogService logService,
                             IMappingService mappingService,
                             IRepositoryManager repositoryManager,
-                            IDataShaperService<ProductDto> dataShaper)
+                            IDataShaperService<ProductDto, ExpandoForXmlObject> dataShaper)
             : base(logService,
                   mappingService,
                   repositoryManager)
@@ -39,16 +39,17 @@ namespace Services.Models
             return product;
         }
 
-        public async Task<PagedList<DynamicModel>> GetAllAsync(ProductParameters parameters)
+        public async Task<PagedList<ExpandoForXmlObject>> GetAllAsync(ProductParameters parameters)
         {
             IEnumerable<Product> products = await _repositoryManager.Product.GetAllAsync(isTrackChanges: false, parameters);
             int totalRecords = await _repositoryManager.Product.CountAllAsync(parameters);
 
             var sourceDto = _mappingService.Map<IEnumerable<Product>, IEnumerable<ProductDto>>(products);
 
-            var shapedData = _dataShaper.ShapingData(sourceDto, parameters.Fields);
+            var shapedData = _dataShaper.ExecuteShapingData(sourceDto, parameters.Fields);
 
-            return new PagedList<DynamicModel>(shapedData.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
+            //return new PagedList<DynamicModel>(shapedData.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
+            return new PagedList<ExpandoForXmlObject>(new List<ExpandoForXmlObject>(), 0, 0, 0);
         }
 
         public async Task<ProductDto?> GetOneByIdAsync(Guid productId)

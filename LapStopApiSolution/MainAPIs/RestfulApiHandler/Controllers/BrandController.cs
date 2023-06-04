@@ -1,5 +1,6 @@
 ﻿using Common.Functions;
 using Common.Models.DynamicObjects;
+using Common.Models.HATEOAS;
 using Contracts.ILog;
 using Contracts.IServices;
 using DTO.Input.FromBody.Creation;
@@ -14,6 +15,7 @@ using Marvin.Cache.Headers;
 using Marvin.Cache.Headers.Interfaces;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using RestfulApiHandler.ActionFilters;
 using RestfulApiHandler.Roots;
 using System.Text.Json;
@@ -34,10 +36,10 @@ namespace RestfulApiHandler.Controllers
         [Route("brands", Name = "GetAllBrandsHead")]
         public async Task<IActionResult> GetAllBrandsHead([FromQuery]BrandParameters parameters) 
         {
-            PagedList<DynamicModel> pagedResult = await _serviceManager.Brand.GetAllAsync(parameters);
+            //PagedList<DynamicModel> pagedResult = await _serviceManager.Brand.GetAllAsync(parameters);
 
-            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
-
+            //Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
+            
             return Ok();
         }
 
@@ -46,7 +48,9 @@ namespace RestfulApiHandler.Controllers
         //[ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         public async Task<IActionResult> GetAllBrands([FromQuery] BrandParameters parameters)
         {
-            PagedList<DynamicModel> pagedResult = await _serviceManager.Brand.GetAllAsync(parameters);
+            HateoasParameters<BrandParameters> hateoasParameters = new HateoasParameters<BrandParameters>(HttpContext, parameters);
+
+            PagedList<ExpandoForXmlObject> pagedResult = await _serviceManager.Brand.GetAllAsync(hateoasParameters);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
 

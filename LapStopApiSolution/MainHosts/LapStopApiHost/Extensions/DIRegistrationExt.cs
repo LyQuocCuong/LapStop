@@ -1,13 +1,14 @@
 ﻿using AutoMapperLib;
 using AutoMapperLib.Profiles;
-using Contracts.IDataShaper;
+using Common.Models.DynamicObjects;
+using Contracts.DataShaper;
 using Contracts.IMapping;
 using DTO.Input.FromBody.Creation;
 using DTO.Output.Data;
 using Entities.Context;
 using Entities.InputDtoValidators.Creation;
 using FluentValidation;
-using Helpers.DataShaper;
+using LogicServices.DataShaper.UsingExpandoForXmlObject;
 using Microsoft.EntityFrameworkCore;
 using RestfulApiHandler.ActionFilters;
 
@@ -67,10 +68,10 @@ namespace LapStopApiHost.Extensions
 
         public static void RegisterDI_DataShaper(this IServiceCollection services)
         {
-            services.AddScoped<IDataShaperService<EmployeeDto>, DataShaperService<EmployeeDto>>();
-            services.AddScoped<IDataShaperService<BrandDto>, DataShaperService<BrandDto>>();
-            services.AddScoped<IDataShaperService<CustomerDto>, DataShaperService<CustomerDto>>();
-            services.AddScoped<IDataShaperService<ProductDto>, DataShaperService<ProductDto>>();
+            services.AddScoped<IDataShaperService<EmployeeDto, ExpandoForXmlObject>, DataShaperService<EmployeeDto>>();
+            services.AddScoped<IDataShaperService<BrandDto, ExpandoForXmlObject>, DataShaperService<BrandDto>>();
+            services.AddScoped<IDataShaperService<CustomerDto, ExpandoForXmlObject>, DataShaperService<CustomerDto>>();
+            services.AddScoped<IDataShaperService<ProductDto, ExpandoForXmlObject>, DataShaperService<ProductDto>>();
         }
 
         public static void RegisterDI_CustomValidationAttribute(this IServiceCollection services)
