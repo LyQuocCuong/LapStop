@@ -1,6 +1,6 @@
 ﻿using System.Dynamic;
 
-namespace Contracts.DataShaper
+namespace Contracts.DataShaperService
 {
     public interface IDataShaperService<TAppliedModel, TReturnedDynamicObject>
     {

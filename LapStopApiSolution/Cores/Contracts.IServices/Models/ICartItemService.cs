@@ -1,6 +1,4 @@
-﻿using DTO.Output.Data;
-
-namespace Contracts.IServices.Models
+﻿namespace Contracts.IServices.Models
 {
     public interface ICartItemService
     {

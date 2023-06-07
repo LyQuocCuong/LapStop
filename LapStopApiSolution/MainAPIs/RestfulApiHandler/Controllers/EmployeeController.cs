@@ -1,19 +1,4 @@
-﻿using Common.Functions;
-using Common.Models.DynamicObjects;
-using Contracts.ILog;
-using Contracts.IServices;
-using DTO.Input.FromBody.Creation;
-using DTO.Input.FromBody.Update;
-using DTO.Input.FromQuery.Parameters;
-using DTO.Output.Data;
-using DTO.Output.PagedList;
-using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc;
-using RestfulApiHandler.ActionFilters;
-using RestfulApiHandler.Roots;
-using System.Text.Json;
-
-namespace RestfulApiHandler.Controllers
+﻿namespace RestfulApiHandler.Controllers
 {
     [ApiController]
     [Route("api")]
@@ -27,7 +12,7 @@ namespace RestfulApiHandler.Controllers
 
         [HttpHead]
         [Route("employees", Name = "GetAllEmployeesHead")]
-        public async Task<IActionResult> GetAllEmployeesHead([FromQuery]EmployeeParameter parameter)
+        public async Task<IActionResult> GetAllEmployeesHead([FromQuery]EmployeeRequestParam parameter)
         {
             if (parameter.MinAge > parameter.MaxAge)
             {
@@ -43,7 +28,7 @@ namespace RestfulApiHandler.Controllers
 
         [HttpGet]
         [Route("employees", Name = "GetAllEmployees")]
-        public async Task<IActionResult> GetAllEmployees([FromQuery] EmployeeParameter parameter)
+        public async Task<IActionResult> GetAllEmployees([FromQuery] EmployeeRequestParam parameter)
         {
             if (parameter.MinAge > parameter.MaxAge)
             {

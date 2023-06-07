@@ -1,4 +1,4 @@
-﻿namespace Common.Models.HATEOAS
+﻿namespace Common.Models.Hateoas
 {
     public class LinkItemModel
     {

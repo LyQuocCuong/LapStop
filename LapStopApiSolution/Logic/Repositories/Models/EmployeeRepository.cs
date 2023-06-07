@@ -1,10 +1,4 @@
-﻿using Contracts.IRepositories.Models;
-using Domains.Models;
-using DTO.Input.FromQuery.Parameters;
-using Entities.Context;
-using Microsoft.EntityFrameworkCore;
-using Repositories.Extensions;
-using System.Linq.Dynamic.Core;
+﻿using Repositories.Extensions;
 
 namespace Repositories.Models
 {
@@ -15,7 +9,7 @@ namespace Repositories.Models
         }
 
         public async Task<IEnumerable<Employee>> GetAllAsync(bool isTrackChanges, 
-                                                             EmployeeParameter parameter)
+                                                             EmployeeRequestParam parameter)
         {
             return await FindAll(isTrackChanges)
                             .FilterAgeExt(parameter)
@@ -27,7 +21,7 @@ namespace Repositories.Models
                             .ToListAsync();
         }
 
-        public async Task<int> CountAllAsync(EmployeeParameter parameter)
+        public async Task<int> CountAllAsync(EmployeeRequestParam parameter)
         {
             return await FindAll(isTrackChanges: false)
                             .FilterAgeExt(parameter)

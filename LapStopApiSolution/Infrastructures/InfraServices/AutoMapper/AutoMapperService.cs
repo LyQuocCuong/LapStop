@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Contracts.IMapping;
+using Contracts.MappingService;
 
 namespace InfraServices.AutoMapper
 {

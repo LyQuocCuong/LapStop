@@ -1,10 +1,10 @@
 ﻿using DTO.Bases;
 
-namespace DTO.Input.FromQuery.Parameters
+namespace DTO.Input.FromQuery.RequestPrams
 {
-    public class EmployeeParameter : BaseRequestParameters
+    public class EmployeeRequestParam : BasePOSRequestParam
     {
-        public EmployeeParameter() 
+        public EmployeeRequestParam() 
         {
             this.OrderBy = "EmployeeCode";  //set DEFAULT field's Order
         }
@@ -14,5 +14,7 @@ namespace DTO.Input.FromQuery.Parameters
         public uint MaxAge { get; set; } = uint.MaxValue;
 
         public string? SearchTerm { get; set; }
+
+        public string? ShapingProps { get; set; }
     }
 }

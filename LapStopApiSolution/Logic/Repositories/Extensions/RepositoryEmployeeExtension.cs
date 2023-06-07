@@ -1,21 +1,16 @@
-﻿using Domains.Models;
-using DTO.Input.FromQuery.Parameters;
-using Repositories.Extensions.Utility;
-using System.Linq.Dynamic.Core;
-using System.Reflection;
-using System.Text;
+﻿using Repositories.Extensions.Utility;
 
 namespace Repositories.Extensions
 {
     internal static class RepositoryEmployeeExtension
     {
-        public static IQueryable<Employee> FilterAgeExt(this IQueryable<Employee> employees, EmployeeParameter parameter)
+        public static IQueryable<Employee> FilterAgeExt(this IQueryable<Employee> employees, EmployeeRequestParam parameter)
         {
             return employees.Where(e => DateTime.Now.Year - e.DOB.Year >= parameter.MinAge &&
                                         DateTime.Now.Year - e.DOB.Year <= parameter.MaxAge);
         }
 
-        public static IQueryable<Employee> SearchExt(this IQueryable<Employee> employees, EmployeeParameter parameter)
+        public static IQueryable<Employee> SearchExt(this IQueryable<Employee> employees, EmployeeRequestParam parameter)
         {
             if (string.IsNullOrEmpty(parameter.SearchTerm))
             {
@@ -28,7 +23,7 @@ namespace Repositories.Extensions
         }
 
         public static IQueryable<Employee> OrderByExt(this IQueryable<Employee> employees, 
-                                                           EmployeeParameter parameter)
+                                                           EmployeeRequestParam parameter)
         {
             if (string.IsNullOrWhiteSpace(parameter.OrderBy))   // check NULL
             {

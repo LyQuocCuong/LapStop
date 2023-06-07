@@ -1,10 +1,4 @@
-﻿using Contracts.ILog;
-using Contracts.IServices;
-using DTO.Output.Data;
-using Microsoft.AspNetCore.Mvc;
-using RestfulApiHandler.Roots;
-
-namespace RestfulApiHandler.Controllers
+﻿namespace RestfulApiHandler.Controllers
 {
     [ApiController]
     [Route("api")]

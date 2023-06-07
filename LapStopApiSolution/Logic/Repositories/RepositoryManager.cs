@@ -1,6 +1,4 @@
 ﻿using Contracts.IRepositories;
-using Contracts.IRepositories.Models;
-using Entities.Context;
 using Repositories.Models;
 
 namespace Repositories

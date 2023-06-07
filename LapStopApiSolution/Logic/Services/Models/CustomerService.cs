@@ -1,18 +1,4 @@
-﻿using Common.Models.DynamicObjects;
-using Common.Models.Exceptions;
-using Contracts.DataShaper;
-using Contracts.ILog;
-using Contracts.IMapping;
-using Contracts.IRepositories;
-using Contracts.IServices.Models;
-using Domains.Models;
-using DTO.Input.FromBody.Creation;
-using DTO.Input.FromBody.Update;
-using DTO.Input.FromQuery.Parameters;
-using DTO.Output.Data;
-using DTO.Output.PagedList;
-
-namespace Services.Models
+﻿namespace Services.Models
 {
     internal sealed class CustomerService : ServiceBase, ICustomerService
     {
@@ -39,7 +25,7 @@ namespace Services.Models
             return customer;
         }
 
-        public async Task<PagedList<ExpandoForXmlObject>> GetAllAsync(CustomerParameters parameters)
+        public async Task<PagedList<ExpandoForXmlObject>> GetAllAsync(CustomerRequestParam parameters)
         {
             //IEnumerable<Customer> customers = await _repositoryManager.Customer.GetAllAsync(isTrackChanges: false, parameters);
             //int totalRecords = await _repositoryManager.Customer.CountAllAsync(parameters);

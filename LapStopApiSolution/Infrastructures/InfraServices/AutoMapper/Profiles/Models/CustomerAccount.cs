@@ -1,8 +1,4 @@
 ﻿using AutoMapper;
-using Domains.Models;
-using DTO.Input.FromBody.Creation;
-using DTO.Input.FromBody.Update;
-using DTO.Output.Data;
 
 namespace InfraServices.AutoMapper.Profiles
 {

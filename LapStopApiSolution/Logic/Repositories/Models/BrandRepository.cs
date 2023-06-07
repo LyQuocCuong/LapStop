@@ -1,11 +1,4 @@
-﻿using Contracts.IRepositories.Models;
-using Domains.Models;
-using DTO.Input.FromQuery.Parameters;
-using Entities.Context;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Dynamic.Core;
-
-namespace Repositories.Models
+﻿namespace Repositories.Models
 {
     internal sealed class BrandRepository : RepositoryBase<Brand>, IBrandRepository
     {
@@ -23,7 +16,7 @@ namespace Repositories.Models
             base.DeleteModel(brand);
         }
 
-        public async Task<IEnumerable<Brand>> GetAllAsync(bool isTrackChanges, BrandParameters parameters)
+        public async Task<IEnumerable<Brand>> GetAllAsync(bool isTrackChanges, BrandRequestParam parameters)
         {
             return await FindAll(isTrackChanges)
                             .OrderBy(b => b.Name)
@@ -33,7 +26,7 @@ namespace Repositories.Models
                             .ToListAsync();
         }
 
-        public async Task<int> CountAllAsync(BrandParameters parameters)
+        public async Task<int> CountAllAsync(BrandRequestParam parameters)
         {
             return await FindAll(isTrackChanges: false)
                             .CountAsync();

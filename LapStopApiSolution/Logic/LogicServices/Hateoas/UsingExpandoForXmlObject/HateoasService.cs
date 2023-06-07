@@ -1,7 +1,7 @@
 ﻿using Common.Models.DynamicObjects;
-using Common.Models.HATEOAS;
-using Contracts.DataShaper;
-using Contracts.HATEOAS;
+using Common.Models.Hateoas;
+using Contracts.DataShaperService;
+using Contracts.HateoasService;
 using Microsoft.AspNetCore.Http;
 
 namespace LogicServices.Hateoas.UsingExpandoForXmlObject

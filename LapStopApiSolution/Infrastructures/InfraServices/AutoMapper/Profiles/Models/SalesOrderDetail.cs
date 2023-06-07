@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Domains.Models;
-using DTO.Output.Data;
 
 namespace InfraServices.AutoMapper.Profiles
 {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DTO.Output.PagedList
+﻿namespace DTO.Output.PagedList
 {
     public sealed class PagedList<T> : List<T>
     {

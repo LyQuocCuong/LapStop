@@ -1,6 +1,4 @@
 ﻿using Contracts.IRepositories;
-using Entities.Context;
-using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection;
 

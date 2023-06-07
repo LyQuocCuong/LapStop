@@ -1,6 +1,4 @@
-﻿using Domains.Base;
-
-namespace Domains.Models
+﻿namespace Domains.Models
 {
     public sealed class SalesOrderDetail : BaseModel
     {

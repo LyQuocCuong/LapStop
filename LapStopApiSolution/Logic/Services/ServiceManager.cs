@@ -1,13 +1,4 @@
-﻿using Common.Models.DynamicObjects;
-using Contracts.DataShaper;
-using Contracts.HATEOAS;
-using Contracts.ILog;
-using Contracts.IMapping;
-using Contracts.IRepositories;
-using Contracts.IServices;
-using Contracts.IServices.Models;
-using DTO.Output.Data;
-using Services.Models;
+﻿using Services.Models;
 
 namespace Services
 {

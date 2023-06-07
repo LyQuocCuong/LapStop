@@ -1,6 +1,6 @@
 ﻿namespace DTO.Bases
 {
-    public abstract class BaseRequestParameters
+    public abstract class BasePOSRequestParam
     {
         const int maxPageSize = 50;
         public int PageNumber { get; set; } = 1;
@@ -19,7 +19,5 @@
         }
 
         public string? OrderBy { get; set; }
-
-        public string? Fields { get; set; }
     }
 }

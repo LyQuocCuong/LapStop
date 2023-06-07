@@ -1,4 +1,4 @@
-﻿namespace Contracts.ILog
+﻿namespace Contracts.LogService
 {
     public interface ILogService
     {
