@@ -1,11 +1,4 @@
-﻿using Contracts.IRepositories.Models;
-using Domains.Models;
-using DTO.Input.FromQuery.Parameters;
-using Entities.Context;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Dynamic.Core;
-
-namespace Repositories.Models
+﻿namespace Repositories.Models
 {
     internal sealed class ProductRepository : RepositoryBase<Product>, IProductRepository
     {
@@ -13,7 +6,7 @@ namespace Repositories.Models
         {
         }
                 
-        public async Task<IEnumerable<Product>> GetAllAsync(bool isTrackChanges, ProductParameters parameters)
+        public async Task<IEnumerable<Product>> GetAllAsync(bool isTrackChanges, ProductRequestParam parameters)
         {
             return await FindAll(isTrackChanges)
                             .OrderBy(p => p.Name)
@@ -23,7 +16,7 @@ namespace Repositories.Models
                             .ToListAsync();
         }
 
-        public async Task<int> CountAllAsync(ProductParameters parameters)
+        public async Task<int> CountAllAsync(ProductRequestParam parameters)
         {
             return await FindAll(isTrackChanges: false)
                             .CountAsync();

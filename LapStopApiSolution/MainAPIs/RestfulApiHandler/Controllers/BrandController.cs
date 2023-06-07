@@ -1,26 +1,4 @@
-﻿using Common.Functions;
-using Common.Models.DynamicObjects;
-using Common.Models.HATEOAS;
-using Contracts.ILog;
-using Contracts.IServices;
-using DTO.Input.FromBody.Creation;
-using DTO.Input.FromBody.Update;
-using DTO.Input.FromQuery.Parameters;
-using DTO.Output.Data;
-using DTO.Output.PagedList;
-using FluentValidation;
-using FluentValidation.AspNetCore;
-using FluentValidation.Results;
-using Marvin.Cache.Headers;
-using Marvin.Cache.Headers.Interfaces;
-using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using RestfulApiHandler.ActionFilters;
-using RestfulApiHandler.Roots;
-using System.Text.Json;
-
-namespace RestfulApiHandler.Controllers
+﻿namespace RestfulApiHandler.Controllers
 {
     [ApiController]
     [Route("api")]
@@ -34,7 +12,7 @@ namespace RestfulApiHandler.Controllers
 
         [HttpHead]
         [Route("brands", Name = "GetAllBrandsHead")]
-        public async Task<IActionResult> GetAllBrandsHead([FromQuery]BrandParameters parameters) 
+        public async Task<IActionResult> GetAllBrandsHead([FromQuery]BrandRequestParam parameters) 
         {
             //PagedList<DynamicModel> pagedResult = await _serviceManager.Brand.GetAllAsync(parameters);
 
@@ -46,9 +24,9 @@ namespace RestfulApiHandler.Controllers
         [HttpGet]
         [Route("brands", Name = "GetAllBrands")]
         //[ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
-        public async Task<IActionResult> GetAllBrands([FromQuery] BrandParameters parameters)
+        public async Task<IActionResult> GetAllBrands([FromQuery] BrandRequestParam parameters)
         {
-            HateoasParameters<BrandParameters> hateoasParameters = new HateoasParameters<BrandParameters>(HttpContext, parameters);
+            HateoasParameters<BrandRequestParam> hateoasParameters = new HateoasParameters<BrandRequestParam>(HttpContext, parameters);
 
             PagedList<ExpandoForXmlObject> pagedResult = await _serviceManager.Brand.GetAllAsync(hateoasParameters);
 

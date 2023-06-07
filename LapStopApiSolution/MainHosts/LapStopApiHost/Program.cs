@@ -1,18 +1,4 @@
-using Common.Models.DynamicObjects;
-using Contracts.HATEOAS;
-using Contracts.ILog;
-using Contracts.IRepositories;
-using Contracts.IServices;
-using DTO.Output.Data;
-using InfraServices.NLog;
-using LapStopApiHost.Extensions;
-using Microsoft.AspNetCore.Mvc;
-using NLog;
-using Repositories;
-using RestfulApiHandler.HATEOAS;
-using Services;
-
-LogManager.LoadConfiguration(
+LogManager.Setup().LoadConfigurationFromFile(
     Path.Combine(Directory.GetCurrentDirectory(), 
     "../../Infrastructures/InfraServices/NLog/NLog.config")
 );

@@ -1,12 +1,4 @@
-﻿using Common.Models.Exceptions;
-using Contracts.ILog;
-using Contracts.IMapping;
-using Contracts.IRepositories;
-using Contracts.IServices.Models;
-using Domains.Models;
-using DTO.Output.Data;
-
-namespace Services.Models
+﻿namespace Services.Models
 {
     internal sealed class CartItemService : ServiceBase, ICartItemService
     {

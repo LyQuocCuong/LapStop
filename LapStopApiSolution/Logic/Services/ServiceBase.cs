@@ -1,7 +1,4 @@
-﻿using Contracts.ILog;
-using Contracts.IMapping;
-using Contracts.IRepositories;
-using Contracts.IServices;
+﻿using Contracts.IServices;
 
 namespace Services
 {

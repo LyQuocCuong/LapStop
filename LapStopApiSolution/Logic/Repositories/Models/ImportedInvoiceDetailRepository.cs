@@ -1,8 +1,4 @@
-﻿using Contracts.IRepositories.Models;
-using Domains.Models;
-using Entities.Context;
-
-namespace Repositories.Models
+﻿namespace Repositories.Models
 {
     internal sealed class ImportedInvoiceDetailRepository : RepositoryBase<ImportedInvoiceDetail>, IImportedInvoiceDetailRepository
     {

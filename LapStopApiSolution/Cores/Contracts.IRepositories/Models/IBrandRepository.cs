@@ -1,13 +1,10 @@
-﻿using Domains.Models;
-using DTO.Input.FromQuery.Parameters;
-
-namespace Contracts.IRepositories.Models
+﻿namespace Contracts.IRepositories.Models
 {
     public interface IBrandRepository
     {
-        Task<IEnumerable<Brand>> GetAllAsync(bool isTrackChanges, BrandParameters parameters);
+        Task<IEnumerable<Brand>> GetAllAsync(bool isTrackChanges, BrandRequestParam parameters);
 
-        Task<int> CountAllAsync(BrandParameters parameters);
+        Task<int> CountAllAsync(BrandRequestParam parameters);
 
         Task<Brand?> GetOneByIdAsync(bool isTrackChanges, Guid brandId);
 

@@ -1,16 +1,8 @@
-﻿using Common.Models.DynamicObjects;
-using Common.Models.HATEOAS;
-using DTO.Input.FromBody.Creation;
-using DTO.Input.FromBody.Update;
-using DTO.Input.FromQuery.Parameters;
-using DTO.Output.Data;
-using DTO.Output.PagedList;
-
-namespace Contracts.IServices.Models
+﻿namespace Contracts.IServices.Models
 {
     public interface IBrandService
     {
-        Task<PagedList<ExpandoForXmlObject>> GetAllAsync(HateoasParameters<BrandParameters> parameters);
+        Task<PagedList<ExpandoForXmlObject>> GetAllAsync(HateoasParameters<BrandRequestParam> parameters);
 
         Task<BrandDto?> GetOneByIdAsync(Guid brandId);
 

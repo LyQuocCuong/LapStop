@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Contracts.HATEOAS
+namespace Contracts.HateoasService
 {
     // Install: Microsoft.AspNetCore.Mvc.Abstractions to use HttpContext
     // We don't USE HttpContext right here, just DEFINE

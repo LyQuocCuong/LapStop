@@ -1,8 +1,4 @@
-﻿using DTO.Input.FromBody.Creation;
-using DTO.Input.FromBody.Update;
-using DTO.Output.Data;
-
-namespace Contracts.IServices.Models
+﻿namespace Contracts.IServices.Models
 {
     public interface ICustomerAccountService
     {

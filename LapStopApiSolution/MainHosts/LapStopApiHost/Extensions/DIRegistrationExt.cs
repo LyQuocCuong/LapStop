@@ -1,18 +1,4 @@
-﻿using Common.Models.DynamicObjects;
-using Contracts.DataShaper;
-using Contracts.IMapping;
-using DTO.Input.FromBody.Creation;
-using DTO.Output.Data;
-using Entities.Context;
-using Entities.InputDtoValidators.Creation;
-using FluentValidation;
-using InfraServices.AutoMapper;
-using InfraServices.AutoMapper.Profiles;
-using LogicServices.DataShaper.UsingExpandoForXmlObject;
-using Microsoft.EntityFrameworkCore;
-using RestfulApiHandler.ActionFilters;
-
-namespace LapStopApiHost.Extensions
+﻿namespace LapStopApiHost.Extensions
 {
     public static class DIRegistrationExt
     {

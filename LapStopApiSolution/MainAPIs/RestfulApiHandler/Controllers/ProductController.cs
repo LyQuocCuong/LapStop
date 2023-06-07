@@ -1,19 +1,4 @@
-﻿using Common.Functions;
-using Common.Models.DynamicObjects;
-using Contracts.ILog;
-using Contracts.IServices;
-using DTO.Input.FromBody.Creation;
-using DTO.Input.FromBody.Update;
-using DTO.Input.FromQuery.Parameters;
-using DTO.Output.Data;
-using DTO.Output.PagedList;
-using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc;
-using RestfulApiHandler.ActionFilters;
-using RestfulApiHandler.Roots;
-using System.Text.Json;
-
-namespace RestfulApiHandler.Controllers
+﻿namespace RestfulApiHandler.Controllers
 {
     [ApiController]
     [Route("api")]
@@ -27,7 +12,7 @@ namespace RestfulApiHandler.Controllers
 
         [HttpHead]
         [Route("products", Name = "GetAllProductsHead")]
-        public async Task<IActionResult> GetAllProductsHead([FromQuery] ProductParameters parameters)
+        public async Task<IActionResult> GetAllProductsHead([FromQuery] ProductRequestParam parameters)
         {
             PagedList<ExpandoForXmlObject> pagedResult = await _serviceManager.Product.GetAllAsync(parameters);
 
@@ -38,7 +23,7 @@ namespace RestfulApiHandler.Controllers
 
         [HttpGet]
         [Route("products", Name = "GetAllProducts")]
-        public async Task<IActionResult> GetAllProducts([FromQuery] ProductParameters parameters)
+        public async Task<IActionResult> GetAllProducts([FromQuery] ProductRequestParam parameters)
         {
             PagedList<ExpandoForXmlObject> pagedResult = await _serviceManager.Product.GetAllAsync(parameters);
 

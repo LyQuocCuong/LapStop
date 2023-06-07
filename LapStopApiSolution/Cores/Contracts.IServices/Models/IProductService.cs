@@ -1,15 +1,8 @@
-﻿using Common.Models.DynamicObjects;
-using DTO.Input.FromBody.Creation;
-using DTO.Input.FromBody.Update;
-using DTO.Input.FromQuery.Parameters;
-using DTO.Output.Data;
-using DTO.Output.PagedList;
-
-namespace Contracts.IServices.Models
+﻿namespace Contracts.IServices.Models
 {
     public interface IProductService
     {
-        Task<PagedList<ExpandoForXmlObject>> GetAllAsync(ProductParameters parameters);
+        Task<PagedList<ExpandoForXmlObject>> GetAllAsync(ProductRequestParam parameters);
 
         Task<ProductDto?> GetOneByIdAsync(Guid productId);
 

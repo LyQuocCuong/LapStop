@@ -1,4 +1,4 @@
-﻿using Contracts.ILog;
+﻿using Contracts.LogService;
 using NLog;
 
 namespace InfraServices.NLog

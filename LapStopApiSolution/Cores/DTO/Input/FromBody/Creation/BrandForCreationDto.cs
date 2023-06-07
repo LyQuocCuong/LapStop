@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace DTO.Input.FromBody.Creation
+﻿namespace DTO.Input.FromBody.Creation
 {
     public sealed class BrandForCreationDto
     {

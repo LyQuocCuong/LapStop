@@ -1,8 +1,4 @@
-﻿using Contracts.ILog;
-using Contracts.IServices;
-using Microsoft.AspNetCore.Mvc;
-
-namespace RestfulApiHandler.Roots
+﻿namespace RestfulApiHandler.Roots
 {
     public abstract class RootController : ControllerBase
     {

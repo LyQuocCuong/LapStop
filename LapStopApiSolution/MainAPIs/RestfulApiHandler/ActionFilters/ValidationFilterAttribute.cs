@@ -1,6 +1,4 @@
-﻿using Common.Functions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace RestfulApiHandler.ActionFilters
 {

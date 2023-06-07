@@ -1,17 +1,14 @@
-﻿using Domains.Models;
-using DTO.Input.FromQuery.Parameters;
-
-namespace Contracts.IRepositories.Models
+﻿namespace Contracts.IRepositories.Models
 {
     public interface ICustomerRepository
     {
-        Task<IEnumerable<Customer>> GetAllAsync(bool isTrackChanges, CustomerParameters parameters);
+        Task<IEnumerable<Customer>> GetAllAsync(bool isTrackChanges, CustomerRequestParam parameters);
 
         Task<Customer?> GetOneByIdAsync(bool isTrackChanges, Guid customerId);
 
         Task<bool> IsValidIdAsync(Guid customerId);
 
-        Task<int> CountAllAsync(CustomerParameters parameters);
+        Task<int> CountAllAsync(CustomerRequestParam parameters);
 
         void Create(Customer customer);
 

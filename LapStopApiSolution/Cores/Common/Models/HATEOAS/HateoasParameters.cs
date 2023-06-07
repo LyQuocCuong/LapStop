@@ -1,18 +1,16 @@
-﻿using DTO.Input.FromQuery.Parameters;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 
-namespace Common.Models.HATEOAS
+namespace Common.Models.Hateoas
 {
     public class HateoasParameters<TModelParameter>
     {
         public HttpContext HttpContext { get; set; }
-        public TModelParameter RequestParams { get; set; }
+        public TModelParameter RequestParam { get; set; }
 
-        public HateoasParameters(HttpContext httpContext, TModelParameter modelParameter)
+        public HateoasParameters(HttpContext httpContext, TModelParameter requestParam)
         {
             this.HttpContext = httpContext;
-            this.RequestParams = modelParameter;
+            this.RequestParam = requestParam;
         }
-
     }
 }

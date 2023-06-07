@@ -1,5 +1,5 @@
 ﻿using Common.Models.DynamicObjects;
-using Contracts.DataShaper;
+using Contracts.DataShaperService;
 using System.Reflection;
 
 namespace LogicServices.DataShaper.UsingExpandoForXmlObject

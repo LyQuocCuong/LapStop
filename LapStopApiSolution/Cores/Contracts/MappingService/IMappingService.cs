@@ -1,4 +1,4 @@
-﻿namespace Contracts.IMapping
+﻿namespace Contracts.MappingService
 {
     public interface IMappingService
     {

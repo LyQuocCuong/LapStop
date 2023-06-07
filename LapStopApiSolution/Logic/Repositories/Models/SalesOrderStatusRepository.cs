@@ -1,9 +1,4 @@
-﻿using Contracts.IRepositories.Models;
-using Domains.Models;
-using Entities.Context;
-using Microsoft.EntityFrameworkCore;
-
-namespace Repositories.Models
+﻿namespace Repositories.Models
 {
     internal sealed class SalesOrderStatusRepository : RepositoryBase<SalesOrderStatus>, ISalesOrderStatusRepository
     {

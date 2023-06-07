@@ -1,6 +1,4 @@
-﻿using Domains.Models;
-using System.Reflection.Metadata;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Text;
 
 namespace Repositories.Extensions.Utility

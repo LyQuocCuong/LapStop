@@ -1,14 +1,4 @@
-﻿using Common.Models.Exceptions;
-using Contracts.ILog;
-using Contracts.IMapping;
-using Contracts.IRepositories;
-using Contracts.IServices.Models;
-using Domains.Models;
-using DTO.Input.FromBody.Creation;
-using DTO.Input.FromBody.Update;
-using DTO.Output.Data;
-
-namespace Services.Models
+﻿namespace Services.Models
 {
     internal sealed class CustomerAccountService : ServiceBase, ICustomerAccountService
     {

@@ -1,18 +1,4 @@
-﻿using Common.Models.DynamicObjects;
-using Common.Models.Exceptions;
-using Contracts.DataShaper;
-using Contracts.ILog;
-using Contracts.IMapping;
-using Contracts.IRepositories;
-using Contracts.IServices.Models;
-using Domains.Models;
-using DTO.Input.FromBody.Creation;
-using DTO.Input.FromBody.Update;
-using DTO.Input.FromQuery.Parameters;
-using DTO.Output.Data;
-using DTO.Output.PagedList;
-
-namespace Services.Models
+﻿namespace Services.Models
 {
     internal sealed class EmployeeService : ServiceBase, IEmployeeService
     {
@@ -39,14 +25,14 @@ namespace Services.Models
             return employee;
         }
 
-        public async Task<PagedList<ExpandoForXmlObject>> GetAllAsync(EmployeeParameter parameter)
+        public async Task<PagedList<ExpandoForXmlObject>> GetAllAsync(EmployeeRequestParam parameter)
         {
             IEnumerable<Employee> employees = await _repositoryManager.Employee.GetAllAsync(isTrackChanges: false, parameter);
             int totalRecords = await _repositoryManager.Employee.CountAllAsync(parameter);
             
             var sourceDto = _mappingService.Map<IEnumerable<Employee>, IEnumerable<EmployeeDto>>(employees);
 
-            var shapedData = _dataShaper.ExecuteShapingData(sourceDto, parameter.Fields);
+            var shapedData = _dataShaper.ExecuteShapingData(sourceDto, parameter.ShapingProps);
 
             //return new PagedList<DynamicModel>(shapedData.ToList(), totalRecords, parameter.PageNumber, parameter.PageSize); ;
             return new PagedList<ExpandoForXmlObject>(new List<ExpandoForXmlObject>(), 0, 0, 0);

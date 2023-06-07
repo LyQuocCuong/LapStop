@@ -1,11 +1,4 @@
-﻿using Contracts.IRepositories.Models;
-using Domains.Models;
-using DTO.Input.FromQuery.Parameters;
-using Entities.Context;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Dynamic.Core;
-
-namespace Repositories.Models
+﻿namespace Repositories.Models
 {
     internal sealed class CustomerRepository : RepositoryBase<Customer>, ICustomerRepository
     {
@@ -13,7 +6,7 @@ namespace Repositories.Models
         {
         }
 
-        public async Task<IEnumerable<Customer>> GetAllAsync(bool isTrackChanges, CustomerParameters parameters)
+        public async Task<IEnumerable<Customer>> GetAllAsync(bool isTrackChanges, CustomerRequestParam parameters)
         {
             return await FindAll(isTrackChanges)
                             .OrderBy(c => c.FirstName)
@@ -23,7 +16,7 @@ namespace Repositories.Models
                             .ToListAsync();
         }
 
-        public async Task<int> CountAllAsync(CustomerParameters parameters)
+        public async Task<int> CountAllAsync(CustomerRequestParam parameters)
         {
             return await FindAll(isTrackChanges: false)
                             .CountAsync();

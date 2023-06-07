@@ -1,12 +1,7 @@
-﻿using Common.Models.DynamicObjects;
-using Common.Models.HATEOAS;
-using Contracts.DataShaper;
-using DTO.Output.Data;
-using LogicServices.Hateoas.UsingExpandoForXmlObject;
+﻿using LogicServices.Hateoas.UsingExpandoForXmlObject;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
-namespace RestfulApiHandler.HATEOAS
+namespace RestfulApiHandler.Hateoas
 {
     public class BrandHateoasService : HateoasService<BrandDto>
     {
