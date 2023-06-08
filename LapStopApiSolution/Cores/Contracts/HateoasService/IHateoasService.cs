@@ -5,9 +5,10 @@ namespace Contracts.HateoasService
     // Install: Microsoft.AspNetCore.Mvc.Abstractions to use HttpContext
     // We don't USE HttpContext right here, just DEFINE
     // => Choose "Abstraction" package
-    public interface IHateoasService<TAppliedModel, TReturnedDynamicObject>
+    public interface IHateoasService<TAppliedModel>
     {
-        IEnumerable<TReturnedDynamicObject> ExecuteHateoas(HttpContext httpContext, IEnumerable<TAppliedModel> dataModelCollection, string requiredPropsStr);
-        TReturnedDynamicObject ExecuteHateoas(HttpContext httpContext, TAppliedModel dataModel, string requiredPropsStr);
+        IEnumerable<TAppliedModel> Execute(HttpContext httpContext, IEnumerable<TAppliedModel> dataModelCollection);
+
+        TAppliedModel Execute(HttpContext httpContext, TAppliedModel dataModel);
     }
 }

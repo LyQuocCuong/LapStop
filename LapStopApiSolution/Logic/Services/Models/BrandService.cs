@@ -2,20 +2,20 @@
 {
     internal sealed class BrandService : ServiceBase, IBrandService
     {
-        private readonly IDataShaperService<BrandDto, ExpandoForXmlObject> _dataShaper;
-        private readonly IHateoasService<BrandDto, ExpandoForXmlObject> _brandHateoasService;
+        private readonly IDataShaperService<BrandDto, ExpandoForXmlObject> _dataShaperService;
+        private readonly IHateoasWithShaperService<BrandDto, ExpandoForXmlObject> _hateoasWithShaperService;
 
         public BrandService(ILogService logService,
                             IMappingService mappingService,    
                             IRepositoryManager repositoryManager,
-                            IHateoasService<BrandDto, ExpandoForXmlObject> brandHateoasService,
-                            IDataShaperService<BrandDto, ExpandoForXmlObject> dataShaper)
+                            IDataShaperService<BrandDto, ExpandoForXmlObject> dataShaperService,
+                            IHateoasWithShaperService<BrandDto, ExpandoForXmlObject> hateoasWithShaperService)
             : base(logService, 
                   mappingService, 
                   repositoryManager)
         {
-            _dataShaper = dataShaper;
-            _brandHateoasService = brandHateoasService;
+            _dataShaperService = dataShaperService;
+            _hateoasWithShaperService = hateoasWithShaperService;
         }
 
         private async Task<Brand> GetBrandAndCheckIfItExists(bool isTrackChanges, Guid brandId)
@@ -28,19 +28,23 @@
             return brand;
         }
 
-        public async Task<PagedList<ExpandoForXmlObject>> GetAllAsync(HateoasParameters<BrandRequestParam> parameters)
+        public async Task<PagedList<ExpandoForXmlObject>> GetAllAsync(HateoasParams<BrandRequestParam> hateoasParams)
         {
-            IEnumerable<Brand> brands = await _repositoryManager.Brand.GetAllAsync(isTrackChanges: false, parameters.RequestParam);
-            int totalRecords = await _repositoryManager.Brand.CountAllAsync(parameters.RequestParam);
-
+            IEnumerable<Brand> brands = await _repositoryManager.Brand.GetAllAsync(isTrackChanges: false, hateoasParams.RequestParams);
+            int totalRecords = await _repositoryManager.Brand.CountAllAsync(hateoasParams.RequestParams);
             IEnumerable<BrandDto> brandDtos = _mappingService.Map<IEnumerable<Brand>, IEnumerable<BrandDto>>(brands);
 
-            //var shapedData = _dataShaper.ShapingData(brandDtos, parameters.BrandParameters.Fields);
+            var hateoasModels = _hateoasWithShaperService.Execute(
+                _dataShaperService,
+                hateoasParams.HttpContext, 
+                brandDtos,
+                hateoasParams.RequestParams.ShapingProps);
 
-            IEnumerable<ExpandoForXmlObject> hateoasModels = _brandHateoasService.ExecuteHateoas(parameters.HttpContext, brandDtos, parameters.RequestParam.ShapingProps);
-
-            return new PagedList<ExpandoForXmlObject>(hateoasModels.ToList(), totalRecords, parameters.RequestParam.PageNumber, parameters.RequestParam.PageSize); ;
-            //return new PagedList<DynamicModel>(shapedData.Select(e => e.DynamicModel).ToList(), totalRecords, parameters.BrandParameters.PageNumber, parameters.BrandParameters.PageSize);
+            return new PagedList<ExpandoForXmlObject>(
+                hateoasModels.ToList(), 
+                totalRecords,
+                hateoasParams.RequestParams.PageNumber,
+                hateoasParams.RequestParams.PageSize);
         }
 
         public async Task<BrandDto?> GetOneByIdAsync(Guid brandId)

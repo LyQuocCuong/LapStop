@@ -12,12 +12,12 @@
 
         [HttpHead]
         [Route("brands", Name = "GetAllBrandsHead")]
+        [ServiceFilter(typeof(ValidateRequestNotMissingMediaTypeAttr))]
         public async Task<IActionResult> GetAllBrandsHead([FromQuery]BrandRequestParam parameters) 
         {
-            //PagedList<DynamicModel> pagedResult = await _serviceManager.Brand.GetAllAsync(parameters);
-
-            //Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
-            
+            HateoasParams<BrandRequestParam> hateoasParameters = new(HttpContext, parameters);
+            PagedList<ExpandoForXmlObject> pagedResult = await _serviceManager.Brand.GetAllAsync(hateoasParameters);
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
             return Ok();
         }
 
@@ -26,12 +26,9 @@
         [ServiceFilter(typeof(ValidateRequestNotMissingMediaTypeAttr))]
         public async Task<IActionResult> GetAllBrands([FromQuery] BrandRequestParam parameters)
         {
-            HateoasParameters<BrandRequestParam> hateoasParameters = new(HttpContext, parameters);
-
+            HateoasParams<BrandRequestParam> hateoasParameters = new(HttpContext, parameters);
             PagedList<ExpandoForXmlObject> pagedResult = await _serviceManager.Brand.GetAllAsync(hateoasParameters);
-
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
-
             return Ok(pagedResult);
         }
 

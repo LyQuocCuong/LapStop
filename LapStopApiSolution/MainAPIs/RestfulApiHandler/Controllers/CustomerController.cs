@@ -12,23 +12,23 @@
 
         [HttpHead]
         [Route("customers", Name = "GetAllCustomersHead")]
+        [ServiceFilter(typeof(ValidateRequestNotMissingMediaTypeAttr))]
         public async Task<IActionResult> GetAllCustomersHead([FromQuery]CustomerRequestParam parameters)
         {
-            PagedList<ExpandoForXmlObject> pagedResult = await _serviceManager.Customer.GetAllAsync(parameters);
-
+            HateoasParams<CustomerRequestParam> hateoasParams = new HateoasParams<CustomerRequestParam>(HttpContext, parameters);
+            PagedList<CustomerDto> pagedResult = await _serviceManager.Customer.GetAllAsync(hateoasParams);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
-
             return Ok();
         }
 
         [HttpGet]
         [Route("customers", Name = "GetAllCustomers")]
+        [ServiceFilter(typeof(ValidateRequestNotMissingMediaTypeAttr))]
         public async Task<IActionResult> GetAllCustomers([FromQuery] CustomerRequestParam parameters)
         {
-            PagedList<ExpandoForXmlObject> pagedResult = await _serviceManager.Customer.GetAllAsync(parameters);
-
+            HateoasParams<CustomerRequestParam> hateoasParams = new HateoasParams<CustomerRequestParam>(HttpContext, parameters);
+            PagedList<CustomerDto> pagedResult = await _serviceManager.Customer.GetAllAsync(hateoasParams);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
-
             return Ok(pagedResult);
         }
 

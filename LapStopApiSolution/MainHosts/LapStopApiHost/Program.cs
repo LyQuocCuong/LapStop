@@ -36,7 +36,7 @@ builder.Services.AddSingleton<ILogService, NLogService>();
 builder.Services.RegisterDI_LapStopContext(builder.Configuration);
 builder.Services.RegisterDI_AutoMapper();
 builder.Services.RegisterDI_DataShaper();
-builder.Services.AddScoped<IHateoasService<BrandDto, ExpandoForXmlObject>, BrandHateoasService>();
+builder.Services.RegisterDI_Hateoas();
 builder.Services.RegisterDI_CustomValidationAttribute();    // implement IActionFilter
 builder.Services.RegisterDI_FluentValidation();             // FluentValidation.AspNetCore package
 //builder.Services.RegisterDI_DotNetResponseCaching();      // [Expiration]

@@ -60,6 +60,12 @@
             services.AddScoped<IDataShaperService<ProductDto, ExpandoForXmlObject>, DataShaperService<ProductDto>>();
         }
 
+        public static void RegisterDI_Hateoas(this IServiceCollection services)
+        {
+            services.AddScoped<IHateoasWithShaperService<BrandDto, ExpandoForXmlObject>, BrandDynamicHateoasWithShaperService>();
+            services.AddScoped<IHateoasService<CustomerDto>, CustomerHateoasService>();
+        }
+
         public static void RegisterDI_CustomValidationAttribute(this IServiceCollection services)
         {
             services.AddScoped<ValidationFilterAttribute>();
