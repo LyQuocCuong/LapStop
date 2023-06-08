@@ -6,7 +6,7 @@
         public string? Rel { get; set; }    // relationship
         public string? Href { get; set; }
 
-        public LinkItemModel(string method, string rel, string href) 
+        public LinkItemModel(string? method, string? rel, string? href) 
         {
             Method = method;
             Rel = rel;

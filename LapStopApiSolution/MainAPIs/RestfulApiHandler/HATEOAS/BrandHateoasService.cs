@@ -14,13 +14,6 @@ namespace RestfulApiHandler.Hateoas
             _linkGenerator = linkGenerator;
         }
 
-        public override bool ShouldExecuteHateoas(HttpContext httpContext)
-        {
-            //var mediaType = (MediaTypeHeaderValue)httpContext.Items["AcceptHeaderMediaType"]; 
-            //return mediaType.SubTypeWithoutSuffix.EndsWith("hateoas", StringComparison.InvariantCultureIgnoreCase); 
-            return true;
-        }
-
         public override List<LinkItemModel> GenerateHateoasLinks(HttpContext httpContext, BrandDto dataModel)
         {
             List<LinkItemModel> hateoasLinks = new List<LinkItemModel>();

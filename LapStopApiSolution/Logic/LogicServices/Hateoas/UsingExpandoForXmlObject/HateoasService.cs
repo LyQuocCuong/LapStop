@@ -3,6 +3,7 @@ using Common.Models.Hateoas;
 using Contracts.DataShaperService;
 using Contracts.HateoasService;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Net.Http.Headers;
 
 namespace LogicServices.Hateoas.UsingExpandoForXmlObject
 {
@@ -20,12 +21,22 @@ namespace LogicServices.Hateoas.UsingExpandoForXmlObject
 
         public abstract List<LinkItemModel> GenerateHateoasLinks(HttpContext httpContext, TAppliedModel dataModel);
 
-        public abstract bool ShouldExecuteHateoas(HttpContext httpContext);
+        private static bool ShouldExecuteHateoas(HttpContext httpContext)
+        {
+            if (httpContext != null &&
+                httpContext.Items["AcceptHeaderMediaType"] != null)
+            {
+                var mediaType = (MediaTypeHeaderValue)httpContext.Items["AcceptHeaderMediaType"];
+                return mediaType.SubTypeWithoutSuffix.EndsWith("hateoas", 
+                            StringComparison.InvariantCultureIgnoreCase);
+            }
+            return false;
+        }
 
         public IEnumerable<ExpandoForXmlObject> ExecuteHateoas(HttpContext httpContext, IEnumerable<TAppliedModel> dataModelCollection, string requiredPropsStr)
         {
             List<ExpandoForXmlObject> hateoasModels = new List<ExpandoForXmlObject>();
-            if (ShouldExecuteHateoas(httpContext))
+            if (HateoasService<TAppliedModel>.ShouldExecuteHateoas(httpContext))
             {
                 // append the CoreProperties before executing Shaping
                 if (!string.IsNullOrEmpty(requiredPropsStr))
@@ -34,7 +45,8 @@ namespace LogicServices.Hateoas.UsingExpandoForXmlObject
                 }
                 foreach (var dataModel in dataModelCollection)
                 {
-                    ExpandoForXmlObject shapedModel = _dataShaperService.ExecuteShapingData(dataModel, requiredPropsStr);
+                    ExpandoForXmlObject shapedModel = _dataShaperService.ExecuteShapingData(dataModel, 
+                                                                                        requiredPropsStr);
 
                     // HATEOAS Model => ShapedModel + Add("Links")
                     List<LinkItemModel> hateoasLinks = GenerateHateoasLinks(httpContext, dataModel);
@@ -47,7 +59,8 @@ namespace LogicServices.Hateoas.UsingExpandoForXmlObject
             {
                 foreach (var dataModel in dataModelCollection)
                 {
-                    ExpandoForXmlObject shapedModelWithoutLinks = _dataShaperService.ExecuteShapingData(dataModel, requiredPropsStr);
+                    ExpandoForXmlObject shapedModelWithoutLinks = _dataShaperService
+                                                .ExecuteShapingData(dataModel, requiredPropsStr);
                     hateoasModels.Add(shapedModelWithoutLinks);
                 }
             }
@@ -56,7 +69,7 @@ namespace LogicServices.Hateoas.UsingExpandoForXmlObject
 
         public ExpandoForXmlObject ExecuteHateoas(HttpContext httpContext, TAppliedModel dataModel, string requiredPropsStr)
         {
-            if (ShouldExecuteHateoas(httpContext))
+            if (HateoasService<TAppliedModel>.ShouldExecuteHateoas(httpContext))
             {
                 // append the CoreProperties before executing Shaping
                 if (!string.IsNullOrEmpty(requiredPropsStr))
@@ -64,7 +77,8 @@ namespace LogicServices.Hateoas.UsingExpandoForXmlObject
                     requiredPropsStr = string.Concat(_coreProperties, ",", requiredPropsStr);
                 }
 
-                ExpandoForXmlObject shapedModel = _dataShaperService.ExecuteShapingData(dataModel, requiredPropsStr);
+                ExpandoForXmlObject shapedModel = _dataShaperService.ExecuteShapingData(dataModel, 
+                                                                                    requiredPropsStr);
 
                 // HATEOAS Model => ShapedModel + Add("Links")
                 List<LinkItemModel> hateoasLinks = GenerateHateoasLinks(httpContext, dataModel);

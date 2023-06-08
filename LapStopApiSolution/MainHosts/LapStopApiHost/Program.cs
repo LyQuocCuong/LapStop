@@ -25,9 +25,10 @@ builder.Services.AddControllers(config =>
     //        // support CSV (custom formatter)
     //        config => config.OutputFormatters.Add(new CsvOutputFormatter())
     //)
-    .AddApplicationPart(typeof(RestfulApiHandler.AssemblyReference).Assembly)
-    .AddNewtonsoftJson();
+    .AddApplicationPart(typeof(RestfulApiHandler.AssemblyReference).Assembly);
+    //.AddNewtonsoftJson();
 
+builder.Services.SupportHateoasMediaTypeExt();  // after AddControllers()
 
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 builder.Services.AddScoped<IServiceManager, ServiceManager>();

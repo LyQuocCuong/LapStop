@@ -23,10 +23,10 @@
 
         [HttpGet]
         [Route("brands", Name = "GetAllBrands")]
-        //[ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
+        [ServiceFilter(typeof(ValidateRequestNotMissingMediaTypeAttr))]
         public async Task<IActionResult> GetAllBrands([FromQuery] BrandRequestParam parameters)
         {
-            HateoasParameters<BrandRequestParam> hateoasParameters = new HateoasParameters<BrandRequestParam>(HttpContext, parameters);
+            HateoasParameters<BrandRequestParam> hateoasParameters = new(HttpContext, parameters);
 
             PagedList<ExpandoForXmlObject> pagedResult = await _serviceManager.Brand.GetAllAsync(hateoasParameters);
 

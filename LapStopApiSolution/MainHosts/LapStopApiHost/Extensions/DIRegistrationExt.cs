@@ -63,6 +63,7 @@
         public static void RegisterDI_CustomValidationAttribute(this IServiceCollection services)
         {
             services.AddScoped<ValidationFilterAttribute>();
+            services.AddScoped<ValidateRequestNotMissingMediaTypeAttr>();
         }
 
         public static void RegisterDI_FluentValidation(this IServiceCollection services)
