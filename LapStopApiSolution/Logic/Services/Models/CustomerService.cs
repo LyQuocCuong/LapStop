@@ -1,18 +1,20 @@
-﻿namespace Services.Models
+﻿using Common.Models.Hateoas;
+
+namespace Services.Models
 {
     internal sealed class CustomerService : ServiceBase, ICustomerService
     {
-        private readonly IDataShaperService<CustomerDto, ExpandoForXmlObject> _dataShaper;
+        private readonly IHateoasService<CustomerDto> _hateoasService;
 
         public CustomerService(ILogService logService,
                             IMappingService mappingService,
                             IRepositoryManager repositoryManager,
-                            IDataShaperService<CustomerDto, ExpandoForXmlObject> dataShaper)
+                            IHateoasService<CustomerDto> hateoasService)
             : base(logService,
                   mappingService,
                   repositoryManager)
         {
-            _dataShaper = dataShaper;
+            _hateoasService = hateoasService;
         }
 
         private async Task<Customer> GetCustomerAndCheckIfItExists(bool isTrackChanges, Guid customerId)
@@ -25,18 +27,19 @@
             return customer;
         }
 
-        public async Task<PagedList<ExpandoForXmlObject>> GetAllAsync(CustomerRequestParam parameters)
+        public async Task<PagedList<CustomerDto>> GetAllAsync(HateoasParams<CustomerRequestParam> hateoasParams)
         {
-            //IEnumerable<Customer> customers = await _repositoryManager.Customer.GetAllAsync(isTrackChanges: false, parameters);
-            //int totalRecords = await _repositoryManager.Customer.CountAllAsync(parameters);
+            IEnumerable<Customer> customers = await _repositoryManager.Customer.GetAllAsync(isTrackChanges: false, hateoasParams.RequestParams);
+            int totalRecords = await _repositoryManager.Customer.CountAllAsync(hateoasParams.RequestParams);
+            var sourceDto = _mappingService.Map<IEnumerable<Customer>, IEnumerable<CustomerDto>>(customers);
 
-            //var sourceDto = _mappingService.Map<IEnumerable<Customer>, IEnumerable<CustomerDto>>(customers);
+            var hateoasModels = _hateoasService.Execute(hateoasParams.HttpContext, sourceDto);
 
-            //var shapedData = _dataShaper.ShapingData(sourceDto, parameters.Fields);
-
-            //return new PagedList<DynamicModel>(shapedData.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
-
-            return new PagedList<ExpandoForXmlObject>(new List<ExpandoForXmlObject>(),0, 0, 0);
+            return new PagedList<CustomerDto>(
+                hateoasModels.ToList(),
+                totalRecords,
+                hateoasParams.RequestParams.PageNumber,
+                hateoasParams.RequestParams.PageSize);
         }
 
         public async Task<CustomerDto?> GetOneByIdAsync(Guid customerId)

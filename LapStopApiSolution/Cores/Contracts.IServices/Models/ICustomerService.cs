@@ -2,7 +2,7 @@
 {
     public interface ICustomerService
     {
-        Task<PagedList<ExpandoForXmlObject>> GetAllAsync(CustomerRequestParam parameters);
+        Task<PagedList<CustomerDto>> GetAllAsync(HateoasParams<CustomerRequestParam> parameters);
 
         Task<CustomerDto?> GetOneByIdAsync(Guid customerId);
 

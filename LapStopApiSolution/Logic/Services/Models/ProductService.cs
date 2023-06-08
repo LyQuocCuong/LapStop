@@ -32,7 +32,7 @@
 
             var sourceDto = _mappingService.Map<IEnumerable<Product>, IEnumerable<ProductDto>>(products);
 
-            var shapedData = _dataShaper.ExecuteShapingData(sourceDto, parameters.ShapingProps);
+            var shapedData = _dataShaper.Execute(sourceDto, parameters.ShapingProps);
 
             //return new PagedList<DynamicModel>(shapedData.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
             return new PagedList<ExpandoForXmlObject>(new List<ExpandoForXmlObject>(), 0, 0, 0);

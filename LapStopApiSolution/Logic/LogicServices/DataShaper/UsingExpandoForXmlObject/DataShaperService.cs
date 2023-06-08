@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace LogicServices.DataShaper.UsingExpandoForXmlObject
 {
-    public class DataShaperService<TAppliedModel> : IDataShaperService<TAppliedModel, ExpandoForXmlObject>
+    public sealed class DataShaperService<TAppliedModel> : IDataShaperService<TAppliedModel, ExpandoForXmlObject>
     {
         private readonly PropertyInfo[] propertyInfos;
 
@@ -14,24 +14,24 @@ namespace LogicServices.DataShaper.UsingExpandoForXmlObject
             propertyInfos = typeof(TAppliedModel).GetProperties(BindingFlags.Public | BindingFlags.Instance);
         }
 
-        public IEnumerable<ExpandoForXmlObject> ExecuteShapingData(IEnumerable<TAppliedModel> dataModels, string requiredPropsStr)
+        public IEnumerable<ExpandoForXmlObject> Execute(IEnumerable<TAppliedModel> dataModels, string? requiredPropsStr)
         {
             IEnumerable<PropertyInfo> requiredPropInfos = GetRequiredPropInfos(requiredPropsStr);
             return TrimmingProps(dataModels, requiredPropInfos);
         }
 
-        public ExpandoForXmlObject ExecuteShapingData(TAppliedModel dataModel, string requiredPropsStr)
+        public ExpandoForXmlObject Execute(TAppliedModel dataModel, string? requiredPropsStr)
         {
             IEnumerable<PropertyInfo> requiredPropInfos = GetRequiredPropInfos(requiredPropsStr);
             return TrimmingProps(dataModel, requiredPropInfos);
         }
 
-        private IEnumerable<PropertyInfo> GetRequiredPropInfos(string fieldsString)
+        private IEnumerable<PropertyInfo> GetRequiredPropInfos(string? requiredPropsStr)
         {
             var requiredProperties = new List<PropertyInfo>();
-            if (!string.IsNullOrWhiteSpace(fieldsString))
+            if (!string.IsNullOrWhiteSpace(requiredPropsStr))
             {
-                var fields = fieldsString.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                var fields = requiredPropsStr.Split(',', StringSplitOptions.RemoveEmptyEntries);
                 foreach (var field in fields)
                 {
                     var property = propertyInfos.FirstOrDefault(pi => pi.Name.Equals(field.Trim(),

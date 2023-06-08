@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Cores\Common\Common.csproj" />
+    <ProjectReference Include="..\..\Cores\Domains\Domains.csproj" />
     <ProjectReference Include="..\..\Cores\DTO\DTO.csproj" />
   </ItemGroup>
 

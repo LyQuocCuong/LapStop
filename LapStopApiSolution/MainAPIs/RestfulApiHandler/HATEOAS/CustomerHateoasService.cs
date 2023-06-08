@@ -1,20 +1,18 @@
-﻿using LogicServices.Hateoas.UsingExpandoForXmlObject;
+﻿using LogicServices.Hateoas;
 using Microsoft.AspNetCore.Http;
 
 namespace RestfulApiHandler.Hateoas
 {
-    public class BrandHateoasService : HateoasService<BrandDto>
+    public sealed class CustomerHateoasService : HateoasService<CustomerDto>
     {
         private readonly LinkGenerator _linkGenerator;
 
-        public BrandHateoasService(LinkGenerator linkGenerator,
-                                   IDataShaperService<BrandDto, ExpandoForXmlObject> dataShaperService)
-            : base (dataShaperService) 
+        public CustomerHateoasService(LinkGenerator linkGenerator)
         {
             _linkGenerator = linkGenerator;
         }
 
-        public override List<LinkItemModel> GenerateHateoasLinks(HttpContext httpContext, BrandDto dataModel)
+        public override List<LinkItemModel> GenerateHateoasLinks(HttpContext httpContext, CustomerDto dataModel)
         {
             List<LinkItemModel> hateoasLinks = new List<LinkItemModel>();
             if (_linkGenerator != null)
@@ -24,19 +22,19 @@ namespace RestfulApiHandler.Hateoas
                     new LinkItemModel(
                         method: "GET",
                         rel: "self",
-                        href: _linkGenerator!.GetUriByAction(httpContext, "GetBrandById", values: new { @brandId = id }))
+                        href: _linkGenerator!.GetUriByAction(httpContext, "GetCustomerById", values: new { @customerId = id }))
                 );
                 hateoasLinks.Add(
                     new LinkItemModel(
                         method: "PUT",
                         rel: "update",
-                        href: _linkGenerator!.GetUriByAction(httpContext, "UpdateBrand", values: new { @brandId = id }))
+                        href: _linkGenerator!.GetUriByAction(httpContext, "UpdateCustomer", values: new { @customerId = id }))
                 );
                 hateoasLinks.Add(
                     new LinkItemModel(
                         method: "DELETE",
                         rel: "delete",
-                        href: _linkGenerator!.GetUriByAction(httpContext, "DeleteBrand", values: new { @brandId = id }))
+                        href: _linkGenerator!.GetUriByAction(httpContext, "DeleteCustomer", values: new { @customerId = id }))
                 );
             }
             return hateoasLinks;

@@ -2,7 +2,7 @@
 {
     public interface IBrandService
     {
-        Task<PagedList<ExpandoForXmlObject>> GetAllAsync(HateoasParameters<BrandRequestParam> parameters);
+        Task<PagedList<ExpandoForXmlObject>> GetAllAsync(HateoasParams<BrandRequestParam> parameters);
 
         Task<BrandDto?> GetOneByIdAsync(Guid brandId);
 
