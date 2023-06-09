@@ -1,4 +1,5 @@
-﻿using LogicServices.Hateoas;
+﻿using Common.Models.Links;
+using LogicServices.Hateoas;
 using Microsoft.AspNetCore.Http;
 
 namespace RestfulApiHandler.Hateoas

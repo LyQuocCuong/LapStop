@@ -1,4 +1,4 @@
-﻿using Common.Models.Hateoas;
+﻿using Common.Models.Links;
 using Contracts.HateoasService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;

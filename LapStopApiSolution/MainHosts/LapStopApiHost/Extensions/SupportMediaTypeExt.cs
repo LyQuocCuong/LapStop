@@ -14,6 +14,8 @@ namespace LapStopApiHost.Extensions
                 {
                     systemTextJsonOutputFormatter.SupportedMediaTypes.
                                             Add("application/api.lapstop.hateoas+json");
+                    systemTextJsonOutputFormatter.SupportedMediaTypes.
+                                            Add("application/api.lapstop.apiroot+json");
                 }
 
                 var xmlOutputFormatter = config.OutputFormatters.
@@ -22,6 +24,8 @@ namespace LapStopApiHost.Extensions
                 {
                     xmlOutputFormatter.SupportedMediaTypes.
                                     Add("application/api.lapstop.hateoas+xml");
+                    xmlOutputFormatter.SupportedMediaTypes.
+                                    Add("application/api.lapstop.apiroot+xml");
                 }
             });
         }

@@ -1,4 +1,4 @@
-﻿using Common.Models.Hateoas;
+﻿using Common.Models.Links;
 using DTO.Bases;
 
 namespace DTO.Output.Data
