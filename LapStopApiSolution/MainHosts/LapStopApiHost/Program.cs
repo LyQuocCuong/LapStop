@@ -41,9 +41,8 @@ builder.Services.RegisterDI_CustomValidationAttribute();    // implement IAction
 builder.Services.RegisterDI_FluentValidation();             // FluentValidation.AspNetCore package
 //builder.Services.RegisterDI_DotNetResponseCaching();      // [Expiration]
 builder.Services.RegisterDI_MarvinResponseCaching();        // [Validation] Marvin.Cache.Header package
+builder.Services.RegisterDI_ApiVersioning();
 builder.Services.RegisterDI_Swagger();
-
-
 
 var app = builder.Build();
 
