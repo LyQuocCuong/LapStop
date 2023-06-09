@@ -1,5 +1,5 @@
 ﻿using Common.Models.DynamicObjects;
-using Common.Models.Hateoas;
+using Common.Models.Links;
 using Contracts.DataShaperService;
 using Contracts.HateoasService;
 using Microsoft.AspNetCore.Http;

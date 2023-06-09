@@ -1,4 +1,5 @@
-﻿using LogicServices.Hateoas;
+﻿using Common.Models.Links;
+using LogicServices.Hateoas;
 using LogicServices.Hateoas.UsingExpandoForXmlObject;
 using Microsoft.AspNetCore.Http;
 
