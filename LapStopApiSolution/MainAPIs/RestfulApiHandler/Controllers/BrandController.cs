@@ -1,5 +1,6 @@
 ﻿namespace RestfulApiHandler.Controllers
 {
+    [ApiVersion("1.0")]
     [ApiController]
     [Route("api")]
     public class BrandController : RootController

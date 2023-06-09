@@ -77,5 +77,28 @@
             services.AddScoped<IValidator<BrandForCreationDto>, BrandForCreationValidator>();
         }
 
+        public static void RegisterDI_ApiVersioning(this IServiceCollection services)
+        {
+            services.AddApiVersioning(opt =>
+            {
+                // add Api's version to Response Header
+                opt.ReportApiVersions = true;
+
+                // init a default version
+                opt.DefaultApiVersion = new ApiVersion(1,0);
+
+                // set Api's version = (default) - if Clients don't send
+                opt.AssumeDefaultVersionWhenUnspecified = true;
+
+                //// Conventions (Do NOT need [ApiVersion] in Controllers)
+                //opt.Conventions.Controller<BrandController>()
+                //               .HasDeprecatedApiVersion(new ApiVersion(1, 0));
+
+                //opt.Conventions.Controller<BrandV2Controller>()
+                //               .HasApiVersion(new ApiVersion(2, 0));
+
+            });
+        }
+
     }
 }
