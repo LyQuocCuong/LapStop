@@ -100,5 +100,31 @@
             });
         }
 
+        public static void RegisterDI_RateLimit(this IServiceCollection services)
+        {
+            services.AddMemoryCache();  // use MemoryCache to store Counters, Rules
+
+            var rateLimitRules = new List<RateLimitRule>
+            {
+                new RateLimitRule
+                {
+                    Endpoint = "*",
+                    Limit = 3,
+                    Period = "5m"
+                }
+            };
+
+            services.Configure<IpRateLimitOptions>(opt => 
+            { 
+                opt.GeneralRules = rateLimitRules; 
+            });
+            services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+            services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+            services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+            services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+
+            services.AddHttpContextAccessor();  // register HttpContextAccessor
+        }
+
     }
 }

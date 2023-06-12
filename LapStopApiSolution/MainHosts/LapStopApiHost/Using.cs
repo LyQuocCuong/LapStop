@@ -1,4 +1,5 @@
-﻿global using Common.Models.DynamicObjects;
+﻿global using AspNetCoreRateLimit;
+global using Common.Models.DynamicObjects;
 global using Contracts.DataShaperService;
 global using Contracts.HateoasService;
 global using Contracts.IRepositories;
