@@ -1,3 +1,5 @@
+using AspNetCoreRateLimit;
+
 LogManager.Setup().LoadConfigurationFromFile(
     Path.Combine(Directory.GetCurrentDirectory(), 
     "../../Infrastructures/InfraServices/NLog/NLog.config")
@@ -42,6 +44,7 @@ builder.Services.RegisterDI_FluentValidation();             // FluentValidation.
 //builder.Services.RegisterDI_DotNetResponseCaching();      // [Expiration]
 builder.Services.RegisterDI_MarvinResponseCaching();        // [Validation] Marvin.Cache.Header package
 builder.Services.RegisterDI_ApiVersioning();
+builder.Services.RegisterDI_RateLimit();
 builder.Services.RegisterDI_Swagger();
 
 var app = builder.Build();
@@ -61,6 +64,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseIpRateLimiting();    // BEFORE Cors()
 
 // UseCors must be called before UseResponseCaching
 //app.UseCors();
