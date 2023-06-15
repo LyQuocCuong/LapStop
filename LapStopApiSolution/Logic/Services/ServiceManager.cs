@@ -1,9 +1,13 @@
-﻿using Services.Models;
+﻿using Contracts.IServices.IdentityModels;
+using Services.IdentityModels;
+using Services.Models;
 
 namespace Services
 {
     public sealed class ServiceManager : IServiceManager
     {
+        private readonly Lazy<IIdentEmployeeService> _identEmployeeService;
+
         private readonly Lazy<IBrandService> _brandService;
         private readonly Lazy<ICartService> _cartService;
         private readonly Lazy<ICartItemService> _cartItemService;
@@ -39,6 +43,8 @@ namespace Services
                               IDataShaperService<ProductDto, ExpandoForXmlObject> dataShaperProductService,
                               IDataShaperService<BrandDto, ExpandoForXmlObject> dataShaperBrandService)
         {
+            _identEmployeeService = new Lazy<IIdentEmployeeService>(() => new IdentEmployeeService(logService, mappingService, repositoryManager));
+
             _brandService = new Lazy<IBrandService>(() => new BrandService(logService, mappingService, repositoryManager, dataShaperBrandService, hateoasBrandService));
             _cartService = new Lazy<ICartService>(() => new CartService(logService, mappingService, repositoryManager));
             _cartItemService = new Lazy<ICartItemService>(() => new CartItemService(logService, mappingService, repositoryManager));
@@ -62,6 +68,8 @@ namespace Services
             _salesOrderDetailService = new Lazy<ISalesOrderDetailService>(() => new SalesOrderDetailService(logService, mappingService, repositoryManager));
             _salesOrderStatusService = new Lazy<ISalesOrderStatusService>(() => new SalesOrderStatusService(logService, mappingService, repositoryManager));
         }
+
+        public IIdentEmployeeService IdentEmployee => _identEmployeeService.Value;
 
         public IBrandService Brand => _brandService.Value;
 

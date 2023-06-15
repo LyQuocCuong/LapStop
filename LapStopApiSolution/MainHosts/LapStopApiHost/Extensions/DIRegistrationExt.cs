@@ -1,4 +1,7 @@
-﻿namespace LapStopApiHost.Extensions
+﻿using Domains.IdentityModels;
+using Microsoft.AspNetCore.Identity;
+
+namespace LapStopApiHost.Extensions
 {
     public static class DIRegistrationExt
     {
@@ -10,12 +13,28 @@
             );
         }
 
+        public static void RegisterDI_IdentityContext(this IServiceCollection services)
+        {
+            services.AddIdentity<IdentEmployee, IdentRole>(opt =>
+            {
+                opt.Password.RequireDigit = true;
+                opt.Password.RequireLowercase = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequiredLength = 10;
+
+                opt.User.RequireUniqueEmail = true;
+            })
+            .AddEntityFrameworkStores<LapStopContext>()
+            .AddDefaultTokenProviders();
+        }
+
         public static void RegisterDI_AutoMapper(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddScoped<IMappingService, AutoMapperService>();
         }
-
+        
         public static void RegisterDI_MarvinResponseCaching(this IServiceCollection services)
         {
             services.AddHttpCacheHeaders(
@@ -109,7 +128,7 @@
                 new RateLimitRule
                 {
                     Endpoint = "*",
-                    Limit = 3,
+                    Limit = 50,
                     Period = "5m"
                 }
             };

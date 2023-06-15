@@ -1,11 +1,14 @@
 ﻿using Domains.Base;
+using Domains.IdentityModels;
 using Domains.Models;
 using Entities.Extensions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Entities.Context
 {
-    public sealed class LapStopContext : DbContext
+    public sealed class LapStopContext : IdentityDbContext<IdentEmployee, IdentRole, Guid>
     {
         public LapStopContext(DbContextOptions<LapStopContext> options) : base(options)
         {
@@ -14,6 +17,16 @@ namespace Entities.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<IdentEmployee>().ToTable("IdentEmployee");
+            modelBuilder.Entity<IdentRole>().ToTable("IdentRole");
+            modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("IdentEmployeeClaim");
+            modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("IdentEmployeeRole");
+            modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("IdentEmployeeLogin");
+            modelBuilder.Entity<IdentityRoleClaim<Guid>>().ToTable("IdentRoleClaim");
+            modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("IdentEmployeeToken");
+
             modelBuilder.ApplyOrderConfigExt();
 
             modelBuilder.ApplyAttributeConfigExt();
@@ -22,7 +35,7 @@ namespace Entities.Context
 
             modelBuilder.ApplySeedingDataExt();
 
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplySeedingIdentityDataExt();
         }
 
         public async Task<int> CustomSaveChangesAsync()

@@ -1,5 +1,7 @@
-﻿using Domains.Models;
+﻿using Domains.IdentityModels;
+using Domains.Models;
 using Entities.Configurations;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Entities.Extensions
@@ -1140,6 +1142,11 @@ namespace Entities.Extensions
             modelBuilder.ApplyConfiguration<InvoiceStatus>(new InvoiceStatusConfig());
             modelBuilder.ApplyConfiguration<ProductStatus>(new ProductStatusConfig());
             modelBuilder.ApplyConfiguration<SalesOrderStatus>(new SalesOrderStatusConfig());
+        }
+
+        public static void ApplySeedingIdentityDataExt(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration<IdentRole>(new IdentRoleConfig());
         }
     }
 }

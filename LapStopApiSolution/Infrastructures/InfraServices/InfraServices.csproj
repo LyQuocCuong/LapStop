@@ -15,6 +15,7 @@
     <ProjectReference Include="..\..\Cores\Contracts\Contracts.csproj" />
     <ProjectReference Include="..\..\Cores\Domains\Domains.csproj" />
     <ProjectReference Include="..\..\Cores\DTO\DTO.csproj" />
+    <ProjectReference Include="..\Entities\Entities.csproj" />
   </ItemGroup>
 
 </Project>

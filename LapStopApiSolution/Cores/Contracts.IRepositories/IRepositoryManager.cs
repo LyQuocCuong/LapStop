@@ -1,9 +1,12 @@
-﻿using Contracts.IRepositories.Models;
+﻿using Contracts.IRepositories.IdentityModels;
+using Contracts.IRepositories.Models;
 
 namespace Contracts.IRepositories
 {
     public interface IRepositoryManager
     {
+        IIdentEmployeeRepository IdentEmployee { get; }
+
         Task SaveChangesAsync();
 
         IBrandRepository Brand { get; }
