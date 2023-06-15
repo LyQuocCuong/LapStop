@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Entities.Configurations
 {
-    public class SalesOrderStatusConfig : IEntityTypeConfiguration<SalesOrderStatus>
+    internal sealed class SalesOrderStatusConfig : IEntityTypeConfiguration<SalesOrderStatus>
     {
         public void Configure(EntityTypeBuilder<SalesOrderStatus> builder)
         {

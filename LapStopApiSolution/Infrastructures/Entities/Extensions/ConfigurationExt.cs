@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Entities.Extensions
 {
-    public static class ModelBuilderExt
+    public static class ConfigurationExt
     {
         public static void ApplyOrderConfigExt(this ModelBuilder modelBuilder)
         {

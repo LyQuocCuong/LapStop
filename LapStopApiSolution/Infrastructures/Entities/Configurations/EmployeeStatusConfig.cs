@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Entities.Configurations
 {
-    public class EmployeeStatusConfig : IEntityTypeConfiguration<EmployeeStatus>
+    internal sealed class EmployeeStatusConfig : IEntityTypeConfiguration<EmployeeStatus>
     {
         public void Configure(EntityTypeBuilder<EmployeeStatus> builder)
         {
