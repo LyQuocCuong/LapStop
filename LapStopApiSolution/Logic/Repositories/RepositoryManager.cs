@@ -1,10 +1,16 @@
 ﻿using Contracts.IRepositories;
+using Contracts.IRepositories.IdentityModels;
+using Domains.IdentityModels;
+using Microsoft.AspNetCore.Identity;
+using Repositories.IdentityModels;
 using Repositories.Models;
 
 namespace Repositories
 {
     public sealed class RepositoryManager : IRepositoryManager
     {
+        private readonly Lazy<IIdentEmployeeRepository> _identEmployeeRepository;
+
         private readonly LapStopContext _context;
 
         private readonly Lazy<IBrandRepository> _brandRepository;
@@ -30,8 +36,12 @@ namespace Repositories
         private readonly Lazy<ISalesOrderDetailRepository> _salesOrderDetailRepository;
         private readonly Lazy<ISalesOrderStatusRepository> _salesOrderStatusRepository;
 
-        public RepositoryManager(LapStopContext context)
+        public RepositoryManager(LapStopContext context,
+                                 UserManager<IdentEmployee> userManager,
+                                 RoleManager<IdentRole> roleManager)
         {
+            _identEmployeeRepository = new Lazy<IIdentEmployeeRepository>(() => new IdentEmployeeRepository(userManager, roleManager));
+
             _context = context;
 
             _brandRepository = new Lazy<IBrandRepository>(() => new BrandRepository(context));
@@ -57,6 +67,8 @@ namespace Repositories
             _salesOrderDetailRepository = new Lazy<ISalesOrderDetailRepository>(()  => new SalesOrderDetailRepository(context));
             _salesOrderStatusRepository = new Lazy<ISalesOrderStatusRepository>(()  => new SalesOrderStatusRepository(context));
         }
+
+        public IIdentEmployeeRepository IdentEmployee => _identEmployeeRepository.Value;
 
         public async Task SaveChangesAsync()
         {

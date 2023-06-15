@@ -36,6 +36,10 @@ builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 builder.Services.AddScoped<IServiceManager, ServiceManager>();
 builder.Services.AddSingleton<ILogService, NLogService>();
 builder.Services.RegisterDI_LapStopContext(builder.Configuration);
+
+builder.Services.AddAuthentication();
+builder.Services.RegisterDI_IdentityContext();
+
 builder.Services.RegisterDI_AutoMapper();
 builder.Services.RegisterDI_DataShaper();
 builder.Services.RegisterDI_Hateoas();
@@ -69,6 +73,8 @@ app.UseIpRateLimiting();    // BEFORE Cors()
 
 // UseCors must be called before UseResponseCaching
 //app.UseCors();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

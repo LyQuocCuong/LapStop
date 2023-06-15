@@ -1,9 +1,12 @@
-﻿using Contracts.IServices.Models;
+﻿using Contracts.IServices.IdentityModels;
+using Contracts.IServices.Models;
 
 namespace Contracts.IServices
 {
     public interface IServiceManager
     {
+        IIdentEmployeeService IdentEmployee { get; }
+
         IBrandService Brand { get; }
 
         ICartService Cart { get; }

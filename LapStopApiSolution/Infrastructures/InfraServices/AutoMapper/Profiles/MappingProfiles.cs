@@ -6,6 +6,8 @@ namespace InfraServices.AutoMapper.Profiles
     {
         public MappingProfiles()
         {
+            MappingIdentEmployee();
+
             MappingBrand();
 
             MappingCart();
