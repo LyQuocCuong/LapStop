@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Entities.Configurations
 {
-    public class EmployeeRoleConfig : IEntityTypeConfiguration<EmployeeRole>
+    internal sealed class EmployeeRoleConfig : IEntityTypeConfiguration<EmployeeRole>
     {
         public void Configure(EntityTypeBuilder<EmployeeRole> builder)
         {

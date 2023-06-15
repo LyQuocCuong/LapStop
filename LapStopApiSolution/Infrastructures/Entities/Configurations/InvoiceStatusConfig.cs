@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Entities.Configurations
 {
-    public class InvoiceStatusConfig : IEntityTypeConfiguration<InvoiceStatus>
+    internal sealed class InvoiceStatusConfig : IEntityTypeConfiguration<InvoiceStatus>
     {
         public void Configure(EntityTypeBuilder<InvoiceStatus> builder)
         {

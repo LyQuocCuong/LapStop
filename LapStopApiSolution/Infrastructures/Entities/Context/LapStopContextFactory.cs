@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Entities.Context
 {
-    public sealed class LapStopContextFactory : IDesignTimeDbContextFactory<LapStopContext>
+    internal sealed class LapStopContextFactory : IDesignTimeDbContextFactory<LapStopContext>
     {
         // Define the DbContext was created at the DESIGN-TIME
         // Install 2 packages:
