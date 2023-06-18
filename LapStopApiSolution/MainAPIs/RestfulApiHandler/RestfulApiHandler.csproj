@@ -19,7 +19,7 @@
     <ProjectReference Include="..\..\Cores\Contracts.IServices\Contracts.IServices.csproj" />
     <ProjectReference Include="..\..\Cores\Contracts\Contracts.csproj" />
     <ProjectReference Include="..\..\Infrastructures\Entities\Entities.csproj" />
-    <ProjectReference Include="..\..\Logic\LogicServices\LogicServices.csproj" />
+    <ProjectReference Include="..\..\Infrastructures\ImpServices\ImpServices.csproj" />
   </ItemGroup>
 
 </Project>

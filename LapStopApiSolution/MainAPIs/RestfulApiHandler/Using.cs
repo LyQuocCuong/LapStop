@@ -1,9 +1,9 @@
 ﻿global using Common.Functions;
 global using Common.Models.DynamicObjects;
 global using Common.Models.Hateoas;
-global using Contracts.DataShaperService;
+global using Contracts.DataShaper;
 global using Contracts.IServices;
-global using Contracts.LogService;
+global using Contracts.Logger;
 global using DTO.Input.FromBody.Creation;
 global using DTO.Input.FromBody.Update;
 global using DTO.Input.FromQuery.RequestPrams;
