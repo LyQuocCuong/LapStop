@@ -1,13 +1,13 @@
 ﻿global using Common.Models.DynamicObjects;
 global using Common.Models.Exceptions;
 global using Common.Models.Hateoas;
-global using Contracts.DataShaperService;
-global using Contracts.HateoasService;
+global using Contracts.DataShaper;
+global using Contracts.Hateoas;
 global using Contracts.IRepositories;
 global using Contracts.IServices;
 global using Contracts.IServices.Models;
-global using Contracts.LogService;
-global using Contracts.MappingService;
+global using Contracts.Logger;
+global using Contracts.Mapping;
 global using Domains.Models;
 global using DTO.Input.FromBody.Creation;
 global using DTO.Input.FromBody.Update;
