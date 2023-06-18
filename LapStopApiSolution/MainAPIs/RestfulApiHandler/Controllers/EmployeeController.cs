@@ -1,4 +1,6 @@
-﻿namespace RestfulApiHandler.Controllers
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace RestfulApiHandler.Controllers
 {
     [ApiController]
     [Route("api")]
@@ -26,6 +28,7 @@
             return Ok();
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpGet]
         [Route("employees", Name = "GetAllEmployees")]
         public async Task<IActionResult> GetAllEmployees([FromQuery] EmployeeRequestParam parameter)

@@ -1,5 +1,6 @@
 ﻿using Contracts.IRepositories.IdentityModels;
 using Domains.IdentityModels;
+using DTO.Input.FromBody.Authentication;
 using Microsoft.AspNetCore.Identity;
 
 namespace Repositories.IdentityModels
@@ -16,7 +17,7 @@ namespace Repositories.IdentityModels
             _roleManager = roleManager;
         }
 
-        public async Task<IdentityResult> RegisterEmployee(IdentEmployee identEmployee, ICollection<string?> employeeRoles)
+        public async Task<IdentityResult> Create(IdentEmployee identEmployee, ICollection<string?> employeeRoles)
         {
             IdentityResult result = await _userManager.CreateAsync(identEmployee, identEmployee.PasswordHash);
             if (result.Succeeded)
@@ -29,6 +30,14 @@ namespace Repositories.IdentityModels
                     }
                 }
             }
+            return result;
+        }
+
+        public async Task<bool> Validate(EmployeeForAuthentDto authentDto)
+        {
+            var employee = await _userManager.FindByNameAsync(authentDto.Username);
+            var result = (employee != null && 
+                          await _userManager.CheckPasswordAsync(employee, authentDto.Password));
             return result;
         }
     }

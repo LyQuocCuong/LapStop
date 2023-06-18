@@ -49,6 +49,7 @@ builder.Services.RegisterDI_FluentValidation();             // FluentValidation.
 builder.Services.RegisterDI_MarvinResponseCaching();        // [Validation] Marvin.Cache.Header package
 builder.Services.RegisterDI_ApiVersioning();
 builder.Services.RegisterDI_RateLimit();
+builder.Services.RegisterDI_JWT(builder.Configuration);
 builder.Services.RegisterDI_Swagger();
 
 var app = builder.Build();

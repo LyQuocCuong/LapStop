@@ -1,5 +1,11 @@
-﻿using Domains.IdentityModels;
+﻿using Contracts.Authentication;
+using Domains.IdentityModels;
+using LogicServices.Authentication;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace LapStopApiHost.Extensions
 {
@@ -143,6 +149,36 @@ namespace LapStopApiHost.Extensions
             services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
 
             services.AddHttpContextAccessor();  // register HttpContextAccessor
+        }
+
+        public static void RegisterDI_JWT(this IServiceCollection services, IConfiguration configuration)
+        {
+            var jwtSettings = configuration.GetSection("JwtSettings");
+            var secretKey = Environment.GetEnvironmentVariable("SECRET");
+
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,      // The issuer is the actual server that created the token
+                    ValidateAudience = true,    // The receiver of the token is a valid recipient
+                    ValidateLifetime = true,    // The token has not expired
+                    ValidateIssuerSigningKey = true,    // The signing key is valid and is trusted by the server
+
+                    // Values are used to generate the signature for JWT
+                    ValidIssuer = jwtSettings["validIssuer"],
+                    ValidAudience = jwtSettings["validAudience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+                };
+            });
+
+            services.AddScoped<IAuthentService, AuthentService>();
+
         }
 
     }
