@@ -1,4 +1,5 @@
 ﻿using Contracts.Authentication;
+using Domains.IdentityModels;
 using DTO.Input.FromBody.Authentication;
 
 namespace RestfulApiHandler.Controllers.Others
@@ -7,14 +8,14 @@ namespace RestfulApiHandler.Controllers.Others
     [Route("api/authenticate")]
     public sealed class AuthenticationController : RootController
     {
-        private readonly IAuthentService _authenticationService;
+        private readonly IAuthentService<IdentEmployee> _authentEmployeeService;
 
         public AuthenticationController(ILogService logService,
                                         IServiceManager serviceManager,
-                                        IAuthentService authenticationService)
+                                        IAuthentService<IdentEmployee> authentEmployeeService)
             : base(logService, serviceManager)
         {
-            _authenticationService = authenticationService;
+            _authentEmployeeService = authentEmployeeService;
         }
 
         [HttpPost("employee")]
@@ -25,7 +26,7 @@ namespace RestfulApiHandler.Controllers.Others
             {
                 return Unauthorized();
             }
-            return Ok(new { Token = await _authenticationService.CreateToken(authentDto.Username) });
+            return Ok(new { Token = await _authentEmployeeService.CreateToken(authentDto.Username) });
         }
     }
 }

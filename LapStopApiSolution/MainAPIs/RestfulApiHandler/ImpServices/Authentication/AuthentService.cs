@@ -1,5 +1,4 @@
 ﻿using Contracts.Authentication;
-using Domains.IdentityModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -9,14 +8,13 @@ using System.Text;
 
 namespace RestfulApiHandler.ImpServices.Authentication
 {
-    public class AuthentService : IAuthentService
+    public class AuthentService<TIdentityUser>  : IAuthentService<TIdentityUser> where TIdentityUser : IdentityUser<Guid>
     {
         private readonly IConfiguration _configuration;
-        private IdentEmployee _employee;
-        private readonly UserManager<IdentEmployee> _userManager;
+        private readonly UserManager<TIdentityUser> _userManager;
 
         public AuthentService(IConfiguration configuration,
-            UserManager<IdentEmployee> userManager)
+                                UserManager<TIdentityUser> userManager)
         {
             _configuration = configuration;
             _userManager = userManager;
@@ -24,36 +22,41 @@ namespace RestfulApiHandler.ImpServices.Authentication
 
         public async Task<string> CreateToken(string username)
         {
-            _employee = await _userManager.FindByNameAsync(username);
+            TIdentityUser identUserInfo = await _userManager.FindByNameAsync(username);
+
+            var claims = await GetClaims(identUserInfo);
             var signingCredentials = GetSigningCredentials();
-            var claims = await GetClaims();
             var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
 
             return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
         }
 
-        private SigningCredentials GetSigningCredentials()
-        {
-            var key = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SECRET"));
-            var secret = new SymmetricSecurityKey(key);
-            return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
-        }
-
-        private async Task<List<Claim>> GetClaims()
+        private async Task<List<Claim>> GetClaims(TIdentityUser identUserInfo)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, _employee.UserName)
+                new Claim(ClaimTypes.Name, identUserInfo.UserName)
             };
-            var roles = await _userManager.GetRolesAsync(_employee);
-            foreach (var role in roles)
+            var userRoles = await _userManager.GetRolesAsync(identUserInfo);
+            foreach (var role in userRoles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
             return claims;
         }
 
-        private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
+        private SigningCredentials? GetSigningCredentials()
+        {
+            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("SECRET")))
+            {
+                return null;
+            }
+            var key = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SECRET"));
+            var secret = new SymmetricSecurityKey(key);
+            return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
+        }
+
+        private JwtSecurityToken GenerateTokenOptions(SigningCredentials? signingCredentials, List<Claim> claims)
         {
             var jwtSettings = _configuration.GetSection("JwtSettings");
             var tokenOptions = new JwtSecurityToken(
