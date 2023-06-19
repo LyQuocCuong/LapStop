@@ -178,7 +178,7 @@ namespace LapStopApiHost.Extensions
                 };
             });
 
-            services.AddScoped<IAuthentService, AuthentService>();
+            services.AddScoped<IAuthentService<IdentEmployee>, AuthentService<IdentEmployee>>();
 
         }
 
