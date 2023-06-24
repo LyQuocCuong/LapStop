@@ -17,9 +17,9 @@ namespace Repositories.IdentityModels
             _roleManager = roleManager;
         }
 
-        public async Task<IdentityResult> Create(IdentEmployee identEmployee, ICollection<string?> employeeRoles)
+        public async Task<IdentityResult> Create(IdentEmployee identEmployee, string rawPassword, ICollection<string?> employeeRoles)
         {
-            IdentityResult result = await _userManager.CreateAsync(identEmployee, identEmployee.PasswordHash);
+            IdentityResult result = await _userManager.CreateAsync(identEmployee, rawPassword);
             if (result.Succeeded)
             {
                 foreach(string? role in employeeRoles)

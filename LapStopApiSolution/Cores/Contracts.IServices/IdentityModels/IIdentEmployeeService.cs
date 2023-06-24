@@ -5,7 +5,7 @@ namespace Contracts.IServices.IdentityModels
 {
     public interface IIdentEmployeeService
     {
-        Task<IdentityResult> Create(EmployeeForRegistrationDto registrationDto);
+        Task<IdentityResult> Create(EmployeeForRegistrationDto registrationDto, string rawPassword);
         Task<bool> Validate(EmployeeForAuthentDto authentDto);
     }
 }

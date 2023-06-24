@@ -19,8 +19,6 @@ namespace ImpServices.AutoMapper.Profiles
                            model_field => model_field.MapFrom(e => e.LastName))
                 .ForMember(model => model.UserName,
                            model_field => model_field.MapFrom(e => e.UserName))
-                .ForMember(model => model.PasswordHash,
-                           model_field => model_field.MapFrom(e => e.Password))
                 .ForMember(model => model.Email,
                            model_field => model_field.MapFrom(e => e.Email))
                 .ForMember(model => model.PhoneNumber,

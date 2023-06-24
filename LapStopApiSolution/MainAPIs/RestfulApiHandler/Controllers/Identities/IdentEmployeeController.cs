@@ -17,7 +17,7 @@ namespace RestfulApiHandler.Controllers.Identities
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> RegisterIdentEmployee([FromBody] EmployeeForRegistrationDto registrationDto)
         {
-            IdentityResult result = await _serviceManager.IdentEmployee.Create(registrationDto);
+            IdentityResult result = await _serviceManager.IdentEmployee.Create(registrationDto, registrationDto.Password);
 
             if (result.Succeeded == false)
             {
