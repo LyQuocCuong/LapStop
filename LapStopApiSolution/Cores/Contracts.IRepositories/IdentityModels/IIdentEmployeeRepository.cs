@@ -6,7 +6,7 @@ namespace Contracts.IRepositories.IdentityModels
 {
     public interface IIdentEmployeeRepository
     {
-        Task<IdentityResult> Create(IdentEmployee identEmployee, ICollection<string?> employeeRoles);
+        Task<IdentityResult> Create(IdentEmployee identEmployee, string rawPassword, ICollection<string?> employeeRoles);
         Task<bool> Validate(EmployeeForAuthentDto authentDto);
     }
 }

@@ -14,10 +14,10 @@ namespace Services.IdentityModels
         {
         }
 
-        public async Task<IdentityResult> Create(EmployeeForRegistrationDto registrationDto)
+        public async Task<IdentityResult> Create(EmployeeForRegistrationDto registrationDto, string rawPassword)
         {
             var identEmployee = _mappingService.Map<EmployeeForRegistrationDto, IdentEmployee>(registrationDto);
-            return await _repositoryManager.IdentEmployee.Create(identEmployee, registrationDto.Roles);
+            return await _repositoryManager.IdentEmployee.Create(identEmployee, rawPassword, registrationDto.Roles);
         }
 
         public async Task<bool> Validate(EmployeeForAuthentDto authentDto)
