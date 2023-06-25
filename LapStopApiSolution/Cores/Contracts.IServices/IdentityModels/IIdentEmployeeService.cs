@@ -5,7 +5,8 @@ namespace Contracts.IServices.IdentityModels
 {
     public interface IIdentEmployeeService
     {
-        Task<IdentityResult> Create(EmployeeForRegistrationDto registrationDto, string rawPassword);
-        Task<bool> Validate(EmployeeForAuthentDto authentDto);
+        Task<IdentityResult> CreateAsync(EmployeeForRegistrationDto registrationDto, string rawPassword);
+
+        Task<bool> IsValidAuthentData(AuthentDto authentDto);
     }
 }
