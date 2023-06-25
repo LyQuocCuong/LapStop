@@ -17,7 +17,7 @@ namespace Repositories.IdentityModels
             _roleManager = roleManager;
         }
 
-        public async Task<IdentityResult> Create(IdentEmployee identEmployee, string rawPassword, ICollection<string?> employeeRoles)
+        public async Task<IdentityResult> CreateAsync(IdentEmployee identEmployee, string rawPassword, ICollection<string?> employeeRoles)
         {
             IdentityResult result = await _userManager.CreateAsync(identEmployee, rawPassword);
             if (result.Succeeded)
@@ -33,12 +33,24 @@ namespace Repositories.IdentityModels
             return result;
         }
 
-        public async Task<bool> Validate(EmployeeForAuthentDto authentDto)
+        public async Task<IdentEmployee?> FindByUsernameAsync(string username)
         {
-            var employee = await _userManager.FindByNameAsync(authentDto.Username);
-            var result = (employee != null && 
-                          await _userManager.CheckPasswordAsync(employee, authentDto.Password));
-            return result;
+            if (!string.IsNullOrEmpty(username))
+            {
+                return await _userManager.FindByNameAsync(username);
+            }
+            return null;
         }
+
+        public async Task<bool> IsValidAuthentData(string username, string password)
+        {
+            IdentEmployee? employee = await FindByUsernameAsync(username);
+            if (employee != null && !string.IsNullOrEmpty(password))
+            {
+                return await _userManager.CheckPasswordAsync(employee, password);
+            }
+            return false;
+        }
+
     }
 }

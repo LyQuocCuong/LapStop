@@ -20,9 +20,9 @@ namespace RestfulApiHandler.Controllers.Others
 
         [HttpPost("employee")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> AuthenticateEmployee([FromBody] EmployeeForAuthentDto authentDto)
+        public async Task<IActionResult> AuthenticateEmployee([FromBody] AuthentDto authentDto)
         {
-            if (!await _serviceManager.IdentEmployee.Validate(authentDto))
+            if (!await _serviceManager.IdentEmployee.IsValidAuthentData(authentDto))
             {
                 return Unauthorized();
             }
