@@ -1,11 +1,9 @@
-﻿using Contracts.Authentication;
-using Domains.IdentityModels;
-using Microsoft.AspNetCore.Authentication;
+﻿using Contracts.Utilities.Authentication;
+using Domains.Identities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using RestfulApiHandler.ImpServices.Authentication;
-using RestfulApiHandler.ImpServices.Hateoas;
 using System.Text;
 
 namespace LapStopApiHost.Extensions

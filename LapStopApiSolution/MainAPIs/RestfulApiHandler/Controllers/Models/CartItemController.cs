@@ -2,11 +2,11 @@
 {
     [ApiController]
     [Route("api")]
-    public class CartItemController : RootController
+    public class CartItemController : AbstractController
     {
         public CartItemController(ILogService logService,
-                                  IServiceManager serviceManager)
-                           : base(logService, serviceManager)
+                                IDomainServices domainServices)
+            : base(logService, domainServices)
         {
         }
 
@@ -14,7 +14,7 @@
         [Route("carts/{cartId:guid}/cartitems", Name = "GetAllCartItemsByCartId")]
         public async Task<IActionResult> GetAllCartItemsByCartId(Guid cartId)
         {
-            IEnumerable<CartItemDto> cartItemDtos = await _serviceManager.CartItem.GetAllByCartIdAsync(cartId);
+            IEnumerable<CartItemDto> cartItemDtos = await EntityServices.CartItem.GetAllByCartIdAsync(cartId);
             return Ok(cartItemDtos);
         }
 

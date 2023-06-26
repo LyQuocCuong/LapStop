@@ -18,8 +18,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Cores\Contracts.IServices\Contracts.IServices.csproj" />
     <ProjectReference Include="..\..\Cores\Contracts\Contracts.csproj" />
-    <ProjectReference Include="..\..\Infrastructures\Entities\Entities.csproj" />
-    <ProjectReference Include="..\..\Infrastructures\ImpServices\ImpServices.csproj" />
+    <ProjectReference Include="..\..\Implementations\EFCoreService\EFCoreService.csproj" />
+    <ProjectReference Include="..\..\Implementations\Utilities\Utilities.csproj" />
   </ItemGroup>
 
 </Project>

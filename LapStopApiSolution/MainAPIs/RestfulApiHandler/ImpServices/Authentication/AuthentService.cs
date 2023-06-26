@@ -1,4 +1,4 @@
-﻿using Contracts.Authentication;
+﻿using Contracts.Utilities.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

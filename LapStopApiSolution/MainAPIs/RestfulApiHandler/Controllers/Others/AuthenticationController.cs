@@ -1,19 +1,19 @@
-﻿using Contracts.Authentication;
-using Domains.IdentityModels;
+﻿using Contracts.Utilities.Authentication;
+using Domains.Identities;
 using DTO.Input.FromBody.Authentication;
 
 namespace RestfulApiHandler.Controllers.Others
 {
     [ApiController]
     [Route("api/authenticate")]
-    public sealed class AuthenticationController : RootController
+    public sealed class AuthenticationController : AbstractController
     {
         private readonly IAuthentService<IdentEmployee> _authentEmployeeService;
 
         public AuthenticationController(ILogService logService,
-                                        IServiceManager serviceManager,
+                                        IDomainServices domainServices,
                                         IAuthentService<IdentEmployee> authentEmployeeService)
-            : base(logService, serviceManager)
+            : base(logService, domainServices)
         {
             _authentEmployeeService = authentEmployeeService;
         }
@@ -22,7 +22,7 @@ namespace RestfulApiHandler.Controllers.Others
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> AuthenticateEmployee([FromBody] AuthentDto authentDto)
         {
-            if (!await _serviceManager.IdentEmployee.IsValidAuthentData(authentDto))
+            if (!await IdentityServices.IdentEmployee.IsValidAuthentData(authentDto))
             {
                 return Unauthorized();
             }

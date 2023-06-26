@@ -1,5 +1,4 @@
-﻿using FluentValidation.Results;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace RestfulApiHandler.Extensions
 {

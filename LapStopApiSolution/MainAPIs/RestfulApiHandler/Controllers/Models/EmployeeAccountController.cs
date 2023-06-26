@@ -2,11 +2,11 @@
 {
     [ApiController]
     [Route("api")]
-    public class EmployeeAccountController : RootController
+    public class EmployeeAccountController : AbstractController
     {
         public EmployeeAccountController(ILogService logService,
-                                         IServiceManager serviceManager)
-                                  : base(logService, serviceManager)
+                                IDomainServices domainServices)
+            : base(logService, domainServices)
         {
         }
 
@@ -14,7 +14,7 @@
         [Route("employees/accounts", Name = "GetAllEmployeeAccounts")]
         public async Task<IActionResult> GetAllEmployeeAccounts()
         {
-            IEnumerable<EmployeeAccountDto> employeeAccountDtos = await _serviceManager.EmployeeAccount.GetAllAsync();
+            IEnumerable<EmployeeAccountDto> employeeAccountDtos = await EntityServices.EmployeeAccount.GetAllAsync();
             return Ok(employeeAccountDtos);
         }
 
@@ -22,7 +22,7 @@
         [Route("employees/{employeeId:guid}/account", Name = "GetEmployeeAccountByEmployeeId")]
         public async Task<IActionResult> GetEmployeeAccountByEmployeeId(Guid employeeId)
         {
-            EmployeeAccountDto? employeeAccountDto = await _serviceManager.EmployeeAccount.GetOneByEmployeeIdAsync(employeeId);
+            EmployeeAccountDto? employeeAccountDto = await EntityServices.EmployeeAccount.GetOneByEmployeeIdAsync(employeeId);
             if (employeeAccountDto == null)
             {
                 return NotFound();

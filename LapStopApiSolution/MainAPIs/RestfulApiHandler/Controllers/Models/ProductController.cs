@@ -2,11 +2,11 @@
 {
     [ApiController]
     [Route("api")]
-    public class ProductController : RootController
+    public class ProductController : AbstractController
     {
         public ProductController(ILogService logService,
-                                 IServiceManager serviceManager)
-                           : base(logService, serviceManager)
+                                IDomainServices domainServices)
+            : base(logService, domainServices)
         {
         }
 
@@ -14,7 +14,7 @@
         [Route("products", Name = "GetAllProductsHead")]
         public async Task<IActionResult> GetAllProductsHead([FromQuery] ProductRequestParam parameters)
         {
-            PagedList<ExpandoForXmlObject> pagedResult = await _serviceManager.Product.GetAllAsync(parameters);
+            PagedList<ExpandoForXmlObject> pagedResult = await EntityServices.Product.GetAllAsync(parameters);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
 
@@ -25,7 +25,7 @@
         [Route("products", Name = "GetAllProducts")]
         public async Task<IActionResult> GetAllProducts([FromQuery] ProductRequestParam parameters)
         {
-            PagedList<ExpandoForXmlObject> pagedResult = await _serviceManager.Product.GetAllAsync(parameters);
+            PagedList<ExpandoForXmlObject> pagedResult = await EntityServices.Product.GetAllAsync(parameters);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
 
@@ -36,7 +36,7 @@
         [Route("products/{productId:guid}", Name = "GetProductById")]
         public async Task<IActionResult> GetProductById(Guid productId)
         {
-            ProductDto? productDto = await _serviceManager.Product.GetOneByIdAsync(productId);
+            ProductDto? productDto = await EntityServices.Product.GetOneByIdAsync(productId);
             if (productDto == null)
             {
                 return NotFound();
@@ -49,7 +49,7 @@
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateProduct([FromBody] ProductForCreationDto creationDto)
         {
-            ProductDto newProductDto = await _serviceManager.Product.CreateAsync(creationDto);
+            ProductDto newProductDto = await EntityServices.Product.CreateAsync(creationDto);
             return CreatedAtRoute("GetProductById", new { productId = newProductDto.Id }, newProductDto);
         }
 
@@ -58,11 +58,11 @@
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> UpdateProduct(Guid productId, [FromBody] ProductForUpdateDto updateDto)
         {
-            if (await _serviceManager.Product.IsValidIdAsync(productId) == false)
+            if (await EntityServices.Product.IsValidIdAsync(productId) == false)
             {
                 return NotFound();
             }
-            await _serviceManager.Product.UpdateAsync(productId, updateDto);
+            await EntityServices.Product.UpdateAsync(productId, updateDto);
             return NoContent();
         }
 
@@ -75,13 +75,13 @@
             {
                 return BadRequest(CommonFunctions.DisplayErrors.ReturnNullObjectMessage(nameof(JsonPatchDocument<ProductForUpdateDto>)));
             }
-            if (await _serviceManager.Product.IsValidIdAsync(productId) == false)
+            if (await EntityServices.Product.IsValidIdAsync(productId) == false)
             {
                 return NotFound();
             }
 
             // get data from DB
-            ProductForUpdateDto updateDto = await _serviceManager.Product.GetDtoForPatchAsync(productId);
+            ProductForUpdateDto updateDto = await EntityServices.Product.GetDtoForPatchAsync(productId);
 
             // apply Patch operation + log Errors in ModelState
             patchDocument.ApplyTo(updateDto, ModelState);
@@ -94,7 +94,7 @@
             }
 
             // update
-            await _serviceManager.Product.UpdateAsync(productId, updateDto);
+            await EntityServices.Product.UpdateAsync(productId, updateDto);
 
             return NoContent();
         }
@@ -103,11 +103,11 @@
         [Route("products/{productId:guid}", Name = "DeleteProduct")]
         public async Task<IActionResult> DeleteProduct(Guid productId)
         {
-            if (await _serviceManager.Product.IsValidIdAsync(productId) == false)
+            if (await EntityServices.Product.IsValidIdAsync(productId) == false)
             {
                 return NotFound();
             }
-            await _serviceManager.Product.DeleteAsync(productId);
+            await EntityServices.Product.DeleteAsync(productId);
             return NoContent();
         }
 
@@ -139,7 +139,7 @@
             //    };
             //    data.Add(product);
             //}
-            //productDtos = await _serviceManager.Product.BulkCreateAsync(data);
+            //productDtos = await EntityServices.Product.BulkCreateAsync(data);
             return Ok();
         }
 
@@ -161,7 +161,7 @@
                     CurrentPrice = product.CurrentPrice
                 });
             }
-            await _serviceManager.Product.BulkUpdateAsync(bulkUpdateDtos);
+            await EntityServices.Product.BulkUpdateAsync(bulkUpdateDtos);
             return NoContent();
         }
 
@@ -170,7 +170,7 @@
         public async Task<IActionResult> BulkDeleteProduct()
         {
             List<Guid> ids = productDtos.Select(p => p.Id).ToList();
-            await _serviceManager.Product.BulkDeleteAsync(ids);
+            await EntityServices.Product.BulkDeleteAsync(ids);
             return NoContent();
         }
 

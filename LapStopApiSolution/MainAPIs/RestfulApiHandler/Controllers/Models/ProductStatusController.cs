@@ -2,11 +2,11 @@
 {
     [ApiController]
     [Route("api")]
-    public class ProductStatusController : RootController
+    public class ProductStatusController : AbstractController
     {
         public ProductStatusController(ILogService logService,
-                                       IServiceManager serviceManager)
-                                : base(logService, serviceManager)
+                                IDomainServices domainServices)
+            : base(logService, domainServices)
         {
         }
 
@@ -14,7 +14,7 @@
         [Route("productstatuses", Name = "GetAllProductStatuses")]
         public async Task<IActionResult> GetAllProductStatuses()
         {
-            IEnumerable<ProductStatusDto> productStatusDtos = await _serviceManager.ProductStatus.GetAllAsync();
+            IEnumerable<ProductStatusDto> productStatusDtos = await EntityServices.ProductStatus.GetAllAsync();
             return Ok(productStatusDtos);
         }
 
@@ -22,7 +22,7 @@
         [Route("productstatuses/{productStatusId:guid}", Name = "GetProductStatusById")]
         public async Task<IActionResult> GetProductStatusById(Guid productStatusId)
         {
-            ProductStatusDto? productStatusDto = await _serviceManager.ProductStatus.GetOneByIdAsync(productStatusId);
+            ProductStatusDto? productStatusDto = await EntityServices.ProductStatus.GetOneByIdAsync(productStatusId);
             if (productStatusDto == null)
             {
                 return NotFound();

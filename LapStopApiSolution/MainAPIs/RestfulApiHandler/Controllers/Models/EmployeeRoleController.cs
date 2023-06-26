@@ -2,11 +2,11 @@
 {
     [ApiController]
     [Route("api")]
-    public class EmployeeRoleController : RootController
+    public class EmployeeRoleController : AbstractController
     {
         public EmployeeRoleController(ILogService logService,
-                                      IServiceManager serviceManager)
-                               : base(logService, serviceManager)
+                                IDomainServices domainServices)
+            : base(logService, domainServices)
         {
         }
 
@@ -14,7 +14,7 @@
         [Route("employeeroles", Name = "GetAllEmployeeRoles")]
         public async Task<IActionResult> GetAllEmployeeRoles()
         {
-            IEnumerable<EmployeeRoleDto> employeeRoleDtos = await _serviceManager.EmployeeRole.GetAllAsync();
+            IEnumerable<EmployeeRoleDto> employeeRoleDtos = await EntityServices.EmployeeRole.GetAllAsync();
             return Ok(employeeRoleDtos);
         }
 
@@ -22,7 +22,7 @@
         [Route("employeeroles/{employeeRoleId:guid}", Name = "GetEmployeeRoleById")]
         public async Task<IActionResult> GetEmployeeRoleById(Guid employeeRoleId)
         {
-            EmployeeRoleDto? employeeRoleDto = await _serviceManager.EmployeeRole.GetOneByIdAsync(employeeRoleId);
+            EmployeeRoleDto? employeeRoleDto = await EntityServices.EmployeeRole.GetOneByIdAsync(employeeRoleId);
             if (employeeRoleDto == null)
             {
                 return NotFound();

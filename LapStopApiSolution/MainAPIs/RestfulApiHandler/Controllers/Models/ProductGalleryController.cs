@@ -2,11 +2,11 @@
 {
     [ApiController]
     [Route("api")]
-    public class ProductGalleryController : RootController
+    public class ProductGalleryController : AbstractController
     {
         public ProductGalleryController(ILogService logService,
-                                        IServiceManager serviceManager)
-                                 : base(logService, serviceManager)
+                                IDomainServices domainServices)
+            : base(logService, domainServices)
         {
         }
 
@@ -14,7 +14,7 @@
         [Route("products/{productId:guid}/galleries", Name = "GetAllProductGalleriesByProductId")]
         public async Task<IActionResult> GetAllProductGalleriesByProductId(Guid productId)
         {
-            IEnumerable<ProductGalleryDto> productGalleryDtos = await _serviceManager.ProductGallery.GetAllByProductIdAsync(productId);
+            IEnumerable<ProductGalleryDto> productGalleryDtos = await EntityServices.ProductGallery.GetAllByProductIdAsync(productId);
             return Ok(productGalleryDtos);
         }
 

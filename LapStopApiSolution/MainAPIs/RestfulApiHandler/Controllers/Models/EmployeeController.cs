@@ -4,11 +4,11 @@ namespace RestfulApiHandler.Controllers.Models
 {
     [ApiController]
     [Route("api")]
-    public class EmployeeController : RootController
+    public class EmployeeController : AbstractController
     {
         public EmployeeController(ILogService logService,
-                                  IServiceManager serviceManager)
-                           : base(logService, serviceManager)
+                                IDomainServices domainServices)
+            : base(logService, domainServices)
         {
         }
 
@@ -21,7 +21,7 @@ namespace RestfulApiHandler.Controllers.Models
                 return BadRequest(CommonFunctions.DisplayErrors.ReturnInvalidAgeRangeMessage);
             }
 
-            PagedList<ExpandoForXmlObject> pagedResult = await _serviceManager.Employee.GetAllAsync(parameter);
+            PagedList<ExpandoForXmlObject> pagedResult = await EntityServices.Employee.GetAllAsync(parameter);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
 
@@ -38,7 +38,7 @@ namespace RestfulApiHandler.Controllers.Models
                 return BadRequest(CommonFunctions.DisplayErrors.ReturnInvalidAgeRangeMessage);
             }
 
-            PagedList<ExpandoForXmlObject> pagedResult = await _serviceManager.Employee.GetAllAsync(parameter);
+            PagedList<ExpandoForXmlObject> pagedResult = await EntityServices.Employee.GetAllAsync(parameter);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
 
@@ -49,7 +49,7 @@ namespace RestfulApiHandler.Controllers.Models
         [Route("employees/{employeeId:guid}", Name = "GetEmployeeById")]
         public async Task<IActionResult> GetEmployeeById(Guid employeeId)
         {
-            EmployeeDto? employeeDto = await _serviceManager.Employee.GetOneByIdAsync(employeeId);
+            EmployeeDto? employeeDto = await EntityServices.Employee.GetOneByIdAsync(employeeId);
             if (employeeDto == null)
             {
                 return NotFound();
@@ -62,7 +62,7 @@ namespace RestfulApiHandler.Controllers.Models
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateEmployee([FromBody] EmployeeForCreationDto creationDto)
         {
-            EmployeeDto newEmployeeDto = await _serviceManager.Employee.CreateAsync(creationDto);
+            EmployeeDto newEmployeeDto = await EntityServices.Employee.CreateAsync(creationDto);
             return CreatedAtRoute("GetEmployeeById", new { employeeId = newEmployeeDto.Id }, newEmployeeDto);
         }
 
@@ -71,11 +71,11 @@ namespace RestfulApiHandler.Controllers.Models
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> UpdateEmployee(Guid employeeId, [FromBody] EmployeeForUpdateDto updateDto)
         {
-            if (await _serviceManager.Employee.IsValidIdAsync(employeeId) == false)
+            if (await EntityServices.Employee.IsValidIdAsync(employeeId) == false)
             {
                 return NotFound();
             }
-            await _serviceManager.Employee.UpdateAsync(employeeId, updateDto);
+            await EntityServices.Employee.UpdateAsync(employeeId, updateDto);
             return NoContent();
         }
 
@@ -88,13 +88,13 @@ namespace RestfulApiHandler.Controllers.Models
             {
                 return BadRequest(CommonFunctions.DisplayErrors.ReturnNullObjectMessage(nameof(JsonPatchDocument<EmployeeForUpdateDto>)));
             }
-            if (await _serviceManager.Employee.IsValidIdAsync(employeeId) == false)
+            if (await EntityServices.Employee.IsValidIdAsync(employeeId) == false)
             {
                 return NotFound();
             }
 
             // get data from DB
-            EmployeeForUpdateDto updateDto = await _serviceManager.Employee.GetDtoForPatchAsync(employeeId);
+            EmployeeForUpdateDto updateDto = await EntityServices.Employee.GetDtoForPatchAsync(employeeId);
 
             // apply Patch operation + log Errors in ModelState
             patchDocument.ApplyTo(updateDto, ModelState);
@@ -107,7 +107,7 @@ namespace RestfulApiHandler.Controllers.Models
             }
 
             // update
-            await _serviceManager.Employee.UpdateAsync(employeeId, updateDto);
+            await EntityServices.Employee.UpdateAsync(employeeId, updateDto);
 
             return NoContent();
         }
@@ -116,11 +116,11 @@ namespace RestfulApiHandler.Controllers.Models
         [Route("employees/{employeeId:guid}", Name = "DeleteEmployee")]
         public async Task<IActionResult> DeleteEmployee(Guid employeeId)
         {
-            if (await _serviceManager.Employee.IsValidIdAsync(employeeId) == false)
+            if (await EntityServices.Employee.IsValidIdAsync(employeeId) == false)
             {
                 return NotFound();
             }
-            await _serviceManager.Employee.DeleteAsync(employeeId);
+            await EntityServices.Employee.DeleteAsync(employeeId);
             return NoContent();
         }
 

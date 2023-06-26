@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\Contracts.IRepositories\Contracts.IRepositories.csproj" />
+    <ProjectReference Include="..\Contracts\Contracts.csproj" />
     <ProjectReference Include="..\DTO\DTO.csproj" />
   </ItemGroup>
 

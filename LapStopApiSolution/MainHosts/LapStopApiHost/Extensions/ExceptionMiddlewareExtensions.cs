@@ -1,5 +1,6 @@
 ﻿using Common.Models.Errors;
 using Common.Models.Exceptions;
+using Contracts.Utilities.Logger;
 using Microsoft.AspNetCore.Diagnostics;
 
 namespace LapStopApiHost.Extensions

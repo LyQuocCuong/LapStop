@@ -3,11 +3,11 @@
     [ApiVersion("1.0")]
     [ApiController]
     [Route("api")]
-    public class BrandController : RootController
+    public class BrandController : AbstractController
     {
         public BrandController(ILogService logService,
-                               IServiceManager serviceManager)
-                        : base(logService, serviceManager)
+                                IDomainServices domainServices)
+            : base(logService, domainServices)
         {
         }
 
@@ -17,7 +17,7 @@
         public async Task<IActionResult> GetAllBrandsHead([FromQuery] BrandRequestParam parameters)
         {
             HateoasParams<BrandRequestParam> hateoasParameters = new(HttpContext, parameters);
-            PagedList<ExpandoForXmlObject> pagedResult = await _serviceManager.Brand.GetAllAsync(hateoasParameters);
+            PagedList<ExpandoForXmlObject> pagedResult = await EntityServices.Brand.GetAllAsync(hateoasParameters);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
             return Ok();
         }
@@ -28,7 +28,7 @@
         public async Task<IActionResult> GetAllBrands([FromQuery] BrandRequestParam parameters)
         {
             HateoasParams<BrandRequestParam> hateoasParameters = new(HttpContext, parameters);
-            PagedList<ExpandoForXmlObject> pagedResult = await _serviceManager.Brand.GetAllAsync(hateoasParameters);
+            PagedList<ExpandoForXmlObject> pagedResult = await EntityServices.Brand.GetAllAsync(hateoasParameters);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
             return Ok(pagedResult);
         }
@@ -39,7 +39,7 @@
         //[HttpCacheValidation(MustRevalidate = true)]
         public async Task<IActionResult> GetBrandById(Guid brandId)
         {
-            BrandDto? brandDto = await _serviceManager.Brand.GetOneByIdAsync(brandId);
+            BrandDto? brandDto = await EntityServices.Brand.GetOneByIdAsync(brandId);
             if (brandDto == null)
             {
                 return NotFound();
@@ -69,7 +69,7 @@
                 return UnprocessableEntity(ModelState);
             }
 
-            BrandDto newBrandDto = await _serviceManager.Brand.CreateAsync(creationDto);
+            BrandDto newBrandDto = await EntityServices.Brand.CreateAsync(creationDto);
             return CreatedAtRoute("GetBrandById", new { brandId = newBrandDto.Id }, newBrandDto);
         }
 
@@ -80,11 +80,11 @@
                                                      [FromServices] IValidatorValueInvalidator validator,
                                                      [FromServices] IStoreKeyAccessor keyAccessor)
         {
-            if (await _serviceManager.Brand.IsValidIdAsync(brandId) == false)
+            if (await EntityServices.Brand.IsValidIdAsync(brandId) == false)
             {
                 return NotFound();
             }
-            await _serviceManager.Brand.UpdateAsync(brandId, updateDto);
+            await EntityServices.Brand.UpdateAsync(brandId, updateDto);
 
             #region MARK FOR INVALIDATION 
             // Mark for Invalidation to remove the out-of-date StoreKey
@@ -111,12 +111,12 @@
             {
                 return BadRequest(CommonFunctions.DisplayErrors.ReturnNullObjectMessage(nameof(JsonPatchDocument<BrandForUpdateDto>)));
             }
-            else if (await _serviceManager.Brand.IsValidIdAsync(brandId) == false)
+            else if (await EntityServices.Brand.IsValidIdAsync(brandId) == false)
             {
                 return NotFound();
             }
             // get data from DB
-            BrandForUpdateDto updateDto = await _serviceManager.Brand.GetDtoForPatchAsync(brandId);
+            BrandForUpdateDto updateDto = await EntityServices.Brand.GetDtoForPatchAsync(brandId);
 
             // apply Patch operation + log Errors in ModelState
             patchDocument.ApplyTo(updateDto, ModelState);
@@ -129,7 +129,7 @@
             }
 
             // update
-            await _serviceManager.Brand.UpdateAsync(brandId, updateDto);
+            await EntityServices.Brand.UpdateAsync(brandId, updateDto);
 
             return NoContent();
         }
@@ -138,11 +138,11 @@
         [Route("brands/{brandId:guid}", Name = "DeleteBrand")]
         public async Task<IActionResult> DeleteBrand(Guid brandId)
         {
-            if (await _serviceManager.Brand.IsValidIdAsync(brandId) == false)
+            if (await EntityServices.Brand.IsValidIdAsync(brandId) == false)
             {
                 return NotFound();
             }
-            await _serviceManager.Brand.DeleteAsync(brandId);
+            await EntityServices.Brand.DeleteAsync(brandId);
             return NoContent();
         }
 

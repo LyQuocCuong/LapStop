@@ -5,11 +5,11 @@ namespace RestfulApiHandler.Controllers.Identities
     [ApiVersion("1.0")]
     [ApiController]
     [Route("api/identity/employee")]
-    public sealed class IdentEmployeeController : RootController
+    public sealed class IdentEmployeeController : AbstractController
     {
         public IdentEmployeeController(ILogService logService,
-                                       IServiceManager serviceManager)
-            : base(logService, serviceManager)
+                                       IDomainServices domainServices)
+            : base(logService, domainServices)
         {
         }
 
@@ -17,7 +17,7 @@ namespace RestfulApiHandler.Controllers.Identities
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> RegisterIdentEmployee([FromBody] EmployeeForRegistrationDto registrationDto)
         {
-            IdentityResult result = await _serviceManager.IdentEmployee.CreateAsync(registrationDto, registrationDto.Password);
+            IdentityResult result = await IdentityServices.IdentEmployee.CreateAsync(registrationDto, registrationDto.Password);
 
             if (result.Succeeded == false)
             {

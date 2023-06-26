@@ -2,11 +2,11 @@
 {
     [ApiController]
     [Route("api")]
-    public class CustomerAccountController : RootController
+    public class CustomerAccountController : AbstractController
     {
         public CustomerAccountController(ILogService logService,
-                                         IServiceManager serviceManager)
-                                  : base(logService, serviceManager)
+                                IDomainServices domainServices)
+            : base(logService, domainServices)
         {
         }
 
@@ -14,7 +14,7 @@
         [Route("customers/accounts", Name = "GetAllCustomerAccounts")]
         public async Task<IActionResult> GetAllCustomerAccounts()
         {
-            IEnumerable<CustomerAccountDto> customerAccountDtos = await _serviceManager.CustomerAccount.GetAllAsync();
+            IEnumerable<CustomerAccountDto> customerAccountDtos = await EntityServices.CustomerAccount.GetAllAsync();
             return Ok(customerAccountDtos);
         }
 
@@ -22,7 +22,7 @@
         [Route("customers/{customerId:guid}/account", Name = "GetCustomerAccountByCustomerId")]
         public async Task<IActionResult> GetCustomerAccountByCustomerId(Guid customerId)
         {
-            CustomerAccountDto? customerAccountDto = await _serviceManager.CustomerAccount.GetOneByCustomerIdAsync(customerId);
+            CustomerAccountDto? customerAccountDto = await EntityServices.CustomerAccount.GetOneByCustomerIdAsync(customerId);
             if (customerAccountDto == null)
             {
                 return NotFound();
@@ -38,7 +38,7 @@
             {
                 return BadRequest(CommonFunctions.DisplayErrors.ReturnNullObjectMessage(nameof(CustomerAccountForCreationDto)));
             }
-            CustomerAccountDto newCustomerAccountDto = await _serviceManager.CustomerAccount.CreateAsync(customerId, creationDto);
+            CustomerAccountDto newCustomerAccountDto = await EntityServices.CustomerAccount.CreateAsync(customerId, creationDto);
             return CreatedAtRoute("GetCustomerAccountByCustomerId", new { customerId = newCustomerAccountDto.CustomerId }, newCustomerAccountDto);
         }
 
@@ -46,7 +46,7 @@
         [Route("customers/{customerId:guid}/account", Name = "UpdateCustomerAccount")]
         public async Task<IActionResult> UpdateCustomerAccount(Guid customerId, [FromBody] CustomerAccountForUpdateDto updateDto)
         {
-            await _serviceManager.CustomerAccount.UpdateAsync(customerId, updateDto);
+            await EntityServices.CustomerAccount.UpdateAsync(customerId, updateDto);
             return NoContent();
         }
 
