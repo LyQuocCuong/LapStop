@@ -2,11 +2,11 @@
 {
     [ApiController]
     [Route("api")]
-    public class SalesOrderStatusController : RootController
+    public class SalesOrderStatusController : AbstractController
     {
         public SalesOrderStatusController(ILogService logService,
-                                          IServiceManager serviceManager)
-                                   : base(logService, serviceManager)
+                                IDomainServices domainServices)
+            : base(logService, domainServices)
         {
         }
 
@@ -14,7 +14,7 @@
         [Route("salesorderstatuses", Name = "GetAllSalesOrderStatuses")]
         public async Task<IActionResult> GetAllSalesOrderStatuses()
         {
-            IEnumerable<SalesOrderStatusDto> salesOrderStatusDtos = await _serviceManager.SalesOrderStatus.GetAllAsync();
+            IEnumerable<SalesOrderStatusDto> salesOrderStatusDtos = await EntityServices.SalesOrderStatus.GetAllAsync();
             return Ok(salesOrderStatusDtos);
         }
 
@@ -22,7 +22,7 @@
         [Route("salesorderstatuses/{salesOrderStatusId:guid}", Name = "GetSalesOrderStatusById")]
         public async Task<IActionResult> GetSalesOrderStatusById(Guid salesOrderStatusId)
         {
-            SalesOrderStatusDto? salesOrderStatusDto = await _serviceManager.SalesOrderStatus.GetOneByIdAsync(salesOrderStatusId);
+            SalesOrderStatusDto? salesOrderStatusDto = await EntityServices.SalesOrderStatus.GetOneByIdAsync(salesOrderStatusId);
             if (salesOrderStatusDto == null)
             {
                 return NotFound();

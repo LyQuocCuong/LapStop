@@ -1,4 +1,6 @@
-using AspNetCoreRateLimit;
+using Contracts.Utilities;
+using Contracts.Utilities.Logger;
+using Utilities.NLog;
 
 LogManager.Setup().LoadConfigurationFromFile(
     Path.Combine(Directory.GetCurrentDirectory(), 
@@ -32,8 +34,10 @@ builder.Services.AddControllers(config =>
 
 builder.Services.SupportHateoasMediaTypeExt();  // after AddControllers()
 
-builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
-builder.Services.AddScoped<IServiceManager, ServiceManager>();
+builder.Services.AddScoped<IDomainRepositories, DomainRepositories>();
+builder.Services.AddScoped<IDomainServices, DomainServices>();
+builder.Services.AddScoped<IUtilityServices, UtilityServices>();
+builder.Services.AddScoped<IDomainServices, DomainServices>();
 builder.Services.AddSingleton<ILogService, NLogService>();
 builder.Services.RegisterDI_LapStopContext(builder.Configuration);
 

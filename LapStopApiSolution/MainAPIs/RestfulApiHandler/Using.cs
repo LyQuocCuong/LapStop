@@ -1,9 +1,8 @@
 ﻿global using Common.Functions;
 global using Common.Models.DynamicObjects;
 global using Common.Models.Hateoas;
-global using Contracts.DataShaper;
 global using Contracts.IServices;
-global using Contracts.Logger;
+global using Contracts.Utilities.Logger;
 global using DTO.Input.FromBody.Creation;
 global using DTO.Input.FromBody.Update;
 global using DTO.Input.FromQuery.RequestPrams;
@@ -18,5 +17,5 @@ global using Microsoft.AspNetCore.JsonPatch;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Routing;
 global using RestfulApiHandler.ActionFilters;
-global using RestfulApiHandler.Roots;
+global using RestfulApiHandler.Base;
 global using System.Text.Json;

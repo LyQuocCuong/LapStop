@@ -2,11 +2,11 @@
 {
     [ApiController]
     [Route("api")]
-    public class CustomerController : RootController
+    public class CustomerController : AbstractController
     {
         public CustomerController(ILogService logService,
-                                  IServiceManager serviceManager)
-                           : base(logService, serviceManager)
+                                IDomainServices domainServices)
+            : base(logService, domainServices)
         {
         }
 
@@ -16,7 +16,7 @@
         public async Task<IActionResult> GetAllCustomersHead([FromQuery] CustomerRequestParam parameters)
         {
             HateoasParams<CustomerRequestParam> hateoasParams = new HateoasParams<CustomerRequestParam>(HttpContext, parameters);
-            PagedList<CustomerDto> pagedResult = await _serviceManager.Customer.GetAllAsync(hateoasParams);
+            PagedList<CustomerDto> pagedResult = await EntityServices.Customer.GetAllAsync(hateoasParams);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
             return Ok();
         }
@@ -27,7 +27,7 @@
         public async Task<IActionResult> GetAllCustomers([FromQuery] CustomerRequestParam parameters)
         {
             HateoasParams<CustomerRequestParam> hateoasParams = new HateoasParams<CustomerRequestParam>(HttpContext, parameters);
-            PagedList<CustomerDto> pagedResult = await _serviceManager.Customer.GetAllAsync(hateoasParams);
+            PagedList<CustomerDto> pagedResult = await EntityServices.Customer.GetAllAsync(hateoasParams);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
             return Ok(pagedResult);
         }
@@ -36,7 +36,7 @@
         [Route("customers/{customerId:guid}", Name = "GetCustomerById")]
         public async Task<IActionResult> GetCustomerById(Guid customerId)
         {
-            CustomerDto? customerDto = await _serviceManager.Customer.GetOneByIdAsync(customerId);
+            CustomerDto? customerDto = await EntityServices.Customer.GetOneByIdAsync(customerId);
             if (customerDto == null)
             {
                 return NotFound();
@@ -49,7 +49,7 @@
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateCustomer([FromBody] CustomerForCreationDto creationDto)
         {
-            CustomerDto newCustomerDto = await _serviceManager.Customer.CreateAsync(creationDto);
+            CustomerDto newCustomerDto = await EntityServices.Customer.CreateAsync(creationDto);
             return CreatedAtRoute("GetCustomerById", new { customerId = newCustomerDto.Id }, newCustomerDto);
         }
 
@@ -58,11 +58,11 @@
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> UpdateCustomer(Guid customerId, [FromBody] CustomerForUpdateDto updateDto)
         {
-            if (await _serviceManager.Customer.IsValidIdAsync(customerId) == false)
+            if (await EntityServices.Customer.IsValidIdAsync(customerId) == false)
             {
                 return NotFound();
             }
-            await _serviceManager.Customer.UpdateAsync(customerId, updateDto);
+            await EntityServices.Customer.UpdateAsync(customerId, updateDto);
             return NoContent();
         }
 
@@ -75,7 +75,7 @@
             JsonPatchDocument<CustomerForUpdateDto> abc = new JsonPatchDocument<CustomerForUpdateDto>();
             abc.Replace(s => s.FirstName, "xyz");
 
-            if (await _serviceManager.Customer.IsValidIdAsync(customerId) == false)
+            if (await EntityServices.Customer.IsValidIdAsync(customerId) == false)
             {
                 return NotFound();
             }
@@ -84,11 +84,11 @@
                 return BadRequest(CommonFunctions.DisplayErrors.ReturnNullObjectMessage(nameof(JsonPatchDocument<CustomerForUpdateDto>)));
             }
 
-            CustomerForUpdateDto updateDto = await _serviceManager.Customer.GetDtoForPatchAsync(customerId);
+            CustomerForUpdateDto updateDto = await EntityServices.Customer.GetDtoForPatchAsync(customerId);
 
             abc.ApplyTo(updateDto);
 
-            await _serviceManager.Customer.UpdateAsync(customerId, updateDto);
+            await EntityServices.Customer.UpdateAsync(customerId, updateDto);
 
             return NoContent();
         }
@@ -97,11 +97,11 @@
         [Route("customers/{customerId:guid}", Name = "DeleteCustomer")]
         public async Task<IActionResult> DeleteCustomer(Guid customerId)
         {
-            if (await _serviceManager.Customer.IsValidIdAsync(customerId) == false)
+            if (await EntityServices.Customer.IsValidIdAsync(customerId) == false)
             {
                 return NotFound();
             }
-            await _serviceManager.Customer.DeleteAsync(customerId);
+            await EntityServices.Customer.DeleteAsync(customerId);
             return NoContent();
         }
 

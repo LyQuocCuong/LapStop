@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Cores\Contracts.IRepositories\Contracts.IRepositories.csproj" />
-    <ProjectReference Include="..\..\Infrastructures\Entities\Entities.csproj" />
+    <ProjectReference Include="..\..\Implementations\EFCoreService\EFCoreService.csproj" />
   </ItemGroup>
 
 </Project>

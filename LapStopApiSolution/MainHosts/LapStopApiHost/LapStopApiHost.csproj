@@ -20,6 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Cores\Common\Common.csproj" />
+    <ProjectReference Include="..\..\Implementations\Utilities\Utilities.csproj" />
     <ProjectReference Include="..\..\Logic\Repositories\Repositories.csproj" />
     <ProjectReference Include="..\..\Logic\Services\Services.csproj" />
     <ProjectReference Include="..\..\MainAPIs\RestfulApiHandler\RestfulApiHandler.csproj" />

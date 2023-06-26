@@ -3,10 +3,10 @@
     [ApiVersion("2.0", Deprecated = true)]
     [ApiController]
     [Route("/api/{v:apiversion}")]
-    public sealed class BrandV2Controller : RootController
+    public sealed class BrandV2Controller : AbstractController
     {
-        public BrandV2Controller(ILogService logService, IServiceManager serviceManager) 
-            : base(logService, serviceManager)
+        public BrandV2Controller(ILogService logService, IDomainServices domainServices) 
+            : base(logService, domainServices)
         {
         }
 
@@ -16,7 +16,7 @@
         public async Task<IActionResult> GetAllBrands([FromQuery] BrandRequestParam parameters)
         {
             HateoasParams<BrandRequestParam> hateoasParameters = new(HttpContext, parameters);
-            PagedList<ExpandoForXmlObject> pagedResult = await _serviceManager.Brand.GetAllAsync(hateoasParameters);
+            PagedList<ExpandoForXmlObject> pagedResult = await EntityServices.Brand.GetAllAsync(hateoasParameters);
             Response.Headers.Add("X-PaginationV2", JsonSerializer.Serialize(pagedResult.MetaData));
             return Ok(pagedResult);
         }

@@ -1,1 +1,1 @@
-﻿global using Domains.Base;
+﻿global using Domains.Entities.Base;

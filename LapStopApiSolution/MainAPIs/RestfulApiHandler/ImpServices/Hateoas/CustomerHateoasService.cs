@@ -1,6 +1,6 @@
 ﻿using Common.Models.Links;
-using ImpServices.Hateoas;
 using Microsoft.AspNetCore.Http;
+using Utilities.Hateoas;
 
 namespace RestfulApiHandler.ImpServices.Hateoas
 {
