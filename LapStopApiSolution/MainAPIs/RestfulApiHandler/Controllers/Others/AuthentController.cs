@@ -6,16 +6,16 @@ namespace RestfulApiHandler.Controllers.Others
 {
     [ApiController]
     [Route("api/authenticate")]
-    public sealed class AuthenticationController : AbstractController
+    public sealed class AuthentController : AbstractController
     {
-        private readonly IAuthentService<IdentEmployee> _authentEmployeeService;
+        private readonly IAuthentService _authentService;
 
-        public AuthenticationController(ILogService logService,
-                                        IDomainServices domainServices,
-                                        IAuthentService<IdentEmployee> authentEmployeeService)
+        public AuthentController(ILogService logService,
+                                IDomainServices domainServices,
+                                IAuthentService authentService)
             : base(logService, domainServices)
         {
-            _authentEmployeeService = authentEmployeeService;
+            _authentService = authentService;
         }
 
         [HttpPost("employee")]
@@ -26,7 +26,7 @@ namespace RestfulApiHandler.Controllers.Others
             {
                 return Unauthorized();
             }
-            return Ok(new { Token = await _authentEmployeeService.CreateToken(authentDto.Username) });
+            return Ok(new { Token = await _authentService.CreateToken(authentDto.Username) });
         }
     }
 }

@@ -1,10 +1,10 @@
-﻿using Repositories.Base;
-
-namespace Repositories.Entities
+﻿namespace Repositories.Entities
 {
-    internal sealed class CartRepository : AbstractRepository<Cart>, ICartRepository
+    internal sealed class CartRepository : AbstractEntityRepository<Cart>, ICartRepository
     {
-        public CartRepository(LapStopContext context) : base(context)
+        public CartRepository(LapStopContext context,
+                                IDomainRepositories domainRepositories)
+            : base(context, domainRepositories)
         {
         }
 

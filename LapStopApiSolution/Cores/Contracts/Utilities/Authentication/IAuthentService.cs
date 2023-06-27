@@ -1,6 +1,6 @@
 ﻿namespace Contracts.Utilities.Authentication
 {
-    public interface IAuthentService<TIdentityUser>
+    public interface IAuthentService
     {
         Task<string> CreateToken(string username);
     }

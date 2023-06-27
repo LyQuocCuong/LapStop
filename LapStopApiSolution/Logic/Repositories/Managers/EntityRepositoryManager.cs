@@ -28,30 +28,30 @@ namespace Repositories.Managers
         private readonly Lazy<ISalesOrderDetailRepository> _salesOrderDetailRepository;
         private readonly Lazy<ISalesOrderStatusRepository> _salesOrderStatusRepository;
 
-        public EntityRepositoryManager(LapStopContext context)
+        public EntityRepositoryManager(LapStopContext context, IDomainRepositories domainRepositories)
         {
-            _brandRepository = new Lazy<IBrandRepository>(() => new BrandRepository(context));
-            _cartRepository = new Lazy<ICartRepository>(() => new CartRepository(context));
-            _cartItemRepository = new Lazy<ICartItemRepository>(() => new CartItemRepository(context));
-            _customerAccountRepository = new Lazy<ICustomerAccountRepository>(() => new CustomerAccountRepository(context));
-            _customerRepository = new Lazy<ICustomerRepository>(() => new CustomerRepository(context));
-            _employeeAccountRepository = new Lazy<IEmployeeAccountRepository>(() => new EmployeeAccountRepository(context));
-            _employeeGalleryRepository = new Lazy<IEmployeeGalleryRepository>(() => new EmployeeGalleryRepository(context));
-            _employeeRepository = new Lazy<IEmployeeRepository>(() => new EmployeeRepository(context));
-            _employeeRoleRepository = new Lazy<IEmployeeRoleRepository>(() => new EmployeeRoleRepository(context));
-            _employeeStatusRepository = new Lazy<IEmployeeStatusRepository>(() => new EmployeeStatusRepository(context));
-            _exportedInvoiceRepository = new Lazy<IExportedInvoiceRepository>(() => new ExportedInvoiceRepository(context));
-            _exportedInvoiceDetailRepository = new Lazy<IExportedInvoiceDetailRepository>(() => new ExportedInvoiceDetailRepository(context));
-            _importedInvoiceRepository = new Lazy<IImportedInvoiceRepository>(() => new ImportedInvoiceRepository(context));
-            _importedInvoiceDetailRepository = new Lazy<IImportedInvoiceDetailRepository>(() => new ImportedInvoiceDetailRepository(context));
-            _invoiceStatusRepository = new Lazy<IInvoiceStatusRepository>(() => new InvoiceStatusRepository(context));
-            _productBrandRepository = new Lazy<IProductBrandRepository>(() => new ProductBrandRepository(context));
-            _productGalleryRepository = new Lazy<IProductGalleryRepository>(() => new ProductGalleryRepository(context));
-            _productRepository = new Lazy<IProductRepository>(() => new ProductRepository(context));
-            _productStatusRepository = new Lazy<IProductStatusRepository>(() => new ProductStatusRepository(context));
-            _salesOrderRepository = new Lazy<ISalesOrderRepository>(() => new SalesOrderRepository(context));
-            _salesOrderDetailRepository = new Lazy<ISalesOrderDetailRepository>(() => new SalesOrderDetailRepository(context));
-            _salesOrderStatusRepository = new Lazy<ISalesOrderStatusRepository>(() => new SalesOrderStatusRepository(context));
+            _brandRepository = new Lazy<IBrandRepository>(() => new BrandRepository(context, domainRepositories));
+            _cartRepository = new Lazy<ICartRepository>(() => new CartRepository(context, domainRepositories));
+            _cartItemRepository = new Lazy<ICartItemRepository>(() => new CartItemRepository(context, domainRepositories));
+            _customerAccountRepository = new Lazy<ICustomerAccountRepository>(() => new CustomerAccountRepository(context, domainRepositories));
+            _customerRepository = new Lazy<ICustomerRepository>(() => new CustomerRepository(context, domainRepositories));
+            _employeeAccountRepository = new Lazy<IEmployeeAccountRepository>(() => new EmployeeAccountRepository(context, domainRepositories));
+            _employeeGalleryRepository = new Lazy<IEmployeeGalleryRepository>(() => new EmployeeGalleryRepository(context, domainRepositories));
+            _employeeRepository = new Lazy<IEmployeeRepository>(() => new EmployeeRepository(context, domainRepositories));
+            _employeeRoleRepository = new Lazy<IEmployeeRoleRepository>(() => new EmployeeRoleRepository(context, domainRepositories));
+            _employeeStatusRepository = new Lazy<IEmployeeStatusRepository>(() => new EmployeeStatusRepository(context, domainRepositories));
+            _exportedInvoiceRepository = new Lazy<IExportedInvoiceRepository>(() => new ExportedInvoiceRepository(context, domainRepositories));
+            _exportedInvoiceDetailRepository = new Lazy<IExportedInvoiceDetailRepository>(() => new ExportedInvoiceDetailRepository(context, domainRepositories));
+            _importedInvoiceRepository = new Lazy<IImportedInvoiceRepository>(() => new ImportedInvoiceRepository(context, domainRepositories));
+            _importedInvoiceDetailRepository = new Lazy<IImportedInvoiceDetailRepository>(() => new ImportedInvoiceDetailRepository(context, domainRepositories));
+            _invoiceStatusRepository = new Lazy<IInvoiceStatusRepository>(() => new InvoiceStatusRepository(context, domainRepositories));
+            _productBrandRepository = new Lazy<IProductBrandRepository>(() => new ProductBrandRepository(context, domainRepositories));
+            _productGalleryRepository = new Lazy<IProductGalleryRepository>(() => new ProductGalleryRepository(context, domainRepositories));
+            _productRepository = new Lazy<IProductRepository>(() => new ProductRepository(context, domainRepositories));
+            _productStatusRepository = new Lazy<IProductStatusRepository>(() => new ProductStatusRepository(context, domainRepositories));
+            _salesOrderRepository = new Lazy<ISalesOrderRepository>(() => new SalesOrderRepository(context, domainRepositories));
+            _salesOrderDetailRepository = new Lazy<ISalesOrderDetailRepository>(() => new SalesOrderDetailRepository(context, domainRepositories));
+            _salesOrderStatusRepository = new Lazy<ISalesOrderStatusRepository>(() => new SalesOrderStatusRepository(context, domainRepositories));
         }
 
         public IBrandRepository Brand => _brandRepository.Value;

@@ -1,10 +1,8 @@
-﻿using Repositories.Base;
-
-namespace Repositories.Entities
+﻿namespace Repositories.Entities
 {
-    internal sealed class EmployeeStatusRepository : AbstractRepository<EmployeeStatus>, IEmployeeStatusRepository
+    internal sealed class EmployeeStatusRepository : AbstractEntityRepository<EmployeeStatus>, IEmployeeStatusRepository
     {
-        public EmployeeStatusRepository(LapStopContext context) : base(context)
+        public EmployeeStatusRepository(LapStopContext context, IDomainRepositories domainRepositories) : base(context, domainRepositories)
         {
         }
 

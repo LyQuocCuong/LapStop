@@ -1,5 +1,7 @@
-﻿using Contracts.Utilities.Authentication;
-using Microsoft.AspNetCore.Identity;
+﻿using Contracts.IRepositories;
+using Contracts.IRepositories.Managers;
+using Contracts.IServices.Managers;
+using Contracts.Utilities.Authentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -8,41 +10,27 @@ using System.Text;
 
 namespace RestfulApiHandler.ImpServices.Authentication
 {
-    public class AuthentService<TIdentityUser>  : IAuthentService<TIdentityUser> where TIdentityUser : IdentityUser<Guid>
+    public sealed class AuthentEmployeeService : IAuthentService
     {
         private readonly IConfiguration _configuration;
-        private readonly UserManager<TIdentityUser> _userManager;
+        private readonly IIdentityRepositoryManager _identityRepositories;
 
-        public AuthentService(IConfiguration configuration,
-                                UserManager<TIdentityUser> userManager)
+        public AuthentEmployeeService(IConfiguration configuration,
+                              IDomainRepositories domainRepositories)
         {
             _configuration = configuration;
-            _userManager = userManager;
+            _identityRepositories = domainRepositories.IdentityRepositories;
         }
 
         public async Task<string> CreateToken(string username)
         {
-            TIdentityUser identUserInfo = await _userManager.FindByNameAsync(username);
-
-            var claims = await GetClaims(identUserInfo);
+            var claims = await _identityRepositories.IdentEmployee.GetClaimsInfo(username);
+            
             var signingCredentials = GetSigningCredentials();
+            
             var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
 
             return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-        }
-
-        private async Task<List<Claim>> GetClaims(TIdentityUser identUserInfo)
-        {
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, identUserInfo.UserName)
-            };
-            var userRoles = await _userManager.GetRolesAsync(identUserInfo);
-            foreach (var role in userRoles)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, role));
-            }
-            return claims;
         }
 
         private SigningCredentials? GetSigningCredentials()
