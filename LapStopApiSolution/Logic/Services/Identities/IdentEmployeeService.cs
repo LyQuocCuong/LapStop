@@ -14,7 +14,7 @@ namespace Services.Identities
         public async Task<IdentityResult> CreateAsync(EmployeeForRegistrationDto registrationDto, string rawPassword)
         {
             var identEmployee = UtilServices.Mapper.ExecuteMapping<EmployeeForRegistrationDto, IdentEmployee>(registrationDto);
-            return await IdentityRepositories.IdentEmployee.CreateAsync(identEmployee, rawPassword, registrationDto.Roles);
+            return await IdentityRepositories.IdentEmployee.ExeCreateAsync(identEmployee, rawPassword, registrationDto.Roles);
         }
 
         public async Task<bool> IsValidAuthentData(AuthentDto authentDto)
