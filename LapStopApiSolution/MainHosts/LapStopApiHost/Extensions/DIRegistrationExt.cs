@@ -169,6 +169,8 @@ namespace LapStopApiHost.Extensions
                     ValidateLifetime = true,    // The token has not expired
                     ValidateIssuerSigningKey = true,    // The signing key is valid and is trusted by the server
 
+                    //ClockSkew = TimeSpan.Zero,
+
                     // Values are used to generate the signature for JWT
                     ValidIssuer = jwtSettings["validIssuer"],
                     ValidAudience = jwtSettings["validAudience"],

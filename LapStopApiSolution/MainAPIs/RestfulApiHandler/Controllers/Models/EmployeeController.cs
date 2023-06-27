@@ -28,7 +28,7 @@ namespace RestfulApiHandler.Controllers.Models
             return Ok();
         }
 
-        [Authorize(Roles = "Manager")]
+        [Authorize]
         [HttpGet]
         [Route("employees", Name = "GetAllEmployees")]
         public async Task<IActionResult> GetAllEmployees([FromQuery] EmployeeRequestParam parameter)
