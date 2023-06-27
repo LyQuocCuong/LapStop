@@ -2,7 +2,7 @@
 using Domains.Identities;
 using DTO.Input.FromBody.Authentication;
 
-namespace RestfulApiHandler.Controllers.Others
+namespace RestfulApiHandler.Controllers.Authent
 {
     [ApiController]
     [Route("api/authenticate")]
@@ -26,7 +26,7 @@ namespace RestfulApiHandler.Controllers.Others
             {
                 return Unauthorized();
             }
-            return Ok(new { Token = await _authentService.CreateToken(authentDto.Username) });
+            return Ok(await _authentService.GenerateTokens(authentDto.Username));
         }
     }
 }

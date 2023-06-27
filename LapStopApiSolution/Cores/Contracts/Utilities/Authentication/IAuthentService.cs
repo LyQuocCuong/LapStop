@@ -1,7 +1,11 @@
-﻿namespace Contracts.Utilities.Authentication
+﻿using DTO.Output.Token;
+
+namespace Contracts.Utilities.Authentication
 {
     public interface IAuthentService
     {
-        Task<string> CreateToken(string username);
+        Task<TokensDto> GenerateTokens(string username);
+
+        Task<TokensDto> ProcessExpiredAccessToken(TokensDto inputTokenDto);
     }
 }

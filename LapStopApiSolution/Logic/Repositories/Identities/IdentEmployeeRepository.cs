@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
 
 namespace Repositories.Identities
 {
@@ -31,6 +30,28 @@ namespace Repositories.Identities
             return result;
         }
 
+        /// <summary>
+        /// RefreshToken
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <param name="refreshToken"></param>
+        /// <param name="refreshTokenExpiryTime">Generated ONLY 1 time - NO updated</param>
+        /// <returns></returns>
+        public async Task<IdentityResult> ExeUpdateRefreshTokenAsync(IdentEmployee employee, string refreshToken, 
+                                                                    DateTime? refreshTokenExpiryTime = null)
+        {
+            if (employee != null)
+            {
+                employee.RefreshToken = refreshToken;
+                if (refreshTokenExpiryTime.HasValue)
+                {
+                    employee.RefreshTokenExpiryTime = refreshTokenExpiryTime.Value;
+                }
+                return await _userManager.UpdateAsync(employee);
+            }
+            return IdentityResult.Failed(new IdentityError() { Code = "NULL Value"});
+        }
+
         public async Task<IdentEmployee?> FindByUsernameAsync(string username)
         {
             if (!string.IsNullOrEmpty(username))
@@ -38,6 +59,11 @@ namespace Repositories.Identities
                 return await _userManager.FindByNameAsync(username);
             }
             return null;
+        }
+
+        public async Task<IList<string>> GetRolesOfEmployeeAsync(IdentEmployee employee)
+        {
+            return await _userManager.GetRolesAsync(employee);
         }
 
         public async Task<bool> IsValidAuthentData(string username, string password)
@@ -48,24 +74,6 @@ namespace Repositories.Identities
                 return await _userManager.CheckPasswordAsync(employee, password);
             }
             return false;
-        }
-
-        public async Task<List<Claim>> GetClaimsInfo(string username)
-        {
-            List<Claim> claimsInfo = new List<Claim>();
-
-            IdentEmployee? employee = await FindByUsernameAsync(username);
-            if (employee != null)
-            {
-                claimsInfo.Add(new Claim(ClaimTypes.Name, username));
-
-                var rolesOfEmployee = await _userManager.GetRolesAsync(employee);
-                foreach (var role in rolesOfEmployee)
-                {
-                    claimsInfo.Add(new Claim(ClaimTypes.Role, role));
-                }
-            }
-            return claimsInfo;
         }
 
     }
