@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace RestfulApiHandler.Controllers.Models
+namespace RestfulApiHandler.Controllers.Entities
 {
     [ApiController]
     [Route("api")]

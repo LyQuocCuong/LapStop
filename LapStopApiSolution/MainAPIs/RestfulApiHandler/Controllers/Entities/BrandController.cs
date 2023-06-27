@@ -1,4 +1,4 @@
-﻿namespace RestfulApiHandler.Controllers.Models
+﻿namespace RestfulApiHandler.Controllers.Entities
 {
     [ApiVersion("1.0")]
     [ApiController]
