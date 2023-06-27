@@ -8,3 +8,4 @@ global using EFCoreService.Context;
 global using Microsoft.EntityFrameworkCore;
 global using Repositories.Base;
 global using System.Linq.Dynamic.Core;
+global using Repositories.Parameters;

@@ -2,7 +2,7 @@
 {
     internal sealed class CustomerRepository : AbstractEntityRepository<Customer>, ICustomerRepository
     {
-        public CustomerRepository(LapStopContext context, IDomainRepositories domainRepositories) : base(context, domainRepositories)
+        public CustomerRepository(EntityRepositoryParams repoParams) : base(repoParams)
         {
         }
 

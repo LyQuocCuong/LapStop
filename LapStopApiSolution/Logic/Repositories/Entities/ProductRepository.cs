@@ -2,7 +2,7 @@
 {
     internal sealed class ProductRepository : AbstractEntityRepository<Product>, IProductRepository
     {
-        public ProductRepository(LapStopContext context, IDomainRepositories domainRepositories) : base(context, domainRepositories)
+        public ProductRepository(EntityRepositoryParams repoParams) : base(repoParams)
         {
         }
 
@@ -44,16 +44,13 @@
 
         public async Task BulkCreateAsync(IEnumerable<Product> products)
         {
-            await _context.BulkInsertAsync(products, options =>
-            {
-                options.InsertIfNotExists = true;
-            });
+            await base.BulkCreateEntities(products);
         }
 
         public async Task BulkUpdateAsync(IEnumerable<Product> products)
         {
             // if having Tracking, can use BulkSaveChangesAsync() 
-            await _context.BulkUpdateAsync(products);
+            await base.BulkUpdateEntities(products);
         }
 
         public async Task BulkDeleteAsync(IEnumerable<Product> products)
@@ -62,7 +59,7 @@
             {
                 product.IsRemoved = true;
             }
-            await _context.BulkUpdateAsync(products);
+            await base.BulkUpdateEntities(products);
         }
 
     }

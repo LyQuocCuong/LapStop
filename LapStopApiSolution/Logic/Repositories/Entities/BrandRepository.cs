@@ -2,9 +2,7 @@
 {
     internal sealed class BrandRepository : AbstractEntityRepository<Brand>, IBrandRepository
     {
-        public BrandRepository(LapStopContext context, 
-                                IDomainRepositories domainRepositories) 
-            : base(context, domainRepositories)
+        public BrandRepository(EntityRepositoryParams repoParams) : base(repoParams)
         {
         }
 

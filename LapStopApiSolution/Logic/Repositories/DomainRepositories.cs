@@ -19,7 +19,7 @@ namespace Repositories
             _context = context;
 
             _entityRepositories = new Lazy<IEntityRepositoryManager>(() 
-                    => new EntityRepositoryManager(context, this));
+                    => new EntityRepositoryManager(new EntityRepositoryParams(context, this)));
 
             _identityRepositories = new Lazy<IIdentityRepositoryManager>(() 
                     => new IdentityRepositoryManager(this, userManager, roleManager));
@@ -33,7 +33,5 @@ namespace Repositories
         public IEntityRepositoryManager EntityRepositories => _entityRepositories.Value;
 
         public IIdentityRepositoryManager IdentityRepositories => _identityRepositories.Value;
-
-        public LapStopContext DomainContext => _context;
     }
 }

@@ -2,7 +2,7 @@
 {
     internal sealed class ImportedInvoiceRepository : AbstractEntityRepository<ImportedInvoice>, IImportedInvoiceRepository
     {
-        public ImportedInvoiceRepository(LapStopContext context, IDomainRepositories domainRepositories) : base(context, domainRepositories)
+        public ImportedInvoiceRepository(EntityRepositoryParams repoParams) : base(repoParams)
         {
         }
     }

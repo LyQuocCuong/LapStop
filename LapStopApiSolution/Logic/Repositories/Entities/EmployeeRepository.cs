@@ -4,7 +4,7 @@ namespace Repositories.Entities
 {
     internal sealed class EmployeeRepository : AbstractEntityRepository<Employee>, IEmployeeRepository
     {
-        public EmployeeRepository(LapStopContext context, IDomainRepositories domainRepositories) : base(context, domainRepositories)
+        public EmployeeRepository(EntityRepositoryParams repoParams) : base(repoParams)
         {
         }
 

@@ -1,31 +1,29 @@
 ﻿using Contracts.IRepositories.Base;
 using Contracts.IRepositories.Managers;
+using Repositories.Parameters;
 using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Repositories.Base
 {
     internal abstract class AbstractEntityRepository<TModel> : 
-                                IAbstractRepository, 
                                 IAbstractEntityRepository<TModel> where TModel : class
     {
-        protected readonly LapStopContext _context;
         private readonly DbSet<TModel> _dbSet;
-        private readonly IDomainRepositories _domainRepositories;
+        private readonly EntityRepositoryParams _repoParams;
 
-        public AbstractEntityRepository(LapStopContext context, IDomainRepositories domainRepositories)
+        public AbstractEntityRepository(EntityRepositoryParams repoParams)
         {
-            _context = context;
-            _dbSet = context.Set<TModel>();
-            _domainRepositories = domainRepositories;
+            _repoParams = repoParams;
+            _dbSet = repoParams.Context.Set<TModel>();
         }
 
 
         #region Due to need to call Each Other (Repo call other Repos)
         
-        public IEntityRepositoryManager EntityRepositories => _domainRepositories.EntityRepositories;
+        public IEntityRepositoryManager EntityRepositories => _repoParams.DomainRepositories.EntityRepositories;
         
-        public IIdentityRepositoryManager IdentityRepositories => _domainRepositories.IdentityRepositories;
+        public IIdentityRepositoryManager IdentityRepositories => _repoParams.DomainRepositories.IdentityRepositories;
         
         #endregion
 
@@ -70,6 +68,19 @@ namespace Repositories.Base
         public void DeleteEntityPermanently(TModel obj)
         {
             _dbSet.Remove(obj);
+        }
+
+        public async Task BulkUpdateEntities(IEnumerable<TModel> entities)
+        {
+            await _repoParams.Context.BulkUpdateAsync(entities);
+        }
+
+        public async Task BulkCreateEntities(IEnumerable<TModel> entities)
+        {
+            await _repoParams.Context.BulkInsertAsync(entities, options =>
+            {
+                options.InsertIfNotExists = true;
+            });
         }
     }
 }
