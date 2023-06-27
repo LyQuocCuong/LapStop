@@ -1,20 +1,23 @@
-﻿using Contracts.IRepositories.Managers;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace Contracts.IRepositories.Base
 {
-    public interface IAbstractEntityRepository<TModel> where TModel : class
+    public interface IAbstractEntityRepository<TEntity> : IAbstractRepository where TEntity : class
     {
-        IQueryable<TModel> FindAll(bool isTrackChanges);
+        IQueryable<TEntity> FindAll(bool isTrackChanges);
 
-        IQueryable<TModel> FindByCondition(bool isTrackChanges, Expression<Func<TModel, bool>> expression);
+        IQueryable<TEntity> FindByCondition(bool isTrackChanges, Expression<Func<TEntity, bool>> expression);
 
-        void CreateEntity(TModel obj);
+        void CreateEntity(TEntity obj);
 
-        void UpdateEntity(TModel obj);
+        void UpdateEntity(TEntity obj);
 
-        void DeleteEntity(TModel obj);
+        void DeleteEntity(TEntity obj);
 
-        void DeleteEntityPermanently(TModel obj);
+        void DeleteEntityPermanently(TEntity obj);
+
+        Task BulkCreateEntities(IEnumerable<TEntity> entities);
+
+        Task BulkUpdateEntities(IEnumerable<TEntity> entities);
     }
 }

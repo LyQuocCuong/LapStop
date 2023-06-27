@@ -2,9 +2,7 @@
 {
     internal sealed class CartRepository : AbstractEntityRepository<Cart>, ICartRepository
     {
-        public CartRepository(LapStopContext context,
-                                IDomainRepositories domainRepositories)
-            : base(context, domainRepositories)
+        public CartRepository(EntityRepositoryParams repoParams) : base(repoParams)
         {
         }
 
