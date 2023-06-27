@@ -1,10 +1,8 @@
-﻿using Repositories.Base;
-
-namespace Repositories.Entities
+﻿namespace Repositories.Entities
 {
-    internal sealed class InvoiceStatusRepository : AbstractRepository<InvoiceStatus>, IInvoiceStatusRepository
+    internal sealed class InvoiceStatusRepository : AbstractEntityRepository<InvoiceStatus>, IInvoiceStatusRepository
     {
-        public InvoiceStatusRepository(LapStopContext context) : base(context)
+        public InvoiceStatusRepository(LapStopContext context, IDomainRepositories domainRepositories) : base(context, domainRepositories)
         {
         }
 

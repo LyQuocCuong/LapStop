@@ -1,19 +1,15 @@
-﻿using System.Linq.Expressions;
+﻿using Contracts.IRepositories.Managers;
 
 namespace Contracts.IRepositories.Base
 {
-    public interface IAbstractRepository<TModel> where TModel : class
+    public interface IAbstractRepository
     {
-        IQueryable<TModel> FindAll(bool isTrackChanges);
+        #region Due to need to call Each Other (Repo call other Repos)
 
-        IQueryable<TModel> FindByCondition(bool isTrackChanges, Expression<Func<TModel, bool>> expression);
+        IEntityRepositoryManager EntityRepositories { get; }
 
-        void CreateEntity(TModel obj);
+        IIdentityRepositoryManager IdentityRepositories { get; }
 
-        void UpdateEntity(TModel obj);
-
-        void DeleteEntity(TModel obj);
-
-        void DeleteEntityPermanently(TModel obj);
+        #endregion
     }
 }

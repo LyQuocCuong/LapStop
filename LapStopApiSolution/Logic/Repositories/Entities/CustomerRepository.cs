@@ -1,10 +1,8 @@
-﻿using Repositories.Base;
-
-namespace Repositories.Entities
+﻿namespace Repositories.Entities
 {
-    internal sealed class CustomerRepository : AbstractRepository<Customer>, ICustomerRepository
+    internal sealed class CustomerRepository : AbstractEntityRepository<Customer>, ICustomerRepository
     {
-        public CustomerRepository(LapStopContext context) : base(context)
+        public CustomerRepository(LapStopContext context, IDomainRepositories domainRepositories) : base(context, domainRepositories)
         {
         }
 

@@ -1,10 +1,8 @@
-﻿using Repositories.Base;
-
-namespace Repositories.Entities
+﻿namespace Repositories.Entities
 {
-    internal sealed class ImportedInvoiceDetailRepository : AbstractRepository<ImportedInvoiceDetail>, IImportedInvoiceDetailRepository
+    internal sealed class ImportedInvoiceDetailRepository : AbstractEntityRepository<ImportedInvoiceDetail>, IImportedInvoiceDetailRepository
     {
-        public ImportedInvoiceDetailRepository(LapStopContext context) : base(context)
+        public ImportedInvoiceDetailRepository(LapStopContext context, IDomainRepositories domainRepositories) : base(context, domainRepositories)
         {
         }
     }

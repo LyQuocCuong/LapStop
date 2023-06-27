@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Repositories.Identities
 {
-    internal sealed class IdentEmployeeRepository : IIdentEmployeeRepository
+    internal sealed class IdentEmployeeRepository : AbstractIndentityRepository, IIdentEmployeeRepository
     {
         private readonly UserManager<IdentEmployee> _userManager;
-        private readonly RoleManager<IdentRole> _roleManager;
 
-        public IdentEmployeeRepository(UserManager<IdentEmployee> userManager, 
-                                       RoleManager<IdentRole> roleManager) 
+        public IdentEmployeeRepository(IDomainRepositories domainRepositories,
+                                    UserManager<IdentEmployee> userManager) 
+            : base(domainRepositories)
         {
             _userManager = userManager;
-            _roleManager = roleManager;
         }
 
         public async Task<IdentityResult> CreateAsync(IdentEmployee identEmployee, string rawPassword, ICollection<string?> employeeRoles)
@@ -21,7 +21,8 @@ namespace Repositories.Identities
             {
                 foreach(string? role in employeeRoles)
                 {
-                    if (await _roleManager.RoleExistsAsync(role))
+                    if (!string.IsNullOrEmpty(role) && 
+                        await IdentityRepositories.IdentRole.IsRoleExistsAsync(role))
                     {
                         await _userManager.AddToRoleAsync(identEmployee, role);
                     }
@@ -47,6 +48,24 @@ namespace Repositories.Identities
                 return await _userManager.CheckPasswordAsync(employee, password);
             }
             return false;
+        }
+
+        public async Task<List<Claim>> GetClaimsInfo(string username)
+        {
+            List<Claim> claimsInfo = new List<Claim>();
+
+            IdentEmployee? employee = await FindByUsernameAsync(username);
+            if (employee != null)
+            {
+                claimsInfo.Add(new Claim(ClaimTypes.Name, username));
+
+                var rolesOfEmployee = await _userManager.GetRolesAsync(employee);
+                foreach (var role in rolesOfEmployee)
+                {
+                    claimsInfo.Add(new Claim(ClaimTypes.Role, role));
+                }
+            }
+            return claimsInfo;
         }
 
     }

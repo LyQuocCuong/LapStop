@@ -1,10 +1,8 @@
-﻿using Repositories.Base;
-
-namespace Repositories.Entities
+﻿namespace Repositories.Entities
 {
-    internal sealed class ProductBrandRepository : AbstractRepository<ProductBrand>, IProductBrandRepository
+    internal sealed class ProductBrandRepository : AbstractEntityRepository<ProductBrand>, IProductBrandRepository
     {
-        public ProductBrandRepository(LapStopContext context) : base(context)
+        public ProductBrandRepository(LapStopContext context, IDomainRepositories domainRepositories) : base(context, domainRepositories)
         {
         }
     }

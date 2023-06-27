@@ -1,10 +1,8 @@
-﻿using Repositories.Base;
-
-namespace Repositories.Entities
+﻿namespace Repositories.Entities
 {
-    internal sealed class ProductGalleryRepository : AbstractRepository<ProductGallery>, IProductGalleryRepository
+    internal sealed class ProductGalleryRepository : AbstractEntityRepository<ProductGallery>, IProductGalleryRepository
     {
-        public ProductGalleryRepository(LapStopContext context) : base(context)
+        public ProductGalleryRepository(LapStopContext context, IDomainRepositories domainRepositories) : base(context, domainRepositories)
         {
         }
 

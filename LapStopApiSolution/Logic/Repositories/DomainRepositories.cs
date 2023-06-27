@@ -8,7 +8,6 @@ namespace Repositories
     public sealed class DomainRepositories : IDomainRepositories
     {
         private readonly LapStopContext _context;
-
         private readonly Lazy<IEntityRepositoryManager> _entityRepositories;
         private readonly Lazy<IIdentityRepositoryManager> _identityRepositories;
 
@@ -19,8 +18,11 @@ namespace Repositories
         {
             _context = context;
 
-            _entityRepositories = new Lazy<IEntityRepositoryManager>(() => new EntityRepositoryManager(context));
-            _identityRepositories = new Lazy<IIdentityRepositoryManager>(() => new IdentityRepositoryManager(userManager, roleManager));
+            _entityRepositories = new Lazy<IEntityRepositoryManager>(() 
+                    => new EntityRepositoryManager(context, this));
+
+            _identityRepositories = new Lazy<IIdentityRepositoryManager>(() 
+                    => new IdentityRepositoryManager(this, userManager, roleManager));
         }
 
         public async Task SaveChangesAsync()
@@ -31,5 +33,7 @@ namespace Repositories
         public IEntityRepositoryManager EntityRepositories => _entityRepositories.Value;
 
         public IIdentityRepositoryManager IdentityRepositories => _identityRepositories.Value;
+
+        public LapStopContext DomainContext => _context;
     }
 }

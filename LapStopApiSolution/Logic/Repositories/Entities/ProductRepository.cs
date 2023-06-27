@@ -1,13 +1,11 @@
-﻿using Repositories.Base;
-
-namespace Repositories.Entities
+﻿namespace Repositories.Entities
 {
-    internal sealed class ProductRepository : AbstractRepository<Product>, IProductRepository
+    internal sealed class ProductRepository : AbstractEntityRepository<Product>, IProductRepository
     {
-        public ProductRepository(LapStopContext context) : base(context)
+        public ProductRepository(LapStopContext context, IDomainRepositories domainRepositories) : base(context, domainRepositories)
         {
         }
-                
+
         public async Task<IEnumerable<Product>> GetAllAsync(bool isTrackChanges, ProductRequestParam parameters)
         {
             return await FindAll(isTrackChanges)

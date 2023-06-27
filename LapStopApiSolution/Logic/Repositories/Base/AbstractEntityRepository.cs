@@ -1,19 +1,33 @@
 ﻿using Contracts.IRepositories.Base;
+using Contracts.IRepositories.Managers;
 using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Repositories.Base
 {
-    internal abstract class AbstractRepository<TModel> : IAbstractRepository<TModel> where TModel : class
+    internal abstract class AbstractEntityRepository<TModel> : 
+                                IAbstractRepository, 
+                                IAbstractEntityRepository<TModel> where TModel : class
     {
         protected readonly LapStopContext _context;
         private readonly DbSet<TModel> _dbSet;
+        private readonly IDomainRepositories _domainRepositories;
 
-        public AbstractRepository(LapStopContext context)
+        public AbstractEntityRepository(LapStopContext context, IDomainRepositories domainRepositories)
         {
             _context = context;
             _dbSet = context.Set<TModel>();
+            _domainRepositories = domainRepositories;
         }
+
+
+        #region Due to need to call Each Other (Repo call other Repos)
+        
+        public IEntityRepositoryManager EntityRepositories => _domainRepositories.EntityRepositories;
+        
+        public IIdentityRepositoryManager IdentityRepositories => _domainRepositories.IdentityRepositories;
+        
+        #endregion
 
         public IQueryable<TModel> FindAll(bool isTrackChanges)
         {

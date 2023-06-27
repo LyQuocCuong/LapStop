@@ -1,5 +1,6 @@
 ﻿using Domains.Identities;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Contracts.IRepositories.Identities
 {
@@ -10,5 +11,7 @@ namespace Contracts.IRepositories.Identities
         Task<IdentEmployee?> FindByUsernameAsync(string username);
         
         Task<bool> IsValidAuthentData(string username, string password);
+
+        Task<List<Claim>> GetClaimsInfo(string username);
     }
 }
