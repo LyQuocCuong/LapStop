@@ -1,4 +1,5 @@
 ﻿using Contracts.IRepositories.Managers;
+using Contracts.IServices.Managers;
 using Contracts.Utilities;
 
 namespace Contracts.IServices.Base
@@ -9,7 +10,15 @@ namespace Contracts.IServices.Base
 
         IIdentityRepositoryManager IdentityRepositories { get; }
 
-        IUtilityServices UtilServices { get; }
+        #region Due to need to call Each Other (Services call other Services)
+
+        IEntityServiceManager EntityServices { get; }
+
+        IIdentityServiceManager IdentityServices { get; }
+
+        #endregion
+
+        UtilityServiceManager UtilityServices { get; }
 
         Task SaveChangesToDatabaseAsync();
     }

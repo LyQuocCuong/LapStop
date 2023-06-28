@@ -2,20 +2,18 @@
 {
     internal sealed class CustomerAccountService : AbstractService, ICustomerAccountService
     {
-        public CustomerAccountService(IDomainRepositories domainRepository,
-                            IUtilityServices utilityServices)
-            : base(domainRepository, utilityServices)
+        public CustomerAccountService(ServiceParams serviceParams) : base(serviceParams)
         {
         }
 
         public async Task<CustomerAccountDto> CreateAsync(Guid customerId, CustomerAccountForCreationDto creationDto)
         {
-            CustomerAccount newCustomerAccount = UtilServices.Mapper.ExecuteMapping<CustomerAccountForCreationDto, CustomerAccount>(creationDto);
+            CustomerAccount newCustomerAccount = UtilityServices.Mapper.ExecuteMapping<CustomerAccountForCreationDto, CustomerAccount>(creationDto);
             newCustomerAccount.CustomerId = customerId;
             EntityRepositories.CustomerAccount.Create(newCustomerAccount);
             await SaveChangesToDatabaseAsync();
 
-            return UtilServices.Mapper.ExecuteMapping<CustomerAccount, CustomerAccountDto>(newCustomerAccount);
+            return UtilityServices.Mapper.ExecuteMapping<CustomerAccount, CustomerAccountDto>(newCustomerAccount);
         }
 
         public async Task UpdateAsync(Guid customerId, CustomerAccountForUpdateDto updateDto)
@@ -25,14 +23,14 @@
             {
                 throw new ExNotFoundInDBModel(nameof(CustomerAccountService), nameof(UpdateAsync), typeof(CustomerAccount), customerId);
             }
-            UtilServices.Mapper.ExecuteMapping<CustomerAccountForUpdateDto, CustomerAccount>(updateDto, customerAccount);
+            UtilityServices.Mapper.ExecuteMapping<CustomerAccountForUpdateDto, CustomerAccount>(updateDto, customerAccount);
             await SaveChangesToDatabaseAsync();
         }
 
         public async Task<IEnumerable<CustomerAccountDto>> GetAllAsync()
         {
             IEnumerable<CustomerAccount> customerAccounts = await EntityRepositories.CustomerAccount.GetAllAsync(isTrackChanges: false);
-            return UtilServices.Mapper.ExecuteMapping<IEnumerable<CustomerAccount>, IEnumerable<CustomerAccountDto>>(customerAccounts);
+            return UtilityServices.Mapper.ExecuteMapping<IEnumerable<CustomerAccount>, IEnumerable<CustomerAccountDto>>(customerAccounts);
         }
 
         public async Task<CustomerAccountDto?> GetOneByCustomerIdAsync(Guid customerId)
@@ -46,7 +44,7 @@
             {
                 throw new ExNotFoundInDBModel(nameof(CustomerAccountService), nameof(GetOneByCustomerIdAsync), typeof(CustomerAccount), customerId);
             }
-            return UtilServices.Mapper.ExecuteMapping<CustomerAccount, CustomerAccountDto>(customerAccount);
+            return UtilityServices.Mapper.ExecuteMapping<CustomerAccount, CustomerAccountDto>(customerAccount);
         }
 
     }

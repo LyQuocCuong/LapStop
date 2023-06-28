@@ -2,9 +2,7 @@
 {
     internal sealed class ExportedInvoiceService : AbstractService, IExportedInvoiceService
     {
-        public ExportedInvoiceService(IDomainRepositories domainRepository,
-                            IUtilityServices utilityServices)
-            : base(domainRepository, utilityServices)
+        public ExportedInvoiceService(ServiceParams serviceParams) : base(serviceParams)
         {
         }
     }

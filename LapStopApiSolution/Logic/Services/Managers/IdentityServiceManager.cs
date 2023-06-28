@@ -7,10 +7,9 @@ namespace Services.Managers
     {
         private readonly Lazy<IIdentEmployeeService> _identEmployeeService;
 
-        public IdentityServiceManager(IDomainRepositories domainRepositories,
-                                      IUtilityServices utilityServices)
+        public IdentityServiceManager(ServiceParams serviceParams)
         {
-            _identEmployeeService = new Lazy<IIdentEmployeeService>(() => new IdentEmployeeService(domainRepositories, utilityServices));
+            _identEmployeeService = new Lazy<IIdentEmployeeService>(() => new IdentEmployeeService(serviceParams));
         }
 
         public IIdentEmployeeService IdentEmployee => _identEmployeeService.Value;

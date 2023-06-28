@@ -2,16 +2,14 @@
 {
     internal sealed class CartService : AbstractService, ICartService
     {
-        public CartService(IDomainRepositories domainRepository,
-                            IUtilityServices utilityServices)
-            : base(domainRepository, utilityServices)
+        public CartService(ServiceParams serviceParams) : base(serviceParams)
         {
         }
 
         public async Task<IEnumerable<CartDto>> GetAllAsync()
         {
             IEnumerable<Cart> carts = await EntityRepositories.Cart.GetAllAsync(isTrackChanges: false);
-            return UtilServices.Mapper.ExecuteMapping<IEnumerable<Cart>, IEnumerable<CartDto>>(carts);
+            return UtilityServices.Mapper.ExecuteMapping<IEnumerable<Cart>, IEnumerable<CartDto>>(carts);
         }
 
         public async Task<CartDto?> GetOneByCustomerIdAsync(Guid customerId)
@@ -25,7 +23,7 @@
             {
                 throw new ExNotFoundInDBModel(nameof(CartService), nameof(GetOneByCustomerIdAsync), typeof(Cart), customerId);
             }
-            return UtilServices.Mapper.ExecuteMapping<Cart, CartDto>(cart);
+            return UtilityServices.Mapper.ExecuteMapping<Cart, CartDto>(cart);
         }
 
         public async Task<bool> IsValidIdAsync(Guid cartId)

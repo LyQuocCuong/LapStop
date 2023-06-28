@@ -2,16 +2,14 @@
 {
     internal sealed class EmployeeAccountService : AbstractService, IEmployeeAccountService
     {
-        public EmployeeAccountService(IDomainRepositories domainRepository,
-                            IUtilityServices utilityServices)
-            : base(domainRepository, utilityServices)
+        public EmployeeAccountService(ServiceParams serviceParams) : base(serviceParams)
         {
         }
 
         public async Task<IEnumerable<EmployeeAccountDto>> GetAllAsync()
         {
             IEnumerable<EmployeeAccount> employeeAccounts = await EntityRepositories.EmployeeAccount.GetAllAsync(isTrackChanges: false);
-            return UtilServices.Mapper.ExecuteMapping<IEnumerable<EmployeeAccount>, IEnumerable<EmployeeAccountDto>>(employeeAccounts);
+            return UtilityServices.Mapper.ExecuteMapping<IEnumerable<EmployeeAccount>, IEnumerable<EmployeeAccountDto>>(employeeAccounts);
         }
 
         public async Task<EmployeeAccountDto?> GetOneByEmployeeIdAsync(Guid employeeId)
@@ -25,7 +23,7 @@
             {
                 throw new ExNotFoundInDBModel(nameof(EmployeeAccountService), nameof(GetOneByEmployeeIdAsync), typeof(EmployeeAccount), employeeId);
             }
-            return UtilServices.Mapper.ExecuteMapping<EmployeeAccount, EmployeeAccountDto>(employeeAccount);
+            return UtilityServices.Mapper.ExecuteMapping<EmployeeAccount, EmployeeAccountDto>(employeeAccount);
         }
     }
 }

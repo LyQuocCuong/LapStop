@@ -2,16 +2,14 @@
 {
     internal sealed class SalesOrderStatusService : AbstractService, ISalesOrderStatusService
     {
-        public SalesOrderStatusService(IDomainRepositories domainRepository,
-                            IUtilityServices utilityServices)
-            : base(domainRepository, utilityServices)
+        public SalesOrderStatusService(ServiceParams serviceParams) : base(serviceParams)
         {
         }
 
         public async Task<IEnumerable<SalesOrderStatusDto>> GetAllAsync()
         {
             IEnumerable<SalesOrderStatus> salesOrderStatuses = await EntityRepositories.SalesOrderStatus.GetAllAsync(isTrackChanges: false);
-            return UtilServices.Mapper.ExecuteMapping<IEnumerable<SalesOrderStatus>, IEnumerable<SalesOrderStatusDto>>(salesOrderStatuses);
+            return UtilityServices.Mapper.ExecuteMapping<IEnumerable<SalesOrderStatus>, IEnumerable<SalesOrderStatusDto>>(salesOrderStatuses);
         }
 
         public async Task<SalesOrderStatusDto?> GetOneByIdAsync(Guid salesOrderStatusId)
@@ -21,7 +19,7 @@
             {
                 throw new ExNotFoundInDBModel(nameof(SalesOrderStatusService), nameof(GetOneByIdAsync), typeof(SalesOrderStatus), salesOrderStatusId);
             }
-            return UtilServices.Mapper.ExecuteMapping<SalesOrderStatus, SalesOrderStatusDto>(salesOrderStatus);
+            return UtilityServices.Mapper.ExecuteMapping<SalesOrderStatus, SalesOrderStatusDto>(salesOrderStatus);
         }
     }
 }

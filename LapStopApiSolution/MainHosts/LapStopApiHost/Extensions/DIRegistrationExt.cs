@@ -1,4 +1,5 @@
-﻿using Contracts.Utilities.Authentication;
+﻿using Contracts.Utilities;
+using Contracts.Utilities.Authentication;
 using Domains.Identities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -34,12 +35,51 @@ namespace LapStopApiHost.Extensions
             .AddDefaultTokenProviders();
         }
 
-        public static void RegisterDI_AutoMapper(this IServiceCollection services)
+        public static void RegisterDI_Repositories(this IServiceCollection services)
+        {
+            services.AddScoped<IDomainRepositories, DomainRepositories>();
+        }
+
+        public static void RegisterDI_Services(this IServiceCollection services)
+        {
+            services.AddScoped<IDomainServices, DomainServices>();
+            services.AddScoped<UtilityServiceManager>();
+
+            RegisterDI_NLog(services);
+            RegisterDI_AutoMapper(services);
+            RegisterDI_DataShaper(services);
+            RegisterDI_Hateoas(services);
+        }
+
+        #region RegisterDI_Services
+
+        private static void RegisterDI_NLog(this IServiceCollection services)
+        {
+            services.AddSingleton<ILogService, NLogService>();
+        }
+
+        private static void RegisterDI_AutoMapper(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddScoped<IMappingService, AutoMapperService>();
         }
-        
+
+        private static void RegisterDI_DataShaper(this IServiceCollection services)
+        {
+            services.AddScoped<IDataShaperService<EmployeeDto, ExpandoForXmlObject>, DataShaperService<EmployeeDto>>();
+            services.AddScoped<IDataShaperService<BrandDto, ExpandoForXmlObject>, DataShaperService<BrandDto>>();
+            services.AddScoped<IDataShaperService<CustomerDto, ExpandoForXmlObject>, DataShaperService<CustomerDto>>();
+            services.AddScoped<IDataShaperService<ProductDto, ExpandoForXmlObject>, DataShaperService<ProductDto>>();
+        }
+
+        private static void RegisterDI_Hateoas(this IServiceCollection services)
+        {
+            services.AddScoped<IHateoasWithShaperService<BrandDto, ExpandoForXmlObject>, BrandDynamicHateoasWithShaperService>();
+            services.AddScoped<IHateoasService<CustomerDto>, CustomerHateoasService>();
+        }
+
+        #endregion
+
         public static void RegisterDI_MarvinResponseCaching(this IServiceCollection services)
         {
             services.AddHttpCacheHeaders(
@@ -74,20 +114,6 @@ namespace LapStopApiHost.Extensions
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
-        }
-
-        public static void RegisterDI_DataShaper(this IServiceCollection services)
-        {
-            services.AddScoped<IDataShaperService<EmployeeDto, ExpandoForXmlObject>, DataShaperService<EmployeeDto>>();
-            services.AddScoped<IDataShaperService<BrandDto, ExpandoForXmlObject>, DataShaperService<BrandDto>>();
-            services.AddScoped<IDataShaperService<CustomerDto, ExpandoForXmlObject>, DataShaperService<CustomerDto>>();
-            services.AddScoped<IDataShaperService<ProductDto, ExpandoForXmlObject>, DataShaperService<ProductDto>>();
-        }
-
-        public static void RegisterDI_Hateoas(this IServiceCollection services)
-        {
-            services.AddScoped<IHateoasWithShaperService<BrandDto, ExpandoForXmlObject>, BrandDynamicHateoasWithShaperService>();
-            services.AddScoped<IHateoasService<CustomerDto>, CustomerHateoasService>();
         }
 
         public static void RegisterDI_CustomValidationAttribute(this IServiceCollection services)

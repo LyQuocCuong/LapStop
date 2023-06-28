@@ -8,6 +8,6 @@ namespace Contracts.IRepositories
 
         IIdentityRepositoryManager IdentityRepositories { get; }
 
-        Task SaveChangesAsync();
+        Task SaveChangesToDatabaseAsync();
     }
 }

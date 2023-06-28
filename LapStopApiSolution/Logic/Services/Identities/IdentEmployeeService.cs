@@ -5,15 +5,13 @@ namespace Services.Identities
 {
     internal sealed class IdentEmployeeService : AbstractService, IIdentEmployeeService
     {
-        public IdentEmployeeService(IDomainRepositories domainRepository,
-                            IUtilityServices utilityServices)
-            : base(domainRepository, utilityServices)
+        public IdentEmployeeService(ServiceParams serviceParams) : base(serviceParams)
         {
         }
 
         public async Task<IdentityResult> CreateAsync(EmployeeForRegistrationDto registrationDto, string rawPassword)
         {
-            var identEmployee = UtilServices.Mapper.ExecuteMapping<EmployeeForRegistrationDto, IdentEmployee>(registrationDto);
+            var identEmployee = UtilityServices.Mapper.ExecuteMapping<EmployeeForRegistrationDto, IdentEmployee>(registrationDto);
             return await IdentityRepositories.IdentEmployee.ExeCreateAsync(identEmployee, rawPassword, registrationDto.Roles);
         }
 

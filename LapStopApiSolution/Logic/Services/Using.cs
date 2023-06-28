@@ -14,3 +14,4 @@ global using DTO.Input.FromQuery.RequestPrams;
 global using DTO.Output.Data;
 global using DTO.Output.PagedList;
 global using Services.Base;
+global using Services.Parameters;

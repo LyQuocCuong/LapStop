@@ -2,9 +2,7 @@
 {
     internal sealed class EmployeeGalleryService : AbstractService, IEmployeeGalleryService
     {
-        public EmployeeGalleryService(IDomainRepositories domainRepository,
-                            IUtilityServices utilityServices)
-            : base(domainRepository, utilityServices)
+        public EmployeeGalleryService(ServiceParams serviceParams) : base(serviceParams)
         {
         }
 
@@ -15,7 +13,7 @@
                 throw new ExNotFoundInDBModel(nameof(EmployeeAccountService), nameof(GetAllByEmployeeIdAsync), typeof(Employee), employeeId);
             }
             IEnumerable<EmployeeGallery> employeeGalleries = await EntityRepositories.EmployeeGallery.GetAllByEmployeeIdAsync(isTrackChanges: false, employeeId);
-            return UtilServices.Mapper.ExecuteMapping<IEnumerable<EmployeeGallery>, IEnumerable<EmployeeGalleryDto>>(employeeGalleries);
+            return UtilityServices.Mapper.ExecuteMapping<IEnumerable<EmployeeGallery>, IEnumerable<EmployeeGalleryDto>>(employeeGalleries);
         }
     }
 }

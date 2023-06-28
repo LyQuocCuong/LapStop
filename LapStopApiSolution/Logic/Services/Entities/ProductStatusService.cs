@@ -2,16 +2,14 @@
 {
     internal sealed class ProductStatusService : AbstractService, IProductStatusService
     {
-        public ProductStatusService(IDomainRepositories domainRepository,
-                            IUtilityServices utilityServices)
-            : base(domainRepository, utilityServices)
+        public ProductStatusService(ServiceParams serviceParams) : base(serviceParams)
         {
         }
 
         public async Task<IEnumerable<ProductStatusDto>> GetAllAsync()
         {
             IEnumerable<ProductStatus> productStatuses = await EntityRepositories.ProductStatus.GetAllAsync(isTrackChanges: false);
-            return UtilServices.Mapper.ExecuteMapping<IEnumerable<ProductStatus>, IEnumerable<ProductStatusDto>>(productStatuses);
+            return UtilityServices.Mapper.ExecuteMapping<IEnumerable<ProductStatus>, IEnumerable<ProductStatusDto>>(productStatuses);
         }
 
         public async Task<ProductStatusDto?> GetOneByIdAsync(Guid productStatusId)
@@ -21,7 +19,7 @@
             {
                 throw new ExNotFoundInDBModel(nameof(ProductStatusService), nameof(GetOneByIdAsync), typeof(ProductStatus), productStatusId);
             }
-            return UtilServices.Mapper.ExecuteMapping<ProductStatus, ProductStatusDto>(productStatus);
+            return UtilityServices.Mapper.ExecuteMapping<ProductStatus, ProductStatusDto>(productStatus);
         }
     }
 }

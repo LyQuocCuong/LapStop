@@ -1,5 +1,6 @@
 using Contracts.Utilities;
 using Contracts.Utilities.Logger;
+using Services.Parameters;
 using Utilities.NLog;
 
 LogManager.Setup().LoadConfigurationFromFile(
@@ -34,19 +35,14 @@ builder.Services.AddControllers(config =>
 
 builder.Services.SupportHateoasMediaTypeExt();  // after AddControllers()
 
-builder.Services.AddScoped<IDomainRepositories, DomainRepositories>();
-builder.Services.AddScoped<IDomainServices, DomainServices>();
-builder.Services.AddScoped<IUtilityServices, UtilityServices>();
-builder.Services.AddScoped<IDomainServices, DomainServices>();
-builder.Services.AddSingleton<ILogService, NLogService>();
 builder.Services.RegisterDI_LapStopContext(builder.Configuration);
 
 builder.Services.AddAuthentication();
 builder.Services.RegisterDI_IdentityContext();
 
-builder.Services.RegisterDI_AutoMapper();
-builder.Services.RegisterDI_DataShaper();
-builder.Services.RegisterDI_Hateoas();
+builder.Services.RegisterDI_Repositories();
+builder.Services.RegisterDI_Services();
+
 builder.Services.RegisterDI_CustomValidationAttribute();    // implement IActionFilter
 builder.Services.RegisterDI_FluentValidation();             // FluentValidation.AspNetCore package
 //builder.Services.RegisterDI_DotNetResponseCaching();      // [Expiration]
