@@ -1,29 +1,25 @@
-﻿using Contracts.IRepositories;
+﻿using Common.Variables;
+using Contracts.IRepositories;
 using Contracts.IRepositories.Managers;
 using Contracts.Utilities.Authentication;
 using Domains.Identities;
 using DTO.Output.Token;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using RestfulApiHandler.Helpers;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace RestfulApiHandler.ImpServices.Authentication
 {
     public sealed class AuthentEmployeeService : IAuthentService
     {
-        private readonly IConfiguration _configuration;
         private readonly IIdentityRepositoryManager _identityRepositories;
 
-        public AuthentEmployeeService(IConfiguration configuration,
-                              IDomainRepositories domainRepositories)
+        public AuthentEmployeeService(IDomainRepositories domainRepositories)
         {
-            _configuration = configuration;
             _identityRepositories = domainRepositories.IdentityRepositories;
         }
-
 
         public async Task<TokensDto> GenerateTokens(string username)
         {
@@ -36,9 +32,10 @@ namespace RestfulApiHandler.ImpServices.Authentication
                     RefreshToken = GenerateRefreshToken(),
                 };
 
-                DateTime refreshTokenExpiryTime = DateTime.Now.AddDays(7);
                 var result = await _identityRepositories.IdentEmployee
-                                        .ExeUpdateRefreshTokenAsync(employee, newTokens.RefreshToken, refreshTokenExpiryTime);
+                                        .ExeUpdateRefreshTokenAsync(employee, 
+                                                                    newTokens.RefreshToken, 
+                                                CommonVariables.RefreshTokenConfig.ExpirationTime);
                 if (result.Succeeded)
                 {
                     return newTokens;
@@ -103,31 +100,26 @@ namespace RestfulApiHandler.ImpServices.Authentication
             return claimsInfo;
         }
 
-        private SigningCredentials? GetSigningCredentials()
+        private static SigningCredentials? GetSigningCredentials()
         {
-            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("SECRET")))
-            {
-                return null;
-            }
-            var key = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SECRET"));
+            var key = CommonVariables.JwtTokenConfig.SecretKeyUTF8;
             var secret = new SymmetricSecurityKey(key);
-            return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
+            return new SigningCredentials(secret, CommonVariables.JwtTokenConfig.AlgorithmForSignature);
         }
 
-        private JwtSecurityToken GenerateTokenOptions(SigningCredentials? signingCredentials, List<Claim> claims)
+        private static JwtSecurityToken GenerateTokenOptions(SigningCredentials? signingCredentials, List<Claim> claims)
         {
-            var jwtSettings = _configuration.GetSection("JwtSettings");
             var tokenOptions = new JwtSecurityToken(
-                issuer: jwtSettings["validIssuer"],
-                audience: jwtSettings["validAudience"],
-                expires: DateTime.Now.AddMinutes(Convert.ToDouble(jwtSettings["expires"])),
+                issuer: CommonVariables.JwtTokenConfig.ValidIssuer,
+                audience: CommonVariables.JwtTokenConfig.ValidAudience,
+                expires: CommonVariables.JwtTokenConfig.ExpirationTime,
                 claims: claims,
                 signingCredentials: signingCredentials
             );
             return tokenOptions;
         }
 
-        private string GenerateRefreshToken()
+        private static string GenerateRefreshToken()
         {
             var randomNumber = new byte[32];
             using (var rng = RandomNumberGenerator.Create())
@@ -137,26 +129,23 @@ namespace RestfulApiHandler.ImpServices.Authentication
             return Convert.ToBase64String(randomNumber);
         }
 
-        private ClaimsPrincipal GetPrincipalFromExpiredToken(string expiredToken)
+        private static ClaimsPrincipal GetPrincipalFromExpiredToken(string expiredToken)
         {
-            var jwtSettings = _configuration.GetSection("JwtSettings");
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateAudience = true,
-                ValidateIssuer = true,
-                ValidateIssuerSigningKey = true,
-                ValidateLifetime = true,
+            var tokenValidationParameters = RestfulApiHelper.GetDefaultTokenValidationParams();
 
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SECRET"))),
-                ValidIssuer = jwtSettings["validIssuer"],
-                ValidAudience = jwtSettings["validAudience"]
-            };
+            // Due to validating an ExpiredToken, MUST turn off ValidateLifeTime.
+            // If not, an lifetime exception thrown
+            tokenValidationParameters.ValidateLifetime = false;
+
             SecurityToken securityToken;
             var tokenHandler = new JwtSecurityTokenHandler();
-            var principal = tokenHandler.ValidateToken(expiredToken, tokenValidationParameters, out securityToken);
+            var principal = tokenHandler.ValidateToken(expiredToken, 
+                                            tokenValidationParameters, out securityToken);
+            
             var jwtSecurityToken = securityToken as JwtSecurityToken;
             if (jwtSecurityToken == null ||
-                !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                !jwtSecurityToken.Header.Alg.Equals(CommonVariables.JwtTokenConfig.AlgorithmForSignature, 
+                                                    StringComparison.InvariantCultureIgnoreCase))
             {
                 throw new SecurityTokenException("Invalid token");
             }
