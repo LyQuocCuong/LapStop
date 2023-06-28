@@ -2,9 +2,7 @@
 {
     internal sealed class ProductService : AbstractService, IProductService
     {
-        public ProductService(IDomainRepositories domainRepository,
-                            IUtilityServices utilityServices)
-            : base(domainRepository, utilityServices)
+        public ProductService(ServiceParams serviceParams) : base(serviceParams)
         {
         }
 
@@ -23,9 +21,9 @@
             IEnumerable<Product> products = await EntityRepositories.Product.GetAllAsync(isTrackChanges: false, parameters);
             int totalRecords = await EntityRepositories.Product.CountAllAsync(parameters);
 
-            var sourceDto = UtilServices.Mapper.ExecuteMapping<IEnumerable<Product>, IEnumerable<ProductDto>>(products);
+            var sourceDto = UtilityServices.Mapper.ExecuteMapping<IEnumerable<Product>, IEnumerable<ProductDto>>(products);
 
-            var shapedData = UtilServices.DataShaperForProduct.Execute(sourceDto, parameters.ShapingProps);
+            var shapedData = UtilityServices.DataShaperForProduct.Execute(sourceDto, parameters.ShapingProps);
 
             //return new PagedList<DynamicModel>(shapedData.ToList(), totalRecords, parameters.PageNumber, parameters.PageSize);
             return new PagedList<ExpandoForXmlObject>(new List<ExpandoForXmlObject>(), 0, 0, 0);
@@ -34,13 +32,13 @@
         public async Task<ProductDto?> GetOneByIdAsync(Guid productId)
         {
             Product product = await GetProductAndCheckIfItExists(isTrackChanges: false, productId);
-            return UtilServices.Mapper.ExecuteMapping<Product, ProductDto>(product);
+            return UtilityServices.Mapper.ExecuteMapping<Product, ProductDto>(product);
         }
 
         public async Task<ProductForUpdateDto> GetDtoForPatchAsync(Guid productId)
         {
             Product product = await GetProductAndCheckIfItExists(isTrackChanges: false, productId);
-            return UtilServices.Mapper.ExecuteMapping<Product, ProductForUpdateDto>(product);
+            return UtilityServices.Mapper.ExecuteMapping<Product, ProductForUpdateDto>(product);
         }
 
         public async Task<bool> IsValidIdAsync(Guid productId)
@@ -50,17 +48,17 @@
 
         public async Task<ProductDto> CreateAsync(ProductForCreationDto creationDto)
         {
-            Product newProduct = UtilServices.Mapper.ExecuteMapping<ProductForCreationDto, Product>(creationDto);
+            Product newProduct = UtilityServices.Mapper.ExecuteMapping<ProductForCreationDto, Product>(creationDto);
             EntityRepositories.Product.Create(newProduct);
             await SaveChangesToDatabaseAsync();
 
-            return UtilServices.Mapper.ExecuteMapping<Product, ProductDto>(newProduct);
+            return UtilityServices.Mapper.ExecuteMapping<Product, ProductDto>(newProduct);
         }
 
         public async Task UpdateAsync(Guid productId, ProductForUpdateDto updateDto)
         {
             Product product = await GetProductAndCheckIfItExists(isTrackChanges: true, productId);
-            UtilServices.Mapper.ExecuteMapping<ProductForUpdateDto, Product>(updateDto, product);
+            UtilityServices.Mapper.ExecuteMapping<ProductForUpdateDto, Product>(updateDto, product);
             await SaveChangesToDatabaseAsync();
         }
 
@@ -73,15 +71,15 @@
 
         public async Task<IEnumerable<ProductDto>> BulkCreateAsync(IEnumerable<ProductForCreationDto> creationDtos)
         {
-            var newProducts = UtilServices.Mapper.ExecuteMapping<IEnumerable<ProductForCreationDto>, IEnumerable<Product>>(creationDtos);
+            var newProducts = UtilityServices.Mapper.ExecuteMapping<IEnumerable<ProductForCreationDto>, IEnumerable<Product>>(creationDtos);
             await EntityRepositories.Product.BulkCreateAsync(newProducts);
 
-            return UtilServices.Mapper.ExecuteMapping<IEnumerable<Product>, IEnumerable<ProductDto>>(newProducts);
+            return UtilityServices.Mapper.ExecuteMapping<IEnumerable<Product>, IEnumerable<ProductDto>>(newProducts);
         }
 
         public async Task BulkUpdateAsync(IEnumerable<ProductForBulkUpdateDto> bulkUpdateDtos)
         {
-            var existingProducts = UtilServices.Mapper.ExecuteMapping<IEnumerable<ProductForBulkUpdateDto>, IEnumerable<Product>>(bulkUpdateDtos);
+            var existingProducts = UtilityServices.Mapper.ExecuteMapping<IEnumerable<ProductForBulkUpdateDto>, IEnumerable<Product>>(bulkUpdateDtos);
             await EntityRepositories.Product.BulkUpdateAsync(existingProducts);
         }
 

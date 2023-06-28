@@ -1,5 +1,4 @@
-﻿using Contracts.IRepositories;
-using Contracts.IRepositories.Managers;
+﻿using Contracts.IRepositories.Managers;
 using Microsoft.AspNetCore.Identity;
 using Repositories.Managers;
 
@@ -25,7 +24,7 @@ namespace Repositories
                     => new IdentityRepositoryManager(this, userManager, roleManager));
         }
 
-        public async Task SaveChangesAsync()
+        public async Task SaveChangesToDatabaseAsync()
         {
             await _context.CustomSaveChangesAsync();
         }

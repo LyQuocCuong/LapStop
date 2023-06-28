@@ -2,9 +2,7 @@
 {
     internal sealed class SalesOrderService : AbstractService, ISalesOrderService
     {
-        public SalesOrderService(IDomainRepositories domainRepository,
-                            IUtilityServices utilityServices)
-            : base(domainRepository, utilityServices)
+        public SalesOrderService(ServiceParams serviceParams) : base(serviceParams)
         {
         }
     }

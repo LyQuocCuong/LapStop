@@ -2,16 +2,14 @@
 {
     internal sealed class EmployeeRoleService : AbstractService, IEmployeeRoleService
     {
-        public EmployeeRoleService(IDomainRepositories domainRepository,
-                            IUtilityServices utilityServices)
-            : base(domainRepository, utilityServices)
+        public EmployeeRoleService(ServiceParams serviceParams) : base(serviceParams)
         {
         }
 
         public async Task<IEnumerable<EmployeeRoleDto>> GetAllAsync()
         {
             IEnumerable<EmployeeRole> employeeRoles = await EntityRepositories.EmployeeRole.GetAllAsync(isTrackChanges: false);
-            return UtilServices.Mapper.ExecuteMapping<IEnumerable<EmployeeRole>, IEnumerable<EmployeeRoleDto>>(employeeRoles);
+            return UtilityServices.Mapper.ExecuteMapping<IEnumerable<EmployeeRole>, IEnumerable<EmployeeRoleDto>>(employeeRoles);
         }
 
         public async Task<EmployeeRoleDto?> GetOneByIdAsync(Guid employeeRoleId)
@@ -21,7 +19,7 @@
             {
                 throw new ExNotFoundInDBModel(nameof(EmployeeRoleService), nameof(GetOneByIdAsync), typeof(EmployeeRole), employeeRoleId);
             }
-            return UtilServices.Mapper.ExecuteMapping<EmployeeRole, EmployeeRoleDto>(employeeRole);
+            return UtilityServices.Mapper.ExecuteMapping<EmployeeRole, EmployeeRoleDto>(employeeRole);
         }
     }
 }

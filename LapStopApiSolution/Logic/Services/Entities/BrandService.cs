@@ -2,9 +2,7 @@
 {
     internal sealed class BrandService : AbstractService, IBrandService
     {
-        public BrandService(IDomainRepositories domainRepository,
-                            IUtilityServices utilityServices)
-            : base(domainRepository, utilityServices)
+        public BrandService(ServiceParams serviceParams) : base(serviceParams)
         {
         }
 
@@ -22,10 +20,10 @@
         {
             IEnumerable<Brand> brands = await EntityRepositories.Brand.GetAllAsync(isTrackChanges: false, hateoasParams.RequestParams);
             int totalRecords = await EntityRepositories.Brand.CountAllAsync(hateoasParams.RequestParams);
-            IEnumerable<BrandDto> brandDtos = UtilServices.Mapper.ExecuteMapping<IEnumerable<Brand>, IEnumerable<BrandDto>>(brands);
+            IEnumerable<BrandDto> brandDtos = UtilityServices.Mapper.ExecuteMapping<IEnumerable<Brand>, IEnumerable<BrandDto>>(brands);
 
-            var hateoasModels = UtilServices.HateoasShaperForBrand.Execute(
-                UtilServices.DataShaperForBrand,
+            var hateoasModels = UtilityServices.HateoasShaperForBrand.Execute(
+                UtilityServices.DataShaperForBrand,
                 hateoasParams.HttpContext, 
                 brandDtos,
                 hateoasParams.RequestParams.ShapingProps);
@@ -40,13 +38,13 @@
         public async Task<BrandDto?> GetOneByIdAsync(Guid brandId)
         {
             Brand brand = await GetBrandAndCheckIfItExists(isTrackChanges: false, brandId);
-            return UtilServices.Mapper.ExecuteMapping<Brand, BrandDto>(brand);
+            return UtilityServices.Mapper.ExecuteMapping<Brand, BrandDto>(brand);
         }
 
         public async Task<BrandForUpdateDto> GetDtoForPatchAsync(Guid brandId)
         {
             Brand brand = await GetBrandAndCheckIfItExists(isTrackChanges: false, brandId);
-            return UtilServices.Mapper.ExecuteMapping<Brand, BrandForUpdateDto>(brand);
+            return UtilityServices.Mapper.ExecuteMapping<Brand, BrandForUpdateDto>(brand);
         }
 
         public async Task<bool> IsValidIdAsync(Guid brandId)
@@ -60,17 +58,17 @@
 
         public async Task<BrandDto> CreateAsync(BrandForCreationDto creationDto)
         {
-            Brand newBrand = UtilServices.Mapper.ExecuteMapping<BrandForCreationDto, Brand>(creationDto);
+            Brand newBrand = UtilityServices.Mapper.ExecuteMapping<BrandForCreationDto, Brand>(creationDto);
             EntityRepositories.Brand.Create(newBrand);
             await SaveChangesToDatabaseAsync();
 
-            return UtilServices.Mapper.ExecuteMapping<Brand, BrandDto>(newBrand);
+            return UtilityServices.Mapper.ExecuteMapping<Brand, BrandDto>(newBrand);
         }
 
         public async Task UpdateAsync(Guid brandId, BrandForUpdateDto updateDto)
         {
             Brand brand = await GetBrandAndCheckIfItExists(isTrackChanges: true, brandId);
-            UtilServices.Mapper.ExecuteMapping<BrandForUpdateDto, Brand>(updateDto, brand);
+            UtilityServices.Mapper.ExecuteMapping<BrandForUpdateDto, Brand>(updateDto, brand);
             await SaveChangesToDatabaseAsync();
         }
 

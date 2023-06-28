@@ -2,9 +2,7 @@
 {
     internal sealed class CartItemService : AbstractService, ICartItemService
     {
-        public CartItemService(IDomainRepositories domainRepository,
-                            IUtilityServices utilityServices)
-            : base(domainRepository, utilityServices)
+        public CartItemService(ServiceParams serviceParams) : base(serviceParams)
         {
         }
 
@@ -17,7 +15,7 @@
             
             IEnumerable<CartItem> cartItems = await EntityRepositories.CartItem.GetAllByCartIdAsync(isTrackChanges: false, cartId);
             
-            return UtilServices.Mapper.ExecuteMapping<IEnumerable<CartItem>, IEnumerable<CartItemDto>>(cartItems);
+            return UtilityServices.Mapper.ExecuteMapping<IEnumerable<CartItem>, IEnumerable<CartItemDto>>(cartItems);
         }
     }
 }

@@ -1,30 +1,43 @@
 ﻿using Contracts.IRepositories.Managers;
 using Contracts.IServices.Base;
-using Contracts.Utilities;
+using Contracts.IServices.Managers;
 
 namespace Services.Base
 {
     internal abstract class AbstractService : IAbstractService
     {
         private readonly IDomainRepositories _domainRepositories;
-        private readonly IUtilityServices _utilServices;
+        private readonly IDomainServices _domainServices;
+        private readonly UtilityServiceManager _utilityServices;
 
-        internal AbstractService(IDomainRepositories domainRepository,
-                                 IUtilityServices utilityServices)
+        internal AbstractService(ServiceParams serviceParams)
         {
-            _domainRepositories = domainRepository;
-            _utilServices = utilityServices;
+            _domainRepositories = serviceParams.DomainRepositories;
+            _domainServices = serviceParams.DomainServices;
+            _utilityServices = serviceParams.UtilityServices;
         }
 
-        public IEntityRepositoryManager EntityRepositories => _domainRepositories.EntityRepositories;
+        public IEntityRepositoryManager EntityRepositories 
+            => _domainRepositories.EntityRepositories;
 
-        public IIdentityRepositoryManager IdentityRepositories => _domainRepositories.IdentityRepositories;
+        public IIdentityRepositoryManager IdentityRepositories 
+            => _domainRepositories.IdentityRepositories;
 
-        public IUtilityServices UtilServices => _utilServices;
+        public UtilityServiceManager UtilityServices => _utilityServices;
+
+        #region Due to need to call Each Other (Services call other Services)
+
+        public IEntityServiceManager EntityServices 
+            => _domainServices.EntityServices;
+
+        public IIdentityServiceManager IdentityServices
+            => _domainServices.IdentityServices;
+
+        #endregion
 
         public async Task SaveChangesToDatabaseAsync()
         {
-            await _domainRepositories.SaveChangesAsync();
+            await _domainRepositories.SaveChangesToDatabaseAsync();
         }
     }
 }

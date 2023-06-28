@@ -2,9 +2,7 @@
 {
     internal sealed class ProductBrandService : AbstractService, IProductBrandService
     {
-        public ProductBrandService(IDomainRepositories domainRepository,
-                            IUtilityServices utilityServices)
-            : base(domainRepository, utilityServices)
+        public ProductBrandService(ServiceParams serviceParams) : base(serviceParams)
         {
         }
     }
