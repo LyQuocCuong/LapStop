@@ -1,8 +1,3 @@
-using Contracts.Utilities;
-using Contracts.Utilities.Logger;
-using Services.Parameters;
-using Utilities.NLog;
-
 LogManager.Setup().LoadConfigurationFromFile(
     Path.Combine(Directory.GetCurrentDirectory(), 
     "../../Infrastructures/InfraServices/NLog/NLog.config")

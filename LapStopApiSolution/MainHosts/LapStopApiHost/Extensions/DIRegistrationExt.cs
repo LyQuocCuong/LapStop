@@ -1,11 +1,12 @@
-﻿using Contracts.Utilities;
+﻿using Common.Variables;
+using Contracts.Utilities;
 using Contracts.Utilities.Authentication;
 using Domains.Identities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using RestfulApiHandler.Helpers;
 using RestfulApiHandler.ImpServices.Authentication;
-using System.Text;
 
 namespace LapStopApiHost.Extensions
 {
@@ -178,8 +179,23 @@ namespace LapStopApiHost.Extensions
 
         public static void RegisterDI_JWT(this IServiceCollection services, IConfiguration configuration)
         {
-            var jwtSettings = configuration.GetSection("JwtSettings");
-            var secretKey = Environment.GetEnvironmentVariable("SECRET");
+            services.AddScoped<IAuthentService, AuthentEmployeeService>();
+
+            CommonVariables.JwtTokenConfig
+                .InitializeValues(
+                    // Values are used to GENERATE the JWT Token
+                    algorithmForSignature: SecurityAlgorithms.HmacSha256,
+                    secretKey: Environment.GetEnvironmentVariable("SECRET"),
+                    validIssuer: configuration.GetSection("JwtSettings")["validIssuer"],
+                    validAudience: configuration.GetSection("JwtSettings")["validAudience"],
+                    expirationMinutes: configuration.GetSection("JwtSettings")["expirationMinutes"],
+                    // Values are used to VALIDATE the JWT Token
+                    clockSkewMinutes: 0,
+                    isShouldValidateIssuer: true,
+                    isShouldValidateAudience: true,
+                    isShouldValidateIssuerSigningKey: true,
+                    isShouldValidateLifetime: true
+                );
 
             services.AddAuthentication(opt =>
             {
@@ -188,23 +204,8 @@ namespace LapStopApiHost.Extensions
             })
             .AddJwtBearer(options =>
             {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,      // The issuer is the actual server that created the token
-                    ValidateAudience = true,    // The receiver of the token is a valid recipient
-                    ValidateLifetime = true,    // The token has not expired
-                    ValidateIssuerSigningKey = true,    // The signing key is valid and is trusted by the server
-
-                    //ClockSkew = TimeSpan.Zero,
-
-                    // Values are used to generate the signature for JWT
-                    ValidIssuer = jwtSettings["validIssuer"],
-                    ValidAudience = jwtSettings["validAudience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
-                };
+                options.TokenValidationParameters = RestfulApiHelper.GetDefaultTokenValidationParams();
             });
-
-            services.AddScoped<IAuthentService, AuthentEmployeeService>();
 
         }
 
