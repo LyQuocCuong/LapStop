@@ -23,7 +23,8 @@ namespace RestfulApiHandler.ImpServices.Authentication
 
         public async Task<TokensDto> GenerateTokens(string username)
         {
-            IdentEmployee? employee = await _identityRepositories.IdentEmployee.FindByUsernameAsync(username);
+            IdentEmployee? employee = await _identityRepositories.IdentEmployee
+                                                .FindByUsernameAsync(username);
             if (employee != null)
             {
                 TokensDto newTokens = new TokensDto()
@@ -31,11 +32,10 @@ namespace RestfulApiHandler.ImpServices.Authentication
                     AccessToken = await GenerateJwtToken(employee),
                     RefreshToken = GenerateRefreshToken(),
                 };
-
                 var result = await _identityRepositories.IdentEmployee
-                                        .ExeUpdateRefreshTokenAsync(employee, 
-                                                                    newTokens.RefreshToken, 
-                                                CommonVariables.RefreshTokenConfig.ExpirationTime);
+                                        .ExeUpdateRefreshTokenAsync
+                                            (employee,newTokens.RefreshToken, 
+                                            CommonVariables.RefreshTokenConfig.ExpirationTime);
                 if (result.Succeeded)
                 {
                     return newTokens;
@@ -49,18 +49,23 @@ namespace RestfulApiHandler.ImpServices.Authentication
             if (!string.IsNullOrEmpty(inputTokenDto.AccessToken))
             {
                 ClaimsPrincipal principal = GetPrincipalFromExpiredToken(inputTokenDto.AccessToken);
+
                 if (principal.Identity != null && !string.IsNullOrEmpty(principal.Identity.Name))
                 {
-                    IdentEmployee? employee = await _identityRepositories.IdentEmployee.FindByUsernameAsync(principal.Identity.Name);
+                    IdentEmployee? employee = await _identityRepositories.IdentEmployee
+                                                        .FindByUsernameAsync(principal.Identity.Name);
                     if (employee != null
                         && employee.RefreshToken == inputTokenDto.RefreshToken
                         && employee.RefreshTokenExpiryTime > DateTime.Now)
                     {
-                        // re-generate Tokens (NOT update expiration of RefreshToken)
+                        // re-generate Tokens
                         inputTokenDto.AccessToken = await GenerateJwtToken(employee);
                         inputTokenDto.RefreshToken = GenerateRefreshToken();
 
-                        var result = await _identityRepositories.IdentEmployee.ExeUpdateRefreshTokenAsync(employee, inputTokenDto.RefreshToken, null);
+                        // NOT update expiration of RefreshToken
+                        var result = await _identityRepositories.IdentEmployee
+                                                .ExeUpdateRefreshTokenAsync
+                                                    (employee, inputTokenDto.RefreshToken, null);
 
                         if (result.Succeeded)
                         {
@@ -139,13 +144,15 @@ namespace RestfulApiHandler.ImpServices.Authentication
 
             SecurityToken securityToken;
             var tokenHandler = new JwtSecurityTokenHandler();
-            var principal = tokenHandler.ValidateToken(expiredToken, 
+
+            ClaimsPrincipal principal = tokenHandler.ValidateToken(expiredToken, 
                                             tokenValidationParameters, out securityToken);
             
             var jwtSecurityToken = securityToken as JwtSecurityToken;
             if (jwtSecurityToken == null ||
-                !jwtSecurityToken.Header.Alg.Equals(CommonVariables.JwtTokenConfig.AlgorithmForSignature, 
-                                                    StringComparison.InvariantCultureIgnoreCase))
+                !jwtSecurityToken.Header.Alg
+                                .Equals(CommonVariables.JwtTokenConfig.AlgorithmForSignature, 
+                                        StringComparison.InvariantCultureIgnoreCase))
             {
                 throw new SecurityTokenException("Invalid token");
             }

@@ -19,7 +19,5 @@ namespace RestfulApiHandler.Controllers.Authent
             var tokenDtoToReturn = await _authentService.ProcessExpiredAccessToken(tokenDto);
             return Ok(tokenDtoToReturn);
         }
-
-
     }
 }
