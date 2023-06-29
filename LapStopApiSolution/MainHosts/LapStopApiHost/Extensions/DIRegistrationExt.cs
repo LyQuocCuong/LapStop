@@ -1,4 +1,5 @@
-﻿using Common.Variables;
+﻿using Common.Models.Token;
+using Common.Variables;
 using Contracts.Utilities;
 using Contracts.Utilities.Authentication;
 using Domains.Identities;
@@ -181,13 +182,17 @@ namespace LapStopApiHost.Extensions
         {
             services.AddScoped<IAuthentService, AuthentEmployeeService>();
 
+            // Use BOTH 2 ways to get Configurations
+            JwtConfiguration jwtConfiguration = new JwtConfiguration();
+            configuration.Bind(jwtConfiguration.Section, jwtConfiguration);
+
             CommonVariables.JwtTokenConfig
                 .InitializeValues(
                     // Values are used to GENERATE the JWT Token
                     algorithmForSignature: SecurityAlgorithms.HmacSha256,
                     secretKey: Environment.GetEnvironmentVariable("SECRET"),
-                    validIssuer: configuration.GetSection("JwtSettings")["validIssuer"],
-                    validAudience: configuration.GetSection("JwtSettings")["validAudience"],
+                    validIssuer: jwtConfiguration.ValidIssuer,
+                    validAudience: jwtConfiguration.ValidAudience,
                     expirationMinutes: configuration.GetSection("JwtSettings")["expirationMinutes"],
                     // Values are used to VALIDATE the JWT Token
                     clockSkewMinutes: 0,
