@@ -186,6 +186,11 @@ namespace LapStopApiHost.Extensions
             JwtConfiguration jwtConfiguration = new JwtConfiguration();
             configuration.Bind(jwtConfiguration.Section, jwtConfiguration);
 
+            /// config for IOptions Patterns (IOptions, IOptionsSnapshot, IOptionMonitor)
+            //services.Configure<JwtConfiguration>(configuration.GetSection("JwtSettings"));
+            //services.Configure<JwtConfiguration>("JwtSnapShot", configuration.GetSection("JwtSettings"));
+            //services.Configure<JwtConfiguration>("JwtMonitor", configuration.GetSection("JwtSettings"));
+
             CommonVariables.JwtTokenConfig
                 .InitializeValues(
                     // Values are used to GENERATE the JWT Token
