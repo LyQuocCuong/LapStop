@@ -5,7 +5,7 @@ namespace RestfulApiHandler.Controllers.Identities
     [ApiVersion("1.0")]
     [ApiController]
     [Route("api/identity/employee")]
-    public sealed class IdentEmployeeController : AbstractController
+    public sealed class IdentEmployeeController : AbstractApiControllerVer01
     {
         public IdentEmployeeController(ILogService logService,
                                        IDomainServices domainServices)

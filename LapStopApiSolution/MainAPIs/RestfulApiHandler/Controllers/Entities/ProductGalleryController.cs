@@ -2,7 +2,7 @@
 {
     [ApiController]
     [Route("api")]
-    public class ProductGalleryController : AbstractController
+    public class ProductGalleryController : AbstractApiControllerVer01
     {
         public ProductGalleryController(ILogService logService,
                                 IDomainServices domainServices)
