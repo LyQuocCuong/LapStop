@@ -2,7 +2,7 @@
 {
     [ApiController]
     [Route("api")]
-    public class InvoiceStatusController : AbstractController
+    public class InvoiceStatusController : AbstractApiControllerVer01
     {
         public InvoiceStatusController(ILogService logService,
                                 IDomainServices domainServices)

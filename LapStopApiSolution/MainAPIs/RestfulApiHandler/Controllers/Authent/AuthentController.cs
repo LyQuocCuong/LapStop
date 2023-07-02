@@ -6,7 +6,7 @@ namespace RestfulApiHandler.Controllers.Authent
 {
     [ApiController]
     [Route("api/authenticate")]
-    public sealed class AuthentController : AbstractController
+    public sealed class AuthentController : AbstractApiControllerVer01
     {
         private readonly IAuthentService _authentService;
 

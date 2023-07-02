@@ -6,6 +6,7 @@ using Domains.Identities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using RestfulApiHandler.Helpers;
 using RestfulApiHandler.ImpServices.Authentication;
 
@@ -115,7 +116,74 @@ namespace LapStopApiHost.Extensions
         {
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+
+            services.AddSwaggerGen(); // DEFAULT
+
+            services.AddSwaggerGen(s =>
+            {
+                // Global Info
+                s.SwaggerDoc(
+                    name: "v1",
+                    info: new OpenApiInfo
+                    {
+                        Title = "LQC_API_Ver1",
+                        Version = "v1",
+                        Description = "CompanyEmployees API by CodeMaze",
+                        TermsOfService = new Uri("https://example.com/terms"),
+                        Contact = new OpenApiContact 
+                        { 
+                            Name = "John Doe", 
+                            Email = "John.Doe@gmail.com", 
+                            Url = new Uri("https://twitter.com/johndoe"), 
+                        },
+                        License = new OpenApiLicense 
+                        { 
+                            Name = "CompanyEmployees API LICX", 
+                            Url = new Uri("https://example.com/license"), 
+                        }
+                    });
+                s.SwaggerDoc(
+                    name: "v2",
+                    info: new OpenApiInfo
+                    {
+                        Title = "LQC_API_Ver2",
+                        Version = "v2"
+                    });
+                // end
+
+                // Authentication
+                s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Description = "Place to add JWT with Bearer",
+                    Name = "Authorization",
+                    Scheme = "Bearer"
+                });
+                s.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+
+                            Reference = new OpenApiReference()
+                            {
+                                Id = "Bearer",
+                                Type = ReferenceType.SecurityScheme
+                            },
+                            Name = "Bearer"
+                        },
+                        new List<string>()
+                    }
+                });
+                // end
+
+                // Enable XML comments
+                var xmlFile = $"{typeof(RestfulApiHandler.AssemblyReference).Assembly.GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                s.IncludeXmlComments(xmlPath);
+                // end
+            });
         }
 
         public static void RegisterDI_CustomValidationAttribute(this IServiceCollection services)

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RestfulApiHandler</name>
+    </assembly>
+    <members>
+        <member name="M:RestfulApiHandler.Controllers.Entities.BrandController.GetAllBrands(DTO.Input.FromQuery.RequestPrams.BrandRequestParam)">
+            <summary>
+            Get all Brands
+            </summary>
+            <param name="parameters"></param>
+            <returns>List of Brands</returns>
+            <response code="200">Get the list of Brands successfully</response> 
+        </member>
+        <member name="M:RestfulApiHandler.Controllers.Entities.BrandController.CreateBrand(FluentValidation.IValidator{DTO.Input.FromBody.Creation.BrandForCreationDto},DTO.Input.FromBody.Creation.BrandForCreationDto)">
+            <summary>
+            Create a new Brand
+            </summary>
+            <param name="creationValidator"></param>
+            <param name="creationDto"></param>
+            <returns></returns>
+            <response code="201">Returns the newly created Brand</response> 
+            <response code="400">If the BrandForCreationDto is null</response> 
+            <response code="422">If the Model is invalid</response> 
+        </member>
+    </members>
+</doc>

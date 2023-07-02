@@ -3,7 +3,7 @@
     [ApiVersion("1.0")]
     [ApiController]
     [Route("api")]
-    public class BrandController : AbstractController
+    public class BrandController : AbstractApiControllerVer01
     {
         public BrandController(ILogService logService,
                                 IDomainServices domainServices)
@@ -22,9 +22,16 @@
             return Ok();
         }
 
+        /// <summary>
+        /// Get all Brands
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns>List of Brands</returns>
+        /// <response code="200">Get the list of Brands successfully</response> 
         [HttpGet]
         [Route("brands", Name = "GetAllBrands")]
         [ServiceFilter(typeof(ValidateRequestNotMissingMediaTypeAttr))]
+        [ProducesResponseType(200)]
         public async Task<IActionResult> GetAllBrands([FromQuery] BrandRequestParam parameters)
         {
             HateoasParams<BrandRequestParam> hateoasParameters = new(HttpContext, parameters);
@@ -47,8 +54,20 @@
             return Ok(brandDto);
         }
 
+        /// <summary>
+        /// Create a new Brand
+        /// </summary>
+        /// <param name="creationValidator"></param>
+        /// <param name="creationDto"></param>
+        /// <returns></returns>
+        /// <response code="201">Returns the newly created Brand</response> 
+        /// <response code="400">If the BrandForCreationDto is null</response> 
+        /// <response code="422">If the Model is invalid</response> 
         [HttpPost]
         [Route("brands", Name = "CreateBrand")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(422)]
         public async Task<IActionResult> CreateBrand([FromServices] IValidator<BrandForCreationDto> creationValidator,
                                                      [FromBody] BrandForCreationDto creationDto)
         {
