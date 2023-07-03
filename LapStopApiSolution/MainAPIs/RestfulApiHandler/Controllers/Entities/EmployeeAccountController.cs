@@ -1,8 +1,6 @@
 ﻿namespace RestfulApiHandler.Controllers.Entities
 {
-    [ApiController]
-    [Route("api")]
-    public class EmployeeAccountController : AbstractApiControllerVer01
+    public sealed class EmployeeAccountController : AbstractApiVer01Controller
     {
         public EmployeeAccountController(ILogService logService,
                                 IDomainServices domainServices)

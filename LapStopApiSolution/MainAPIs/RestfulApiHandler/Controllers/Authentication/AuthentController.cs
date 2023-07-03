@@ -1,12 +1,10 @@
 ﻿using Contracts.Utilities.Authentication;
-using Domains.Identities;
 using DTO.Input.FromBody.Authentication;
 
-namespace RestfulApiHandler.Controllers.Authent
+namespace RestfulApiHandler.Controllers.Authentication
 {
-    [ApiController]
     [Route("api/authenticate")]
-    public sealed class AuthentController : AbstractApiControllerVer01
+    public sealed class AuthentController : AbstractApiVer01Controller
     {
         private readonly IAuthentService _authentService;
 

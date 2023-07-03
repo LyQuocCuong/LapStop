@@ -1,8 +1,6 @@
 ﻿namespace RestfulApiHandler.Controllers.Entities
 {
-    [ApiController]
-    [Route("api")]
-    public class EmployeeGalleryController : AbstractApiControllerVer01
+    public sealed class EmployeeGalleryController : AbstractApiVer01Controller
     {
         public EmployeeGalleryController(ILogService logService,
                                 IDomainServices domainServices)

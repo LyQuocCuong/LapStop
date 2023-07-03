@@ -2,10 +2,8 @@
 
 namespace RestfulApiHandler.Controllers.Identities
 {
-    [ApiVersion("1.0")]
-    [ApiController]
-    [Route("api/identity/employee")]
-    public sealed class IdentEmployeeController : AbstractApiControllerVer01
+    [Route("api/identemployee")]
+    public sealed class IdentEmployeeController : AbstractApiVer01Controller
     {
         public IdentEmployeeController(ILogService logService,
                                        IDomainServices domainServices)
@@ -14,6 +12,7 @@ namespace RestfulApiHandler.Controllers.Identities
         }
 
         [HttpPost]
+        [Route("register")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> RegisterIdentEmployee([FromBody] EmployeeForRegistrationDto registrationDto)
         {
