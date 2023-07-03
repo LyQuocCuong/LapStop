@@ -1,9 +1,6 @@
 ﻿namespace RestfulApiHandler.Controllers.Entities
 {
-    [ApiVersion("1.0")]
-    [ApiController]
-    [Route("api")]
-    public class BrandController : AbstractApiControllerVer01
+    public sealed class BrandController : AbstractApiVer01Controller
     {
         public BrandController(ILogService logService,
                                 IDomainServices domainServices)

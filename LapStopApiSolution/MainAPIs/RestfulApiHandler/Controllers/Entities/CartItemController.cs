@@ -1,8 +1,6 @@
 ﻿namespace RestfulApiHandler.Controllers.Entities
 {
-    [ApiController]
-    [Route("api")]
-    public class CartItemController : AbstractApiControllerVer01
+    public sealed class CartItemController : AbstractApiVer01Controller
     {
         public CartItemController(ILogService logService,
                                 IDomainServices domainServices)

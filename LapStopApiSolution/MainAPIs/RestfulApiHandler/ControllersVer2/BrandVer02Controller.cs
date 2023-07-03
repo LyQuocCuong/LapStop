@@ -1,9 +1,8 @@
 ﻿namespace RestfulApiHandler.ControllersVer2
 {
-    [Route("/api/{v:apiversion}")]
-    public sealed class BrandV2Controller : AbstractApiControllerVer02
+    public sealed class BrandVer02Controller : AbstractApiVer02Controller
     {
-        public BrandV2Controller(ILogService logService, IDomainServices domainServices) 
+        public BrandVer02Controller(ILogService logService, IDomainServices domainServices) 
             : base(logService, domainServices)
         {
         }
