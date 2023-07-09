@@ -6,8 +6,12 @@ using Domains.Identities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using RestfulApiHandler.Helpers;
 using RestfulApiHandler.ImpServices.Authentication;
+using static System.Net.WebRequestMethods;
+using System.Net;
 
 namespace LapStopApiHost.Extensions
 {
@@ -115,7 +119,122 @@ namespace LapStopApiHost.Extensions
         {
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+
+            //services.AddSwaggerGen();
+
+            services.AddSwaggerGen(s =>
+            {
+                s.SwaggerDoc(
+                    name: "v1",
+                    info: new OpenApiInfo()
+                    {
+                        Title = "LQC_API_Ver1",
+                        Version = "v1",
+                        Description = "lapStop API by LQC",
+                        TermsOfService = new Uri("https://www.google.com/"),
+                        Contact = new Microsoft.OpenApi.Models.OpenApiContact()
+                        {
+                            Name = "LQC",
+                            Email = "lqc",
+                            Url = new Uri("https://www.google.com/")
+                        },
+                        License = new Microsoft.OpenApi.Models.OpenApiLicense()
+                        {
+                            Name = "LQC license",
+                            Url = new Uri("https://www.google.com/")
+                        }
+                    }
+                );
+
+                s.SwaggerDoc(
+                    name: "v2",
+                    info: new OpenApiInfo()
+                    {
+                        Title = "LQC_Version_2",
+                        Version = "v2",
+                        Description = "LapStop ver 2",
+                        TermsOfService =  new Uri("https://www.google.com/"),
+                        Contact = new Microsoft.OpenApi.Models.OpenApiContact()
+                        {
+                            Name = "LQc",
+                            Email = "lqc",
+                            Url = new Uri("https://www.google.com/")
+                        },
+                        License = new Microsoft.OpenApi.Models.OpenApiLicense()
+                        {
+                            Name = "LQc",
+                            Url = new Uri("https://www.google.com/")
+                        }
+                    }
+                );
+
+                /// <summary>
+                /// Add one or more "securityDefinitions", 
+                /// describing how your API is protected, to the generated Swagger
+                /// </summary>
+                /// <param name="name">A unique name for the scheme, as per the Swagger spec.</param>
+                /// A description of the scheme - 
+                /// can be an instance of BasicAuthScheme, ApiKeyScheme or OAuth2Scheme
+                /// </param>
+                s.AddSecurityDefinition("BearerAuthent", new OpenApiSecurityScheme()
+                {
+                    // REQUIRED. The location of the API key.
+                    // Valid values are "query", "header" or "cookie".
+                    In = ParameterLocation.Header,
+
+                    // REQUIRED. The type of the security scheme.
+                    // Valid values are "apiKey", "http", "oauth2", "openIdConnect".
+                    Type = SecuritySchemeType.ApiKey,
+                    
+                    Description = "Place to add JWT with Bearer",
+
+                    // REQUIRED. The name of the header, query or cookie parameter to be used.
+                    Name = "Authorization",
+                    
+                    // REQUIRED.The name of the HTTP Authorization scheme to be used
+                    // in the Authorization header as defined in RFC7235.
+                    Scheme = "Bearer"
+                });
+
+                /// <summary>
+                /// Adds a global security requirement
+                /// </summary>
+                /// A dictionary of required schemes (logical AND). 
+                /// 
+                /// Keys must correspond to schemes defined through AddSecurityDefinition
+                /// 
+                /// If the scheme is of type "oauth2", then the value is a list of scopes. 
+                /// 
+                /// Otherwise it MUST be an empty array
+                /// 
+                s.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                    // inherits Dictionary<OpenApiSecurityScheme, IList<string>>
+                    /// One item of Dictionary
+                    {
+                        new OpenApiSecurityScheme()
+                        {
+                            Reference = new OpenApiReference()
+                            {
+                                Id = "BearerAuthent",
+                                Type = ReferenceType.SecurityScheme
+                            },
+
+                            // REQUIRED.
+                            // The name of the header, query or cookie parameter to be used.
+                            Name = "Authorization"
+                        },
+                        new List<string>()  // EMPTY due to NOT "oauth2" type.
+                    }
+                });
+
+                // XML fiename can be ANY names. Depend on the name is used to XML file.
+                var xmlFile = $"{typeof(RestfulApiHandler.AssemblyReference).Assembly.GetName().Name}.xml"; 
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile); 
+                s.IncludeXmlComments(xmlPath);
+
+            });
+
         }
 
         public static void RegisterDI_CustomValidationAttribute(this IServiceCollection services)

@@ -60,7 +60,13 @@ app.ConfigureExceptionHandler(logger);
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+
+    app.UseSwaggerUI(s =>
+    {
+        s.SwaggerEndpoint("/swagger/v1/swagger.json", "LQC Ver1");
+        s.SwaggerEndpoint("/swagger/v2/swagger.json", "LQC Ver2");
+    });
+
 }
 
 app.UseHttpsRedirection();

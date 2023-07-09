@@ -3,6 +3,7 @@
     [ApiVersion("1.0")]
     [ApiController]
     [Route("api")]
+    [ApiExplorerSettings(GroupName = "v1")]
     public class BrandController : AbstractController
     {
         public BrandController(ILogService logService,
@@ -22,6 +23,11 @@
             return Ok();
         }
 
+        /// <summary>
+        /// Get all Brands
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns>A list of Brands</returns>
         [HttpGet]
         [Route("brands", Name = "GetAllBrands")]
         [ServiceFilter(typeof(ValidateRequestNotMissingMediaTypeAttr))]
@@ -33,6 +39,15 @@
             return Ok(pagedResult);
         }
 
+        /// <summary>
+        /// get brand by Id
+        /// </summary>
+        /// <param name="brandId"></param>
+        /// <returns>the brand with the specific Id</returns>
+        /// <response code="201">Return the brand with ID</response>
+        /// <response code="404">If the brandId does NOT exist</response>
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
         [HttpGet]
         [Route("brands/{brandId:guid}", Name = "GetBrandById")]
         //[HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]

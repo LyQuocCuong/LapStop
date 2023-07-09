@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RestfulApiHandler</name>
+    </assembly>
+    <members>
+        <member name="M:RestfulApiHandler.Controllers.Entities.BrandController.GetAllBrands(DTO.Input.FromQuery.RequestPrams.BrandRequestParam)">
+            <summary>
+            Get all Brands
+            </summary>
+            <param name="parameters"></param>
+            <returns>A list of Brands</returns>
+        </member>
+        <member name="M:RestfulApiHandler.Controllers.Entities.BrandController.GetBrandById(System.Guid)">
+            <summary>
+            get brand by Id
+            </summary>
+            <param name="brandId"></param>
+            <returns>the brand with the specific Id</returns>
+            <response code="201">Return the list brands</response>
+            <response code="404">If the brandId does NOT exist</response>
+        </member>
+    </members>
+</doc>
