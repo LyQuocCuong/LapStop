@@ -16,9 +16,13 @@ namespace RestfulApiHandler.Controllers.Entities
         public async Task<IActionResult> GetAllEmployeesHead([FromQuery] EmployeeRequestParam parameter)
         {
             ApiResponseBase apiResponse = await EntityServices.Employee.GetAllAsync(parameter);
+
             if (apiResponse.IsSuccess)
             {
+                var castingDirectly = ((ApiOkResponse<PagedList<ExpandoForXmlObject>>)apiResponse).Data.MetaData;
+                
                 var metaData = apiResponse.GetResult<PagedList<ExpandoForXmlObject>>().MetaData;
+                
                 Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(metaData));
                 return Ok(apiResponse);
             }
