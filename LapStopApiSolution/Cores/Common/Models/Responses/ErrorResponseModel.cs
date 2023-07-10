@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace Common.Models.Errors
+namespace Common.Models.Responses
 {
     public sealed class ErrorResponseModel
     {

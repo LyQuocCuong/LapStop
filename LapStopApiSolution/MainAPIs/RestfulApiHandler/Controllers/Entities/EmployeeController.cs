@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DTO.Output.ApiResponses.Bases;
+using RestfulApiHandler.Extensions;
 
 namespace RestfulApiHandler.Controllers.Entities
 {
     public sealed class EmployeeController : AbstractApiVer01Controller
     {
         public EmployeeController(ILogService logService,
-                                IDomainServices domainServices)
+                                  IDomainServices domainServices)
             : base(logService, domainServices)
         {
         }
@@ -14,33 +15,29 @@ namespace RestfulApiHandler.Controllers.Entities
         [Route("employees", Name = "GetAllEmployeesHead")]
         public async Task<IActionResult> GetAllEmployeesHead([FromQuery] EmployeeRequestParam parameter)
         {
-            if (parameter.MinAge > parameter.MaxAge)
+            ApiResponseBase apiResponse = await EntityServices.Employee.GetAllAsync(parameter);
+            if (apiResponse.IsSuccess)
             {
-                return BadRequest(CommonFunctions.DisplayErrors.ReturnInvalidAgeRangeMessage);
+                var metaData = apiResponse.GetResult<PagedList<ExpandoForXmlObject>>().MetaData;
+                Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(metaData));
+                return Ok(apiResponse);
             }
-
-            PagedList<ExpandoForXmlObject> pagedResult = await EntityServices.Employee.GetAllAsync(parameter);
-
-            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
-
-            return Ok();
+            return ProcessErrorResponse(apiResponse);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         [Route("employees", Name = "GetAllEmployees")]
         public async Task<IActionResult> GetAllEmployees([FromQuery] EmployeeRequestParam parameter)
         {
-            if (parameter.MinAge > parameter.MaxAge)
+            ApiResponseBase apiResponse = await EntityServices.Employee.GetAllAsync(parameter);
+            if (apiResponse.IsSuccess)
             {
-                return BadRequest(CommonFunctions.DisplayErrors.ReturnInvalidAgeRangeMessage);
+                var metaData = apiResponse.GetResult<PagedList<ExpandoForXmlObject>>().MetaData;
+                Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(metaData));
+                return Ok(apiResponse);
             }
-
-            PagedList<ExpandoForXmlObject> pagedResult = await EntityServices.Employee.GetAllAsync(parameter);
-
-            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
-
-            return Ok(pagedResult);
+            return ProcessErrorResponse(apiResponse);
         }
 
         [HttpGet]

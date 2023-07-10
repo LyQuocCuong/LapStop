@@ -1,4 +1,7 @@
-﻿namespace Services.Entities
+﻿using DTO.Output.ApiResponses.Bases;
+using DTO.Output.ApiResponses.ErrorBadRequest;
+
+namespace Services.Entities
 {
     internal sealed class EmployeeService : AbstractService, IEmployeeService
     {
@@ -16,22 +19,34 @@
             return employee;
         }
 
-        public async Task<PagedList<ExpandoForXmlObject>> GetAllAsync(EmployeeRequestParam parameter)
+        public async Task<ApiResponseBase> GetAllAsync(EmployeeRequestParam parameter)
         {
+            if (parameter.MinAge > parameter.MaxAge)
+            {
+                return new EmployeeInvaidAgeRangeBadRequestResponse();
+            }
+
             IEnumerable<Employee> employees = await EntityRepositories.Employee.GetAllAsync(isTrackChanges: false, parameter);
+            
             int totalRecords = await EntityRepositories.Employee.CountAllAsync(parameter);
             
             var sourceDto = UtilityServices.Mapper.ExecuteMapping<IEnumerable<Employee>, IEnumerable<EmployeeDto>>(employees);
 
             var shapedData = UtilityServices.DataShaperForEmployee.Execute(sourceDto, parameter.ShapingProps);
 
-            //return new PagedList<DynamicModel>(shapedData.ToList(), totalRecords, parameter.PageNumber, parameter.PageSize); ;
-            return new PagedList<ExpandoForXmlObject>(new List<ExpandoForXmlObject>(), 0, 0, 0);
+            var result = new PagedList<ExpandoForXmlObject>(
+                sourceData: shapedData.ToList(), 
+                totalRecords: totalRecords, 
+                pageNumber: parameter.PageNumber, 
+                pageSize: parameter.PageSize);
+
+            return new ApiOkResponse<PagedList<ExpandoForXmlObject>>(result);
         }
 
         public async Task<EmployeeDto?> GetOneByIdAsync(Guid employeeId)
         {
             Employee employee = await GetEmployeeAndCheckIfItExists(isTrackChanges: false, employeeId);
+            
             return UtilityServices.Mapper.ExecuteMapping<Employee, EmployeeDto>(employee);
         }
 
