@@ -17,7 +17,7 @@
             </summary>
             <param name="brandId"></param>
             <returns>the brand with the specific Id</returns>
-            <response code="201">Return the list brands</response>
+            <response code="201">Return the brand with ID</response>
             <response code="404">If the brandId does NOT exist</response>
         </member>
     </members>
