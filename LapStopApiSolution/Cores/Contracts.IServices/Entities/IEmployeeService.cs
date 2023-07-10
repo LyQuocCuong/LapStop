@@ -1,8 +1,10 @@
-﻿namespace Contracts.IServices.Entities
+﻿using DTO.Output.ApiResponses.Bases;
+
+namespace Contracts.IServices.Entities
 {
     public interface IEmployeeService
     {
-        Task<PagedList<ExpandoForXmlObject>> GetAllAsync(EmployeeRequestParam parameter);
+        Task<ApiResponseBase> GetAllAsync(EmployeeRequestParam parameter);
 
         Task<EmployeeDto?> GetOneByIdAsync(Guid employeeId);
 
