@@ -7,6 +7,8 @@
             IsSuccess = isSuccess;
         }
 
+        // IsSuccess just help to CAST model
+        // CASTING to ApiOkReponse or ApiNotFoundResponse
         public bool IsSuccess { get; }
     }
 }

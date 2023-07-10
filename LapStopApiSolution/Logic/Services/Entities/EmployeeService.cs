@@ -1,4 +1,5 @@
-﻿using DTO.Output.ApiResponses.Bases;
+﻿using Common.Functions;
+using DTO.Output.ApiResponses.Bases;
 using DTO.Output.ApiResponses.ErrorBadRequest;
 
 namespace Services.Entities
@@ -23,16 +24,20 @@ namespace Services.Entities
         {
             if (parameter.MinAge > parameter.MaxAge)
             {
-                return new EmployeeInvaidAgeRangeBadRequestResponse();
+                return new EmployeeBadRequestResponse(
+                        message: CommonFunctions.DisplayErrors.ReturnInvalidAgeRangeMessage);
             }
 
-            IEnumerable<Employee> employees = await EntityRepositories.Employee.GetAllAsync(isTrackChanges: false, parameter);
+            IEnumerable<Employee> employees = await EntityRepositories.Employee
+                                                            .GetAllAsync(isTrackChanges: false, parameter);
             
             int totalRecords = await EntityRepositories.Employee.CountAllAsync(parameter);
             
-            var sourceDto = UtilityServices.Mapper.ExecuteMapping<IEnumerable<Employee>, IEnumerable<EmployeeDto>>(employees);
+            var sourceDto = UtilityServices.Mapper
+                                .ExecuteMapping<IEnumerable<Employee>, IEnumerable<EmployeeDto>>(employees);
 
-            var shapedData = UtilityServices.DataShaperForEmployee.Execute(sourceDto, parameter.ShapingProps);
+            var shapedData = UtilityServices.DataShaperForEmployee
+                                .Execute(sourceDto, parameter.ShapingProps);
 
             var result = new PagedList<ExpandoForXmlObject>(
                 sourceData: shapedData.ToList(), 
