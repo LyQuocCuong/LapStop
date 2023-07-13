@@ -29,6 +29,7 @@
     <ProjectReference Include="..\..\Cores\Contracts\Contracts.csproj" />
     <ProjectReference Include="..\..\Implementations\EFCoreService\EFCoreService.csproj" />
     <ProjectReference Include="..\..\Implementations\Utilities\Utilities.csproj" />
+    <ProjectReference Include="..\..\Logic\Application\Application.csproj" />
   </ItemGroup>
 
 </Project>

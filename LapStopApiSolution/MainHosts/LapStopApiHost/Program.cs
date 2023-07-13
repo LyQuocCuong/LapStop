@@ -1,3 +1,6 @@
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+
 LogManager.Setup().LoadConfigurationFromFile(
     Path.Combine(Directory.GetCurrentDirectory(), 
     "../../Infrastructures/InfraServices/NLog/NLog.config")
@@ -37,6 +40,14 @@ builder.Services.RegisterDI_IdentityContext();
 
 builder.Services.RegisterDI_Repositories();
 builder.Services.RegisterDI_Services();
+
+// version Older
+///builder.Services.AddMediatR(typeof(Application.AssemblyReference).Assembly);
+
+// version 12
+builder.Services.AddMediatR(cfg => {
+    cfg.RegisterServicesFromAssembly(typeof(Application.AssemblyReference).Assembly);
+});
 
 builder.Services.RegisterDI_CustomValidationAttribute();    // implement IActionFilter
 builder.Services.RegisterDI_FluentValidation();             // FluentValidation.AspNetCore package
